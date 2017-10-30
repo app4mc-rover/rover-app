@@ -51,4 +51,8 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+
+build
+dependencies
 build/*
+dependencies/*
