@@ -21,7 +21,7 @@
  *
  */
 
-#include <RaspberryTest.h>
+#include <roverapp.h>
 
 #include <libraries/pthread_distribution_lib/pthread_distribution.h>
 #include <libraries/pthread_monitoring/collect_thread_name.h>

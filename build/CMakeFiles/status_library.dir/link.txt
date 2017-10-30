@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC   -shared -Wl,-soname,libstatus_library.so -o libs/libstatus_library.so CMakeFiles/status_library.dir/src/libraries/status_library/status_library.cpp.o 

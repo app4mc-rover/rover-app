@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef RASPBERRYTEST_H_
-#define RASPBERRYTEST_H_
+#ifndef ROVERAPP_H_
+#define ROVERAPP_H_
 
 #include <pthread.h>
 #include <iostream>
