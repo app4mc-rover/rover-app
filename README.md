@@ -1,6 +1,9 @@
 # rover-app
 roverapp Software (C/C++) for APP4MC Rover project
 
+Comprehensive documentation link: https://app4mc-rover.github.io/rover-docs
+
+
 **Roverapp** complete feature list is given below:
 
 * Multi-threaded, schedulable and traceable embedded software.
@@ -21,4 +24,3 @@ roverapp Software (C/C++) for APP4MC Rover project
 * Booth mode implementations.
 * Implementations for bluetooth-based driving from Android phones.
 
-Comprehensive documentation link: https://app4mc-rover.github.io/rover-docs
