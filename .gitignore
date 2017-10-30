@@ -52,6 +52,8 @@ Mkfile.old
 dkms.conf
 
 build
-dependencies
-build/*
-dependencies/*
+CMakeFiles
+CMakeFiles/*
+CMakeCache.txt
+Makefile
+cmake_install.cmake
