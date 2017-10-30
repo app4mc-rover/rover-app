@@ -126,7 +126,7 @@ target_link_libraries (roverapp roverappdrivers)
 #
 
 #Install binary, shared library, static library (archives)
-install (TARGETS roverapp
+install (TARGETS roverapp roverapi roverapptasks roverappdrivers hono_interaction status_library pthread_monitoring timing pthread_distribution
   RUNTIME DESTINATION  ${PROJECT_BINARY_DIR}/../
   LIBRARY DESTINATION /usr/lib 
   ARCHIVE DESTINATION /usr/lib)
