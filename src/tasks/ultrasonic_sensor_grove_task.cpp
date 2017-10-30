@@ -35,7 +35,7 @@
 #include <pthread.h>
 
 #include <libraries/pthread_monitoring/collect_thread_name.h>
-#include <RaspberryTest.h>
+#include <roverapp.h>
 
 void setup_GrooveUltrasonicRanger() {
 	//wiringPiSetup();   //Since this can only be used once in a program, we do it in main and comment this.

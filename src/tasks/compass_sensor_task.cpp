@@ -35,7 +35,7 @@
 #include <iostream>
 
 #include <libraries/pthread_monitoring/collect_thread_name.h>
-#include <RaspberryTest.h>
+#include <roverapp.h>
 
 #define HMC588L_ADDRESS 0x1E
 #define CALIBRATION_DURATION 10000 //compass calibration has a duration of 5 seconds

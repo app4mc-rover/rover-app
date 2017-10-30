@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <pthread.h>
 
 //Buffers to work with strings
 char buffer[256];
@@ -239,6 +240,12 @@ int sendTelemetryDataToHonoInstance (char * host_name, int port, char * tenant_n
 	printf("Response=%s\n",buffer);
 #endif
 
+	if (code == 503)
+        {
+                pthread_exit(NULL);
+        }
+	
+
 	//Handle the code and return status: 1-succeeded 0-failed
 	status = handleCode(code);
 
@@ -321,6 +328,11 @@ int sendEventDataToHonoInstance (char * host_name, int port, char * tenant_name,
 	//Print the response
 	printf("Response=%s\n",buffer);
 #endif
+
+	if (code == 503)
+        {
+                pthread_exit(NULL);
+        }
 
 	//Handle the code and return status: 1-succeeded 0-failed
 	status = handleCode(code);

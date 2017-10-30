@@ -19,7 +19,7 @@
 
 
 #include "bcm2835.h"
-#include "i2c-dev.h" //#include <linux/i2c-dev.h> , since this belongs to old kernel in our system, we included a new i2c-dev.h
+#include <linux/i2c-dev.h> 
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>

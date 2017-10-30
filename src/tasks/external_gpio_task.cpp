@@ -25,7 +25,7 @@
 #include <pthread.h>
 
 #include <libraries/pthread_monitoring/collect_thread_name.h>
-#include <RaspberryTest.h>
+#include <roverapp.h>
 
 void setupBuzzer (void)
 {

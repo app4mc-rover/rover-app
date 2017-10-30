@@ -43,7 +43,7 @@
 #include <pthread.h>
 
 #include <libraries/pthread_monitoring/collect_thread_name.h>
-#include <RaspberryTest.h>
+#include <roverapp.h>
 
 #include <iostream>
 #include <fstream>
@@ -55,8 +55,8 @@
 #include <opencv2/opencv.hpp>
 
 /* raspicam-0.1.3 libraries, Includes (-I) are in /workspace, include paths are specified for "g++"!! */
-#include <raspicam.h>
-#include <raspicam_cv.h>
+//#include <raspicam.h>
+//#include <raspicam_cv.h>
 
 using namespace cv;
 using namespace std;

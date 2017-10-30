@@ -3,21 +3,19 @@
 # https://github.com/app4mc-rover/rover-app
 #
 
+#
+# SETTINGS AND CMAKE CONFIG FINDING
+#
+
 cmake_minimum_required (VERSION 2.8.11)
 project (roverapp)
 
 #For find_package packages, export someextlib_DIR=/path/to/..
 
-# Set directories for external libs
-
-# Set include directories for external libs
-set (jsoncpp_INCLUDE_DIRS ${PROJECT_BINARY_DIR}/../dependencies/jsoncpp/include)
-
 # Required packages
 find_package (OpenCV REQUIRED)
 #find_package (raspicam REQUIRED)
-#find_package (wiringPi REQUIRED)
-#find_package (Threads)
+find_package (Threads)
 
 #Where to put binary files after "make"
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
@@ -25,21 +23,24 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 #Where to put library files after "make"
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/libs)
 
+#
+# INCLUDE DIRECTORIES
+#
+
 #Include directories
 include_directories (${PROJECT_BINARY_DIR}/../include)
-include_directories (${PROJECT_BINARY_DIR}/../include/api)
-include_directories (${PROJECT_BINARY_DIR}/../include/tasks)
-include_directories (${PROJECT_BINARY_DIR}/../include/libraries/hono_interaction/)
-include_directories (${PROJECT_BINARY_DIR}/../include/libraries/pthread_distribution_lib/)
-include_directories (${PROJECT_BINARY_DIR}/../include/libraries/pthread_monitoring/)
-include_directories (${PROJECT_BINARY_DIR}/../include/libraries/status_library/)
-include_directories (${PROJECT_BINARY_DIR}/../include/libraries/timing/)
+
+#Include driver headers
 include_directories (${PROJECT_BINARY_DIR}/../include/drivers/oled_drivers)
-include_directories (${PROJECT_BINARY_DIR}/../include/drivers/bluetooth_drivers)
 
 #Include directories for external libraries
 include_directories( ${OpenCV_INCLUDE_DIRS} )
-include_directories( ${jsoncpp_INCLUDE_DIRS} )
+#include_directories( ${jsoncpp_INCLUDE_DIRS} )
+#include_directories( ${bluetooth_INCLUDE_DIRS} )
+
+#
+# LIBRARIES
+#
 
 #Add api
 add_library(roverapi SHARED ${PROJECT_BINARY_DIR}/../src/api/basic_psys_rover.c)
@@ -52,15 +53,57 @@ add_library (pthread_monitoring SHARED ${PROJECT_BINARY_DIR}/../src/libraries/pt
 add_library (timing SHARED ${PROJECT_BINARY_DIR}/../src/libraries/timing/timing.cpp)
 
 #Add tasks
-#Add all files to a variable TASK_FILES
-file (GLOB_RECURSE TASK_FILES ${PROJECT_BINARY_DIR}/../src/tasks/*cpp)
-add_library (roverapptasks SHARED ${TASK_FILES})
+#Add all files to a variable ROVERAPP_TASK_FILES
+file (GLOB_RECURSE ROVERAPP_TASK_FILES ${PROJECT_BINARY_DIR}/../src/tasks/*cpp)
+add_library (roverapptasks SHARED ${ROVERAPP_TASK_FILES})
+
+
+#Add drivers
+file (GLOB_RECURSE ROVERAPP_DRIVER_FILES ${PROJECT_BINARY_DIR}/../src/drivers/oled_drivers/*)
+add_library (roverappdrivers SHARED ${ROVERAPP_DRIVER_FILES})
+
+#
+#  EXECUTABLE
+#
 
 #Add main executable
 add_executable(roverapp ${PROJECT_BINARY_DIR}/../src/roverapp.cpp)
 
+#
+#  LINKING TO ROVER TASKS
+#
+
 #Link external libraries
-target_link_libraries (roverapp jsoncpp)
+target_link_libraries (roverapptasks opencv_core)
+target_link_libraries (roverapptasks opencv_imgproc)
+target_link_libraries (roverapptasks opencv_highgui)
+target_link_libraries (roverapptasks jsoncpp)
+target_link_libraries (roverapptasks bluetooth)
+target_link_libraries (roverapptasks pthread)
+target_link_libraries (roverapptasks wiringPi)
+target_link_libraries (roverapptasks wiringPiDev)
+#target_link_libraries (roverapptasks raspicam)
+
+
+#Linker actions to link our libraries to executable
+target_link_libraries(roverapptasks hono_interaction)
+target_link_libraries(roverapptasks pthread_distribution)
+target_link_libraries(roverapptasks status_library)
+target_link_libraries(roverapptasks pthread_monitoring)
+target_link_libraries(roverapptasks timing)
+
+#Link api
+target_link_libraries (roverapptasks roverapi)
+
+#Link drivers
+target_link_libraries (roverapptasks roverappdrivers)
+
+#
+# LINKING TO MAIN EXECUTABLE
+#
+
+#Link external libraries
+target_link_libraries (roverapp pthread)
 
 #Link api
 target_link_libraries (roverapp roverapi)
@@ -75,8 +118,15 @@ target_link_libraries(roverapp timing)
 #Link tasks
 target_link_libraries(roverapp roverapptasks)
 
+#Link drivers
+target_link_libraries (roverapp roverappdrivers)
+
+#
+# INSTALLING
+#
+
 #Install binary, shared library, static library (archives)
-#install (TARGETS discoverymanager dmLib
-#  RUNTIME DESTINATION ${PROJECT_BINARY_DIR}/build
-#  LIBRARY DESTINATION /usr/lib 
-#  ARCHIVE DESTINATION /usr/lib)
+install (TARGETS roverapp
+  RUNTIME DESTINATION  ${PROJECT_BINARY_DIR}/../
+  LIBRARY DESTINATION /usr/lib 
+  ARCHIVE DESTINATION /usr/lib)
