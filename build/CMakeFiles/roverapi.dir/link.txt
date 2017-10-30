@@ -1,1 +1,0 @@
-/usr/bin/cc  -fPIC   -shared -Wl,-soname,libroverapi.so -o libs/libroverapi.so CMakeFiles/roverapi.dir/src/api/basic_psys_rover.c.o 

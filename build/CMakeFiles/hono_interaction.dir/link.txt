@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC   -shared -Wl,-soname,libhono_interaction.so -o libs/libhono_interaction.so CMakeFiles/hono_interaction.dir/src/libraries/hono_interaction/hono_interaction.cpp.o 

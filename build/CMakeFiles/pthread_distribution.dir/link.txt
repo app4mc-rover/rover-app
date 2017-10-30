@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC   -shared -Wl,-soname,libpthread_distribution.so -o libs/libpthread_distribution.so CMakeFiles/pthread_distribution.dir/src/libraries/pthread_distribution_lib/pthread_distribution.cpp.o 

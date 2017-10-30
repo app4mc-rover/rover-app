@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/roverapp.dir/src/roverapp.cpp.o  -o bin/roverapp -rdynamic -ljsoncpp libs/libroverapi.so libs/libhono_interaction.so libs/libpthread_distribution.so libs/libstatus_library.so libs/libpthread_monitoring.so libs/libtiming.so libs/libroverapptasks.so -Wl,-rpath,/home/pi/rover-app/build/libs 
