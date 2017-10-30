@@ -54,12 +54,37 @@
 #include <api/basic_psys_rover.h>
 
 #include <interfaces.h>
+#include <signal.h>
 
 //Please comment the line below to work with SR-04 sensor instead of GROOVE for rear proximity sensing.
 //#define USE_GROOVE_SENSOR 1
 
 using namespace std;
 
+/* Threads */
+pthread_t ultrasonic_grove_thread;
+pthread_t ultrasonic_sr04_front_thread;
+pthread_t ultrasonic_sr04_back_thread;
+pthread_t temperature_thread;
+//	pthread_t keycommand_input_thread;
+pthread_t motordriver_thread;
+pthread_t infrared_thread;
+pthread_t displaysensors_thread;
+pthread_t compasssensor_thread;
+pthread_t record_timing_thread;
+pthread_t adaptive_cruise_control_thread;
+pthread_t parking_thread;
+pthread_t hono_interaction_thread;
+pthread_t cpu_logger_thread;
+pthread_t oled_thread;
+pthread_t srf02_thread;
+pthread_t bluetooth_thread;
+pthread_t extgpio_thread;
+pthread_t booth_thread;
+pthread_t socket_client_thread;
+pthread_t socket_server_thread;
+
+/* Timing interfaces for thread measurement */
 timing_interface compass_task_ti;
 pthread_mutex_t compass_task_ti_l;
 
@@ -171,14 +196,42 @@ pthread_mutex_t buzzer_status_shared_lock;
 
 int shutdown_hook_shared;
 
-
 /* For proper termination */
 int running_flag;
+
+void exitHandler(int dummy)
+{
+	pthread_kill(ultrasonic_grove_thread, SIGTERM);
+	pthread_kill(ultrasonic_sr04_front_thread, SIGTERM);
+	pthread_kill(ultrasonic_sr04_back_thread, SIGTERM);
+	pthread_kill(temperature_thread, SIGTERM);
+	pthread_kill(motordriver_thread, SIGTERM);
+	pthread_kill(infrared_thread, SIGTERM);
+	pthread_kill(displaysensors_thread, SIGTERM);
+	pthread_kill(compasssensor_thread, SIGTERM);
+	pthread_kill(record_timing_thread, SIGTERM);
+	pthread_kill(adaptive_cruise_control_thread, SIGTERM);
+	pthread_kill(parking_thread, SIGTERM);
+	pthread_kill(hono_interaction_thread, SIGTERM);
+	pthread_kill(cpu_logger_thread, SIGTERM);
+	pthread_kill(oled_thread, SIGTERM);
+	pthread_kill(srf02_thread, SIGTERM);
+	pthread_kill(bluetooth_thread, SIGTERM);
+	pthread_kill(extgpio_thread, SIGTERM);
+	pthread_kill(booth_thread, SIGTERM);
+	pthread_kill(socket_client_thread, SIGTERM);
+	pthread_kill(socket_server_thread, SIGTERM);
+}
 
 int main()
 {
 	//Register all the entries as devices to cloud
 	registerEntriesToHonoInstance();
+
+	/* Add signals to exit threads properly */
+	signal(SIGINT, exitHandler);
+	signal(SIGTERM, exitHandler);
+	signal(SIGKILL, exitHandler);
 
 	RefreshThreadList();
 
@@ -222,27 +275,7 @@ int main()
 	pthread_t main_thread = pthread_self();
 	pthread_setname_np(main_thread, "main_thread");
 
- 	pthread_t ultrasonic_grove_thread;
-	pthread_t ultrasonic_sr04_front_thread;
-	pthread_t ultrasonic_sr04_back_thread;
-	pthread_t temperature_thread;
-//	pthread_t keycommand_input_thread;
-	pthread_t motordriver_thread;
-	pthread_t infrared_thread;
-	pthread_t displaysensors_thread;
-	pthread_t compasssensor_thread;
-	pthread_t record_timing_thread;
-	pthread_t adaptive_cruise_control_thread;
-	pthread_t parking_thread;
-	pthread_t hono_interaction_thread;
-	pthread_t cpu_logger_thread;
-	pthread_t oled_thread;
-	pthread_t srf02_thread;
-	pthread_t bluetooth_thread;
-	pthread_t extgpio_thread;
-	pthread_t booth_thread;
-	pthread_t socket_client_thread;
-	pthread_t socket_server_thread;
+
 
 	//Thread creation
 
