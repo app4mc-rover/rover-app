@@ -74,6 +74,8 @@ add_executable(roverapp ${PROJECT_BINARY_DIR}/../src/roverapp.cpp)
 #
 
 #Link external libraries
+# Search with sudo find / -name *libx*
+# If there is an x.so, you can link x library
 target_link_libraries (roverapptasks opencv_core)
 target_link_libraries (roverapptasks opencv_imgproc)
 target_link_libraries (roverapptasks opencv_highgui)
