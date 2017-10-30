@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rm -rf ./build && mkdir -p build && cd build && cmake .. && make && sudo make install
+rm -rf ./build && mkdir -p build && cd build && cmake .. && sudo make && sudo make install

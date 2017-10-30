@@ -125,6 +125,14 @@ target_link_libraries (roverapp roverappdrivers)
 # INSTALLING
 #
 
+#Post-build actions, copy our python script to /opt
+add_custom_command (
+	TARGET roverapp POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy
+	${PROJECT_BINARY_DIR}/../scripts/read_core_usage.py
+	/opt/
+)
+
 #Install binary, shared library, static library (archives)
 install (TARGETS roverapp roverapi roverapptasks roverappdrivers hono_interaction status_library pthread_monitoring timing pthread_distribution
   RUNTIME DESTINATION  ${PROJECT_BINARY_DIR}/../
