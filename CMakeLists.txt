@@ -123,20 +123,23 @@ target_link_libraries(roverapp roverapptasks)
 #Link drivers
 target_link_libraries (roverapp roverappdrivers)
 
+#Post-build actions, to copy a file to a directory in 'make'
+#add_custom_command (
+#        TARGET roverapp POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy
+#        ${PROJECT_BINARY_DIR}/../scripts/read_core_usage.py
+#        /opt/
+#)
+
 #
 # INSTALLING
 #
-
-#Post-build actions, copy our python script to /opt
-add_custom_command (
-	TARGET roverapp POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy
-	${PROJECT_BINARY_DIR}/../scripts/read_core_usage.py
-	/opt/
-)
 
 #Install binary, shared library, static library (archives)
 install (TARGETS roverapp roverapi roverapptasks roverappdrivers hono_interaction status_library pthread_monitoring timing pthread_distribution
   RUNTIME DESTINATION  ${PROJECT_BINARY_DIR}/../
   LIBRARY DESTINATION /usr/lib 
   ARCHIVE DESTINATION /usr/lib)
+
+#Copy/install files to a certain static directory
+install (FILES ${PROJECT_BINARY_DIR}/../scripts/read_core_usage.py DESTINATION /opt)

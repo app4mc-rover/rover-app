@@ -38,6 +38,8 @@
 /* json-cpp library */
 #include <json/json.h>
 
+#include <math.h>
+
 /* Global definitions */
 int roverapp_send_sockfd;
 
@@ -57,15 +59,15 @@ Json::Value constructJSONData (int data_type)
 	{
 		case SENSOR_DATA:
 			data["rover_dtype"] = "sensor";
-			data["data"]["infrared0"] = infrared_shared[0];
-			data["data"]["infrared1"] = infrared_shared[1];
-			data["data"]["infrared2"] = infrared_shared[2];
-			data["data"]["infrared3"] = infrared_shared[3];
-			data["data"]["front"] = distance_sr04_front_shared;
-			data["data"]["rear"] = distance_sr04_back_shared;
-			data["data"]["temperature"] = temperature_shared;
-			data["data"]["humidity"] = humidity_shared;
-			data["data"]["bearing"] = (int) bearing_shared;
+			data["data"]["infrared0"] = ceil(infrared_shared[0]);
+			data["data"]["infrared1"] = ceil(infrared_shared[1]);
+			data["data"]["infrared2"] = ceil(infrared_shared[2]);
+			data["data"]["infrared3"] = ceil (infrared_shared[3]);
+			data["data"]["front"] = ceil (distance_sr04_front_shared);
+			data["data"]["rear"] = ceil (distance_sr04_back_shared);
+			data["data"]["temperature"] = ceil (temperature_shared);
+			data["data"]["humidity"] = ceil (humidity_shared);
+			data["data"]["bearing"] = ceil (bearing_shared);
 			break;
 		case UTIL_DATA:
 			data["rover_dtype"] = "util";

@@ -57,7 +57,7 @@ void ManualModeSet(void)
 		driving_mode = MANUAL;
 	pthread_mutex_unlock(&driving_mode_lock);
 	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'f';
+		keycommand_shared = 'F';
 	pthread_mutex_unlock(&keycommand_lock);
 }
 
@@ -71,7 +71,7 @@ void ParkingRightModeSet(void)
 		driving_mode = PARKING_RIGHT;
 	pthread_mutex_unlock(&driving_mode_lock);
 	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'f';
+		keycommand_shared = 'F';
 	pthread_mutex_unlock(&keycommand_lock);
 }
 
@@ -85,7 +85,7 @@ void ParkingLeftModeSet(void)
 		driving_mode = PARKING_LEFT;
 	pthread_mutex_unlock(&driving_mode_lock);
 	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'f';
+		keycommand_shared = 'F';
 	pthread_mutex_unlock(&keycommand_lock);
 }
 
@@ -99,7 +99,7 @@ void ACCModeSet(void)
 		driving_mode = ACC;
 	pthread_mutex_unlock(&driving_mode_lock);
 	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'f';
+		keycommand_shared = 'F';
 	pthread_mutex_unlock(&keycommand_lock);
 }
 
@@ -113,7 +113,7 @@ void BoothMode1Set(void)
 		driving_mode = BOOTH1;
 	pthread_mutex_unlock(&driving_mode_lock);
 	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'f';
+		keycommand_shared = 'F';
 	pthread_mutex_unlock(&keycommand_lock);
 }
 
@@ -127,7 +127,7 @@ void BoothMode2Set(void)
 		driving_mode = BOOTH2;
 	pthread_mutex_unlock(&driving_mode_lock);
 	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'f';
+		keycommand_shared = 'F';
 	pthread_mutex_unlock(&keycommand_lock);
 }
 
@@ -162,71 +162,71 @@ void *MotorDriver_Task(void * arg)
 
 		switch (local_command)
 		{
-			case 'g':
+			case 'G':
 				running = 0;
 				break;
-			case 'p':
+			case 'P':
 				ParkingLeftModeSet();
 				break;
-			case 'o':
+			case 'O':
 				ParkingRightModeSet();
 				break;
-			case 'w':
+			case 'W':
 				ExitAutomaticModes();
 				go(FORWARD, speed_shared);
 				break;
-			case 'd':
+			case 'D':
 				ExitAutomaticModes();
 				turn(BACKWARD, LEFT, speed_shared);
 				break;
-			case 's':
+			case 'S':
 				ExitAutomaticModes();
 				go(BACKWARD, speed_shared);
 				break;
-			case 'a':
+			case 'A':
 				ExitAutomaticModes();
 				turn(BACKWARD, RIGHT, speed_shared);
 				break;
-			case 'q':
+			case 'Q':
 				ExitAutomaticModes();
 				turn(FORWARD, RIGHT, speed_shared);
 				break;
-			case 'e':
+			case 'E':
 				ExitAutomaticModes();
 				turn(FORWARD, LEFT, speed_shared);
 				break;
-			case 'k':  //turn right on spot
+			case 'K':  //turn right on spot
 				ExitAutomaticModes();
 				turnOnSpot(FORWARD, RIGHT, speed_shared);
 				break;
-			case 'j': //turn left on spot
+			case 'J': //turn left on spot
 				ExitAutomaticModes();
 				turnOnSpot(FORWARD, LEFT, speed_shared);
 				break;
-			case 'u':
+			case 'U':
 				//Calibration mode
 				break;
-			case 'r':
+			case 'R':
 				//Shutdown hook from web server
 				shutdownOSwithDisplay();
 				break;
-			case 'm':
+			case 'M':
 				//ACC mode set
 				ACCModeSet();
 				break;
-			case 'x':
+			case 'X':
 				//Manual mode set
 				ManualModeSet();
 				break;
-			case 'l':
+			case 'L':
 				//Booth mode (Demo 1) set
 				BoothMode1Set();
 				break;
-			case 'n':
+			case 'N':
 				//Booth mode (Demo 2) set
 				BoothMode2Set();
 				break;
-			case 'f':
+			case 'F':
 				stop();
 				break;
 		}

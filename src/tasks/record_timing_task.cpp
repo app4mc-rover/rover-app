@@ -74,7 +74,7 @@ void *Record_Timing_Task (void * arg)
 		record_timing_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		printf("---------- TASK TIMING/SCHEDULING INFO ----------\n");
+		/*printf("---------- TASK TIMING/SCHEDULING INFO ----------\n");
 		PrintTimingInfo(temperature_task_ti);
 		PrintTimingInfo(display_sensors_task_ti);
 		PrintTimingInfo(infrared_distance_task_ti);
@@ -94,7 +94,7 @@ void *Record_Timing_Task (void * arg)
 		PrintTimingInfo(imgproc_task_ti);
 		PrintTimingInfo(socket_client_task_ti);
 		PrintTimingInfo(socket_server_task_ti);
-		printf("-------------------------------------------------\n");
+		printf("-------------------------------------------------\n");*/
 		//Task content ends here -------------------------------------------------
 
 		record_timing_task_tmr.recordEndTime();
