@@ -26,7 +26,8 @@
  *			such as ... -lopencv_core -lopencv_ml -lopencv_imgproc
  *	  6) Be sure to include the library search paths using -L:
  *	        -L"C:\SysGCC\Raspberry\arm-linux-gnueabihf\sysroot\lib\arm-linux-gnueabihf"
- *	  7) Be sure to include OpenCV and raspicam libraries below to `include directories` in gcc using -I flag.
+ *	  7) Be sure to include OpenCV and raspicam libraries below to `include di
+rectories` in gcc using -I flag.
  *
  *	  IMPORTANT!: For this task to run, camera stream or any other processes that use the raspberry pi camera should be deactivated!
  *
@@ -48,15 +49,13 @@
 #include <iostream>
 #include <fstream>
 
-/* OpenCV 2.4.9 libraries, Includes (-I) are in /workspace, include paths are specified for "g++"!! */
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 
-/* raspicam-0.1.3 libraries, Includes (-I) are in /workspace, include paths are specified for "g++"!! */
-//#include <raspicam.h>
-//#include <raspicam_cv.h>
+#include <raspicam.h>
+#include <raspicam_cv.h>
 
 using namespace cv;
 using namespace std;
