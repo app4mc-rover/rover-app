@@ -12,7 +12,7 @@
 #    M. Ozcelikors <mozcelikors@gmail.com>
 #
 # Installation:
-# 	Install/copy this file to /opt/
+# 	Install/copy this file to /opt/rover-app/scripts
 
 import psutil
 import time
