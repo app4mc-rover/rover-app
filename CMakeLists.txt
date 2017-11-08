@@ -45,21 +45,31 @@ include_directories( ${OpenCV_INCLUDE_DIRS} )
 #Add api
 add_library(roverapi SHARED ${CMAKE_SOURCE_DIR}/src/api/basic_psys_rover.c)
 
+set(CUSTOM_LIBS_DIR ${CMAKE_SOURCE_DIR}/src/libraries)
+
 #Add our custom libraries
-add_library (hono_interaction SHARED ${CMAKE_SOURCE_DIR}/src/libraries/hono_interaction/hono_interaction.cpp)
-add_library (pthread_distribution SHARED ${CMAKE_SOURCE_DIR}/src/libraries/pthread_distribution_lib/pthread_distribution.cpp)
-add_library (status_library SHARED ${CMAKE_SOURCE_DIR}/src/libraries/status_library/status_library.cpp)
-add_library (pthread_monitoring SHARED ${CMAKE_SOURCE_DIR}/src/libraries/pthread_monitoring/collect_thread_name.cpp)
-add_library (timing SHARED ${CMAKE_SOURCE_DIR}/src/libraries/timing/timing.cpp)
+add_library (hono_interaction SHARED
+  ${CUSTOM_LIBS_DIR}/hono_interaction/hono_interaction.cpp)
+add_library (pthread_distribution SHARED
+  ${CUSTOM_LIBS_DIR}/pthread_distribution_lib/pthread_distribution.cpp)
+add_library (status_library SHARED
+  ${CUSTOM_LIBS_DIR}/status_library/status_library.cpp)
+add_library (pthread_monitoring SHARED
+  ${CUSTOM_LIBS_DIR}/pthread_monitoring/collect_thread_name.cpp)
+add_library (timing SHARED
+  ${CUSTOM_LIBS_DIR}/timing/timing.cpp)
 
 #Add tasks
 #Add all files to a variable ROVERAPP_TASK_FILES
-file (GLOB_RECURSE ROVERAPP_TASK_FILES ${CMAKE_SOURCE_DIR}/src/tasks/*cpp)
+file (GLOB_RECURSE ROVERAPP_TASK_FILES ${CMAKE_SOURCE_DIR}/src/tasks/*.cpp)
 add_library (roverapptasks SHARED ${ROVERAPP_TASK_FILES})
 
 
 #Add drivers
-file (GLOB_RECURSE ROVERAPP_DRIVER_FILES ${CMAKE_SOURCE_DIR}/src/drivers/oled_drivers/*)
+file (GLOB_RECURSE ROVERAPP_DRIVER_FILES
+  ${CMAKE_SOURCE_DIR}/src/drivers/oled_drivers/*.c
+  ${CMAKE_SOURCE_DIR}/src/drivers/oled_drivers/*.cpp
+)
 add_library (roverappdrivers SHARED ${ROVERAPP_DRIVER_FILES})
 
 #
@@ -122,14 +132,6 @@ target_link_libraries(roverapp roverapptasks)
 
 #Link drivers
 target_link_libraries (roverapp roverappdrivers)
-
-#Post-build actions, to copy a file to a directory in 'make'
-#add_custom_command (
-#        TARGET roverapp POST_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E copy
-#        ${PROJECT_BINARY_DIR}/../scripts/read_core_usage.py
-#        /opt/
-#)
 
 #
 # INSTALLING
