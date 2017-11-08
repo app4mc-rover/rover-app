@@ -9,7 +9,7 @@
  *    CPU Utilization Logger Task for Rover / Raspberry Pi - uses external python script
  *
  * Note:
- *    read_core_usage.py must be installed to /opt/read_core_usage.py
+ *    read_core_usage.py must be installed to /opt/rover-app/scripts/read_core_usage.py
  *
  * Authors:
  *    M. Ozcelikors,            R.Hottger
@@ -43,13 +43,13 @@ float* retrieveCoreUtilization (void)
 	size_t bytes_read;
 
 	/* Execute the command */
-	fp = popen("python /opt/read_core_usage.py ","r");
+	fp = popen("python /opt/rover-app/scripts/read_core_usage.py ","r");
 
 	/* Read to buffer */
 	bytes_read = fread(buffer, 1, sizeof(buffer), fp);
 
 	if (bytes_read == 0 || bytes_read == sizeof(buffer))
-		perror("Can't read from /opt/read_core_usage.py");
+		perror("Can't read from /opt/rover-app/scripts/read_core_usage.py");
 
 	buffer[bytes_read] = '\0';
 
