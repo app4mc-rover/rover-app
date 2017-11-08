@@ -138,7 +138,7 @@ target_link_libraries (roverapp roverappdrivers)
 #
 
 #Install binary, shared library, static library (archives)
-install (
+install(
   TARGETS roverapp roverapi
     roverapptasks
     roverappdrivers
@@ -146,9 +146,11 @@ install (
     status_library
     pthread_monitoring
     timing pthread_distribution
-  RUNTIME DESTINATION  ${CMAKE_SOURCE_DIR}
+  PUBLIC_HEADER /usr/include
+  RUNTIME DESTINATION /usr/bin
   LIBRARY DESTINATION /usr/lib
   ARCHIVE DESTINATION /usr/lib)
 
 #Copy/install files to a certain static directory
-install (FILES ${CMAKE_SOURCE_DIR}/scripts/read_core_usage.py DESTINATION /opt)
+install(FILES ${CMAKE_SOURCE_DIR}/scripts/read_core_usage.py
+  DESTINATION /opt/rover-app/scripts/)
