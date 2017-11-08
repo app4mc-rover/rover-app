@@ -14,7 +14,7 @@ project (roverapp)
 
 # Required packages
 find_package (OpenCV REQUIRED)
-#find_package (raspicam REQUIRED)
+find_package (raspicam REQUIRED)
 find_package (Threads)
 
 #Where to put binary files after "make"
@@ -94,7 +94,7 @@ target_link_libraries (roverapptasks bluetooth)
 target_link_libraries (roverapptasks pthread)
 target_link_libraries (roverapptasks wiringPi)
 target_link_libraries (roverapptasks wiringPiDev)
-#target_link_libraries (roverapptasks raspicam)
+target_link_libraries (roverapptasks raspicam)
 
 
 #Linker actions to link our libraries to executable
