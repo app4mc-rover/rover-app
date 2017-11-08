@@ -146,7 +146,7 @@ install(
     status_library
     pthread_monitoring
     timing pthread_distribution
-  PUBLIC_HEADER /usr/include
+  PUBLIC_HEADER
   RUNTIME DESTINATION /usr/bin
   LIBRARY DESTINATION /usr/lib
   ARCHIVE DESTINATION /usr/lib)
