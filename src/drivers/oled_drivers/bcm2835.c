@@ -19,7 +19,11 @@
 
 
 #include "bcm2835.h"
-#include <linux/i2c-dev.h> 
+#ifdef CROSS_COMPILE_ECLIPSE
+	#include "i2c-dev.h"
+#else
+	#include <linux/i2c-dev.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
