@@ -36,6 +36,7 @@ void setupBuzzer (void)
 /* 1-> ON    0-> OFF */
 void buzzerHandler (void)
 {
+	/* TODO: To be checked
 	if ( buzzer_status_shared == 0 )
 	{
 		softToneWrite (BUZZER_PIN, BUZZER_OFF_FREQ);
@@ -54,7 +55,7 @@ void buzzerHandler (void)
 	{
 		softToneWrite (BUZZER_PIN, BUZZER_OFF_FREQ);
 	}
-
+	*/
 }
 
 void turnBuzzerOn (void)
