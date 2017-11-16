@@ -35,6 +35,7 @@ include_directories (${CMAKE_SOURCE_DIR}/include/drivers/oled_drivers)
 
 #Include directories for external libraries
 include_directories( ${OpenCV_INCLUDE_DIRS} )
+include_directories( ${raspicam_INCLUDE_DIRS} )
 #include_directories( ${jsoncpp_INCLUDE_DIRS} )
 #include_directories( ${bluetooth_INCLUDE_DIRS} )
 
@@ -85,7 +86,7 @@ add_executable(roverapp ${CMAKE_SOURCE_DIR}/src/roverapp.cpp)
 
 #Link external libraries
 # Search with sudo find / -name *libx*
-# If there is an x.so, you can link x library
+# If there is an x.so in /usr/lib/ or /usr/local/lib/, you can link x library
 target_link_libraries (roverapptasks opencv_core)
 target_link_libraries (roverapptasks opencv_imgproc)
 target_link_libraries (roverapptasks opencv_highgui)
