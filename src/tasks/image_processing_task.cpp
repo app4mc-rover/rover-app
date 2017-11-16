@@ -53,8 +53,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 
-#include <raspicam.h>
-#include <raspicam_cv.h>
+#include <raspicam/raspicam.h>
+#include <raspicam/raspicam_cv.h>
 
 using namespace cv;
 using namespace std;
