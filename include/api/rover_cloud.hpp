@@ -41,25 +41,51 @@ namespace rover
 			char * TENANT_NAME;
 		public:
 			/**
-			 * @brief Registers a device to Hono instance given device ID
-			 * @return status message is returned. 1 indicates successful operation and 0 indicates unsuccessful operation.
+			 * @brief Sets private attribute HOST_NAME
+			 * @param host_name
 			 */
 			void setHostName (char * host_name);
 
 			/**
-			 * @brief Use brief, otherwise the index won't have a brief explanation.
-			 * @param  a is an initialized integer variable
-			 * @param  b is an initialized integer variable
-			 * @return void
-			 *
-			 * Detailed explanation.
+			 * @brief Sets private attribute PORT
+			 * @param port
 			 */
 			void setPort (int port);
+
+			/**
+			 * @brief Sets private attribute TENANT_NAME
+			 * @param tenant
+			 */
 			void setTenantName (char * tenant);
+
+			/**
+			 * @brief Sets up a hono connection using host name, port, and tenant name
+			 * @param host_name
+			 * @param port
+			 * @param tenant
+			 */
 			void setHono (char * host_name, int port, char * tenant);
+
+			/**
+			 * @brief Retrieves private attribute HOST_NAME
+			 */
 			char * getHostName (void);
+
+			/**
+			 * @brief Retrieves private attribute PORT
+			 */
 			int getPort (void);
+
+			/**
+			 * @brief Retrieves private attribute TENANT_NAME
+			 */
 			char * getTenantName (void);
+
+			/**
+			 * @brief Registers a device to Hono instance given device ID
+			 * @param device_id
+			 * @return status code (int) is returned. 1 indicates successful operation and 0 indicates unsuccessful operation.
+			 */
 			int registerDevice (char * device_id);
 			int sendTelemetry (char * device_id, char * user, char * password, char * field, double value);
 			int sendEvent (char * device_id, char * user, char * password, char * field, double value);
