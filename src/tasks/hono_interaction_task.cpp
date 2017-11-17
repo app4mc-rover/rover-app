@@ -34,8 +34,8 @@ void *Hono_Interaction_Task(void * arg)
 {
 	timing hono_task_tmr;
 	hono_task_tmr.setTaskID("HonoTsk");
-	hono_task_tmr.setDeadline(1);
-	hono_task_tmr.setPeriod(1);
+	hono_task_tmr.setDeadline(2);
+	hono_task_tmr.setPeriod(2);
 
 	CollectThreadName("Hono_Interaction_Task");
 
