@@ -26,9 +26,6 @@
 #include <softPwm.h>
 
 #include <libraries/pthread_monitoring/collect_thread_name.h>
-#include <roverapp.h>
-
-/* Signal header */
 #include <signal.h>
 
 /* Socket defs header */
@@ -36,6 +33,8 @@
 
 /* json-cpp library */
 #include <json/json.h>
+
+#include <roverapp.h>
 
 /* Global definitions */
 int roverapp_listen_sockfd;

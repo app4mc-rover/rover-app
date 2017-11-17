@@ -43,8 +43,6 @@
 #include <pthread.h>
 
 #include <libraries/pthread_monitoring/collect_thread_name.h>
-#include <roverapp.h>
-
 #include <iostream>
 #include <fstream>
 
@@ -55,6 +53,8 @@
 
 #include <raspicam/raspicam.h>
 #include <raspicam/raspicam_cv.h>
+
+#include <roverapp.h>
 
 using namespace cv;
 using namespace std;

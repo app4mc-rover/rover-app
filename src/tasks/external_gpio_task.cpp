@@ -14,6 +14,8 @@
 */
 
 #include <tasks/external_gpio_task.h>
+#include <tasks/oled_task.h>
+#include <wiringPi.h>
 
 #include <ctime>
 #include <wiringPi.h>
@@ -58,6 +60,16 @@ void buzzerHandler (void)
 	*/
 }
 
+void buttonHandler (void)
+{
+	if (digitalRead(SHUTDOWN_BUTTON_PIN) == LOW)
+	{
+		shutdownOSwithDisplay();
+	}
+}
+
+
+
 void turnBuzzerOn (void)
 {
 	pthread_mutex_lock(&buzzer_status_shared_lock);
@@ -100,8 +112,8 @@ void *External_GPIO_Task(void *arg)
 	CollectThreadName("External_GPIO_Task");
 
 	extgpio_task_tmr.setTaskID("GPIO");
-	extgpio_task_tmr.setDeadline(1);
-	extgpio_task_tmr.setPeriod(1);
+	extgpio_task_tmr.setDeadline(0.2);
+	extgpio_task_tmr.setPeriod(0.2);
 
 	/* Setup Buzzer */
 	setupBuzzer();
@@ -115,6 +127,7 @@ void *External_GPIO_Task(void *arg)
 
 		/* Handle buzzer operation */
 		buzzerHandler();
+		buttonHandler();
 
 		//Task content ends here -------------------------------------------------
 

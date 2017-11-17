@@ -32,4 +32,4 @@
 
 #include "interfaces.h"
 
-#endif /* RASPBERRYTEST_H_ */
+#endif /* ROVERAPP_H_ */

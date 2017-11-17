@@ -182,7 +182,7 @@ int registerDeviceToHonoInstance (char * host_name, int port, char * tenant_name
  * 						If the action completed -> returns 1
  * 						If the action failed ->    returns 0
  */
-int sendTelemetryDataToHonoInstance (char * host_name, int port, char * tenant_name, char * device_id, char * field, double value)
+int sendTelemetryDataToHonoInstance (char * host_name, int port, char * tenant_name, char * device_id, char * user, char * password, char * field, double value)
 {
 	FILE *fp;
 	int code;
@@ -197,9 +197,13 @@ int sendTelemetryDataToHonoInstance (char * host_name, int port, char * tenant_n
 	//To get the information in dashboard, we use device ID as the entry name, and "value" as field.
 	//Example: "curl -X PUT -i -H 'Content-Type: application/json' --data-binary '{"value": 0.5}' http://idial.institute:8080/telemetry/DEFAULT_TENANT/roverRearSensor"
 
-	sprintf(buffer, "curl -X POST -i -u sensor1@");
+	sprintf(buffer, "curl -X POST -i -u ");
+	strcat(buffer, user);
+	strcat(buffer, "@");
 	strcat(buffer, tenant_name);
-	strcat(buffer, ":hono-secret -H 'Content-Type: application/json' --data-binary '{\"");
+	strcat(buffer, ":");
+	strcat(buffer, password);
+	strcat(buffer, " -H 'Content-Type: application/json' --data-binary '{\"");
 
 	strcat(buffer, field);
 	strcat(buffer, "\": ");
@@ -271,7 +275,7 @@ int sendTelemetryDataToHonoInstance (char * host_name, int port, char * tenant_n
  * 						If the action completed -> returns 1
  * 						If the action failed ->    returns 0
  */
-int sendEventDataToHonoInstance (char * host_name, int port, char * tenant_name, char * device_id, char * field, double value)
+int sendEventDataToHonoInstance (char * host_name, int port, char * tenant_name, char * device_id, char * user, char * password, char * field, double value)
 {
 	FILE *fp;
 	int code;
@@ -286,9 +290,13 @@ int sendEventDataToHonoInstance (char * host_name, int port, char * tenant_name,
 	//To get the information in dashboard, we use device ID as the entry name, and "value" as field.
 	//Example: "curl -X PUT -i -H 'Content-Type: application/json' --data-binary '{"value": 0.5}' http://idial.institute:8080/event/DEFAULT_TENANT/roverRearSensor"
 
-	sprintf(buffer, "curl -X POST -i -u sensor1@");
+	sprintf(buffer, "curl -X POST -i -u ");
+	strcat(buffer, user);
+	strcat(buffer, "@");
 	strcat(buffer, tenant_name);
-	strcat(buffer, ":hono-secret -H 'Content-Type: application/json' --data-binary '{\"");
+	strcat(buffer, ":");
+	strcat(buffer, password);
+	strcat(buffer, " -H 'Content-Type: application/json' --data-binary '{\"");
 
 	strcat(buffer, field);
 	strcat(buffer, "\": ");

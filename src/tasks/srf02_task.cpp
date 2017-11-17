@@ -24,8 +24,6 @@
 #include <pthread.h>
 
 #include <libraries/pthread_monitoring/collect_thread_name.h>
-#include <roverapp.h>
-
 #include <linux/i2c-dev.h>
 #include <fcntl.h>
 #include <string.h>
@@ -34,6 +32,8 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#include <roverapp.h>
 
 
 /* Name of the I2C device we will be using */

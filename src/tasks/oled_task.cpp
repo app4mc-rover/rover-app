@@ -49,8 +49,6 @@
 #include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
-#include <roverapp.h>
-
 #include <libraries/pthread_monitoring/collect_thread_name.h>
 
 #include <drivers/oled_drivers/ArduiPi_SSD1306.h>
@@ -61,6 +59,7 @@
 #include "../drivers/oled_drivers/appstacle_logo.c"
 
 #include <libraries/status_library/status_library.h>
+#include <roverapp.h>
 
 Adafruit_SSD1306 display;
 

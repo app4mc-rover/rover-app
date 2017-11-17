@@ -61,14 +61,14 @@
 #include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
-#include <roverapp.h>
-
 #include <libraries/pthread_monitoring/collect_thread_name.h>
 
 #include <sys/socket.h>
 #include <bluetooth/bluetooth.h>
 /* Important Note: RFCOMM socket type is supported by Android API, so we chose to use it */
 #include <bluetooth/rfcomm.h>
+
+#include <roverapp.h>
 
 
 void *Bluetooth_Task (void * arg)

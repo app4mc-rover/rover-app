@@ -26,13 +26,14 @@
 #include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
-#include <roverapp.h>
 #include <softPwm.h>
 
 #include <libraries/pthread_monitoring/collect_thread_name.h>
 
 /* Signal header */
 #include <signal.h>
+
+#include <roverapp.h>
 
 /* Reads a certain file which returns core usage and exits with EX_OK or EX_SOFTWARE */
 float* retrieveCoreUtilization (void)

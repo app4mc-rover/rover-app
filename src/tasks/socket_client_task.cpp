@@ -24,8 +24,6 @@
 #include <pthread.h>
 
 #include <libraries/pthread_monitoring/collect_thread_name.h>
-#include <roverapp.h>
-
 #include <unistd.h>
 #include <string.h>
 
@@ -39,6 +37,8 @@
 #include <json/json.h>
 
 #include <math.h>
+
+#include <roverapp.h>
 
 /* Global definitions */
 int roverapp_send_sockfd;
