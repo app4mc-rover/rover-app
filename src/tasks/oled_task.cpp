@@ -292,7 +292,7 @@ void *OLED_Task (void * arg)
 					display.setTextSize(3);
 					display.setTextColor(WHITE);
 
-					if (retrieveHONOStatus() == 1)
+					if (retrieveHONOStatus("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret") == 1)
 					{
 						display.setCursor(50,32);
 						display.print("ON");
