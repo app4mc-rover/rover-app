@@ -48,17 +48,17 @@ void *Hono_Interaction_Task(void * arg)
 
 		// Send everything to Hono every second in this task using the following functions
 		// TODO: This can be done with one curl command, probably a better way.
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverFront", distance_sr04_front_shared);
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverFrontLeft",infrared_shared[3]);
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverFrontRight", infrared_shared[2]);
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverRear", distance_sr04_back_shared);
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverRearLeft", infrared_shared[1]);
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverRearRight", infrared_shared[0]);
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverBearing", bearing_shared);
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverUtilCpu1", cpu_util_shared[0]);
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverUtilCpu2", cpu_util_shared[1]);
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverUtilCpu3", cpu_util_shared[2]);
-		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","roverUtilCpu4", cpu_util_shared[3]);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverFront", distance_sr04_front_shared);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverFrontLeft",infrared_shared[3]);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverFrontRight", infrared_shared[2]);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverRear", distance_sr04_back_shared);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverRearLeft", infrared_shared[1]);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverRearRight", infrared_shared[0]);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverBearing", bearing_shared);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverUtilCpu1", cpu_util_shared[0]);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverUtilCpu2", cpu_util_shared[1]);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverUtilCpu3", cpu_util_shared[2]);
+		sendTelemetryDataToHonoInstance("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret","roverUtilCpu4", cpu_util_shared[3]);
 
 
 		//Task content ends here -------------------------------------------------
