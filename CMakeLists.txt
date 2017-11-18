@@ -43,8 +43,12 @@ include_directories( ${raspicam_INCLUDE_DIRS} )
 # LIBRARIES
 #
 
-#Add api
-add_library(roverapi SHARED ${CMAKE_SOURCE_DIR}/src/api/basic_psys_rover.c)
+#Add roverapi
+file (GLOB_RECURSE ROVERAPI_FILES
+  ${CMAKE_SOURCE_DIR}/src/roverapi/*.c
+  ${CMAKE_SOURCE_DIR}/src/roverapi/*.cpp
+)
+add_library (roverapi SHARED ${ROVERAPI_FILES})
 
 set(CUSTOM_LIBS_DIR ${CMAKE_SOURCE_DIR}/src/libraries)
 
