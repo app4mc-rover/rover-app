@@ -6,11 +6,11 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Description:
- *    Rover WebUI API - Interfaces for Rover webUI application development
+ *    Rover Driving API - Interfaces for Rover driving application development
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created API 17.11.2017
  *
  */
 
-#include <api/rover_webui.hpp>
+#include <roverapi/rover_driving.hpp>

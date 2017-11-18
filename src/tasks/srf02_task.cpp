@@ -19,7 +19,6 @@
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 
@@ -34,6 +33,7 @@
 #include <sys/stat.h>
 
 #include <roverapp.h>
+#include <roverapi/basic_psys_rover.h>
 
 
 /* Name of the I2C device we will be using */

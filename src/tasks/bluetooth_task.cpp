@@ -58,7 +58,6 @@
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 #include <libraries/pthread_monitoring/collect_thread_name.h>
@@ -69,6 +68,7 @@
 #include <bluetooth/rfcomm.h>
 
 #include <roverapp.h>
+#include <roverapi/basic_psys_rover.h>
 
 
 void *Bluetooth_Task (void * arg)

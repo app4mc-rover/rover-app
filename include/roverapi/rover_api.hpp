@@ -6,28 +6,36 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Description:
- *    Rover WebUI API - Interfaces for Rover webUI application development - Header file
+ *    Rover API - Interfaces for Rover application development - Header file
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created API 17.11.2017
  *
  */
 
-#ifndef API_ROVER_WEBUI_HPP_
-#define API_ROVER_WEBUI_HPP_
+#ifndef ROVER_API_HPP_
+#define ROVER_API_HPP_
 
-#include <api/rover_api.hpp>
+#include <stdint.h>
 
+/**
+  *   @brief  rover Namespace contains classes to manage Rover sensors, gpio, driving, utilities, cloud, and web UI.
+  *
+  */
 namespace rover
 {
-	class RoverWebUI : public RoverBase
+	class RoverBase
 	{
+
 		public:
-			void initialize();
-			void start();
-			void kill();
+			RoverBase();
+			virtual ~RoverBase();
+			void initialize (void);
+			void start (void);
+			void kill (void);
 	};
 }
 
 
-#endif /* API_ROVER_WEBUI_HPP_ */
+
+#endif /* ROVER_API_HPP_ */

@@ -6,33 +6,28 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Description:
- *    Rover Sensors API - Interfaces for Rover sensors application development - Header file
+ *    Rover WebUI API - Interfaces for Rover webUI application development - Header file
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created API 17.11.2017
  *
  */
 
-#ifndef API_ROVER_SENSORS_HPP_
-#define API_ROVER_SENSORS_HPP_
+#ifndef API_ROVER_WEBUI_HPP_
+#define API_ROVER_WEBUI_HPP_
 
-#include <api/rover_api.hpp>
+#include <roverapi/rover_api.hpp>
 
 namespace rover
 {
-	class RoverSensors : public RoverBase
+	class RoverWebUI : public RoverBase
 	{
 		public:
 			void initialize();
-			void readUltrasonicSensor(int sensor_id);
-			void readInfraredSensor(int sensor_id);
-			void calibrateBearingSensor();
-			void readBearing();
-			void readTemperature();
-			void readHumidity();
+			void start();
+			void kill();
 	};
 }
 
 
-
-#endif /* API_ROVER_SENSORS_HPP_ */
+#endif /* API_ROVER_WEBUI_HPP_ */

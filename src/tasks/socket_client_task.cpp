@@ -19,7 +19,6 @@
 #include <unistd.h>
 #include <ctime>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 
@@ -39,6 +38,7 @@
 #include <math.h>
 
 #include <roverapp.h>
+#include <roverapi/basic_psys_rover.h>
 
 /* Global definitions */
 int roverapp_send_sockfd;

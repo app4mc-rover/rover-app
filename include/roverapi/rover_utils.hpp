@@ -16,7 +16,7 @@
 #ifndef API_ROVER_UTILS_HPP_
 #define API_ROVER_UTILS_HPP_
 
-#include <api/rover_api.hpp>
+#include <roverapi/rover_api.hpp>
 
 namespace rover
 {

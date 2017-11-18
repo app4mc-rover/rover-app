@@ -23,7 +23,6 @@
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 #include <softPwm.h>
@@ -31,6 +30,7 @@
 #include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <tasks/motordriver_task.h>
 #include <roverapp.h>
+#include <roverapi/basic_psys_rover.h>
 
 int StopParking (void)
 {

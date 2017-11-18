@@ -6,39 +6,41 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Description:
- *    Rover API - Interfaces for Rover application development - Header file
+ *    Rover API - Interfaces for Rover application development
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created API 17.11.2017
  *
  */
 
-#ifndef ROVER_API_HPP_
-#define ROVER_API_HPP_
-
-#include <stdint.h>
+#include <roverapi/rover_api.hpp>
 
 /**
-  *   @brief  Swaps the values of two integer parameters.
+  *   @brief  Constructor for the RoverBase class
+  */
+rover::RoverBase::RoverBase()
+{
+
+}
+
+/**
+  *   @brief  Destructor for the RoverBase class
+  */
+rover::RoverBase::~RoverBase()
+{
+
+}
+
+/**
+  *   @brief  Constructor for the RoverBase class
   *
   *   @param  a is an initialized integer variable
   *   @param  b is an initialized integer variable
   *   @return void
   */
-namespace rover
+void rover::RoverBase::initialize(void)
 {
-	class RoverBase
-	{
-
-		public:
-			RoverBase();
-			virtual ~RoverBase();
-			void initialize (void);
-			void start (void);
-			void kill (void);
-	};
+	int a = 1;
 }
 
 
-
-#endif /* ROVER_API_HPP_ */

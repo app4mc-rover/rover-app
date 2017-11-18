@@ -6,11 +6,11 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Description:
- *    Rover Driving API - Interfaces for Rover driving application development
+ *    Rover Sensors API - Interfaces for Rover sensors application development
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created API 17.11.2017
  *
  */
 
-#include <api/rover_driving.hpp>
+#include <roverapi/rover_sensors.hpp>

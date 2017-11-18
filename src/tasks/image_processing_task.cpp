@@ -38,7 +38,6 @@
 #include <wiringPi.h>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 
@@ -55,6 +54,7 @@
 #include <raspicam/raspicam_cv.h>
 
 #include <roverapp.h>
+#include <roverapi/basic_psys_rover.h>
 
 using namespace cv;
 using namespace std;

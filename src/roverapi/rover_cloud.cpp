@@ -13,7 +13,8 @@
  *
  */
 
-#include <api/rover_cloud.hpp>
+#include <roverapi/rover_cloud.hpp>
+
 #include <libraries/hono_interaction/hono_interaction.h>
 #include <libraries/status_library/status_library.h>
 

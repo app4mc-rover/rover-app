@@ -16,7 +16,7 @@
 #ifndef API_ROVER_CLOUD_HPP_
 #define API_ROVER_CLOUD_HPP_
 
-#include <api/rover_api.hpp>
+#include <roverapi/rover_api.hpp>
 
 namespace rover
 {
@@ -82,13 +82,28 @@ namespace rover
 			char * getTenantName (void);
 
 			/**
-			 * @brief Registers a device to Hono instance given device ID
+			 * @brief Constructs curl command to register a device to Hono instance given device ID using REST API
 			 * @param device_id
 			 * @return status code (int) is returned. 1 indicates successful operation and 0 indicates unsuccessful operation.
 			 */
 			int registerDevice (char * device_id);
+
+			/**
+			 * @brief Constructs curl command to send telemetry data to Eclipse Hono using REST API
+			 * @return status code (int) is returned. 1 indicates successful operation and 0 indicates unsuccessful operation.
+			 */
 			int sendTelemetry (char * device_id, char * user, char * password, char * field, double value);
+
+			/**
+			 * @brief Constructs curl command to send event data to Eclipse Hono using REST API
+			 * @return status code (int) is returned. 1 indicates successful operation and 0 indicates unsuccessful operation.
+			 */
 			int sendEvent (char * device_id, char * user, char * password, char * field, double value);
+
+			/**
+			 * @brief Retrieves Hono cloud status by constructing a dummy REST API telemetry sending command to Eclipse Hono
+			 * @return status code (int) is returned. 1 indicates successful operation and 0 indicates unsuccessful operation.
+			 */
 			int getHonoStatus (char * device_id, char * user, char * password);
 	};
 }

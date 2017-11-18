@@ -27,7 +27,7 @@
 #include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
+#include <roverapi/basic_psys_rover.h>
 #include <interfaces.h>
 
 

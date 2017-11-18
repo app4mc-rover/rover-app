@@ -49,12 +49,12 @@
 #include <pthread.h>
 
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 
 #include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
+#include <roverapi/basic_psys_rover.h>
 
 void setup_HCSR04UltrasonicBack() {
     //wiringPiSetup();

@@ -6,11 +6,11 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Description:
- *    Rover Gpio API - Interfaces for Rover general purpose I/O application development
+ *    Rover WebUI API - Interfaces for Rover webUI application development
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created API 17.11.2017
  *
  */
 
-#include <api/rover_gpio.hpp>
+#include <roverapi/rover_webui.hpp>

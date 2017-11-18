@@ -21,7 +21,7 @@
  *
  */
 
-#include "../include/roverapp.h"
+#include <roverapp.h>
 
 #include <libraries/pthread_distribution_lib/pthread_distribution.h>
 #include <libraries/pthread_monitoring/collect_thread_name.h>
@@ -51,10 +51,9 @@
 #include <tasks/socket_client_task.h>
 #include <tasks/socket_server_task.h>
 
-#include <api/basic_psys_rover.h>
-
 #include <interfaces.h>
 #include <signal.h>
+#include <roverapi/basic_psys_rover.h>
 
 //Please comment the line below to work with SR-04 sensor instead of GROOVE for rear proximity sensing.
 //#define USE_GROOVE_SENSOR 1

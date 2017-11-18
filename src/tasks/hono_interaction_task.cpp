@@ -20,7 +20,6 @@
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 #include <softPwm.h>
@@ -29,6 +28,7 @@
 #include <roverapp.h>
 
 #include <libraries/hono_interaction/hono_interaction.h>
+#include <roverapi/basic_psys_rover.h>
 
 void *Hono_Interaction_Task(void * arg)
 {

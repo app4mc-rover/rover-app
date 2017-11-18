@@ -23,7 +23,6 @@
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 #include <softPwm.h>
@@ -34,6 +33,7 @@
 #include <signal.h>
 
 #include <roverapp.h>
+#include <roverapi/basic_psys_rover.h>
 
 /* Reads a certain file which returns core usage and exits with EX_OK or EX_SOFTWARE */
 float* retrieveCoreUtilization (void)

@@ -46,7 +46,6 @@
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 #include <libraries/pthread_monitoring/collect_thread_name.h>
@@ -60,6 +59,7 @@
 
 #include <libraries/status_library/status_library.h>
 #include <roverapp.h>
+#include <roverapi/basic_psys_rover.h>
 
 Adafruit_SSD1306 display;
 
