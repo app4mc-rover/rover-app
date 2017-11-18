@@ -1,8 +1,10 @@
 # rover-app
 roverapp Software (C/C++) for APP4MC Rover project
 
-Comprehensive documentation link: https://app4mc-rover.github.io/rover-docs
+![API Documentation Link](https://travis-ci.org/app4mc-rover/rover-app.svg?branch=master)
 
+API documentation link: https://app4mc-rover.github.io/rover-app
+Comprehensive documentation link: https://app4mc-rover.github.io/rover-docs
 
 **Roverapp** complete feature list is given below:
 
