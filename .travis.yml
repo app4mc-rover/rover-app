@@ -11,6 +11,6 @@ deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN2 #Create token from Github and Set in travis-ci.org dashboard
-  local_dir: ./doxygen/html
+  local_dir: ./html/
   on:
     branch: master
