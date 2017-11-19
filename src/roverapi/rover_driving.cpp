@@ -14,3 +14,8 @@
  */
 
 #include <roverapi/rover_driving.hpp>
+
+void rover::RoverDriving::initialize(void)
+{
+
+}

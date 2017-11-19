@@ -20,18 +20,80 @@
 
 namespace rover
 {
+	int FULL_SPEED = 480; //rover::FULL_SPEED
+	int LOW_SPEED  = 360; //rover::LOW_SPEED
+	/**
+	 * @brief Contains the member functions to drive the rover or perform behaviors such as parking and ACC using its motors.
+	 */
 	class RoverDriving : public RoverBase
 	{
+		private:
+			/**
+			 * @brief Speed for the rover movement. 360 -> Lowest speed (rover::LOW_SPEED), 480 -> Highest speed (rover::FULL_SPEED).
+			 */
+			int SPEED;
+
 		public:
+			/**
+			 * @brief Initializes wiringPi library and Analog to Digital Converter to start driving the rover.
+			 */
+			void initialize();
+
+			/**
+			 * @brief Commands the rover to stop.
+			 */
 			void stop();
-			void goForward();
-			void goBackward();
-			void turnRight();
-			void turnLeft();
+
+			/**
+			 * @brief Sets the speed.
+			 */
+			void setSpeed (int speed_setpoint);
+
+			/**
+			 * @brief Retrieves the current speed setpoint.
+			 */
+			int getSpeed (void);
+
+			/**
+			 * @brief Commands the rover to go forward.
+			 */
+			void goForward ();
+
+			/**
+			 * @brief Commands the rover to go backward.
+			 */
+			void goBackward ();
+
+			/**
+			 * @brief Commands the rover to turn right on its spot.
+			 */
+			void turnRight ();
+
+			/**
+			 * @brief Commands the rover to turn left on its spot.
+			 */
+			void turnLeft ();
+
+			/**
+			 * @brief Commands the rover to perform ACC behavior until stopped. RoverSensors should be initialized beforehand.
+			 */
 			void performACC();
+
+			/**
+			 * @brief Commands the rover to perform Parking behavior until stopped. RoverSensors should be initialized beforehand.
+			 */
 			void performParking();
+
+			/**
+			 * @brief Commands the rover to perform Booth Mode 1 behavior until stopped. RoverSensors should be initialized beforehand.
+			 */
 			void performBoothMode1();
+
+			/**
+			 * @brief Commands the rover to perform Booth Mode 2 behavior until stopped. RoverSensors should be initialized beforehand.
+			 */
 			void performBoothMode2();
+
 	};
 }
 
