@@ -113,6 +113,23 @@ void shutdownOSwithDisplay(void)
 	/* Play the shutdown tone..*/
 	playShutdownTone();
 
+	/* Prepare "Shutting Down..." */
+	display.clearDisplay();
+
+	display.setTextSize(2);
+	display.setTextColor(WHITE);
+
+	display.setCursor(20,10);
+	display.print("Shutting");
+
+	display.setTextColor(WHITE);
+
+	display.setCursor(20,32);
+	display.print("Down...");
+
+	/* Display everything earlier this time*/
+	display.display();
+
 	/* Here we're shutting Raspberry Pi down.. */
 	shutdownOS();
 
