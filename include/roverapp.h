@@ -32,4 +32,6 @@
 
 #include "interfaces.h"
 
+extern pthread_t oled_thread;
+
 #endif /* ROVERAPP_H_ */
