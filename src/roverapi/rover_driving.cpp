@@ -14,8 +14,71 @@
  */
 
 #include <roverapi/rover_driving.hpp>
+#include <roverapi/basic_psys_rover.h>
 
-void rover::RoverDriving::initialize(void)
+#include <wiringPi.h>
+#include <softPwm.h>
+#include <wiringPiI2C.h>
+#include <stdio.h>
+#include <unistd.h>
+
+rover::RoverDriving::RoverDriving()
 {
+	this->SPEED = FULL_SPEED;
+}
+void rover::RoverDriving::setSpeed (int speed_setpoint)
+{
+	this->SPEED = speed_setpoint;
+}
 
+int rover::RoverDriving::getSpeed (void)
+{
+	return this->SPEED;
+}
+
+void rover::RoverDriving::initialize (void)
+{
+	/* wiringPi can only be called once */
+#ifndef _WIRINGPI_SETUP
+#define _WIRINGPI_SETUP
+	wiringPiSetup ();
+#endif
+
+	pinMode (ENABLE_MOTOR_LEFT, OUTPUT) ;
+	digitalWrite (ENABLE_MOTOR_LEFT, HIGH) ;
+	pinMode (ENABLE_MOTOR_RIGHT, OUTPUT) ;
+	digitalWrite (ENABLE_MOTOR_RIGHT, HIGH) ;
+	pinMode (DIRECTION_PIN_LEFT, OUTPUT) ;
+	pinMode (DIRECTION_PIN_RIGHT, OUTPUT) ;
+
+
+	softPwmCreate (SOFT_PWM_ENGINE_LEFT, 0, FULL_SPEED) ;
+	softPwmCreate (SOFT_PWM_ENGINE_RIGHT, 0, FULL_SPEED) ;
+
+	pinMode (FLASH_LIGHT_LED, OUTPUT) ;
+}
+
+void rover::RoverDriving::turnLeft (void)
+{
+	turnOnSpot(FORWARD, LEFT, this->SPEED);
+}
+
+void rover::RoverDriving::turnRight (void)
+{
+	turnOnSpot(FORWARD, RIGHT, this->SPEED);
+}
+
+void rover::RoverDriving::goForward (void)
+{
+	go(FORWARD, this->SPEED);
+}
+
+void rover::RoverDriving::goBackward (void)
+{
+	go(BACKWARD, this->SPEED);
+}
+
+void rover::RoverDriving::stop (void)
+{
+	stop();
 }

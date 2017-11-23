@@ -48,6 +48,7 @@
 #include <libraries/timing/timing.h>
 #include <interfaces.h>
 #include <pthread.h>
+#include <signal.h>
 #include <libraries/pthread_monitoring/collect_thread_name.h>
 
 #include <drivers/oled_drivers/ArduiPi_SSD1306.h>
@@ -89,6 +90,9 @@ void OLED_Setup (void)
 /* Proper shutdown function, including showing message in the OLED display */
 void shutdownOSwithDisplay(void)
 {
+	/* Kill OLED thread for it to not interfere with the "Shutting down..." display */
+	pthread_kill(oled_thread, SIGTERM);
+
 	/* Prepare "Shutting Down..." */
 	display.clearDisplay();
 
@@ -111,6 +115,23 @@ void shutdownOSwithDisplay(void)
 
 	/* Here we're shutting Raspberry Pi down.. */
 	shutdownOS();
+
+	/* Prepare "Shutting Down..." */
+	display.clearDisplay();
+
+	display.setTextSize(2);
+	display.setTextColor(WHITE);
+
+	display.setCursor(20,10);
+	display.print("Shutting");
+
+	display.setTextColor(WHITE);
+
+	display.setCursor(20,32);
+	display.print("Down...");
+
+	/* Display everything earlier this time*/
+	display.display();
 
 	/* Abort the application for safety reasons */
 	abort();

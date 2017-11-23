@@ -14,3 +14,18 @@
  */
 
 #include <roverapi/rover_sensors.hpp>
+
+#include <roverapi/basic_psys_rover.h>
+#include <mcp3004.h>
+
+void rover::RoverSensors::initialize (void)
+{
+	/* wiringPi can only be called once */
+#ifndef _WIRINGPI_SETUP
+#define _WIRINGPI_SETUP
+	wiringPiSetup ();
+#endif
+
+	/* Init the analog digital converter */
+	mcp3004Setup (BASE, SPI_CHAN); // 3004 and 3008 are the same 4/8 channels
+}

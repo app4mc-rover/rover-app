@@ -20,8 +20,6 @@
 
 namespace rover
 {
-	int FULL_SPEED = 480; //rover::FULL_SPEED
-	int LOW_SPEED  = 360; //rover::LOW_SPEED
 	/**
 	 * @brief Contains the member functions to drive the rover or perform behaviors such as parking and ACC using its motors.
 	 */
@@ -34,6 +32,11 @@ namespace rover
 			int SPEED;
 
 		public:
+			/**
+			 * @brief Constructor for RoverDriving class.
+			 */
+			RoverDriving();
+
 			/**
 			 * @brief Initializes wiringPi library and Analog to Digital Converter to start driving the rover.
 			 */

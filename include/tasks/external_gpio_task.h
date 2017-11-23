@@ -28,7 +28,7 @@
 #define BUZZER_OFF_FREQ 0
 
 /* Shutdown Button */
-#define SHUTDOWN_BUTTON_PIN 24 //BCM-21, wiringpi 24
+#define SHUTDOWN_BUTTON_PIN 29 //BCM-21, wiringpi 29
 
 /* User Button */
 #define USER_BUTTON_PIN 27 //BCM-16, wiringpi 27
