@@ -18,6 +18,14 @@
 
 #include <stdint.h>
 
+#include <roverapi/rover_display.hpp>
+#include <roverapi/rover_driving.hpp>
+#include <roverapi/rover_gpio.hpp>
+#include <roverapi/rover_sensors.hpp>
+#include <roverapi/rover_utils.hpp>
+#include <roverapi/rover_webui.hpp>
+#include <roverapi/rover_cloud.hpp>
+
 /**
   *   @brief  rover Namespace contains classes to manage Rover sensors, gpio, driving, utilities, cloud, and web UI.
   *
@@ -26,13 +34,30 @@ namespace rover
 {
 	class RoverBase
 	{
+		private:
+			RoverCloud myRoverCloud;
+			RoverDisplay myRoverDisplay;
+			RoverDriving myRoverDriving;
+			RoverGpio myRoverGpio;
+			RoverSensors myRoverSensors;
+			RoverUtils myRoverUtils;
+			RoverWebUI myRoverWebUI;
 
 		public:
 			RoverBase();
 			virtual ~RoverBase();
 			void initialize (void);
 			void start (void);
+			void sleep (int period_ms);
 			void kill (void);
+
+			rover::RoverCloud inRoverCloud (void);
+			rover::RoverDisplay inRoverDisplay (void);
+			rover::RoverDriving inRoverDriving (void);
+			rover::RoverGpio inRoverGpio (void);
+			rover::RoverSensors inRoverSensors (void);
+			rover::RoverUtils inRoverUtils (void);
+			rover::RoverWebUI inRoverWebUI (void);
 	};
 }
 
