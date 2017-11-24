@@ -16,11 +16,10 @@
 #ifndef API_ROVER_WEBUI_HPP_
 #define API_ROVER_WEBUI_HPP_
 
-#include <roverapi/rover_api.hpp>
 
 namespace rover
 {
-	class RoverWebUI : public RoverBase
+	class RoverWebUI
 	{
 		public:
 			void initialize();

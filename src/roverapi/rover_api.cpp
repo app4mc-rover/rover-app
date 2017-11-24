@@ -14,6 +14,7 @@
  */
 
 #include <roverapi/rover_api.hpp>
+#include <wiringPi.h>
 
 /**
   *   @brief  Constructor for the RoverBase class
@@ -32,15 +33,15 @@ rover::RoverBase::~RoverBase()
 }
 
 /**
-  *   @brief  Constructor for the RoverBase class
-  *
-  *   @param  a is an initialized integer variable
-  *   @param  b is an initialized integer variable
-  *   @return void
+  *   @brief  Initializes the libraries for the Rover
   */
 void rover::RoverBase::initialize(void)
 {
-	int a = 1;
+	/* wiringPi can only be called once */
+#ifndef _WIRINGPI_SETUP
+#define _WIRINGPI_SETUP
+	wiringPiSetup ();
+#endif
 }
 
 

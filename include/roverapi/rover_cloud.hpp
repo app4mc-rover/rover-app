@@ -16,15 +16,13 @@
 #ifndef API_ROVER_CLOUD_HPP_
 #define API_ROVER_CLOUD_HPP_
 
-#include <roverapi/rover_api.hpp>
-
 namespace rover
 {
 	/**
 	 * @brief Contains the member functions to connect and send data to Eclipse Hono instance using several parameters
 	 * such as host name, port, tenant name, user name, and password. This class wraps hono_interaction library for Rover-specific interactions.
 	 */
-	class RoverCloud : public RoverBase
+	class RoverCloud
 	{
 		private:
 			/**

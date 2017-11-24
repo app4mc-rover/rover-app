@@ -41,6 +41,9 @@
 
 #include <roverapi/rover_display.hpp>
 
+#include <drivers/oled_drivers/ArduiPi_SSD1306.h>
+#include <drivers/oled_drivers/Adafruit_GFX.h>
+
 void rover::RoverDisplay::initialize(void)
 {
 	/* Type to describe default options for the OLED initialization */

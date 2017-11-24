@@ -16,11 +16,10 @@
 #ifndef API_ROVER_UTILS_HPP_
 #define API_ROVER_UTILS_HPP_
 
-#include <roverapi/rover_api.hpp>
 
 namespace rover
 {
-	class RoverUtils : public RoverBase
+	class RoverUtils
 	{
 		public:
 			void getUtilization();

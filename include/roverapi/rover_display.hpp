@@ -42,10 +42,6 @@
 #ifndef API_ROVER_DISPLAY_HPP_
 #define API_ROVER_DISPLAY_HPP_
 
-#include <roverapi/rover_api.hpp>
-
-#include <drivers/oled_drivers/ArduiPi_SSD1306.h>
-#include <drivers/oled_drivers/Adafruit_GFX.h>
 #include <drivers/oled_drivers/Adafruit_SSD1306.h>
 
 namespace rover
@@ -53,7 +49,7 @@ namespace rover
 	/**
 	 * @brief Contains the member functions to control OLED display on the Rover. This class is a wrapper API for Adafruit_GFX and Adafruit_SSD1306 libraries.
 	 */
-	class RoverDisplay : public RoverBase
+	class RoverDisplay
 	{
 		private:
 			/**

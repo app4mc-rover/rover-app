@@ -16,14 +16,12 @@
 #ifndef API_ROVER_DRIVING_HPP_
 #define API_ROVER_DRIVING_HPP_
 
-#include <roverapi/rover_api.hpp>
-
 namespace rover
 {
 	/**
 	 * @brief Contains the member functions to drive the rover or perform behaviors such as parking and ACC using its motors.
 	 */
-	class RoverDriving : public RoverBase
+	class RoverDriving
 	{
 		private:
 			/**
@@ -76,26 +74,6 @@ namespace rover
 			 * @brief Commands the rover to turn left on its spot.
 			 */
 			void turnLeft ();
-
-			/**
-			 * @brief Commands the rover to perform ACC behavior until stopped. RoverSensors should be initialized beforehand.
-			 */
-			void performACC();
-
-			/**
-			 * @brief Commands the rover to perform Parking behavior until stopped. RoverSensors should be initialized beforehand.
-			 */
-			void performParking();
-
-			/**
-			 * @brief Commands the rover to perform Booth Mode 1 behavior until stopped. RoverSensors should be initialized beforehand.
-			 */
-			void performBoothMode1();
-
-			/**
-			 * @brief Commands the rover to perform Booth Mode 2 behavior until stopped. RoverSensors should be initialized beforehand.
-			 */
-			void performBoothMode2();
 
 	};
 }

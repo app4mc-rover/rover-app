@@ -41,7 +41,7 @@ void setupInfraredSensors()
 		  mcp3004Setup (BASE, SPI_CHAN); // 3004 and 3008 are the same 4/8 channels
 }
 
-float getDistanceFromInfraredSensor(int channel){
+float getDistanceFromInfraredSensor (int channel){
 	float x;
 	float y=analogRead (BASE+channel);
 

@@ -16,18 +16,31 @@
 #ifndef API_ROVER_GPIO_HPP_
 #define API_ROVER_GPIO_HPP_
 
-#include <roverapi/rover_api.hpp>
-
 namespace rover
 {
-	class RoverGpio : public RoverBase
+	class RoverGpio
 	{
+		private:
+			int BUZZER_FREQUENCY;
 		public:
-			void initialize();
-			void setBuzzerOn();
-			void setBuzzerOff();
-			void setBuzzerTone(int tone_freq);
-			void readUserButtonState();
+			/**
+			 * @brief Initializes the RoverGpio functionality
+			 * @return void
+			 */
+			void initialize (void);
+
+			void setBuzzerFrequency (int buzzer_freq);
+			int getBuzzerFrequency (void);
+
+			/**
+			 * @brief Sets the buzzer to the default frequency.
+			 * @return void
+			 */
+			void setBuzzerOn (void);
+			void setBuzzerOff (void);
+			void setBuzzerTone (int buzzer_freq);
+			void readUserButtonState (void);
+			void readShutdownButtonState (void);
 	};
 }
 
