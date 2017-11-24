@@ -691,6 +691,8 @@ typedef enum
 #define BCM2835_PWM0_SERIAL     0x0002  /// Run in serial mode
 #define BCM2835_PWM0_ENABLE     0x0001  /// Channel Enable
 
+#define BCM2835_NO_DELAY_COMPATIBILITY
+
 // Historical name compatibility
 #ifndef BCM2835_NO_DELAY_COMPATIBILITY
 #define delay(x) bcm2835_delay(x)
