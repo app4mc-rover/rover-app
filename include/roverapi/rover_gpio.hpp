@@ -140,6 +140,12 @@ namespace rover
 			void setBuzzerTone (int buzzer_freq);
 
 			/**
+			 * @brief Plays the shutdown tone.
+			 * @return void
+			 */
+			void shutdownTone (void);
+
+			/**
 			 * @brief Reads the digital value of the user button (USER_BUTTON).
 			 * @return user_button_val RoverGpio::LO (low) or RoverGpio::HI (high). Default is LOW and when pressed, user_button_val gives HIGH.
 			 */
