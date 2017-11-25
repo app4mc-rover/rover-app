@@ -59,6 +59,16 @@ namespace rover
 
 		public:
 			/**
+			 * @brief Static definition to indicate BLACK color
+			 */
+			static const int BLACK_COLOR = 0;
+
+			/**
+			 * @brief Static definition to indicate WHITE color
+			 */
+			static const int WHITE_COLOR = 1;
+
+			/**
 			 * @brief Initializes the OLED display of the rover
 			 * @return void
 			 */
@@ -88,7 +98,7 @@ namespace rover
 			 * @param y is the vertical pixel location to start drawing bitmap
 			 * @param w is the width of bitmap in pixels
 			 * @param h is the height of bitmap in pixels
-			 * @param color is the color to draw the bitmap. 0-> BLACK 1-> WHITE.
+			 * @param color is the color to draw the bitmap. RoverDisplay::BLACK_COLOR or RoverDisplay::WHITE_COLOR
 			 * @param bitmap is the unsigned integer array that contains the bitmap image.
 			 * @return void
 			 */
@@ -111,15 +121,15 @@ namespace rover
 
 			/**
 			 * @brief Sets the text color to either white or black
-			 * @param c is the textcolor in integer. 0-> BLACK 1-> WHITE
+			 * @param c is the textcolor in integer. RoverDisplay::BLACK_COLOR or RoverDisplay::WHITE_COLOR
 			 * @return void
 			 */
 			void setTextColor (uint16_t c);
 
 			/**
 			 * @brief Sets the text and background color color to either white or black
-			 * @param c is the text color in integer. 0-> BLACK 1-> WHITE.
-			 * @param c is the background color in integer. 0-> BLACK 1-> WHITE.
+			 * @param c is the text color in integer. RoverDisplay::BLACK_COLOR or RoverDisplay::WHITE_COLOR
+			 * @param c is the background color in integer. RoverDisplay::BLACK_COLOR or RoverDisplay::WHITE_COLOR
 			 * @return void
 			 */
 			void setTextColor (uint16_t c, uint16_t b);
@@ -137,7 +147,7 @@ namespace rover
 			 * @param y is the vertical pixel location to start drawing rectangle
 			 * @param w is the width of rectangle in pixels
 			 * @param h is the height of rectangle in pixels
-			 * @param color is the color to draw the rectangle. 0-> BLACK 1-> WHITE
+			 * @param color is the color to draw the rectangle. RoverDisplay::BLACK_COLOR or RoverDisplay::WHITE_COLOR
 			 * @return void
 			 */
 			void drawRect (int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
