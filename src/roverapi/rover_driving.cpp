@@ -44,6 +44,9 @@ void rover::RoverDriving::initialize (void)
 	wiringPiSetup ();
 #endif
 
+	/* Initialize RoverDriving once */
+#ifndef ROVER_DRIVING_INIT_
+#define ROVER_DRIVING_INIT_
 	pinMode (ENABLE_MOTOR_LEFT, OUTPUT) ;
 	digitalWrite (ENABLE_MOTOR_LEFT, HIGH) ;
 	pinMode (ENABLE_MOTOR_RIGHT, OUTPUT) ;
@@ -56,6 +59,7 @@ void rover::RoverDriving::initialize (void)
 	softPwmCreate (SOFT_PWM_ENGINE_RIGHT, 0, this->HIGHEST_SPEED) ;
 
 	pinMode (FLASH_LIGHT_LED, OUTPUT) ;
+#endif
 }
 
 void rover::RoverDriving::turnLeft (void)

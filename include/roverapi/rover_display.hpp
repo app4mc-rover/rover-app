@@ -57,7 +57,7 @@ namespace rover
 			 */
 			Adafruit_SSD1306 my_display;
 
-		protected:
+		public:
 			/**
 			 * @brief Initializes the OLED display of the rover
 			 * @return void
@@ -69,6 +69,12 @@ namespace rover
 			 * @return void
 			 */
 			void display (void);
+
+			/**
+			 * @brief Returns the display object
+			 * @return void
+			 */
+			Adafruit_SSD1306 getDisplay (void);
 
 			/**
 			 * @brief Clears the display
