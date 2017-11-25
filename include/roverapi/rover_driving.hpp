@@ -25,11 +25,27 @@ namespace rover
 	{
 		private:
 			/**
-			 * @brief Speed for the rover movement. 360 -> Lowest speed (rover::LOW_SPEED), 480 -> Highest speed (rover::FULL_SPEED).
+			 * @brief Speed for the rover movement. 360 -> Lowest speed (RoverDriving::LOWEST_SPEED), 480 -> Highest speed (RoverDriving::HIGHEST_SPEED).
 			 */
 			int SPEED;
 
 		public:
+			/* Rover driving speeds */
+			/**
+			 * @brief Static definition to hold lowest driving speed for rover.
+			 */
+			static const int LOWEST_SPEED = 360;
+
+			/**
+			 * @brief Static definition to hold highest driving speed for rover.
+			 */
+			static const int HIGHEST_SPEED = 480;
+
+			/**
+			 * @brief Static definition to hold stopping speed for rover.
+			 */
+			static const int STOPPING_SPEED = 0;
+
 			/**
 			 * @brief Constructor for RoverDriving class.
 			 */
@@ -43,10 +59,10 @@ namespace rover
 			/**
 			 * @brief Commands the rover to stop.
 			 */
-			void stop();
+			void stopRover();
 
 			/**
-			 * @brief Sets the speed.
+			 * @brief Sets the speed. 360 -> Lowest speed (RoverDriving::LOWEST_SPEED), 480 -> Highest speed (RoverDriving::HIGHEST_SPEED)
 			 */
 			void setSpeed (int speed_setpoint);
 

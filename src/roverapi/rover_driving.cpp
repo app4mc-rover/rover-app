@@ -24,7 +24,7 @@
 
 rover::RoverDriving::RoverDriving()
 {
-	this->SPEED = FULL_SPEED;
+	this->SPEED = this->HIGHEST_SPEED;
 }
 void rover::RoverDriving::setSpeed (int speed_setpoint)
 {
@@ -52,8 +52,8 @@ void rover::RoverDriving::initialize (void)
 	pinMode (DIRECTION_PIN_RIGHT, OUTPUT) ;
 
 
-	softPwmCreate (SOFT_PWM_ENGINE_LEFT, 0, FULL_SPEED) ;
-	softPwmCreate (SOFT_PWM_ENGINE_RIGHT, 0, FULL_SPEED) ;
+	softPwmCreate (SOFT_PWM_ENGINE_LEFT, 0, this->HIGHEST_SPEED) ;
+	softPwmCreate (SOFT_PWM_ENGINE_RIGHT, 0, this->HIGHEST_SPEED) ;
 
 	pinMode (FLASH_LIGHT_LED, OUTPUT) ;
 }
@@ -78,7 +78,7 @@ void rover::RoverDriving::goBackward (void)
 	go(BACKWARD, this->SPEED);
 }
 
-void rover::RoverDriving::stop (void)
+void rover::RoverDriving::stopRover (void)
 {
 	stop();
 }
