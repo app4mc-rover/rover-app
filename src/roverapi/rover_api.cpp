@@ -40,7 +40,7 @@ rover::RoverBase::~RoverBase()
 }
 
 /**
-  *   @brief  Initializes the libraries for the Rover
+  *   @brief  Initializes the all classes, sensors, libraries for the Rover
   */
 void rover::RoverBase::initialize(void)
 {
@@ -49,6 +49,12 @@ void rover::RoverBase::initialize(void)
 #define _WIRINGPI_SETUP
 	wiringPiSetup ();
 #endif
+
+	/* Other initializations */
+	this->inRoverGpio().initialize();
+	this->inRoverSensors().initialize();
+	this->inRoverDisplay().initialize();
+	this->inRoverDriving().initialize();
 }
 
 void rover::RoverBase::shutdown (void)
