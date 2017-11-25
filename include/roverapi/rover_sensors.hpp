@@ -27,7 +27,6 @@ namespace rover
 {
 	/**
 	 * @brief RoverSensors class contains member functions to setup and read from embedded sensors from rover's RoverSenseLayer sensor layer.
-	 * @return void
 	 */
 	class RoverSensors
 	{

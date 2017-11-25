@@ -19,7 +19,7 @@
 namespace rover
 {
 	/**
-	 * @brief Contains the member functions to drive the rover or perform behaviors such as parking and ACC using its motors.
+	 * @brief Contains the member functions to drive the rover using its motors.
 	 */
 	class RoverDriving
 	{
