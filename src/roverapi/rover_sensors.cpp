@@ -38,6 +38,15 @@ void rover::RoverSensors::initialize (void)
 #define _WIRINGPI_SETUP
 	wiringPiSetup ();
 #endif
+
+	/* Initialize only once */
+#ifndef ROVER_SENSORS_INIT_
+#define ROVER_SENSORS_INIT_
+	this->setupHCSR04UltrasonicSensor(this->ROVER_FRONT);
+	this->setupHCSR04UltrasonicSensor(this->ROVER_REAR);
+	this->setupInfraredSensors();
+	this->setupBearingSensor();
+#endif
 }
 
 void rover::RoverSensors::setupHCSR04UltrasonicSensor (int sensor_id)

@@ -46,6 +46,9 @@
 
 void rover::RoverDisplay::initialize(void)
 {
+	/* Initialize only once */
+#ifndef ROVER_DISPLAY_INIT_
+#define ROVER_DISPLAY_INIT_
 	/* Type to describe default options for the OLED initialization */
 	struct s_opts
 	{
@@ -65,6 +68,7 @@ void rover::RoverDisplay::initialize(void)
 
 	this->my_display.begin();
 	this->my_display.clearDisplay();   // clears the screen and buffer
+#endif
 }
 
 void rover::RoverDisplay::display(void)
@@ -110,4 +114,9 @@ void rover::RoverDisplay::print (const char * string)
 void rover::RoverDisplay::drawRect (int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
 	this->my_display.drawRect (x, y, w, h, color);
+}
+
+Adafruit_SSD1306 rover::RoverDisplay::getDisplay (void)
+{
+	return this->my_display;
 }
