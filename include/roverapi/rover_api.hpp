@@ -23,12 +23,19 @@
 #include <roverapi/rover_gpio.hpp>
 #include <roverapi/rover_sensors.hpp>
 #include <roverapi/rover_utils.hpp>
-#include <roverapi/rover_webui.hpp>
 #include <roverapi/rover_cloud.hpp>
 
 /**
-  *   @brief  rover Namespace contains classes to manage Rover sensors, gpio, driving, utilities, cloud, and web UI.
-  *
+\mainpage Rover API Main Page - Example Usage of Rover API
+
+This is a simple example of a mainpage you can create yourself.
+Place this inside of a file called `mainpage.dox` and use doxygen.
+If you specified `INPUT` or `FILE_PATTERNS` in your Doxyfile please
+add `.dox` to your file patterns or `mainpage.dox` to your INPUT files.
+*/
+
+/**
+  *   @brief  rover Namespace contains classes to manage Rover sensors, gpio, driving, utilities, and cloud.
   */
 namespace rover
 {
@@ -41,7 +48,6 @@ namespace rover
 			RoverGpio myRoverGpio;
 			RoverSensors myRoverSensors;
 			RoverUtils myRoverUtils;
-			RoverWebUI myRoverWebUI;
 
 		public:
 			RoverBase();
@@ -57,7 +63,6 @@ namespace rover
 			rover::RoverGpio inRoverGpio (void);
 			rover::RoverSensors inRoverSensors (void);
 			rover::RoverUtils inRoverUtils (void);
-			rover::RoverWebUI inRoverWebUI (void);
 	};
 }
 

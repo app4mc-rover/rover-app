@@ -55,6 +55,7 @@
 #include <signal.h>
 #include <roverapi/basic_psys_rover.h>
 
+
 //Please comment the line below to work with SR-04 sensor instead of GROOVE for rear proximity sensing.
 //#define USE_GROOVE_SENSOR 1
 
@@ -479,10 +480,13 @@ int main()
 	placeAThreadToCore (webserver_motordrive_thread, 0);
 	*/
 
+
+
 	while (running_flag)
 	{
 		//What main thread does should come here..
 		// ...
+
 		delayMicroseconds(1* SECONDS_TO_MICROSECONDS);
 	}
 	pthread_exit(NULL);
