@@ -11,7 +11,8 @@
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created C++ API 17.11.2017
- *    Gael Blondelle - initial API and parameters
+ *    David Schmelter, Fraunhofer IEM - compass sensor initial implementation
+ *    Gael Blondelle, Eclipse Foundation - initial API and parameters
  *
  */
 
@@ -22,25 +23,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-/* Pins of ultrasonic sensors */
-#define SIG0 0   //BCM-17   ->  WiringPi 0   //Same as ECHO0 pin, if some one wants to replace front sr04 with groove sensor
-#define SIG1 2   //BCM-27   ->  WiringPi 2   //Same as ECHO1 pin, if some one wants to replace back sr04 with groove sensor
-
-#define TRIG0 7   //BCM-4   ->  WiringPi 7
-#define ECHO0 0   //BCM-17   ->  WiringPi 0
-
-#define TRIG1 1   //BCM-18   ->  WiringPi 1
-#define ECHO1 2   //BCM-27   ->  WiringPi 2
-
-/* Definitions related to DHT22 sensor */
-#define DHT22_RPI_PIN   24  //BCM19  -> wiringPi 24
-#define MAX_TIMINGS	    85
-
-/* Definitions related to compass sensor */
-#define HMC588L_ADDRESS 0x1E
-#define CALIBRATION_DURATION 10000 //compass calibration has a duration of 5 seconds
-#define DECLINATION_ANGLE 0.0413 //correction factor for location Paderborn
-
 namespace rover
 {
 	/**
@@ -50,8 +32,89 @@ namespace rover
 	class RoverSensors
 	{
 		private:
+			/* Pins of ultrasonic sensors */
+			/**
+			 * @brief Groove Sensor Pin for Front Sensor Socket (in wiringPi format)
+			 */
+			static const int SIG0 = 0; //BCM-17   ->  WiringPi 0   //Same as ECHO0 pin, if some one wants to replace front sr04 with groove sensor
+
+			/**
+			 *  @brief Groove Sensor Pin for Rear Sensor Socket (in wiringPi format)
+			 */
+			static const int SIG1 = 2; //BCM-27   ->  WiringPi 2   //Same as ECHO1 pin, if some one wants to replace back sr04 with groove sensor
+
+			/**
+			 *  @brief HC-SR04 Sensor Trigger Pin for Front Sensor Socket (in wiringPi format)
+			 */
+			static const int TRIG0 = 7; //BCM-4   ->  WiringPi 7
+			/**
+			 *  @brief HC-SR04 Sensor Echo Pin for Front Sensor Socket (in wiringPi format)
+			 */
+			static const int ECHO0 = 0; //BCM-17   ->  WiringPi 0
+
+			/**
+			 *  @brief HC-SR04 Sensor Trigger Pin for Rear Sensor Socket (in wiringPi format)
+			 */
+			static const int TRIG1 = 1; //BCM-18   ->  WiringPi 1
+			/**
+			 *  @brief HC-SR04 Sensor Echo Pin for Rear Sensor Socket (in wiringPi format)
+			 */
+			static const int ECHO1 = 2; //BCM-27   ->  WiringPi 2
+
+			/* Definitions related to DHT22 sensor */
+			/**
+			 *  @brief DHT22 sensor pin in wiringPi format
+			 */
+			static const int DHT22_RPI_PIN = 24;  //BCM19  -> wiringPi 24
+			static const int MAX_TIMINGS = 85;
+
+			/* Definitions related to compass sensor */
+			/**
+			 *  @brief Address for compass sensor
+			 */
+			static const int HMC588L_ADDRESS = 0x1E;
+			/**
+			 *  @brief Calibration duration for compass sensor
+			 */
+			static const int CALIBRATION_DURATION = 10000; //compass calibration has a duration of 5 seconds
+			/**
+			 *  @brief Declination angle / correction factor for compass sensor
+			 */
+			static const float DECLINATION_ANGLE = 0.0413; //correction factor for location Paderborn
 
 		public:
+			/* Rover Sensor IDs */
+			/**
+			 * @brief Static definition to indicate rover's front ultrasonic sensor socket
+			 */
+			static const int ROVER_FRONT = 0;
+
+			/**
+			 * @brief Static definition to indicate rover's rear ultrasonic sensor socket
+			 */
+			static const int ROVER_REAR = 1;
+
+			/* Rover Infrared Sensor IDs */
+			/**
+			 * @brief Static definition to indicate rover's rear-right infrared sensor
+			 */
+			static const int ROVER_REAR_RIGHT = 0;
+
+			/**
+			 * @brief Static definition to indicate rover's rear-left infrared sensor
+			 */
+			static const int ROVER_REAR_LEFT = 1;
+
+			/**
+			 * @brief Static definition to indicate rover's front-right infrared sensor
+			 */
+			static const int ROVER_FRONT_RIGHT = 2;
+
+			/**
+			 * @brief Static definition to indicate rover's front-left infrared sensor
+			 */
+			static const int ROVER_FRONT_LEFT = 3;
+
 			/**
 			 * @brief Initializes the sensors
 			 * @return void
@@ -65,8 +128,8 @@ namespace rover
 			void setupHCSR04UltrasonicSensor(int sensor_id);
 
 			/**
-			 * @brief Reads from HC-SR04 ultrasonic sensor in centimeters. sensor_id 0-> Front ultrasonic sensor, 1-> Rear ultrasonic sensor.
-			 * @param sensor_id 0-> Front ultrasonic sensor, 1-> Rear ultrasonic sensor.
+			 * @brief Reads from HC-SR04 ultrasonic sensor in centimeters. sensor_id RoverSensors::ROVER_FRONT: Front ultrasonic sensor, RoverSensors::ROVER_REAR: Rear ultrasonic sensor.
+			 * @param sensor_id RoverSensors::ROVER_FRONT: Front ultrasonic sensor, RoverSensors::ROVER_REAR: Rear ultrasonic sensor.
 			 * @return sensor_val in centimeters
 			 */
 			int readHCSR04UltrasonicSensor (int sensor_id);
@@ -78,8 +141,8 @@ namespace rover
 			void setupGrooveUltrasonicSensor (void);
 
 			/**
-			 * @brief Reads from groove ultrasonic sensor in centimeters. sensor_id 0-> Front ultrasonic sensor, 1-> Rear ultrasonic sensor.
-			 * @param sensor_id 0-> Front ultrasonic sensor, 1-> Rear ultrasonic sensor.
+			 * @brief Reads from groove ultrasonic sensor in centimeters. sensor_id RoverSensors::ROVER_FRONT: Front ultrasonic sensor, RoverSensors::ROVER_REAR: Rear ultrasonic sensor.
+			 * @param sensor_id RoverSensors::ROVER_FRONT: Front ultrasonic sensor, RoverSensors::ROVER_REAR: Rear ultrasonic sensor.
 			 * @return sensor_val in centimeters
 			 */
 			int readGrooveUltrasonicSensor (int sensor_id);
@@ -92,7 +155,7 @@ namespace rover
 
 			/**
 			 * @brief Reads from infrared sensor in centimeters (float).
-			 * @param infrared_sensor_id Indicates the channel of which on-board sensor is addressed. 0-> Rear-right, 1-> Rear-left, 2-> Front-right, 3-> Front-left.
+			 * @param infrared_sensor_id Indicates the channel of which on-board sensor is addressed. RoverSensors::ROVER_REAR_RIGHT: Rear-right, RoverSensors::ROVER_REAR_LEFT: Rear-left, RoverSensors::ROVER_FRONT_RIGHT: Front-right, RoverSensors::ROVER_FRONT_LEFT: Front-left.
 			 * @return sensor_val in centimeters (float).
 			 */
 			float readInfraredSensor (int infrared_sensor_id);

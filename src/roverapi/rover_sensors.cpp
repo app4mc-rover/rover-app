@@ -46,13 +46,13 @@ void rover::RoverSensors::setupHCSR04UltrasonicSensor (int sensor_id)
 
 	if (sensor_id == 0)
 	{
-		trig_pin = TRIG0;
-		echo_pin = ECHO0;
+		trig_pin = this->TRIG0;
+		echo_pin = this->ECHO0;
 	}
 	else
 	{
-		trig_pin = TRIG1;
-		echo_pin = ECHO1;
+		trig_pin = this->TRIG1;
+		echo_pin = this->ECHO1;
 	}
 
     pinMode(trig_pin, OUTPUT);
@@ -69,13 +69,13 @@ int rover::RoverSensors::readHCSR04UltrasonicSensor (int sensor_id)
 
 	if (sensor_id == 0)
 	{
-		trig_pin = TRIG0;
-		echo_pin = ECHO0;
+		trig_pin = this->TRIG0;
+		echo_pin = this->ECHO0;
 	}
 	else
 	{
-		trig_pin = TRIG1;
-		echo_pin = ECHO1;
+		trig_pin = this->TRIG1;
+		echo_pin = this->ECHO1;
 	}
 
 	int distance = 0;
@@ -115,11 +115,11 @@ int rover::RoverSensors::readGrooveUltrasonicSensor (int sensor_id)
 
 	if (sensor_id == 0)
 	{
-		sig_pin = SIG0;
+		sig_pin = this->SIG0;
 	}
 	else
 	{
-		sig_pin = SIG1;
+		sig_pin = this->SIG1;
 	}
 
 	long startTime, stopTime, elapsedTime, distance = 0;
@@ -176,7 +176,7 @@ float rover::RoverSensors::readInfraredSensor (int infrared_sensor_id)
 
 void rover::RoverSensors::setupBearingSensor(void) {
 
-	if ((i2c_hmc588l_fd = wiringPiI2CSetup(HMC588L_ADDRESS)) < 0) {
+	if ((i2c_hmc588l_fd = wiringPiI2CSetup(this->HMC588L_ADDRESS)) < 0) {
 		printf("Failed to initialize HMC588L compass sensor");
 	}
 
@@ -207,7 +207,7 @@ float rover::RoverSensors::readBearing(void) {
 	int16_t yRaw = (((int16_t) buffer[4] << 8) & 0xff00) | buffer[5];
 
 	//if calibration is active calculate minimum and maximum x/y values for calibration
-	if (millis() <= calibration_start + CALIBRATION_DURATION) {
+	if (millis() <= calibration_start + this->CALIBRATION_DURATION) {
 		if (xRaw < xMinRaw) {
 			xMinRaw = xRaw;
 		}
@@ -233,7 +233,7 @@ float rover::RoverSensors::readBearing(void) {
 	float bearing = atan2(yf, xf);
 
 	//location specific magnetic field correction
-	bearing += DECLINATION_ANGLE;
+	bearing += this->DECLINATION_ANGLE;
 
 	if (bearing < 0) {
 		bearing += 2 * M_PI;
@@ -265,18 +265,18 @@ float rover::RoverSensors::readTemperature (void)
 	{
 
 		/* pull pin down for 18 milliseconds */
-		pinMode( DHT22_RPI_PIN, OUTPUT );
-		digitalWrite( DHT22_RPI_PIN, LOW );
+		pinMode( this->DHT22_RPI_PIN, OUTPUT );
+		digitalWrite( this->DHT22_RPI_PIN, LOW );
 		delay( 18 );
 
 		/* prepare to read the pin */
-		pinMode( DHT22_RPI_PIN, INPUT );
+		pinMode( this->DHT22_RPI_PIN, INPUT );
 
 		/* detect change and read data */
-		for ( i = 0; i < MAX_TIMINGS; i++ )
+		for ( i = 0; i < this->MAX_TIMINGS; i++ )
 		{
 			counter = 0;
-			while ( digitalRead( DHT22_RPI_PIN ) == laststate )
+			while ( digitalRead( this->DHT22_RPI_PIN ) == laststate )
 			{
 				counter++;
 				delayMicroseconds( 1 );
@@ -285,7 +285,7 @@ float rover::RoverSensors::readTemperature (void)
 					break;
 				}
 			}
-			laststate = digitalRead( DHT22_RPI_PIN );
+			laststate = digitalRead( this->DHT22_RPI_PIN );
 
 			if ( counter == 255 )
 				break;
@@ -354,18 +354,18 @@ float rover::RoverSensors::readHumidity (void)
 	{
 
 		/* pull pin down for 18 milliseconds */
-		pinMode( DHT22_RPI_PIN, OUTPUT );
-		digitalWrite( DHT22_RPI_PIN, LOW );
+		pinMode( this->DHT22_RPI_PIN, OUTPUT );
+		digitalWrite( this->DHT22_RPI_PIN, LOW );
 		delay( 18 );
 
 		/* prepare to read the pin */
-		pinMode( DHT22_RPI_PIN, INPUT );
+		pinMode( this->DHT22_RPI_PIN, INPUT );
 
 		/* detect change and read data */
-		for ( i = 0; i < MAX_TIMINGS; i++ )
+		for ( i = 0; i < this->MAX_TIMINGS; i++ )
 		{
 			counter = 0;
-			while ( digitalRead( DHT22_RPI_PIN ) == laststate )
+			while ( digitalRead( this->DHT22_RPI_PIN ) == laststate )
 			{
 				counter++;
 				delayMicroseconds( 1 );
@@ -374,7 +374,7 @@ float rover::RoverSensors::readHumidity (void)
 					break;
 				}
 			}
-			laststate = digitalRead( DHT22_RPI_PIN );
+			laststate = digitalRead( this->DHT22_RPI_PIN );
 
 			if ( counter == 255 )
 				break;
