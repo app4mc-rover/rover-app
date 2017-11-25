@@ -16,6 +16,13 @@
 #include <roverapi/rover_api.hpp>
 #include <wiringPi.h>
 
+#include <roverapi/rover_cloud.hpp>
+#include <roverapi/rover_utils.hpp>
+#include <roverapi/rover_driving.hpp>
+#include <roverapi/rover_gpio.hpp>
+#include <roverapi/rover_display.hpp>
+#include <roverapi/rover_sensors.hpp>
+
 /**
   *   @brief  Constructor for the RoverBase class
   */
@@ -44,4 +51,37 @@ void rover::RoverBase::initialize(void)
 #endif
 }
 
+void rover::RoverBase::sleep (unsigned int period_ms)
+{
+	delay (period_ms);
+}
 
+rover::RoverUtils rover::RoverBase::inRoverUtils (void)
+{
+	return this->myRoverUtils;
+}
+
+rover::RoverCloud rover::RoverBase::inRoverCloud (void)
+{
+	return this->myRoverCloud;
+}
+
+rover::RoverDriving rover::RoverBase::inRoverDriving (void)
+{
+	return this->myRoverDriving;
+}
+
+rover::RoverGpio rover::RoverBase::inRoverGpio (void)
+{
+	return this->myRoverGpio;
+}
+
+rover::RoverDisplay rover::RoverBase::inRoverDisplay (void)
+{
+	return this->myRoverDisplay;
+}
+
+rover::RoverSensors rover::RoverBase::inRoverSensors (void)
+{
+	return this->myRoverSensors;
+}
