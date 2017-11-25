@@ -26,12 +26,18 @@
 #include <roverapi/rover_cloud.hpp>
 
 /**
-\mainpage Rover API Main Page - Example Usage of Rover API
+\mainpage Rover API Main Page
 
-This is a simple example of a mainpage you can create yourself.
-Place this inside of a file called `mainpage.dox` and use doxygen.
-If you specified `INPUT` or `FILE_PATTERNS` in your Doxyfile please
-add `.dox` to your file patterns or `mainpage.dox` to your INPUT files.
+\section api_info Rover API Info
+
+Rover API explanation and example usages will be added here
+
+\image html ./images/rover2.jpg
+
+\image html ./images/rovercomponents.png
+
+\section example_usage Rover API Example Usage
+Some Info here
 */
 
 /**
