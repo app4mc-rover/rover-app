@@ -23,7 +23,7 @@ void rover::RoverGpio::initialize (void)
 #define ROVER_GPIO_INIT_
 	/* Setup buzzer */
 	pinMode (this->BUZZER_PIN, SOFT_TONE_OUTPUT);
-	softToneCreate(this->BUZZER_PIN);
+	softToneCreate (this->BUZZER_PIN);
 
 	/* Setup shutdown button */
 	pinMode (this->SHUTDOWN_BUTTON_PIN, INPUT);
@@ -71,12 +71,12 @@ void rover::RoverGpio::setBuzzerTone (int buzzer_freq)
 
 int rover::RoverGpio::readUserButton (void)
 {
-	return digitalRead(this->USER_BUTTON_PIN);
+	return digitalRead (this->USER_BUTTON_PIN);
 }
 
 int rover::RoverGpio::readShutdownButton (void)
 {
-	return digitalRead(this->SHUTDOWN_BUTTON_PIN);
+	return digitalRead (this->SHUTDOWN_BUTTON_PIN);
 }
 
 void rover::RoverGpio::wPiDigitalWrite (int pin, int value)
@@ -91,5 +91,5 @@ int rover::RoverGpio::wPiDigitalRead (int pin)
 
 void rover::RoverGpio::wPiPinMode (int pin, int set_val)
 {
-	pinMode(pin, set_val);
+	pinMode (pin, set_val);
 }
