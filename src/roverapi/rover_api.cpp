@@ -51,6 +51,75 @@ void rover::RoverBase::initialize(void)
 #endif
 }
 
+void rover::RoverBase::shutdown (void)
+{
+	//Initialize if not initialized
+	this->inRoverDisplay().initialize();
+	this->inRoverGpio().initialize();
+
+	Adafruit_SSD1306 my_display = this->inRoverDisplay().getDisplay();
+
+	/* Prepare "Shutting Down..." */
+	my_display.clearDisplay();
+
+	my_display.setTextSize(2);
+	my_display.setTextColor(WHITE);
+
+	my_display.setCursor(20,10);
+	my_display.print("Shutting");
+
+	my_display.setTextColor(WHITE);
+
+	my_display.setCursor(20,32);
+	my_display.print("Down...");
+
+	/* Display everything earlier this time*/
+	my_display.display();
+
+	/* Play the shutdown tone..*/
+	this->inRoverGpio().shutdownTone();
+
+	/* Prepare "Shutting Down..." */
+	my_display.clearDisplay();
+
+	my_display.setTextSize(2);
+	my_display.setTextColor(WHITE);
+
+	my_display.setCursor(20,10);
+	my_display.print("Shutting");
+
+	my_display.setTextColor(WHITE);
+
+	my_display.setCursor(20,32);
+	my_display.print("Down...");
+
+	/* Display everything earlier this time*/
+	my_display.display();
+
+	/* Here we're shutting Raspberry Pi down.. */
+	system("halt");
+
+	/* Prepare "Shutting Down..." */
+	my_display.clearDisplay();
+
+	my_display.setTextSize(2);
+	my_display.setTextColor(WHITE);
+
+	my_display.setCursor(20,10);
+	my_display.print("Shutting");
+
+	my_display.setTextColor(WHITE);
+
+	my_display.setCursor(20,32);
+	my_display.print("Down...");
+
+	/* Display everything earlier this time*/
+	my_display.display();
+
+	/* Abort the application for safety reasons */
+	abort();
+}
+
 void rover::RoverBase::sleep (unsigned int period_ms)
 {
 	delay (period_ms);
