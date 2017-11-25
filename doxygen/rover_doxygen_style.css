@@ -3,7 +3,14 @@ div.image img[src="rover2.jpg"]{
     width:70%; 
 }
 
-div.image img[src="rovercomponents.png"]{ 
-	margin:20px;
-    width:50%; 
+div.contents div[class="textblock"]{
+	width:80%;
+	text-decoration:justify;
+}
+
+#projectname {
+	font:Georgia, "Times New Roman", Times, serif;
+	font-size:35px;
+	padding-right:30px;
+	color:#C0C0C0;
 }
