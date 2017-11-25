@@ -1,0 +1,9 @@
+div.image img[src="rover2.jpg"]{ 
+	margin:20px;
+    width:70%; 
+}
+
+div.image img[src="rovercomponents.png"]{ 
+	margin:20px;
+    width:50%; 
+}
