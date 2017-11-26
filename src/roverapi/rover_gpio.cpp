@@ -19,8 +19,6 @@
 
 void rover::RoverGpio::initialize (void)
 {
-#ifndef ROVER_GPIO_INIT_
-#define ROVER_GPIO_INIT_
 	/* Setup buzzer */
 	pinMode (this->BUZZER_PIN, SOFT_TONE_OUTPUT);
 	softToneCreate (this->BUZZER_PIN);
@@ -30,7 +28,6 @@ void rover::RoverGpio::initialize (void)
 
 	/* Setup user button */
 	pinMode (this->USER_BUTTON_PIN, INPUT);
-#endif
 }
 
 rover::RoverGpio::RoverGpio()

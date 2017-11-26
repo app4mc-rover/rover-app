@@ -28,7 +28,10 @@
   */
 rover::RoverBase::RoverBase()
 {
-
+	this->ROVER_DISPLAY_INIT_ = 0;
+	this->ROVER_DRIVING_INIT_ = 0;
+	this->ROVER_GPIO_INIT_ = 0;
+	this->ROVER_SENSORS_INIT_ = 0;
 }
 
 /**
@@ -51,84 +54,94 @@ void rover::RoverBase::initialize(void)
 #endif
 
 	/* Other initializations */
-	this->inRoverGpio().initialize();
-	this->inRoverSensors().initialize();
-	this->inRoverDisplay().initialize();
-	this->inRoverDriving().initialize();
+	this->initializeRoverDisplay();
+	this->initializeRoverDriving();
+	this->initializeRoverGpio();
+	this->initializeRoverSensors();
 }
 
 void rover::RoverBase::shutdown (void)
 {
-	//Initialize if not initialized
-	this->inRoverDisplay().initialize();
-	this->inRoverGpio().initialize();
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverBase::initialize() !");
+	}
+	else
+	{
+		RoverDisplay my_display = this->inRoverDisplay();
 
-	RoverDisplay my_display = this->inRoverDisplay();
+		/* Prepare "Shutting Down..." */
+		my_display.clearDisplay();
 
-	/* Prepare "Shutting Down..." */
-	my_display.clearDisplay();
+		my_display.setTextSize(2);
+		my_display.setTextColor(WHITE);
 
-	my_display.setTextSize(2);
-	my_display.setTextColor(WHITE);
+		my_display.setCursor(20,10);
+		my_display.print("Shutting");
 
-	my_display.setCursor(20,10);
-	my_display.print("Shutting");
+		my_display.setTextColor(WHITE);
 
-	my_display.setTextColor(WHITE);
+		my_display.setCursor(20,32);
+		my_display.print("Down...");
 
-	my_display.setCursor(20,32);
-	my_display.print("Down...");
+		/* Display everything earlier this time*/
+		my_display.display();
 
-	/* Display everything earlier this time*/
-	my_display.display();
+		/* Play the shutdown tone..*/
+		this->inRoverGpio().shutdownTone();
 
-	/* Play the shutdown tone..*/
-	this->inRoverGpio().shutdownTone();
+		/* Prepare "Shutting Down..." */
+		my_display.clearDisplay();
 
-	/* Prepare "Shutting Down..." */
-	my_display.clearDisplay();
+		my_display.setTextSize(2);
+		my_display.setTextColor(WHITE);
 
-	my_display.setTextSize(2);
-	my_display.setTextColor(WHITE);
+		my_display.setCursor(20,10);
+		my_display.print("Shutting");
 
-	my_display.setCursor(20,10);
-	my_display.print("Shutting");
+		my_display.setTextColor(WHITE);
 
-	my_display.setTextColor(WHITE);
+		my_display.setCursor(20,32);
+		my_display.print("Down...");
 
-	my_display.setCursor(20,32);
-	my_display.print("Down...");
+		/* Display everything earlier this time*/
+		my_display.display();
 
-	/* Display everything earlier this time*/
-	my_display.display();
+		/* Here we're shutting Raspberry Pi down.. */
+		system("halt");
 
-	/* Here we're shutting Raspberry Pi down.. */
-	system("halt");
+		/* Prepare "Shutting Down..." */
+		my_display.clearDisplay();
 
-	/* Prepare "Shutting Down..." */
-	my_display.clearDisplay();
+		my_display.setTextSize(2);
+		my_display.setTextColor(WHITE);
 
-	my_display.setTextSize(2);
-	my_display.setTextColor(WHITE);
+		my_display.setCursor(20,10);
+		my_display.print("Shutting");
 
-	my_display.setCursor(20,10);
-	my_display.print("Shutting");
+		my_display.setTextColor(WHITE);
 
-	my_display.setTextColor(WHITE);
+		my_display.setCursor(20,32);
+		my_display.print("Down...");
 
-	my_display.setCursor(20,32);
-	my_display.print("Down...");
+		/* Display everything earlier this time*/
+		my_display.display();
 
-	/* Display everything earlier this time*/
-	my_display.display();
-
-	/* Abort the application for safety reasons */
-	abort();
+		/* Abort the application for safety reasons */
+		abort();
+	}
 }
 
 void rover::RoverBase::sleep (unsigned int period_ms)
 {
-	delay (period_ms);
+	if (this->ROVER_DRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverBase::initialize() !");
+	}
+	else
+	{
+		delay (period_ms);
+	}
 }
 
 rover::RoverUtils rover::RoverBase::inRoverUtils (void)
@@ -143,20 +156,85 @@ rover::RoverCloud rover::RoverBase::inRoverCloud (void)
 
 rover::RoverDriving rover::RoverBase::inRoverDriving (void)
 {
-	return this->myRoverDriving;
+	if (this->ROVER_DRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverBase::initialize() !");
+	}
+	else
+	{
+		return this->myRoverDriving;
+	}
 }
 
 rover::RoverGpio rover::RoverBase::inRoverGpio (void)
 {
-	return this->myRoverGpio;
+	if (this->ROVER_GPIO_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverGpio::initialize() !");
+	}
+	else
+	{
+		return this->myRoverGpio;
+	}
 }
 
 rover::RoverDisplay rover::RoverBase::inRoverDisplay (void)
 {
-	return this->myRoverDisplay;
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverBase::initialize() !");
+	}
+	else
+	{
+		return this->myRoverDisplay;
+	}
 }
 
 rover::RoverSensors rover::RoverBase::inRoverSensors (void)
 {
-	return this->myRoverSensors;
+	if (this->ROVER_SENSORS_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverSensors. Use RoverBase::initialize() !");
+	}
+	else
+	{
+		return this->myRoverSensors;
+	}
 }
+
+void rover::RoverBase::initializeRoverSensors (void)
+{
+	if (this->ROVER_SENSORS_INIT_ != 1)
+	{
+		this->inRoverSensors().initialize();
+		this->ROVER_SENSORS_INIT_ = 1;
+	}
+}
+
+void rover::RoverBase::initializeRoverGpio (void)
+{
+	if (this->ROVER_GPIO_INIT_ != 1)
+	{
+		this->inRoverGpio().initialize();
+		this->ROVER_GPIO_INIT_ = 1;
+	}
+}
+
+void rover::RoverBase::initializeRoverDisplay (void)
+{
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		this->inRoverDisplay().initialize();
+		this->ROVER_DISPLAY_INIT_ = 1;
+	}
+}
+
+void rover::RoverBase::initializeRoverDriving (void)
+{
+	if (this->ROVER_DRIVING_INIT_ != 1)
+	{
+		this->inRoverDriving().initialize();
+		this->ROVER_DRIVING_INIT_ = 1;
+	}
+}
+

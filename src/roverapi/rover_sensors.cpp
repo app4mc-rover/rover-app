@@ -43,14 +43,10 @@ void rover::RoverSensors::initialize (void)
 	wiringPiSetup ();
 #endif
 
-	/* Initialize only once */
-#ifndef ROVER_SENSORS_INIT_
-#define ROVER_SENSORS_INIT_
 	this->setupHCSR04UltrasonicSensor(this->ROVER_FRONT);
 	this->setupHCSR04UltrasonicSensor(this->ROVER_REAR);
 	this->setupInfraredSensors();
 	this->setupBearingSensor();
-#endif
 }
 
 void rover::RoverSensors::setupHCSR04UltrasonicSensor (int sensor_id)
@@ -192,8 +188,8 @@ void rover::RoverSensors::calibrateBearingSensor (void)
 	this->calibration_start = millis();
 }
 
-void rover::RoverSensors::setupBearingSensor(void) {
-
+void rover::RoverSensors::setupBearingSensor(void)
+{
 	if ((i2c_hmc588l_fd = wiringPiI2CSetup(this->HMC588L_ADDRESS)) < 0) {
 		printf("Failed to initialize HMC588L compass sensor");
 	}
@@ -209,8 +205,8 @@ void rover::RoverSensors::setupBearingSensor(void) {
 	this->calibration_start = millis();
 }
 
-float rover::RoverSensors::readBearing(void) {
-
+float rover::RoverSensors::readBearing(void)
+{
 	int8_t buffer[6];
 	//potential optimization: wiringPiI2CReadReg16
 	buffer[0] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x03);

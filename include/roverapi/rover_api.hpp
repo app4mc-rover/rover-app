@@ -63,6 +63,7 @@ int main (void)
 
 	// Initialize all components of the rover
 	r.initialize();
+    // or use r.initializeRoverSensors(), r.initializeRoverDisplay(), r.initializeRoverDriving(), r.initializeRoverGpio() to initialize individual components
 
 	// Set-up cloud instance and register your device
 	RoverCloud r_cloud = r.inRoverCloud();
@@ -208,6 +209,27 @@ namespace rover
 			 */
 			RoverUtils myRoverUtils;
 
+			/**
+			 * @brief Flag for indicating whether private RoverGpio object initialized or not.
+			 */
+			int ROVER_GPIO_INIT_;
+
+			/**
+			 * @brief Flag for indicating whether private RoverSensors object initialized or not.
+			 */
+			int ROVER_SENSORS_INIT_;
+
+			/**
+			 * @brief Flag for indicating whether private RoverDisplay object initialized or not.
+			 */
+			int ROVER_DISPLAY_INIT_;
+
+			/**
+			 * @brief Flag for indicating whether private RoverDriving object initialized or not.
+			 */
+			int ROVER_DRIVING_INIT_;
+
+
 		public:
 			/**
 			 * @brief Constructor for the RoverBase class
@@ -273,6 +295,30 @@ namespace rover
 			 * @return RoverUtils instance
 			 */
 			rover::RoverUtils inRoverUtils (void);
+
+			/**
+			 * @brief Initializes private RoverDriving object instance.
+			 * @return void
+			 */
+			void initializeRoverDriving (void);
+
+			/**
+			 * @brief Initializes private RoverGpio object instance.
+			 * @return void
+			 */
+			void initializeRoverGpio (void);
+
+			/**
+			 * @brief Initializes private RoverDisplay object instance.
+			 * @return void
+			 */
+			void initializeRoverDisplay (void);
+
+			/**
+			 * @brief Initializes private RoverSensors object instance.
+			 * @return void
+			 */
+			void initializeRoverSensors (void);
 	};
 }
 
