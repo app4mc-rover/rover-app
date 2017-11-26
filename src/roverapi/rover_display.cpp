@@ -130,7 +130,7 @@ void rover::RoverDisplay::drawRect (int16_t x, int16_t y, int16_t w, int16_t h, 
 
 }
 
-Adafruit_SSD1306 rover::RoverDisplay::getDisplay (void)
+Adafruit_SSD1306& rover::RoverDisplay::getDisplay (void)
 {
 
 	return this->my_display;

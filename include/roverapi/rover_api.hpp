@@ -264,37 +264,37 @@ namespace rover
 			 * @brief Public function to access private RoverCloud instance.
 			 * @return RoverCloud instance
 			 */
-			rover::RoverCloud inRoverCloud (void);
+			rover::RoverCloud& inRoverCloud (void);
 
 			/**
 			 * @brief Public function to access private RoverDisplay instance.
 			 * @return RoverDisplay instance
 			 */
-			rover::RoverDisplay inRoverDisplay (void);
+			rover::RoverDisplay& inRoverDisplay (void);
 
 			/**
 			 * @brief Public function to access private RoverDriving instance.
 			 * @return RoverDriving instance
 			 */
-			rover::RoverDriving inRoverDriving (void);
+			rover::RoverDriving& inRoverDriving (void);
 
 			/**
 			 * @brief Public function to access private RoverGpio instance.
 			 * @return RoverGpio instance
 			 */
-			rover::RoverGpio inRoverGpio (void);
+			rover::RoverGpio& inRoverGpio (void);
 
 			/**
 			 * @brief Public function to access private RoverSensors instance.
 			 * @return RoverSensors instance
 			 */
-			rover::RoverSensors inRoverSensors (void);
+			rover::RoverSensors& inRoverSensors (void);
 
 			/**
 			 * @brief Public function to access private RoverUtils instance.
 			 * @return RoverUtils instance
 			 */
-			rover::RoverUtils inRoverUtils (void);
+			rover::RoverUtils& inRoverUtils (void);
 
 			/**
 			 * @brief Initializes private RoverDriving object instance.

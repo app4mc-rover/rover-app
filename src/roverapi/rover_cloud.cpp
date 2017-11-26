@@ -19,6 +19,7 @@
 #include <libraries/status_library/status_library.h>
 
 #include <stdio.h>
+#include <string.h>
 
 rover::RoverCloud::RoverCloud()
 {
@@ -32,7 +33,7 @@ int rover::RoverCloud::attributeErrorCheck (void)
 {
 	if (this->PORT == 1 || this->TENANT_NAME[0] == 'N' || this->HOST_NAME[0] == 'N')
 	{
-		fprintf (stderr, "Port is not initialized. Please use: setHono function\n");
+		fprintf (stderr, "Hono is not initialized. Please use: setHono function\n");
 		return 0;
 	}
 	else
@@ -86,6 +87,7 @@ int rover::RoverCloud::sendEvent (char * device_id, char * user, char * password
 
 void rover::RoverCloud::setHono (char * host_name, int port, char * tenant)
 {
+
 	this->HOST_NAME = host_name;
 	this->PORT = port;
 	this->TENANT_NAME = tenant;

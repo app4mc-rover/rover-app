@@ -89,7 +89,7 @@ namespace rover
 			 * @brief Returns the display object
 			 * @return void
 			 */
-			Adafruit_SSD1306 getDisplay (void);
+			Adafruit_SSD1306& getDisplay (void);
 
 			/**
 			 * @brief Clears the display

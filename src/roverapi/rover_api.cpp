@@ -28,6 +28,9 @@
   */
 rover::RoverBase::RoverBase()
 {
+	/* wiringPi can only be called once */
+	wiringPiSetup();
+
 	this->ROVER_DISPLAY_INIT_ = 0;
 	this->ROVER_DRIVING_INIT_ = 0;
 	this->ROVER_GPIO_INIT_ = 0;
@@ -47,13 +50,6 @@ rover::RoverBase::~RoverBase()
   */
 void rover::RoverBase::initialize(void)
 {
-	/* wiringPi can only be called once */
-#ifndef _WIRINGPI_SETUP
-#define _WIRINGPI_SETUP
-	wiringPiSetup ();
-#endif
-
-	/* Other initializations */
 	this->initializeRoverDisplay();
 	this->initializeRoverDriving();
 	this->initializeRoverGpio();
@@ -64,7 +60,7 @@ void rover::RoverBase::shutdown (void)
 {
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
-		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverBase::initialize() !");
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverBase::initialize() !\n");
 	}
 	else
 	{
@@ -136,7 +132,7 @@ void rover::RoverBase::sleep (unsigned int period_ms)
 {
 	if (this->ROVER_DRIVING_INIT_ != 1)
 	{
-		fprintf(stderr,"You havent initialized RoverDriving. Use RoverBase::initialize() !");
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverBase::initialize() !\n");
 	}
 	else
 	{
@@ -144,21 +140,21 @@ void rover::RoverBase::sleep (unsigned int period_ms)
 	}
 }
 
-rover::RoverUtils rover::RoverBase::inRoverUtils (void)
+rover::RoverUtils& rover::RoverBase::inRoverUtils (void)
 {
 	return this->myRoverUtils;
 }
 
-rover::RoverCloud rover::RoverBase::inRoverCloud (void)
+rover::RoverCloud& rover::RoverBase::inRoverCloud (void)
 {
 	return this->myRoverCloud;
 }
 
-rover::RoverDriving rover::RoverBase::inRoverDriving (void)
+rover::RoverDriving& rover::RoverBase::inRoverDriving (void)
 {
 	if (this->ROVER_DRIVING_INIT_ != 1)
 	{
-		fprintf(stderr,"You havent initialized RoverDriving. Use RoverBase::initialize() !");
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverBase::initialize() !\n");
 	}
 	else
 	{
@@ -166,11 +162,11 @@ rover::RoverDriving rover::RoverBase::inRoverDriving (void)
 	}
 }
 
-rover::RoverGpio rover::RoverBase::inRoverGpio (void)
+rover::RoverGpio& rover::RoverBase::inRoverGpio (void)
 {
 	if (this->ROVER_GPIO_INIT_ != 1)
 	{
-		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverGpio::initialize() !");
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverGpio::initialize() !\n");
 	}
 	else
 	{
@@ -178,11 +174,11 @@ rover::RoverGpio rover::RoverBase::inRoverGpio (void)
 	}
 }
 
-rover::RoverDisplay rover::RoverBase::inRoverDisplay (void)
+rover::RoverDisplay& rover::RoverBase::inRoverDisplay (void)
 {
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
-		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverBase::initialize() !");
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverBase::initialize() !\n");
 	}
 	else
 	{
@@ -190,11 +186,11 @@ rover::RoverDisplay rover::RoverBase::inRoverDisplay (void)
 	}
 }
 
-rover::RoverSensors rover::RoverBase::inRoverSensors (void)
+rover::RoverSensors& rover::RoverBase::inRoverSensors (void)
 {
 	if (this->ROVER_SENSORS_INIT_ != 1)
 	{
-		fprintf(stderr,"You havent initialized RoverSensors. Use RoverBase::initialize() !");
+		fprintf(stderr,"You havent initialized RoverSensors. Use RoverBase::initialize() !\n");
 	}
 	else
 	{
@@ -206,7 +202,7 @@ void rover::RoverBase::initializeRoverSensors (void)
 {
 	if (this->ROVER_SENSORS_INIT_ != 1)
 	{
-		this->inRoverSensors().initialize();
+		this->myRoverSensors.initialize();
 		this->ROVER_SENSORS_INIT_ = 1;
 	}
 }
@@ -215,7 +211,7 @@ void rover::RoverBase::initializeRoverGpio (void)
 {
 	if (this->ROVER_GPIO_INIT_ != 1)
 	{
-		this->inRoverGpio().initialize();
+		this->myRoverGpio.initialize();
 		this->ROVER_GPIO_INIT_ = 1;
 	}
 }
@@ -224,7 +220,7 @@ void rover::RoverBase::initializeRoverDisplay (void)
 {
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
-		this->inRoverDisplay().initialize();
+		this->myRoverDisplay.initialize();
 		this->ROVER_DISPLAY_INIT_ = 1;
 	}
 }
@@ -233,7 +229,7 @@ void rover::RoverBase::initializeRoverDriving (void)
 {
 	if (this->ROVER_DRIVING_INIT_ != 1)
 	{
-		this->inRoverDriving().initialize();
+		this->myRoverDriving.initialize();
 		this->ROVER_DRIVING_INIT_ = 1;
 	}
 }
