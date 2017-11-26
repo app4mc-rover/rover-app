@@ -126,6 +126,11 @@ namespace rover
 			 */
 			void initialize();
 
+			/***
+			 * @brief Constructor for the RoverSensors class.
+			 */
+			RoverSensors();
+
 			/**
 			 * @brief Sets up the HC-SR04 ultrasonic sensor
 			 * @return void

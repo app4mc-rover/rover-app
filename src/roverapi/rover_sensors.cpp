@@ -30,6 +30,11 @@ static int16_t xMaxRaw = 0;
 static int16_t yMaxRaw = 0;
 static int16_t yMinRaw = 0;
 
+rover::RoverSensors::RoverSensors()
+{
+	this->calibration_start = 0;
+}
+
 void rover::RoverSensors::initialize (void)
 {
 	/* wiringPi can only be called once */
