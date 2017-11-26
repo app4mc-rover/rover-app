@@ -62,6 +62,26 @@ void rover::RoverDriving::initialize (void)
 #endif
 }
 
+void rover::RoverDriving::turnForwardRight (void)
+{
+	turn(FORWARD, LEFT, this->SPEED);
+}
+
+void rover::RoverDriving::turnForwardLeft (void)
+{
+	turn(FORWARD, RIGHT, this->SPEED);
+}
+
+void rover::RoverDriving::turnBackwardRight (void)
+{
+	turn(BACKWARD, LEFT, this->SPEED);
+}
+
+void rover::RoverDriving::turnBackwardLeft (void)
+{
+	turn(BACKWARD, RIGHT, this->SPEED);
+}
+
 void rover::RoverDriving::turnLeft (void)
 {
 	turnOnSpot(FORWARD, LEFT, this->SPEED);

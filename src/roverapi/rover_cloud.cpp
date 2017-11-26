@@ -22,7 +22,7 @@
 int rover::RoverCloud::registerDevice (char * device_id)
 {
 	int status = 0;
-	status = registerDeviceToHonoInstance (this->HOST_NAME, this->PORT, this->TENANT_NAME, device_id);
+	status = registerDeviceToHonoInstance (this->HOST_NAME, this->REGISTRATION_PORT, this->TENANT_NAME, device_id);
 	return status;
 }
 
@@ -55,6 +55,16 @@ void rover::RoverCloud::setHostName (char * host_name)
 void rover::RoverCloud::setPort (int port)
 {
 	this->PORT = port;
+}
+
+void rover::RoverCloud::setRegistrationPort (int port)
+{
+	this->REGISTRATION_PORT = port;
+}
+
+int rover::RoverCloud::getRegistrationPort (void)
+{
+	return this->REGISTRATION_PORT;
 }
 
 void rover::RoverCloud::setTenantName (char * tenant)

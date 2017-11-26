@@ -44,6 +44,11 @@
 
 #include <drivers/oled_drivers/Adafruit_SSD1306.h>
 
+#define NUMFLAKES 10
+#define XPOS 0
+#define YPOS 1
+#define DELTAY 2
+
 namespace rover
 {
 	/**

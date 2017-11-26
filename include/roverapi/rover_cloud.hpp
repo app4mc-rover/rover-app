@@ -34,6 +34,10 @@ namespace rover
 			 */
 			int PORT;
 			/**
+			 * @brief Port used for registering a device to the Eclipse Hono using REST API
+			 */
+			int REGISTRATION_PORT;
+			/**
 			 * @brief Tenant name used for connecting to the Eclipse Hono using REST API
 			 */
 			char * TENANT_NAME;
@@ -78,6 +82,19 @@ namespace rover
 			 * @brief Retrieves private attribute TENANT_NAME
 			 */
 			char * getTenantName (void);
+
+			/**
+			 * @brief Sets the default REGISTRATION_PORT variable
+			 * @param Port (int) to be set as REGISTRATION_PORT
+			 * @return void
+			 */
+			void setRegistrationPort (int port);
+
+			/**
+			 * @brief Retrieves private attribute REGISTRATION_PORT
+			 * @return Private attribute REGISTRATION_PORT
+			 */
+			int getRegistrationPort (void);
 
 			/**
 			 * @brief Constructs curl command to register a device to Hono instance given device ID using REST API

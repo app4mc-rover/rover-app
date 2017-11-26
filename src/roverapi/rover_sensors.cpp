@@ -24,7 +24,6 @@
 #include <unistd.h>
 
 static int i2c_hmc588l_fd = -1;
-static unsigned int calibration_start = 0;
 
 static int16_t xMinRaw = 0;
 static int16_t xMaxRaw = 0;
@@ -183,6 +182,11 @@ float rover::RoverSensors::readInfraredSensor (int infrared_sensor_id)
 	return x;
 }
 
+void rover::RoverSensors::calibrateBearingSensor (void)
+{
+	this->calibration_start = millis();
+}
+
 void rover::RoverSensors::setupBearingSensor(void) {
 
 	if ((i2c_hmc588l_fd = wiringPiI2CSetup(this->HMC588L_ADDRESS)) < 0) {
@@ -197,7 +201,7 @@ void rover::RoverSensors::setupBearingSensor(void) {
 		wiringPiI2CWriteReg8(i2c_hmc588l_fd, 0x02, 0x00); // Continuous-measurement mode
 	}
 
-	calibration_start = millis();
+	this->calibration_start = millis();
 }
 
 float rover::RoverSensors::readBearing(void) {
@@ -216,7 +220,7 @@ float rover::RoverSensors::readBearing(void) {
 	int16_t yRaw = (((int16_t) buffer[4] << 8) & 0xff00) | buffer[5];
 
 	//if calibration is active calculate minimum and maximum x/y values for calibration
-	if (millis() <= calibration_start + this->CALIBRATION_DURATION) {
+	if (millis() <= this->calibration_start + this->CALIBRATION_DURATION) {
 		if (xRaw < xMinRaw) {
 			xMinRaw = xRaw;
 		}

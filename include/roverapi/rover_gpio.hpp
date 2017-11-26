@@ -52,37 +52,37 @@ namespace rover
 			/**
 			 * @brief Static definition for INPUT pin mode for wPiPinMode function
 			 */
-			static const int INPUT = 0;
+			static const int INPUT_ = 0;
 
 			/**
 			 * @brief Static definition for OUTPUT pin mode for wPiPinMode function
 			 */
-			static const int OUTPUT = 1;
+			static const int OUTPUT_ = 1;
 
 			/**
 			 * @brief Static definition for PWM_OUTPUT pin mode for wPiPinMode function
 			 */
-			static const int PWM_OUTPUT = 2;
+			static const int PWM_OUTPUT_ = 2;
 
 			/**
 			 * @brief Static definition for GPIO_CLOCK pin mode for wPiPinMode function
 			 */
-			static const int GPIO_CLOCK = 3;
+			static const int GPIO_CLOCK_ = 3;
 
 			/**
 			 * @brief Static definition for SOFT_PWM_OUTPUT pin mode for wPiPinMode function
 			 */
-			static const int SOFT_PWM_OUTPUT = 4;
+			static const int SOFT_PWM_OUTPUT_ = 4;
 
 			/**
 			 * @brief Static definition for SOFT_TONE_OUTPUT pin mode for wPiPinMode function
 			 */
-			static const int SOFT_TONE_OUTPUT = 5;
+			static const int SOFT_TONE_OUTPUT_ = 5;
 
 			/**
 			 * @brief Static definition for PWM_TONE_OUTPUT pin mode for wPiPinMode function
 			 */
-			static const int PWM_TONE_OUTPUT = 6;
+			static const int PWM_TONE_OUTPUT_ = 6;
 
 			/* Voltage levels */
 			/**
@@ -175,7 +175,7 @@ namespace rover
 			/**
 			 * @brief Wrapper function to wiringPi's pinMode function.
 			 * @param pin Pin number (int) to be set
-			 * @param set_val Pin Mode to be set for the GPIO pin: RoverGpio::INPUT, RoverGpio::OUTPUT, RoverGpio::PWM_OUTPUT, RoverGpio::GPIO_CLOCK, RoverGpio::SOFT_PWM_OUTPUT, RoverGpio::SOFT_TONE_OUTPUT, RoverGpio::PWM_TONE_OUTPUT
+			 * @param set_val Pin Mode to be set for the GPIO pin: RoverGpio::INPUT_, RoverGpio::OUTPUT_, RoverGpio::PWM_OUTPUT_, RoverGpio::GPIO_CLOCK_, RoverGpio::SOFT_PWM_OUTPUT_, RoverGpio::SOFT_TONE_OUTPUT_, RoverGpio::PWM_TONE_OUTPUT_
 			 * @return void
 			 */
 			void wPiPinMode (int pin, int set_val);

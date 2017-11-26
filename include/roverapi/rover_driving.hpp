@@ -91,6 +91,26 @@ namespace rover
 			 */
 			void turnLeft ();
 
+			/**
+			 * @brief Commands the rover to turn forward-left using only one motor.
+			 */
+			void turnForwardLeft ();
+
+			/**
+			 * @brief Commands the rover to turn forward-right using only one motor.
+			 */
+			void turnForwardRight ();
+
+			/**
+			 * @brief Commands the rover to turn backward-left using only one motor.
+			 */
+			void turnBackwardLeft ();
+
+			/**
+			 * @brief Commands the rover to turn backward-right using only one motor.
+			 */
+			void turnBackwardRight ();
+
 	};
 }
 

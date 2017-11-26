@@ -81,7 +81,13 @@ namespace rover
 			 */
 			static const float DECLINATION_ANGLE = 0.0413; //correction factor for location Paderborn
 
+			/**
+			 * @brief Calibration variable for HMC588L
+			 */
+			unsigned int calibration_start;
+
 		public:
+
 			/* Rover Sensor IDs */
 			/**
 			 * @brief Static definition to indicate rover's front ultrasonic sensor socket
@@ -164,6 +170,12 @@ namespace rover
 			 * @return void
 			 */
 			void setupBearingSensor (void);
+
+			/**
+			 * @brief Starts calibration for the bearing sensor
+			 * @return void
+			 */
+			void calibrateBearingSensor (void);
 
 			/**
 			 * @brief Reads the bearing value from Bearing sensor (float).
