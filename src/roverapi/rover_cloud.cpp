@@ -18,26 +18,74 @@
 #include <libraries/hono_interaction/hono_interaction.h>
 #include <libraries/status_library/status_library.h>
 
+#include <stdio.h>
+
+rover::RoverCloud::RoverCloud()
+{
+	this->REGISTRATION_PORT = 1;
+	this->TENANT_NAME = "N";
+	this->PORT = 1;
+	this->HOST_NAME = "N";
+}
+
+int rover::RoverCloud::attributeErrorCheck (void)
+{
+	if (this->REGISTRATION_PORT == 1)
+	{
+		fprintf (stderr, "Registration port is not initialized. Please use: setRegistrationPort function\n");
+		return 0;
+	}
+	else if (this->PORT == 1 || this->TENANT_NAME[0] == 'N' || this->HOST_NAME[0] == 'N')
+	{
+		fprintf (stderr, "Port is not initialized. Please use: setHono function\n");
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
 
 int rover::RoverCloud::registerDevice (char * device_id)
 {
-	int status = 0;
-	status = registerDeviceToHonoInstance (this->HOST_NAME, this->REGISTRATION_PORT, this->TENANT_NAME, device_id);
-	return status;
+	if (this->attributeErrorCheck() == 1)
+	{
+		int status = 0;
+		status = registerDeviceToHonoInstance (this->HOST_NAME, this->REGISTRATION_PORT, this->TENANT_NAME, device_id);
+		return status;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 int rover::RoverCloud::sendTelemetry (char * device_id, char * user, char * password, char * field, double value)
 {
-	int status = 0;
-	status = sendTelemetryDataToHonoInstance (this->HOST_NAME, this->PORT, this->TENANT_NAME, device_id, user, password, field, value);
-	return status;
+	if (this->attributeErrorCheck() == 1)
+	{
+		int status = 0;
+		status = sendTelemetryDataToHonoInstance (this->HOST_NAME, this->PORT, this->TENANT_NAME, device_id, user, password, field, value);
+		return status;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 int rover::RoverCloud::sendEvent (char * device_id, char * user, char * password, char * field, double value)
 {
-	int status = 0;
-	status = sendEventDataToHonoInstance (this->HOST_NAME, this->PORT, this->TENANT_NAME, device_id, user, password, field, value);
-	return status;
+	if (this->attributeErrorCheck() == 1)
+	{
+		int status = 0;
+		status = sendEventDataToHonoInstance (this->HOST_NAME, this->PORT, this->TENANT_NAME, device_id, user, password, field, value);
+		return status;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 void rover::RoverCloud::setHono (char * host_name, int port, char * tenant)
@@ -89,7 +137,14 @@ char * rover::RoverCloud::getTenantName (void)
 
 int rover::RoverCloud::getHonoStatus (char * device_id, char * user, char * password)
 {
-	int status = 0;
-	status = retrieveHONOStatus (this->HOST_NAME, this->PORT, this->TENANT_NAME, device_id, user, password);
-	return status;
+	if (this->attributeErrorCheck() == 1)
+	{
+		int status = 0;
+		status = retrieveHONOStatus (this->HOST_NAME, this->PORT, this->TENANT_NAME, device_id, user, password);
+		return status;
+	}
+	else
+	{
+		return 0;
+	}
 }

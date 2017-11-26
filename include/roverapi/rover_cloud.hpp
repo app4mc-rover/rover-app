@@ -41,7 +41,18 @@ namespace rover
 			 * @brief Tenant name used for connecting to the Eclipse Hono using REST API
 			 */
 			char * TENANT_NAME;
+
+			/**
+			 * @brief Checks private attributes and gives an error message and returns 0 if they're invalid.
+			 */
+			int attributeErrorCheck (void);
+
 		public:
+			/**
+			 * @brief Constructor for the RoverCloud
+			 */
+			RoverCloud();
+
 			/**
 			 * @brief Sets private attribute HOST_NAME
 			 * @param host_name
