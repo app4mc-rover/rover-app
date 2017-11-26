@@ -30,12 +30,7 @@ rover::RoverCloud::RoverCloud()
 
 int rover::RoverCloud::attributeErrorCheck (void)
 {
-	if (this->REGISTRATION_PORT == 1)
-	{
-		fprintf (stderr, "Registration port is not initialized. Please use: setRegistrationPort function\n");
-		return 0;
-	}
-	else if (this->PORT == 1 || this->TENANT_NAME[0] == 'N' || this->HOST_NAME[0] == 'N')
+	if (this->PORT == 1 || this->TENANT_NAME[0] == 'N' || this->HOST_NAME[0] == 'N')
 	{
 		fprintf (stderr, "Port is not initialized. Please use: setHono function\n");
 		return 0;
@@ -48,7 +43,7 @@ int rover::RoverCloud::attributeErrorCheck (void)
 
 int rover::RoverCloud::registerDevice (char * device_id)
 {
-	if (this->attributeErrorCheck() == 1)
+	if (this->REGISTRATION_PORT != 1)
 	{
 		int status = 0;
 		status = registerDeviceToHonoInstance (this->HOST_NAME, this->REGISTRATION_PORT, this->TENANT_NAME, device_id);
@@ -56,6 +51,7 @@ int rover::RoverCloud::registerDevice (char * device_id)
 	}
 	else
 	{
+		fprintf (stderr, "Registration port is not initialized. Please use: setRegistrationPort function\n");
 		return 0;
 	}
 }
