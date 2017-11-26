@@ -93,7 +93,7 @@ int main (void)
 	printf ("Bearing = %f\n",		r.inRoverSensors().readBearing());
 
 	// Checking if a button is pressed (LOW) and playing a tone with buzzer
-	if (r.inRoverGpio.readUserButton() == r.inRoverGpio.LO)
+	if (r.inRoverGpio.readUserButton() == r.inRoverGpio().LO)
 	{
 		r.inRoverGpio.setBuzzerFrequency(400); //in Hz
 		r.inRoverGpio.setBuzzerOn();
