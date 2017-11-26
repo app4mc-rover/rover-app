@@ -63,7 +63,7 @@ void rover::RoverBase::shutdown (void)
 	this->inRoverDisplay().initialize();
 	this->inRoverGpio().initialize();
 
-	Adafruit_SSD1306 my_display = this->inRoverDisplay().getDisplay();
+	RoverDisplay my_display = this->inRoverDisplay();
 
 	/* Prepare "Shutting Down..." */
 	my_display.clearDisplay();

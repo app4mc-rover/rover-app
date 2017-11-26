@@ -62,7 +62,7 @@ void *OLED_Task (void * arg)
 
 	int counter_500ms = 0;
 
-	Adafruit_SSD1306 my_display = r.inRoverDisplay().getDisplay();
+	RoverDisplay my_display = r.inRoverDisplay();
 
 	while (1)
 	{

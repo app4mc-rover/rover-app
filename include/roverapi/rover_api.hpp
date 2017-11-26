@@ -106,7 +106,7 @@ int main (void)
 	printf ("Utilization = [%f %f %f %f]\n", util);
 
 	// Use the OLED display on the rover
-	Adafruit_SSD1306 my_display = r.inRoverDisplay().getDisplay();
+	RoverDisplay my_display = r.inRoverDisplay();
 
 	// Prepare display contents
 	my_display.clearDisplay();
