@@ -50,7 +50,99 @@ shutting down could be performed.
 \image html ./images/rover2.jpg
 
 \section example_usage Rover API Example Usage
-Some Info here
+The following is an example C++ application using some of the Rover API functions:
+
+\code{.cpp}
+#include <rover_api.hpp>
+
+using namespace rover;
+
+int main (void)
+{
+	RoverBase r;
+
+	// Initialize all components of the rover
+	r.initialize();
+
+	// Set-up cloud instance and register your device
+	r.inRoverCloud().setHono("localhost", 8080, "DEFAULT_TENANT");
+
+	r.inRoverCloud().setRegistrationPort(28080);
+	r.inRoverCloud().registerDevice("4711");
+
+	// Send telemetry data to Hono instance
+	r.inRoverCloud().sendTelemetry("4711","myuser","mypassword","roverFront", 100.0);
+
+	// Driving with rover
+	r.inRoverDriving().setSpeed(r.inRoverDriving.HIGHEST_SPEED);
+	r.inRoverDriving().goForward();
+	r.sleep (500); // Sleep for some time in milliseconds
+	r.inRoverDriving().turnRight();
+	r.sleep (500); // Sleep for some time in milliseconds
+	r.inRoverDriving().stopRover();
+
+	// Accessing sensors with rover
+	printf ("Ultrasonic = [%d %d]\n",	r.inRoverSensors().readHCSR04UltrasonicSensor(r.inRoverSensors().ROVER_FRONT),
+										r.inRoverSensors().readHCSR04UltrasonicSensor(r.inRoverSensors().ROVER_REAR));
+	printf ("Infrared = [%f %f %f %f]\n", 	r.inRoverSensors().readInfraredSensor(r.inRoverSensors().ROVER_FRONT_LEFT),
+											r.inRoverSensors().readInfraredSensor(r.inRoverSensors().ROVER_FRONT_RIGHT),
+											r.inRoverSensors().readInfraredSensor(r.inRoverSensors().ROVER_REAR_LEFT),
+											r.inRoverSensors().readInfraredSensor(r.inRoverSensors().ROVER_REAR_RIGHT));
+	printf ("Temperature = %f\n",	r.inRoverSensors().readTemperature());
+	printf ("Humidity = %f\n",		r.inRoverSensors().readHumidity());
+	printf ("Bearing = %f\n",		r.inRoverSensors().readBearing());
+
+	// Checking if a button is pressed (LOW) and playing a tone with buzzer
+	if (r.inRoverGpio.readUserButton() == r.inRoverGpio.LO)
+	{
+		r.inRoverGpio.setBuzzerFrequency(400); //in Hz
+		r.inRoverGpio.setBuzzerOn();
+		r.sleep(1000);
+	}
+	r.inRoverGpio.setBuzzerOff();
+
+	// Print core utilization from the rover's OS
+	float *util = r.inRoverUtils.getCoreUtilization();
+	printf ("Utilization = [%f %f %f %f]\n", util);
+
+	// Use the OLED display on the rover
+	Adafruit_SSD1306 my_display = r.inRoverDisplay().getDisplay();
+
+	// Prepare display contents
+	my_display.clearDisplay();
+	my_display.setTextSize(2);
+	my_display.setTextColor(r.inRoverDisplay().WHITE_COLOR);
+
+	my_display.setCursor(12,10);
+	my_display.print("INTERNET:");
+
+	my_display.setTextSize(3);
+	my_display.setTextColor(r.inRoverDisplay().WHITE_COLOR);
+
+	// Check if internet is connected
+	if (r.inRoverUtils().getInternetStatus() == 1)
+	{
+		my_display.setCursor(50,32);
+		my_display.print("ON");
+	}
+	else
+	{
+		my_display.setCursor(43,32);
+		my_display.print("OFF");
+	}
+
+	// Display now
+	my_display.display();
+
+	// Sleep a bit
+	r.sleep(5000);
+
+	// Shutdown the rover OS and abort the application
+	r.shutdown();
+
+	return 1;
+}
+\endcode
 
 \section roverdocs Rover Documentation
 
