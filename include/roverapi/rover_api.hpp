@@ -65,17 +65,19 @@ int main (void)
 	r.initialize();
 
 	// Set-up cloud instance and register your device
-	r.inRoverCloud().setHono("localhost", 8080, "DEFAULT_TENANT");
+	RoverCloud r_cloud = r.inRoverCloud();
 
-	r.inRoverCloud().setRegistrationPort(28080);
+	r_cloud.setHono("localhost", 8080, "DEFAULT_TENANT");
 
-	if (r.inRoverCloud().registerDevice("4711") == 1)
+	r_cloud.setRegistrationPort(28080);
+
+	if (r_cloud.registerDevice("4711") == 1)
 	{
 		printf ("Registered device to Hono cloud using REST API successfully..\n");
 	}
 
 	// Send telemetry data to Hono instance
-	if (r.inRoverCloud().sendTelemetry("4711","myuser","mypassword","roverFront", 100.0) == 1)
+	if (r_cloud.sendTelemetry("4711","myuser","mypassword","roverFront", 100.0) == 1)
 	{
 		printf ("Data sent to Hono cloud using REST API successfully..\n");
 	}
@@ -88,22 +90,25 @@ int main (void)
 	r.sleep (500); // Sleep for some time in milliseconds
 	r.inRoverDriving().stopRover();
 
+
 	// Accessing sensors with rover
-	printf ("Ultrasonic = [%d %d]\n",	r.inRoverSensors().readHCSR04UltrasonicSensor(r.inRoverSensors().ROVER_FRONT),
-										r.inRoverSensors().readHCSR04UltrasonicSensor(r.inRoverSensors().ROVER_REAR));
-	printf ("Infrared = [%f %f %f %f]\n", 	r.inRoverSensors().readInfraredSensor(r.inRoverSensors().ROVER_FRONT_LEFT),
-											r.inRoverSensors().readInfraredSensor(r.inRoverSensors().ROVER_FRONT_RIGHT),
-											r.inRoverSensors().readInfraredSensor(r.inRoverSensors().ROVER_REAR_LEFT),
-											r.inRoverSensors().readInfraredSensor(r.inRoverSensors().ROVER_REAR_RIGHT));
-	printf ("Temperature = %f\n",	r.inRoverSensors().readTemperature());
-	printf ("Humidity = %f\n",		r.inRoverSensors().readHumidity());
-	printf ("Bearing = %f\n",		r.inRoverSensors().readBearing());
+	RoverSensors r_sensors = r.inRoverSensors();
+
+	printf ("Ultrasonic = [%d %d]\n",	r_sensors.readHCSR04UltrasonicSensor(r_sensors.ROVER_FRONT),
+										r_sensors.readHCSR04UltrasonicSensor(r_sensors.ROVER_REAR));
+	printf ("Infrared = [%f %f %f %f]\n", 	r_sensors.readInfraredSensor(r_sensors.ROVER_FRONT_LEFT),
+											r_sensors.readInfraredSensor(r_sensors.ROVER_FRONT_RIGHT),
+											r_sensors.readInfraredSensor(r_sensors.ROVER_REAR_LEFT),
+											r_sensors.readInfraredSensor(r_sensors.ROVER_REAR_RIGHT));
+	printf ("Temperature = %f\n",	r_sensors.readTemperature());
+	printf ("Humidity = %f\n",		r_sensors.readHumidity());
+	printf ("Bearing = %f\n",		r_sensors.readBearing());
 
 	// Checking if a button is pressed (LOW) and playing a tone with buzzer
-	if (r.inRoverGpio.readUserButton() == r.inRoverGpio().LO)
+	if (r.inRoverGpio().readUserButton() == r.inRoverGpio().LO)
 	{
-		r.inRoverGpio.setBuzzerFrequency(400); //in Hz
-		r.inRoverGpio.setBuzzerOn();
+		r.inRoverGpio().setBuzzerFrequency(400); //in Hz
+		r.inRoverGpio().setBuzzerOn();
 		r.sleep(1000);
 	}
 	r.inRoverGpio.setBuzzerOff();
@@ -118,13 +123,13 @@ int main (void)
 	// Prepare display contents
 	my_display.clearDisplay();
 	my_display.setTextSize(2);
-	my_display.setTextColor(r.inRoverDisplay().WHITE_COLOR);
+	my_display.setTextColor(my_display.WHITE_COLOR);
 
 	my_display.setCursor(12,10);
 	my_display.print("INTERNET:");
 
 	my_display.setTextSize(3);
-	my_display.setTextColor(r.inRoverDisplay().WHITE_COLOR);
+	my_display.setTextColor(my_display.WHITE_COLOR);
 
 	// Check if internet is connected
 	if (r.inRoverUtils().getInternetStatus() == 1)
