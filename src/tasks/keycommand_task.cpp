@@ -24,21 +24,16 @@
 
 #include <ctime>
 #include <stdlib.h>
-#include <wiringPi.h>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
-#include <roverapi/basic_psys_rover.h>
 
 void *KeyCommandInput_Task(void * arg)
 {
 	timing keycommand_task_tmr;
-
-	CollectThreadName("KeyCommandInput_Task");
 
 	keycommand_task_tmr.setTaskID("KeyCommand");
 	keycommand_task_tmr.setDeadline(0.2);

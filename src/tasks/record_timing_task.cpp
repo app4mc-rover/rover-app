@@ -21,16 +21,13 @@
 
 #include <tasks/record_timing_task.h>
 
-#include <wiringPi.h>
 #include <unistd.h>
 #include <ctime>
 #include <libraries/timing/timing.h>
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
-#include <roverapi/basic_psys_rover.h>
 
 
 void PrintTimingInfo(timing_interface ifc)
@@ -61,8 +58,6 @@ void PrintTimingInfo(timing_interface ifc)
 void *Record_Timing_Task (void * arg)
 {
 	timing record_timing_task_tmr;
-
-	CollectThreadName("Record_Timing_Task");
 
 	record_timing_task_tmr.setTaskID("RecordTiming");
 	record_timing_task_tmr.setDeadline(0.5);

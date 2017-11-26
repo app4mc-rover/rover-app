@@ -25,7 +25,6 @@
 
 #include <tasks/ultrasonic_sensor_grove_task.h>
 
-#include <wiringPi.h>
 #include <ctime>
 #include <pthread.h>
 
@@ -33,54 +32,16 @@
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
-#include <roverapi/basic_psys_rover.h>
-
-void setup_GrooveUltrasonicRanger() {
-	//wiringPiSetup();   //Since this can only be used once in a program, we do it in main and comment this.
-
-}
-
-int getCM_GrooveUltrasonicRanger()
-{
-	long startTime, stopTime, elapsedTime, distance = 0;
-	pinMode(SIG, OUTPUT);
-	digitalWrite(SIG, LOW);
-	delayMicroseconds(2);
-	digitalWrite(SIG, HIGH);
-	delayMicroseconds(5);
-	digitalWrite(SIG,LOW);
-	pinMode(SIG,INPUT);
-
-	startTime = micros();
-	while (digitalRead(SIG) == LOW  );
-	startTime = micros();
-	// For values above 40cm, groove sensor is unable to receive signals which causes it to stuck
-	// This is resolved by adding the timeout below.
-	// However, this timeout cause values bigger than 40 to fluctuate
-	while (digitalRead(SIG) == HIGH && micros() < startTime + 100000);
-	stopTime = micros();
-	elapsedTime = stopTime - startTime;
-	distance = elapsedTime / 29 /2;
-	// The below protection is to ensure there is no value fluctuation
-	if (distance > 40 )
-		distance = 40;
-	return distance;
-}
-
 
 void *Ultrasonic_Sensor_Grove_Task(void *unused)
 {
 	timing ultrasonic_grove_task_tmr;
 
-	CollectThreadName("Ultrasonic_Sensor_Grove_Task");
-
 	ultrasonic_grove_task_tmr.setTaskID("GrooveUltrasonic");
 	ultrasonic_grove_task_tmr.setDeadline(0.5);
 	ultrasonic_grove_task_tmr.setPeriod(0.5);
 
-	setup_GrooveUltrasonicRanger();
 	while (1)
 	{
 		ultrasonic_grove_task_tmr.recordStartTime();
@@ -91,7 +52,7 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 			distance_grove_shared = getCM_GrooveUltrasonicRanger();
 		pthread_mutex_unlock(&distance_grove_lock);*/
 		pthread_mutex_lock(&distance_sr04_back_lock);
-			distance_sr04_back_shared = getCM_GrooveUltrasonicRanger();
+			distance_sr04_back_shared = r.inRoverSensors().readGrooveUltrasonicSensor(r.inRoverSensors().ROVER_REAR);
 		pthread_mutex_unlock(&distance_sr04_back_lock);
 		//printf("Distance: %dcm\n", getCM_GrooveUltrasonicRanger());
 		//Task content ends here -------------------------------------------------

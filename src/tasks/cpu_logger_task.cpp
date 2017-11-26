@@ -18,50 +18,16 @@
  */
 
 #include <tasks/cpu_logger_task.h>
-#include <string.h>
-#include <wiringPi.h>
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
 #include <interfaces.h>
 #include <pthread.h>
-#include <softPwm.h>
-
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 
 /* Signal header */
 #include <signal.h>
 
 #include <roverapp.h>
-#include <roverapi/basic_psys_rover.h>
-
-/* Reads a certain file which returns core usage and exits with EX_OK or EX_SOFTWARE */
-float* retrieveCoreUtilization (void)
-{
-	FILE *fp;
-	char buffer[128];
-	float util[5];
-	size_t bytes_read;
-
-	/* Execute the command */
-	fp = popen("python /opt/rover-app/scripts/read_core_usage.py ","r");
-
-	/* Read to buffer */
-	bytes_read = fread(buffer, 1, sizeof(buffer), fp);
-
-	if (bytes_read == 0 || bytes_read == sizeof(buffer))
-		perror("Can't read from /opt/rover-app/scripts/read_core_usage.py");
-
-	buffer[bytes_read] = '\0';
-
-	//printf("buf:%s\n",buffer);
-
-	/* Parse */
-	sscanf(buffer,"[%f, %f, %f, %f]",&util[0], &util[1], &util[2], &util[3]);
-
-	/* Return */
-	return util;
-}
 
 void Cpu_Logger_Task_Terminator (int dummy)
 {
@@ -75,8 +41,6 @@ void *Cpu_Logger_Task(void * arg)
 	cpu_logger_task_tmr.setTaskID("CpuTsk");
 	cpu_logger_task_tmr.setDeadline(3);
 	cpu_logger_task_tmr.setPeriod(3);
-
-	CollectThreadName("Cpu_Logger_Task");
 
 	/* Add termination signal handler to properly close fd */
 	signal(SIGINT, Cpu_Logger_Task_Terminator);
@@ -92,7 +56,7 @@ void *Cpu_Logger_Task(void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		util = retrieveCoreUtilization();
+		util = r.inRoverUtils().getCoreUtilization();
 		pthread_mutex_lock(&cpu_util_shared_lock);
 			cpu_util_shared[0] = util[0];
 			cpu_util_shared[1] = util[1];

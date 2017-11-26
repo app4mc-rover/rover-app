@@ -44,7 +44,6 @@
 
 #include <tasks/ultrasonic_sensor_sr04_front_task.h>
 
-#include <wiringPi.h>
 #include <ctime>
 #include <pthread.h>
 
@@ -52,60 +51,16 @@
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
-#include <roverapi/basic_psys_rover.h>
-
-void setup_HCSR04UltrasonicFront() {
-    //wiringPiSetup();
-    pinMode(TRIG0, OUTPUT);
-    pinMode(ECHO0, INPUT);
-
-    //TRIG pin must start LOW
-    digitalWrite(TRIG0, LOW);
-    delayMicroseconds(2);
-}
-
-int getCM_HCSR04UltrasonicFront() {
-	int distance = 0;
-    //Send trig pulse
-    digitalWrite(TRIG0, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIG0, LOW);
-//    printf("x\n");
-
-    //Wait for echo start
-    long startTime = micros();
-    while(digitalRead(ECHO0) == LOW && micros() < startTime + 100000);
-
-    //Wait for echo end
-    startTime = micros();
-    while(digitalRead(ECHO0) == HIGH);
-    long travelTime = micros() - startTime;
-
-    //Get distance in cm
-    distance = travelTime * 34300;
-	distance = distance / 1000000;
-	distance = distance / 2;
-	// The below protection is to ensure there is no value fluctuation due to timeout
-	if (distance > 40 )
-		distance = 40;
-//	printf("dist=%d\n",distance);
-    return distance;
-}
-
 
 void *Ultrasonic_Sensor_SR04_Front_Task(void *unused)
 {
 	timing ultrasonic_sr04_front_task_tmr;
 
-	CollectThreadName("Ultrasonic_Sensor_SR04_Front_Task");
-
 	ultrasonic_sr04_front_task_tmr.setTaskID("Ultrasonic_SR04_Front");
 	ultrasonic_sr04_front_task_tmr.setDeadline(0.1);
 	ultrasonic_sr04_front_task_tmr.setPeriod(0.1);
 
-	setup_HCSR04UltrasonicFront();
 	while (1)
 	{
 		ultrasonic_sr04_front_task_tmr.recordStartTime();
@@ -113,9 +68,8 @@ void *Ultrasonic_Sensor_SR04_Front_Task(void *unused)
 
 		//Task content starts here -----------------------------------------------
 		pthread_mutex_lock(&distance_sr04_front_lock);
-			distance_sr04_front_shared = getCM_HCSR04UltrasonicFront();
+			distance_sr04_front_shared = r.inRoverSensors().readHCSR04UltrasonicSensor(r.inRoverSensors().ROVER_FRONT);
 		pthread_mutex_unlock(&distance_sr04_front_lock);
-		//printf("Distance: %dcm\n", getCM_GrooveUltrasonicRanger());
 		//Task content ends here -------------------------------------------------
 
 		ultrasonic_sr04_front_task_tmr.recordEndTime();

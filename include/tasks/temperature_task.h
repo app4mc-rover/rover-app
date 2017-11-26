@@ -26,9 +26,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_TIMINGS	85
-
-#define DHT22_RPI_PIN   24 //BCM19, wiringPi 24
 
 void *Temperature_Task(void * arg);
 

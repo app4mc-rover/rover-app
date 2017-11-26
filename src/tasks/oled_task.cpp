@@ -40,119 +40,18 @@
  */
 
 #include <tasks/oled_task.h>
-#include <tasks/external_gpio_task.h>
 
-#include <wiringPi.h>
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
 #include <interfaces.h>
 #include <pthread.h>
 #include <signal.h>
-#include <libraries/pthread_monitoring/collect_thread_name.h>
-
-#include <drivers/oled_drivers/ArduiPi_SSD1306.h>
-#include <drivers/oled_drivers/Adafruit_GFX.h>
-#include <drivers/oled_drivers/Adafruit_SSD1306.h>
 
 /* APPSTACLE Project logo */
 #include "../drivers/oled_drivers/appstacle_logo.c"
 
-#include <libraries/status_library/status_library.h>
 #include <roverapp.h>
-#include <roverapi/basic_psys_rover.h>
-
-Adafruit_SSD1306 display;
-
-/* Config Option */
-struct s_opts
-{
-	int oled;
-	int verbose;
-} ;
-
-/* default options values */
-s_opts opts = {
-	OLED_ADAFRUIT_I2C_128x64,		// Default oled
-	false							// Not verbose
-};
-
-void OLED_Setup (void)
-{
-	/* I2C change parameters to fit to your LCD */
-	if ( !display.init(OLED_I2C_RESET,opts.oled) )
-		exit(EXIT_FAILURE);
-
-	display.begin();
-	display.clearDisplay();   // clears the screen and buffer
-}
-
-/* Proper shutdown function, including showing message in the OLED display */
-void shutdownOSwithDisplay(void)
-{
-	/* Kill OLED thread for it to not interfere with the "Shutting down..." display */
-	pthread_kill(oled_thread, SIGTERM);
-
-	/* Prepare "Shutting Down..." */
-	display.clearDisplay();
-
-	display.setTextSize(2);
-	display.setTextColor(WHITE);
-
-	display.setCursor(20,10);
-	display.print("Shutting");
-
-	display.setTextColor(WHITE);
-
-	display.setCursor(20,32);
-	display.print("Down...");
-
-	/* Display everything earlier this time*/
-	display.display();
-
-	/* Play the shutdown tone..*/
-	playShutdownTone();
-
-	/* Prepare "Shutting Down..." */
-	display.clearDisplay();
-
-	display.setTextSize(2);
-	display.setTextColor(WHITE);
-
-	display.setCursor(20,10);
-	display.print("Shutting");
-
-	display.setTextColor(WHITE);
-
-	display.setCursor(20,32);
-	display.print("Down...");
-
-	/* Display everything earlier this time*/
-	display.display();
-
-	/* Here we're shutting Raspberry Pi down.. */
-	shutdownOS();
-
-	/* Prepare "Shutting Down..." */
-	display.clearDisplay();
-
-	display.setTextSize(2);
-	display.setTextColor(WHITE);
-
-	display.setCursor(20,10);
-	display.print("Shutting");
-
-	display.setTextColor(WHITE);
-
-	display.setCursor(20,32);
-	display.print("Down...");
-
-	/* Display everything earlier this time*/
-	display.display();
-
-	/* Abort the application for safety reasons */
-	abort();
-}
 
 void *OLED_Task (void * arg)
 {
@@ -161,11 +60,9 @@ void *OLED_Task (void * arg)
 	oled_task_tmr.setDeadline(0.5);
 	oled_task_tmr.setPeriod(0.5);
 
-	CollectThreadName("OLED_Task");
-
 	int counter_500ms = 0;
 
-	OLED_Setup();
+	Adafruit_SSD1306 my_display = r.inRoverDisplay().getDisplay();
 
 	while (1)
 	{
@@ -187,158 +84,158 @@ void *OLED_Task (void * arg)
 				case 15:
 				case 20:
 					/* Prepare APPSTACLE logo*/
-					display.clearDisplay();
+					my_display.clearDisplay();
 
 					/* Black logo */
-					//display.fillRect (0, 0, 128, 64, WHITE);
-					//display.drawBitmap (0, 0, appstacle_logo, 128, 64, BLACK);
+					//my_display.fillRect (0, 0, 128, 64, WHITE);
+					//my_display.drawBitmap (0, 0, appstacle_logo, 128, 64, BLACK);
 
 					/* White logo */
-					display.drawBitmap (0, 0, appstacle_logo, 128, 64, WHITE);
+					my_display.drawBitmap (0, 0, appstacle_logo, 128, 64, WHITE);
 
 					break;
 
 				case 1: /* If counter hits counter_500ms * 0.5 sec */
 					/* Prepare WLAN availability */
-					display.clearDisplay();
+					my_display.clearDisplay();
 
-					//display.drawRect(0, 0, display.width(), display.height(), WHITE);
-					//display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
+					//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
+					//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
 
-					display.setTextSize(2);
-					display.setTextColor(WHITE);
+					my_display.setTextSize(2);
+					my_display.setTextColor(WHITE);
 
-					display.setCursor(45,10);
-					display.print("WLAN:");
+					my_display.setCursor(45,10);
+					my_display.print("WLAN:");
 
-					display.setTextSize(3);
-					display.setTextColor(WHITE);
+					my_display.setTextSize(3);
+					my_display.setTextColor(WHITE);
 
-					if (retrieveWLANStatus() == 1)
+					if (r.inRoverUtils().getWlanStatus() == 1)
 					{
-						display.setCursor(50,32);
-						display.print("ON");
+						my_display.setCursor(50,32);
+						my_display.print("ON");
 					}
 					else
 					{
-						display.setCursor(43,32);
-						display.print("OFF");
+						my_display.setCursor(43,32);
+						my_display.print("OFF");
 					}
 
 					break;
 
 				case 6: /* If counter hits counter_500ms * 0.5 sec */
 					/* Prepare Ethernet availability*/
-					display.clearDisplay();
+					my_display.clearDisplay();
 
-					//display.drawRect(0, 0, display.width(), display.height(), WHITE);
-					//display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
+					//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
+					//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
 
-					display.setTextSize(2);
-					display.setTextColor(WHITE);
+					my_display.setTextSize(2);
+					my_display.setTextColor(WHITE);
 
-					display.setCursor(48,10);
-					display.print("ETH:");
+					my_display.setCursor(48,10);
+					my_display.print("ETH:");
 
-					display.setTextSize(3);
-					display.setTextColor(WHITE);
+					my_display.setTextSize(3);
+					my_display.setTextColor(WHITE);
 
-					if (retrieveETHStatus() == 1)
+					if (r.inRoverUtils().getEthernetStatus() == 1)
 					{
-						display.setCursor(50,32);
-						display.print("ON");
+						my_display.setCursor(50,32);
+						my_display.print("ON");
 					}
 					else
 					{
-						display.setCursor(43,32);
-						display.print("OFF");
+						my_display.setCursor(43,32);
+						my_display.print("OFF");
 					}
 
 					break;
 
 				case 11: /* If counter hits counter_500ms * 0.5 sec */
 					/* Prepare Internet availability */
-					display.clearDisplay();
+					my_display.clearDisplay();
 
-					//display.drawRect(0, 0, display.width(), display.height(), WHITE);
-					//display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
+					//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
+					//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
 
-					display.setTextSize(2);
-					display.setTextColor(WHITE);
+					my_display.setTextSize(2);
+					my_display.setTextColor(WHITE);
 
-					display.setCursor(12,10);
-					display.print("INTERNET:");
+					my_display.setCursor(12,10);
+					my_display.print("INTERNET:");
 
-					display.setTextSize(3);
-					display.setTextColor(WHITE);
+					my_display.setTextSize(3);
+					my_display.setTextColor(WHITE);
 
-					if (retrieveINTERNETStatus() == 1)
+					if (r.inRoverUtils().getInternetStatus() == 1)
 					{
-						display.setCursor(50,32);
-						display.print("ON");
+						my_display.setCursor(50,32);
+						my_display.print("ON");
 					}
 					else
 					{
-						display.setCursor(43,32);
-						display.print("OFF");
+						my_display.setCursor(43,32);
+						my_display.print("OFF");
 					}
 
 					break;
 
 				case 16: /* If counter hits counter_500ms * 0.5 sec */
 					/* Prepare Bluetooth availability */
-					display.clearDisplay();
+					my_display.clearDisplay();
 
-					//display.drawRect(0, 0, display.width(), display.height(), WHITE);
-					//display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
+					//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
+					//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
 
-					display.setTextSize(2);
-					display.setTextColor(WHITE);
+					my_display.setTextSize(2);
+					my_display.setTextColor(WHITE);
 
-					display.setCursor(8,10);
-					display.print("BLUETOOTH:");
+					my_display.setCursor(8,10);
+					my_display.print("BLUETOOTH:");
 
-					display.setTextSize(3);
-					display.setTextColor(WHITE);
+					my_display.setTextSize(3);
+					my_display.setTextColor(WHITE);
 
-					if (retrieveBLUETOOTHStatus() == 1)
+					if (r.inRoverUtils().getBluetoothStatus() == 1)
 					{
-						display.setCursor(50,32);
-						display.print("ON");
+						my_display.setCursor(50,32);
+						my_display.print("ON");
 					}
 					else
 					{
-						display.setCursor(43,32);
-						display.print("OFF");
+						my_display.setCursor(43,32);
+						my_display.print("OFF");
 					}
 
 					break;
 
 				case 21: /* If counter hits counter_500ms * 0.5 sec */
 					/* Prepare Hono Instance (Cloud) availability */
-					display.clearDisplay();
+					my_display.clearDisplay();
 
-					//display.drawRect(0, 0, display.width(), display.height(), WHITE);
-					//display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
+					//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
+					//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
 
-					display.setTextSize(2);
-					display.setTextColor(WHITE);
+					my_display.setTextSize(2);
+					my_display.setTextColor(WHITE);
 
-					display.setCursor(45,10);
-					display.print("HONO:");
+					my_display.setCursor(45,10);
+					my_display.print("HONO:");
 
-					display.setTextSize(3);
-					display.setTextColor(WHITE);
+					my_display.setTextSize(3);
+					my_display.setTextColor(WHITE);
 
-					if (retrieveHONOStatus("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret") == 1)
+					if (r.inRoverUtils().getHonoCloudStatus("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret") == 1)
 					{
-						display.setCursor(50,32);
-						display.print("ON");
+						my_display.setCursor(50,32);
+						my_display.print("ON");
 					}
 					else
 					{
-						display.setCursor(43,32);
-						display.print("OFF");
+						my_display.setCursor(43,32);
+						my_display.print("OFF");
 					}
 
 					break;
@@ -352,11 +249,11 @@ void *OLED_Task (void * arg)
 		else
 		{
 			// Proper shutdown function, including showing message in the OLED display
-			shutdownOSwithDisplay();
+			r.shutdown();
 		}
 
 		/* Display the stuff NOW */
-		display.display();
+		my_display.display();
 
 		/* Increment the counter */
 		counter_500ms += 1;

@@ -35,13 +35,11 @@
 #include <tasks/image_processing_task.h>
 
 #include <ctime>
-#include <wiringPi.h>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <iostream>
 #include <fstream>
 
@@ -54,7 +52,6 @@
 #include <raspicam/raspicam_cv.h>
 
 #include <roverapp.h>
-#include <roverapi/basic_psys_rover.h>
 
 using namespace cv;
 using namespace std;
@@ -62,8 +59,6 @@ using namespace std;
 void *Image_Processing_Task(void *arg)
 {
 	timing imgproc_task_tmr;
-
-	CollectThreadName("Image_Processing_Task");
 
 	imgproc_task_tmr.setTaskID("ImgPr");
 	imgproc_task_tmr.setDeadline(1);

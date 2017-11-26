@@ -32,13 +32,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
-
-#define SIG 2   //BCM-27   ->  WiringPi 2   //Same as ECHO1 pin, if some one wants to replace back sr04 with groove sensor
-
 void *Ultrasonic_Sensor_Grove_Task(void *);
-int getCM_GrooveUltrasonicRanger();
-void setup_GrooveUltrasonicRanger();
 
 #endif /* ULTRASONIC_SENSOR_GROVE_TASK_H_ */

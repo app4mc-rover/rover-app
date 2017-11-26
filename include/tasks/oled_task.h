@@ -43,13 +43,8 @@
 #define TASKS_OLED_TASK_H_
 
 /* Defines */
-#define NUMFLAKES 10
-#define XPOS 0
-#define YPOS 1
-#define DELTAY 2
 
 /* Intefaces */
 void *OLED_Task(void * arg);
-void shutdownOSwithDisplay(void);
 
 #endif /* TASKS_OLED_TASK_H_ */
