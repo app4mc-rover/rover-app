@@ -62,6 +62,8 @@ void rover::RoverGpio::setBuzzerOff (void)
 void rover::RoverGpio::shutdownTone (void)
 {
 	softToneWrite (this->BUZZER_PIN, 300);
+	delay(2000);
+	softToneWrite (BUZZER_PIN, 0);
 }
 
 void rover::RoverGpio::setBuzzerTone (int buzzer_freq)
