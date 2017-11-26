@@ -54,8 +54,6 @@
 #include <signal.h>
 
 
-//Please comment the line below to work with SR-04 sensor instead of GROOVE for rear proximity sensing.
-//#define USE_GROOVE_SENSOR 1
 using namespace std;
 
 //Using rover namespace from Rover API

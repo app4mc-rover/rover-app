@@ -51,10 +51,12 @@ void buzzerHandler (void)
 
 void buttonHandler (void)
 {
+#ifndef DEBUG_WO_RSL
 	if (r.inRoverGpio().readShutdownButton() == LOW)
 	{
 		r.shutdown();
 	}
+#endif
 }
 
 void *External_GPIO_Task(void *arg)

@@ -21,7 +21,7 @@
 //Defines
 
 //#define DEBUG_HTTP_RESPONSE 1
-#define DEBUG_DEVICE_REGISTRATION 1
+//#define DEBUG_DEVICE_REGISTRATION 1
 
 
 //Interfaces
