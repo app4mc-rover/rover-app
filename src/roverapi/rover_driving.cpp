@@ -38,12 +38,7 @@ int rover::RoverDriving::getSpeed (void)
 
 void rover::RoverDriving::initialize (void)
 {
-	/* wiringPi can only be called once */
-#ifndef _WIRINGPI_SETUP
-#define _WIRINGPI_SETUP
-	wiringPiSetup ();
-#endif
-
+	//wiringPiSetup();
 	/* Initialize RoverDriving once */
 	pinMode (ENABLE_MOTOR_LEFT, OUTPUT) ;
 	digitalWrite (ENABLE_MOTOR_LEFT, HIGH) ;

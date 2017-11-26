@@ -37,11 +37,7 @@ rover::RoverSensors::RoverSensors()
 
 void rover::RoverSensors::initialize (void)
 {
-	/* wiringPi can only be called once */
-#ifndef _WIRINGPI_SETUP
-#define _WIRINGPI_SETUP
-	wiringPiSetup ();
-#endif
+	//wiringPiSetup();
 
 	this->setupHCSR04UltrasonicSensor(this->ROVER_FRONT);
 	this->setupHCSR04UltrasonicSensor(this->ROVER_REAR);

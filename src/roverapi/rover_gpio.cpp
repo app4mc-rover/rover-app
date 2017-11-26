@@ -19,6 +19,7 @@
 
 void rover::RoverGpio::initialize (void)
 {
+	//wiringPiSetup();
 	/* Setup buzzer */
 	pinMode (this->BUZZER_PIN, SOFT_TONE_OUTPUT);
 	softToneCreate (this->BUZZER_PIN);
