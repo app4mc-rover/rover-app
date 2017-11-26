@@ -84,7 +84,7 @@ int main (void)
 	}
 
 	// Driving with rover
-	r.inRoverDriving().setSpeed(r.inRoverDriving.HIGHEST_SPEED);
+	r.inRoverDriving().setSpeed(r.inRoverDriving().HIGHEST_SPEED);
 	r.inRoverDriving().goForward();
 	r.sleep (500); // Sleep for some time in milliseconds
 	r.inRoverDriving().turnRight();
