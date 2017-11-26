@@ -28,9 +28,15 @@
 #include <iostream>
 #include <stdlib.h>
 #include <unistd.h>
-#include "wiringPi.h"
 
 #include "interfaces.h"
+
+#include <roverapi/rover_api.hpp>
+
+//Using rover namespace from Rover API
+using namespace rover;
+
+extern RoverBase r;
 
 extern pthread_t oled_thread;
 
