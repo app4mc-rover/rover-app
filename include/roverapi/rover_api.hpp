@@ -37,7 +37,7 @@ It also features drivers for sensors such as magnetometers, accelerometers, vari
 Roverapp builds and contains the **Rover API**, which is able to handle subset of its functionality. Example functionality covered in **Rover API** is given below:
 
 \li **RoverBase** class is the main class used for instantiating rover objects.
-Each RoverBase object has private member functions containing other API classes in singleton fashion.
+Each RoverBase object has private member functions referencing to other API classes exclusive to one RoverBase object.
 Therefore, using one RoverBase class, other classes can be accessed, and operations such as initialization,
 shutting down could be performed.
 \li **RoverCloud** contains the member functions to connect and send data to Eclipse Hono instance using several parameters such as host name, port, tenant name, user name, and password. This class wraps hono_interaction library for Rover-specific interactions.
@@ -172,7 +172,7 @@ namespace rover
 {
 	/**
 	  *   @brief  RoverBase class is the main class used for instantiating rover objects.
-	  *   Each RoverBase object has private member functions containing other API classes in singleton fashion.
+	  *   Each RoverBase object has private member functions referencing to other API classes exclusive to one RoverBase object.
 	  *   Therefore, using one RoverBase class, other classes can be accessed, and operations such as initialization,
 	  *   shutting down could be performed.
 	  */
