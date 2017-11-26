@@ -68,10 +68,17 @@ int main (void)
 	r.inRoverCloud().setHono("localhost", 8080, "DEFAULT_TENANT");
 
 	r.inRoverCloud().setRegistrationPort(28080);
-	r.inRoverCloud().registerDevice("4711");
+
+	if (r.inRoverCloud().registerDevice("4711") == 1)
+	{
+		printf ("Registered device to Hono cloud using REST API successfully..\n");
+	}
 
 	// Send telemetry data to Hono instance
-	r.inRoverCloud().sendTelemetry("4711","myuser","mypassword","roverFront", 100.0);
+	if (r.inRoverCloud().sendTelemetry("4711","myuser","mypassword","roverFront", 100.0) == 1)
+	{
+		printf ("Data sent to Hono cloud using REST API successfully..\n");
+	}
 
 	// Driving with rover
 	r.inRoverDriving().setSpeed(r.inRoverDriving.HIGHEST_SPEED);
