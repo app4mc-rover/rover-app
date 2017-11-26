@@ -85,6 +85,21 @@ add_library (roverappdrivers SHARED ${ROVERAPP_DRIVER_FILES})
 add_executable(roverapp ${CMAKE_SOURCE_DIR}/src/roverapp.cpp)
 
 #
+#  LINKING TO ROVER API
+#
+
+target_link_libraries (roverapi wiringPi)
+target_link_libraries (roverapi wiringPiDev)
+
+target_link_libraries(roverapi hono_interaction)
+target_link_libraries(roverapi pthread_distribution)
+target_link_libraries(roverapi status_library)
+target_link_libraries(roverapi pthread_monitoring)
+target_link_libraries(roverapi timing)
+
+target_link_libraries (roverapi roverappdrivers)
+
+#
 #  LINKING TO ROVER TASKS
 #
 
