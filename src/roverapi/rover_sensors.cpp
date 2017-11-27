@@ -262,17 +262,20 @@ float rover::RoverSensors::readTemperature (void)
 {
 	int data[5] = { 0, 0, 0, 0, 0 };
 
-	uint8_t laststate	= HIGH;
-	uint8_t counter		= 0;
-	uint8_t j			= 0, i;
-
-	data[0] = data[1] = data[2] = data[3] = data[4] = 0;
+	uint8_t laststate;
+	uint8_t counter;
+	uint8_t j;
+	uint8_t i;
 
 	int try_again = 1;
 	float f, h, c;
 
 	while (try_again == 1)
 	{
+		data[0] = data[1] = data[2] = data[3] = data[4] = 0;
+		laststate = HIGH;
+		counter = 0;
+		j = 0;
 
 		/* pull pin down for 18 milliseconds */
 		pinMode( this->DHT22_RPI_PIN, OUTPUT );
@@ -333,13 +336,14 @@ float rover::RoverSensors::readTemperature (void)
 				c = -c;
 			}
 			f = c * 1.8f + 32;
-			//printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
+			printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
 			try_again = 0;
 		}
 		else
 		{
 			/* Data not good */
 			try_again = 1;
+			printf ("Data not good, skipping\n");
 		}
 	}
 
@@ -351,17 +355,20 @@ float rover::RoverSensors::readHumidity (void)
 {
 	int data[5] = { 0, 0, 0, 0, 0 };
 
-	uint8_t laststate	= HIGH;
-	uint8_t counter		= 0;
-	uint8_t j			= 0, i;
-
-	data[0] = data[1] = data[2] = data[3] = data[4] = 0;
+	uint8_t laststate;
+	uint8_t counter;
+	uint8_t j;
+	uint8_t i;
 
 	int try_again = 1;
 	float f, h, c;
 
 	while (try_again == 1)
 	{
+		data[0] = data[1] = data[2] = data[3] = data[4] = 0;
+		laststate = HIGH;
+		counter = 0;
+		j = 0;
 
 		/* pull pin down for 18 milliseconds */
 		pinMode( this->DHT22_RPI_PIN, OUTPUT );
