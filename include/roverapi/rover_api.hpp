@@ -53,7 +53,7 @@ shutting down could be performed.
 The following is an example C++ application using some of the Rover API functions:
 
 \code{.cpp}
-#include <rover_api.hpp>
+#include <roverapi/rover_api.hpp>
 
 using namespace rover;
 
