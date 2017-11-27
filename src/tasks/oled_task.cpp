@@ -73,178 +73,188 @@ void *OLED_Task (void * arg)
 
 		if ( shutdown_hook_shared == 0)
 		{
-			/* Our internal control-timer actions */
-			switch (counter_500ms)
+			/* If the display is not in use somewhere else asynchronously */
+			if (display_use_elsewhere_shared == 0)
 			{
-				/* If counter hits counter_500ms * 0.5 sec */
-				/* Display APPSTACLE logo in between */
-				case 0:
-				case 5:
-				case 10:
-				case 15:
-				case 20:
-					/* Prepare APPSTACLE logo*/
-					my_display.clearDisplay();
 
-					/* Black logo */
-					//my_display.fillRect (0, 0, 128, 64, WHITE);
-					//my_display.drawBitmap (0, 0, appstacle_logo, 128, 64, BLACK);
+				/* Our internal control-timer actions */
+				switch (counter_500ms)
+				{
+					/* If counter hits counter_500ms * 0.5 sec */
+					/* Display APPSTACLE logo in between */
+					case 0:
+					case 5:
+					case 10:
+					case 15:
+					case 20:
+						/* Prepare APPSTACLE logo*/
+						my_display.clearDisplay();
 
-					/* White logo */
-					my_display.drawBitmap (0, 0, appstacle_logo, 128, 64, WHITE);
+						/* Black logo */
+						//my_display.fillRect (0, 0, 128, 64, WHITE);
+						//my_display.drawBitmap (0, 0, appstacle_logo, 128, 64, BLACK);
 
-					break;
+						/* White logo */
+						my_display.drawBitmap (0, 0, appstacle_logo, 128, 64, WHITE);
 
-				case 1: /* If counter hits counter_500ms * 0.5 sec */
-					/* Prepare WLAN availability */
-					my_display.clearDisplay();
+						break;
 
-					//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
-					//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
+					case 1: /* If counter hits counter_500ms * 0.5 sec */
+						/* Prepare WLAN availability */
+						my_display.clearDisplay();
 
-					my_display.setTextSize(2);
-					my_display.setTextColor(WHITE);
+						//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
+						//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
 
-					my_display.setCursor(45,10);
-					my_display.print("WLAN:");
+						my_display.setTextSize(2);
+						my_display.setTextColor(WHITE);
 
-					my_display.setTextSize(3);
-					my_display.setTextColor(WHITE);
+						my_display.setCursor(45,10);
+						my_display.print("WLAN:");
 
-					if (r.inRoverUtils().getWlanStatus() == 1)
-					{
-						my_display.setCursor(50,32);
-						my_display.print("ON");
-					}
-					else
-					{
-						my_display.setCursor(43,32);
-						my_display.print("OFF");
-					}
+						my_display.setTextSize(3);
+						my_display.setTextColor(WHITE);
 
-					break;
+						if (r.inRoverUtils().getWlanStatus() == 1)
+						{
+							my_display.setCursor(50,32);
+							my_display.print("ON");
+						}
+						else
+						{
+							my_display.setCursor(43,32);
+							my_display.print("OFF");
+						}
 
-				case 6: /* If counter hits counter_500ms * 0.5 sec */
-					/* Prepare Ethernet availability*/
-					my_display.clearDisplay();
+						break;
 
-					//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
-					//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
+					case 6: /* If counter hits counter_500ms * 0.5 sec */
+						/* Prepare Ethernet availability*/
+						my_display.clearDisplay();
 
-					my_display.setTextSize(2);
-					my_display.setTextColor(WHITE);
+						//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
+						//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
 
-					my_display.setCursor(48,10);
-					my_display.print("ETH:");
+						my_display.setTextSize(2);
+						my_display.setTextColor(WHITE);
 
-					my_display.setTextSize(3);
-					my_display.setTextColor(WHITE);
+						my_display.setCursor(48,10);
+						my_display.print("ETH:");
 
-					if (r.inRoverUtils().getEthernetStatus() == 1)
-					{
-						my_display.setCursor(50,32);
-						my_display.print("ON");
-					}
-					else
-					{
-						my_display.setCursor(43,32);
-						my_display.print("OFF");
-					}
+						my_display.setTextSize(3);
+						my_display.setTextColor(WHITE);
 
-					break;
+						if (r.inRoverUtils().getEthernetStatus() == 1)
+						{
+							my_display.setCursor(50,32);
+							my_display.print("ON");
+						}
+						else
+						{
+							my_display.setCursor(43,32);
+							my_display.print("OFF");
+						}
 
-				case 11: /* If counter hits counter_500ms * 0.5 sec */
-					/* Prepare Internet availability */
-					my_display.clearDisplay();
+						break;
 
-					//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
-					//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
+					case 11: /* If counter hits counter_500ms * 0.5 sec */
+						/* Prepare Internet availability */
+						my_display.clearDisplay();
 
-					my_display.setTextSize(2);
-					my_display.setTextColor(WHITE);
+						//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
+						//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
 
-					my_display.setCursor(12,10);
-					my_display.print("INTERNET:");
+						my_display.setTextSize(2);
+						my_display.setTextColor(WHITE);
 
-					my_display.setTextSize(3);
-					my_display.setTextColor(WHITE);
+						my_display.setCursor(12,10);
+						my_display.print("INTERNET:");
 
-					if (r.inRoverUtils().getInternetStatus() == 1)
-					{
-						my_display.setCursor(50,32);
-						my_display.print("ON");
-					}
-					else
-					{
-						my_display.setCursor(43,32);
-						my_display.print("OFF");
-					}
+						my_display.setTextSize(3);
+						my_display.setTextColor(WHITE);
 
-					break;
+						if (r.inRoverUtils().getInternetStatus() == 1)
+						{
+							my_display.setCursor(50,32);
+							my_display.print("ON");
+						}
+						else
+						{
+							my_display.setCursor(43,32);
+							my_display.print("OFF");
+						}
 
-				case 16: /* If counter hits counter_500ms * 0.5 sec */
-					/* Prepare Bluetooth availability */
-					my_display.clearDisplay();
+						break;
 
-					//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
-					//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
+					case 16: /* If counter hits counter_500ms * 0.5 sec */
+						/* Prepare Bluetooth availability */
+						my_display.clearDisplay();
 
-					my_display.setTextSize(2);
-					my_display.setTextColor(WHITE);
+						//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
+						//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
 
-					my_display.setCursor(8,10);
-					my_display.print("BLUETOOTH:");
+						my_display.setTextSize(2);
+						my_display.setTextColor(WHITE);
 
-					my_display.setTextSize(3);
-					my_display.setTextColor(WHITE);
+						my_display.setCursor(8,10);
+						my_display.print("BLUETOOTH:");
 
-					if (r.inRoverUtils().getBluetoothStatus() == 1)
-					{
-						my_display.setCursor(50,32);
-						my_display.print("ON");
-					}
-					else
-					{
-						my_display.setCursor(43,32);
-						my_display.print("OFF");
-					}
+						my_display.setTextSize(3);
+						my_display.setTextColor(WHITE);
 
-					break;
+						if (r.inRoverUtils().getBluetoothStatus() == 1)
+						{
+							my_display.setCursor(50,32);
+							my_display.print("ON");
+						}
+						else
+						{
+							my_display.setCursor(43,32);
+							my_display.print("OFF");
+						}
 
-				case 21: /* If counter hits counter_500ms * 0.5 sec */
-					/* Prepare Hono Instance (Cloud) availability */
-					my_display.clearDisplay();
+						break;
 
-					//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
-					//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
+					case 21: /* If counter hits counter_500ms * 0.5 sec */
+						/* Prepare Hono Instance (Cloud) availability */
+						my_display.clearDisplay();
 
-					my_display.setTextSize(2);
-					my_display.setTextColor(WHITE);
+						//my_display.drawRect(0, 0, display.width(), display.height(), WHITE);
+						//my_display.drawRect(2, 2, display.width()-4, display.height()-4, WHITE);
 
-					my_display.setCursor(45,10);
-					my_display.print("HONO:");
+						my_display.setTextSize(2);
+						my_display.setTextColor(WHITE);
 
-					my_display.setTextSize(3);
-					my_display.setTextColor(WHITE);
+						my_display.setCursor(45,10);
+						my_display.print("HONO:");
 
-					if (r.inRoverUtils().getHonoCloudStatus("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret") == 1)
-					{
-						my_display.setCursor(50,32);
-						my_display.print("ON");
-					}
-					else
-					{
-						my_display.setCursor(43,32);
-						my_display.print("OFF");
-					}
+						my_display.setTextSize(3);
+						my_display.setTextColor(WHITE);
 
-					break;
+						if (r.inRoverUtils().getHonoCloudStatus("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret") == 1)
+						{
+							my_display.setCursor(50,32);
+							my_display.print("ON");
+						}
+						else
+						{
+							my_display.setCursor(43,32);
+							my_display.print("OFF");
+						}
 
-				default: /* None of the above */
-					// Wait
-					break;
+						break;
 
-			} /* switch-end */
+					default: /* None of the above */
+						// Wait
+						break;
+
+				} /* switch-end */
+
+			} /* if display_use_elsewhere_shared */
+			else
+			{
+
+			}
 		}
 		else
 		{
@@ -252,15 +262,19 @@ void *OLED_Task (void * arg)
 			r.shutdown();
 		}
 
-		/* Display the stuff NOW */
-		my_display.display();
+		/* If the display is not in use somewhere else asynchronously */
+		if (display_use_elsewhere_shared == 0)
+		{
+			/* Display the stuff NOW */
+			my_display.display();
 
-		/* Increment the counter */
-		counter_500ms += 1;
+			/* Increment the counter */
+			counter_500ms += 1;
 
-		/* Since only first 25*0.5 seconds we do something, we can clear the variable */
-		if (counter_500ms > 25)
-			counter_500ms = 0;
+			/* Since only first 25*0.5 seconds we do something, we can clear the variable */
+			if (counter_500ms > 25)
+				counter_500ms = 0;
+		}
 
 		//Task content ends here -------------------------------------------------
 

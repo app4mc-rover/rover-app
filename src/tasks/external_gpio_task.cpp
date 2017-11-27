@@ -56,6 +56,31 @@ void buttonHandler (void)
 	{
 		r.shutdown();
 	}
+
+	if (r.inRoverGpio().readUserButton() == LOW)
+	{
+		display_use_elsewhere_shared = 1;
+		r.sleep(500);
+
+		//r.inRoverDisplay().initialize();
+		r.inRoverDisplay().clearDisplay();
+		r.inRoverDisplay().setTextSize(2);
+		r.inRoverDisplay().setTextColor(WHITE);
+
+		r.inRoverDisplay().setCursor(10,5);
+		r.inRoverDisplay().print("User");
+		r.inRoverDisplay().setCursor(20,25);
+		r.inRoverDisplay().print("Button");
+		r.inRoverDisplay().setCursor(30,45);
+		r.inRoverDisplay().print("Pressed");
+
+		r.inRoverDisplay().display();
+
+		r.inRoverGpio().shutdownTone();
+
+		r.sleep(1000);
+		display_use_elsewhere_shared = 0;
+	}
 #endif
 }
 

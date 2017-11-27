@@ -91,8 +91,8 @@ void *Socket_Client_Task (void * arg)
 	timing socket_client_task_tmr;
 
 	socket_client_task_tmr.setTaskID("Socket_Client_Task");
-	socket_client_task_tmr.setDeadline(0.8);
-	socket_client_task_tmr.setPeriod(0.8);
+	socket_client_task_tmr.setDeadline(0.5);
+	socket_client_task_tmr.setPeriod(0.5);
 
 	/* Add termination signal handler to properly close socket */
 	signal(SIGINT, Socket_Client_Task_Terminator);

@@ -197,6 +197,8 @@ pthread_mutex_t buzzer_status_shared_lock;
 
 int shutdown_hook_shared;
 
+int display_use_elsewhere_shared;
+
 /* For proper termination */
 int running_flag;
 
@@ -257,6 +259,7 @@ int main()
 	buzzer_status_shared = 0;
 	shutdown_hook_shared = 0;
 	running_flag = 1;
+	display_use_elsewhere_shared = 0;
 
 	//Initialize mutexes
 	pthread_mutex_init(&temperature_lock, NULL);

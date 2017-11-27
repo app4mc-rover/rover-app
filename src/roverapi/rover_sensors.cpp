@@ -51,13 +51,13 @@ void rover::RoverSensors::setupHCSR04UltrasonicSensor (int sensor_id)
 
 	if (sensor_id == 0)
 	{
-		trig_pin = this->TRIG0;
-		echo_pin = this->ECHO0;
+		trig_pin = this->TRIG1;
+		echo_pin = this->ECHO1;
 	}
 	else
 	{
-		trig_pin = this->TRIG1;
-		echo_pin = this->ECHO1;
+		trig_pin = this->TRIG0;
+		echo_pin = this->ECHO0;
 	}
 
     pinMode(trig_pin, OUTPUT);
@@ -74,13 +74,13 @@ int rover::RoverSensors::readHCSR04UltrasonicSensor (int sensor_id)
 
 	if (sensor_id == 0)
 	{
-		trig_pin = this->TRIG0;
-		echo_pin = this->ECHO0;
+		trig_pin = this->TRIG1;
+		echo_pin = this->ECHO1;
 	}
 	else
 	{
-		trig_pin = this->TRIG1;
-		echo_pin = this->ECHO1;
+		trig_pin = this->TRIG0;
+		echo_pin = this->ECHO0;
 	}
 
 	int distance = 0;
@@ -120,11 +120,11 @@ int rover::RoverSensors::readGrooveUltrasonicSensor (int sensor_id)
 
 	if (sensor_id == 0)
 	{
-		sig_pin = this->SIG0;
+		sig_pin = this->SIG1;
 	}
 	else
 	{
-		sig_pin = this->SIG1;
+		sig_pin = this->SIG0;
 	}
 
 	long startTime, stopTime, elapsedTime, distance = 0;
