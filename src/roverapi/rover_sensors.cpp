@@ -336,14 +336,14 @@ float rover::RoverSensors::readTemperature (void)
 				c = -c;
 			}
 			f = c * 1.8f + 32;
-			printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
+			//printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
 			try_again = 0;
 		}
 		else
 		{
 			/* Data not good */
 			try_again = 1;
-			printf ("Data not good, skipping\n");
+			//printf ("Data not good, skipping\n");
 		}
 	}
 
