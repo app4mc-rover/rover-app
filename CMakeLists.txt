@@ -10,8 +10,11 @@
 cmake_minimum_required (VERSION 2.8.11)
 project (roverapp)
 
-#For find_package packages, export someextlib_DIR=/path/to/..
+# To find modules from other cmake-built projects that are searched with find_p$
+# external cmake modules need to be provided.
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/ExternalCMakeModules)
 
+#For find_package packages, export someextlib_DIR=/path/to/..
 # Required packages
 find_package (OpenCV REQUIRED)
 find_package (raspicam REQUIRED)
