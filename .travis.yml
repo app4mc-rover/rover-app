@@ -1,0 +1,16 @@
+# This is for building automatically using a Travis docker, and then deploying to Github Pages
+
+before_install:
+  - sudo apt-get install doxygen
+  
+script:
+  - cd doxygen/
+  - doxygen Doxyfile
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN2 #Create token from Github and Set in travis-ci.org dashboard
+  local_dir: ./html/
+  on:
+    branch: feature/apiapp

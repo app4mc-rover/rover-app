@@ -54,14 +54,11 @@
 
 #include <tasks/bluetooth_task.h>
 
-#include <wiringPi.h>
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 
 #include <sys/socket.h>
 #include <bluetooth/bluetooth.h>
@@ -70,15 +67,12 @@
 
 #include <roverapp.h>
 
-
 void *Bluetooth_Task (void * arg)
 {
 	timing bluetooth_task_tmr;
 	bluetooth_task_tmr.setTaskID("BLE");
 	bluetooth_task_tmr.setDeadline(1);
 	bluetooth_task_tmr.setPeriod(1);
-
-	CollectThreadName("BLE_Task");
 
 	/* Bluetooth Setup (RFCOMM socket, server) */
 	struct sockaddr_rc loc_addr = { 0 }, rem_addr = { 0 };

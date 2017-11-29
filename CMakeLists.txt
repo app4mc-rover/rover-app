@@ -10,8 +10,12 @@
 cmake_minimum_required (VERSION 2.8.11)
 project (roverapp)
 
-#For find_package packages, export someextlib_DIR=/path/to/..
+# To find modules from other cmake-built projects that are searched with find_package,
+# external cmake modules need to be provided. Those are typically named as Find<package>.cmake or <package>Config.cmake.
+# Those must be added to the CMAKE_MODULE_PATH set below:
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/ExternalCMakeModules)
 
+#For find_package packages, export someextlib_DIR=/path/to/..
 # Required packages
 find_package (OpenCV REQUIRED)
 find_package (raspicam REQUIRED)
@@ -43,8 +47,12 @@ include_directories( ${raspicam_INCLUDE_DIRS} )
 # LIBRARIES
 #
 
-#Add api
-add_library(roverapi SHARED ${CMAKE_SOURCE_DIR}/src/api/basic_psys_rover.c)
+#Add roverapi
+file (GLOB_RECURSE ROVERAPI_FILES
+  ${CMAKE_SOURCE_DIR}/src/roverapi/*.c
+  ${CMAKE_SOURCE_DIR}/src/roverapi/*.cpp
+)
+add_library (roverapi SHARED ${ROVERAPI_FILES})
 
 set(CUSTOM_LIBS_DIR ${CMAKE_SOURCE_DIR}/src/libraries)
 
@@ -79,6 +87,21 @@ add_library (roverappdrivers SHARED ${ROVERAPP_DRIVER_FILES})
 
 #Add main executable
 add_executable(roverapp ${CMAKE_SOURCE_DIR}/src/roverapp.cpp)
+
+#
+#  LINKING TO ROVER API
+#
+
+target_link_libraries (roverapi wiringPi)
+target_link_libraries (roverapi wiringPiDev)
+
+target_link_libraries(roverapi hono_interaction)
+target_link_libraries(roverapi pthread_distribution)
+target_link_libraries(roverapi status_library)
+target_link_libraries(roverapi pthread_monitoring)
+target_link_libraries(roverapi timing)
+
+target_link_libraries (roverapi roverappdrivers)
 
 #
 #  LINKING TO ROVER TASKS

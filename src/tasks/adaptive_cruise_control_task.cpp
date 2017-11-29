@@ -11,16 +11,12 @@
 
 #include <tasks/adaptive_cruise_control_task.h>
 
-#include <wiringPi.h>
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
-#include <softPwm.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
 
 void *Adaptive_Cruise_Control_Task(void * arg)
@@ -29,8 +25,6 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 	acc_task_tmr.setTaskID("ACC");
 	acc_task_tmr.setDeadline(0.1);
 	acc_task_tmr.setPeriod(0.1);
-
-	CollectThreadName("Adaptive_Cruise_Control_Task");
 
 	while (1)
 	{
@@ -49,24 +43,33 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 			{
 				// go back if distance ok
 				if (distance_sr04_back_shared < CRITICAL_DISTANCE)
-					stop();
+					r.inRoverDriving().stopRover();
 				else
-					go(BACKWARD, LOW_SPEED);
+				{
+					r.inRoverDriving().setSpeed(r.inRoverDriving().LOWEST_SPEED);
+					r.inRoverDriving().goBackward();
+				}
 			}
 
 			// front distance between correct and critical
 			else if (distance_sr04_front_shared < CORRECT_DISTANCE && distance_sr04_front_shared >= CRITICAL_DISTANCE)
 			{
-				stop();
+				r.inRoverDriving().stopRover();
 			}
 
 			// front distance between safe and correct
 			else if (distance_sr04_front_shared < SAFE_DISTANCE && distance_sr04_front_shared >= CORRECT_DISTANCE)
-				go(FORWARD, LOW_SPEED);
+			{
+				r.inRoverDriving().setSpeed(r.inRoverDriving().LOWEST_SPEED);
+				r.inRoverDriving().goForward();
+			}
 
 			// distance > safe
 			else if (distance_sr04_front_shared >= SAFE_DISTANCE)
-				go(FORWARD, speed_shared);
+			{
+				r.inRoverDriving().setSpeed(speed_shared);
+				r.inRoverDriving().goForward();
+			}
 
 
 //			printf("ACC mode is ON!\n");

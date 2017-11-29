@@ -21,11 +21,10 @@
  *
  */
 
-#include "../include/roverapp.h"
+#include <roverapp.h>
 
 #include <libraries/pthread_distribution_lib/pthread_distribution.h>
 #include <libraries/pthread_monitoring/collect_thread_name.h>
-#include <libraries/hono_interaction/hono_interaction.h>
 #include <libraries/timing/timing.h>
 
 #include <tasks/ultrasonic_sensor_grove_task.h>
@@ -51,15 +50,17 @@
 #include <tasks/socket_client_task.h>
 #include <tasks/socket_server_task.h>
 
-#include <api/basic_psys_rover.h>
-
 #include <interfaces.h>
 #include <signal.h>
 
-//Please comment the line below to work with SR-04 sensor instead of GROOVE for rear proximity sensing.
-//#define USE_GROOVE_SENSOR 1
 
 using namespace std;
+
+//Using rover namespace from Rover API
+using namespace rover;
+
+//Create global RoverBase object from Rover API
+RoverBase r;
 
 /* Threads */
 pthread_t ultrasonic_grove_thread;
@@ -196,6 +197,8 @@ pthread_mutex_t buzzer_status_shared_lock;
 
 int shutdown_hook_shared;
 
+int display_use_elsewhere_shared;
+
 /* For proper termination */
 int running_flag;
 
@@ -225,21 +228,19 @@ void exitHandler(int dummy)
 
 int main()
 {
-	//Register all the entries as devices to cloud
-	registerEntriesToHonoInstance();
+	//Initialize all rover components
+	r.initialize();
+
+	//Set-up hono instance attributes and register 4711 device to Hono
+	r.inRoverCloud().setHono("idial.institute", 8080, "DEFAULT_TENANT");
+
+	r.inRoverCloud().setRegistrationPort(28080);
+	r.inRoverCloud().registerDevice("4711");
 
 	/* Add signals to exit threads properly */
 	signal(SIGINT, exitHandler);
 	signal(SIGTERM, exitHandler);
 	signal(SIGKILL, exitHandler);
-
-	RefreshThreadList();
-
-	CollectProcessID();
-
-	CollectThreadName("Main_Thread");
-
-	wiringPiSetup();
 
 	//Initialize shared data
 	temperature_shared = 0.0;
@@ -254,10 +255,11 @@ int main()
 	infrared_shared[3] = 0.0;
 	bearing_shared = 0.0;
 	driving_mode = MANUAL;
-	speed_shared = FULL_SPEED;
+	speed_shared = r.inRoverDriving().HIGHEST_SPEED;
 	buzzer_status_shared = 0;
 	shutdown_hook_shared = 0;
 	running_flag = 1;
+	display_use_elsewhere_shared = 0;
 
 	//Initialize mutexes
 	pthread_mutex_init(&temperature_lock, NULL);
@@ -480,10 +482,13 @@ int main()
 	placeAThreadToCore (webserver_motordrive_thread, 0);
 	*/
 
+
+
 	while (running_flag)
 	{
 		//What main thread does should come here..
 		// ...
+
 		delayMicroseconds(1* SECONDS_TO_MICROSECONDS);
 	}
 	pthread_exit(NULL);

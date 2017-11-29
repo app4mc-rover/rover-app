@@ -152,6 +152,8 @@ extern pthread_mutex_t buzzer_status_shared_lock;
 
 extern int shutdown_hook_shared;
 
+extern int display_use_elsewhere_shared;
+
 /* For proper termination */
 extern int running_flag;
 

@@ -19,11 +19,9 @@
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <linux/i2c-dev.h>
 #include <fcntl.h>
 #include <string.h>
@@ -34,6 +32,7 @@
 #include <sys/stat.h>
 
 #include <roverapp.h>
+#include <roverapi/basic_psys_rover.h>
 
 
 /* Name of the I2C device we will be using */
@@ -124,8 +123,6 @@ void *SRF02_Task (void * arg)
 	srf02_task_tmr.setTaskID("SRF02");
 	srf02_task_tmr.setDeadline(1);
 	srf02_task_tmr.setPeriod(1);
-
-	CollectThreadName("SRF02_Task");
 
 	unsigned int front_sensor, rear_sensor;
 

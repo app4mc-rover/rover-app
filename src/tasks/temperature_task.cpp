@@ -23,107 +23,22 @@
 #include <tasks/temperature_task.h>
 
 #include <ctime>
-#include <wiringPi.h>
-#include <wiringPiI2C.h>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
-
-void readDHT22SensorData()
-{
-	int data[5] = { 0, 0, 0, 0, 0 };
-
-	uint8_t laststate	= HIGH;
-	uint8_t counter		= 0;
-	uint8_t j			= 0, i;
-
-	data[0] = data[1] = data[2] = data[3] = data[4] = 0;
-
-	/* pull pin down for 18 milliseconds */
-	pinMode( DHT22_RPI_PIN, OUTPUT );
-	digitalWrite( DHT22_RPI_PIN, LOW );
-	delay( 18 );
-
-	/* prepare to read the pin */
-	pinMode( DHT22_RPI_PIN, INPUT );
-
-	/* detect change and read data */
-	for ( i = 0; i < MAX_TIMINGS; i++ )
-	{
-		counter = 0;
-		while ( digitalRead( DHT22_RPI_PIN ) == laststate )
-		{
-			counter++;
-			delayMicroseconds( 1 );
-			if ( counter == 255 )
-			{
-				break;
-			}
-		}
-		laststate = digitalRead( DHT22_RPI_PIN );
-
-		if ( counter == 255 )
-			break;
-
-		/* ignore first 3 transitions */
-		if ( (i >= 4) && (i % 2 == 0) )
-		{
-			/* shove each bit into the storage bytes */
-			data[j / 8] <<= 1;
-			if ( counter > 16 )
-				data[j / 8] |= 1;
-			j++;
-		}
-	}
-
-	/*
-	 * check we read 40 bits (8bit x 5 ) + verify checksum in the last byte
-	 * print it out if data is good
-	 */
-	if ( (j >= 40) &&
-	     (data[4] == ( (data[0] + data[1] + data[2] + data[3]) & 0xFF) ) )
-	{
-		float h = (float)((data[0] << 8) + data[1]) / 10;
-		if ( h > 100 )
-		{
-			h = data[0];	// for DHT11
-		}
-		float c = (float)(((data[2] & 0x7F) << 8) + data[3]) / 10;
-		if ( c > 125 )
-		{
-			c = data[2];	// for DHT11
-		}
-		if ( data[2] & 0x80 )
-		{
-			c = -c;
-		}
-		float f = c * 1.8f + 32;
-		//printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
-
-		pthread_mutex_lock(&temperature_lock);
-			temperature_shared = c;
-		pthread_mutex_unlock(&temperature_lock);
-
-		pthread_mutex_lock(&humidity_lock);
-			humidity_shared = h;
-		pthread_mutex_unlock(&humidity_lock);
-	}
-}
 
 void *Temperature_Task(void *arg)
 {
 	timing temperature_task_tmr;
 
-	CollectThreadName("Temperature_Task");
-
 	temperature_task_tmr.setTaskID("DHT22");
 	temperature_task_tmr.setDeadline(0.5);
 	temperature_task_tmr.setPeriod(0.5);
+
+	float temperature, humidity;
 
 	while (1)
 	{
@@ -132,7 +47,16 @@ void *Temperature_Task(void *arg)
 
 		//Task content starts here -----------------------------------------------
 
-		readDHT22SensorData();
+		temperature = r.inRoverSensors().readTemperature();
+		humidity = r.inRoverSensors().readHumidity();
+
+		pthread_mutex_lock(&temperature_lock);
+			temperature_shared = temperature;
+		pthread_mutex_unlock(&temperature_lock);
+
+		pthread_mutex_lock(&humidity_lock);
+			humidity_shared = humidity;
+		pthread_mutex_unlock(&humidity_lock);
 
 		//Task content ends here -------------------------------------------------
 

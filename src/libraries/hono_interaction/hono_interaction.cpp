@@ -352,29 +352,4 @@ int sendEventDataToHonoInstance (char * host_name, int port, char * tenant_name,
 	return status;
 }
 
-/**
- * Function Name:		registerSensorsToHonoInstance
- * Description:			If non registered already, this function
- * 						registers all the sensors and other entries
- * 						of APP4MC Rover as devices to Hono instance.
- * 						for visualization of Raw data in Granafa/InfluxDB.
- */
-int registerEntriesToHonoInstance (void)
-{
-	/*registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverFront");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverFrontLeft");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverFrontRight");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverRear");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverRearLeft");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverRearRight");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverBearing");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverUtilCpu1");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverUtilCpu2");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverUtilCpu3");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "roverUtilCpu4");
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "connectionCheck");*/
-	registerDeviceToHonoInstance("idial.institute",28080,"DEFAULT_TENANT", "4711");
-
-	return 1;
-}
 

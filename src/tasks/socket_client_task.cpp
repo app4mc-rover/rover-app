@@ -15,15 +15,12 @@
 
 #include <tasks/socket_client_task.h>
 
-#include <wiringPi.h>
 #include <unistd.h>
 #include <ctime>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <unistd.h>
 #include <string.h>
 
@@ -93,11 +90,9 @@ void *Socket_Client_Task (void * arg)
 {
 	timing socket_client_task_tmr;
 
-	CollectThreadName("Socket_Client_Task");
-
 	socket_client_task_tmr.setTaskID("Socket_Client_Task");
-	socket_client_task_tmr.setDeadline(0.8);
-	socket_client_task_tmr.setPeriod(0.8);
+	socket_client_task_tmr.setDeadline(0.5);
+	socket_client_task_tmr.setPeriod(0.5);
 
 	/* Add termination signal handler to properly close socket */
 	signal(SIGINT, Socket_Client_Task_Terminator);

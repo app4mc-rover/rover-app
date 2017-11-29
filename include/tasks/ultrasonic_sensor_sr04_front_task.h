@@ -49,14 +49,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
-#define TRIG0 7   //BCM-4   ->  WiringPi 7
-#define ECHO0 0   //BCM-17   ->  WiringPi 0
-
 void *Ultrasonic_Sensor_SR04_Front_Task(void *);
-int getCM_HCSR04UltrasonicFront();
-void setup_HCSR04UltrasonicFront();
 
 
 #endif /* TASKS_ULTRASONIC_SENSOR_SR04_FRONT_TASK_H_ */

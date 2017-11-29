@@ -24,57 +24,21 @@
 #include <tasks/infrared_distance_task.h>
 
 #include <ctime>
-#include <wiringPi.h>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
-#include <mcp3004.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
-
-void setupInfraredSensors()
-{
-	// Init the analog digital converter
-		  mcp3004Setup (BASE, SPI_CHAN); // 3004 and 3008 are the same 4/8 channels
-}
-
-float getDistanceFromInfraredSensor(int channel){
-	float x;
-	float y=analogRead (BASE+channel);
-
-// 1/cm to output voltage is almost linear between
-// 80cm->0,4V->123
-// 6cm->3,1V->961
-// => y=5477*x+55 => x= (y-55)/5477
-	if (y<123){
-		x=100.00;
-	} else {
-		float inverse = (y-55)/5477;
-		//printf("inverse=%f\n",inverse);
-	// x is the distance in cm
-		x = 1/inverse;
-	}
-
-    //printf("Distance channel row data %d:%f\n",channel,y);
-    //printf("Distance channel (cm) %d:%f\n",channel,x);
-
-	return x;
-}
 
 void *InfraredDistance_Task (void * arg)
 {
 	timing infrared_distance_task_tmr;
 
-	CollectThreadName("InfraredDistance_Task");
-
 	infrared_distance_task_tmr.setTaskID("Infrared");
 	infrared_distance_task_tmr.setDeadline(0.5);
 	infrared_distance_task_tmr.setPeriod(0.5);
 
-	//setupInfraredSensors();
 	int chan;
 
 	while (1)
@@ -87,7 +51,7 @@ void *InfraredDistance_Task (void * arg)
 		pthread_mutex_lock(&infrared_lock);
 			for (chan = 0; chan <= 3; chan ++)
 			{
-				infrared_shared[chan] = getDistanceFromInfraredSensor(chan);
+				infrared_shared[chan] = r.inRoverSensors().readInfraredSensor(chan);
 			}
 		pthread_mutex_unlock(&infrared_lock);
 		//Task content ends here -------------------------------------------------

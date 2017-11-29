@@ -28,9 +28,24 @@
 #include <iostream>
 #include <stdlib.h>
 #include <unistd.h>
-#include "wiringPi.h"
 
 #include "interfaces.h"
+
+#include <roverapi/rover_api.hpp>
+
+//Use the following when cross compiling with Eclipse CDT SDK
+//#define CROSS_COMPILE_ECLIPSE 1
+
+//When debugging without RoverSenseLayer uncomment the following to prevent OS to shutdown.
+//#define DEBUG_WO_RSL 1
+
+//Please comment the line below to work with SR-04 sensor instead of GROOVE for rear proximity sensing.
+//#define USE_GROOVE_SENSOR 1
+
+//Using rover namespace from Rover API
+using namespace rover;
+
+extern RoverBase r;
 
 extern pthread_t oled_thread;
 

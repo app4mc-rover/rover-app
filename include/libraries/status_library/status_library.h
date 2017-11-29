@@ -22,6 +22,6 @@ int retrieveWLANStatus (void);
 int retrieveETHStatus (void);
 int retrieveINTERNETStatus (void);
 int retrieveBLUETOOTHStatus (void);
-int retrieveHONOStatus (void);
+int retrieveHONOStatus (char * host_name, int port, char * tenant_name, char * device_id, char * user, char * password);
 
 #endif /* STATUS_LIBRARY_STATUS_LIBRARY_H_ */

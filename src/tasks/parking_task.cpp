@@ -19,27 +19,17 @@
 
 #include <tasks/parking_task.h>
 
-#include <wiringPi.h>
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
-#include <softPwm.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
-#include <tasks/motordriver_task.h>
 #include <roverapp.h>
 
 int StopParking (void)
 {
-    stop();
-    //Write to text file ..
-    ofstream myfile;
-    myfile.open("/var/www/html/ROVER_CMD.inc");
-    myfile << "F";
-    myfile.close();
+    r.inRoverDriving().stopRover();
     pthread_mutex_lock(&driving_mode_lock);
         driving_mode = MANUAL;
     pthread_mutex_unlock(&driving_mode_lock);
@@ -53,8 +43,6 @@ void *Parking_Task(void * arg)
 	parking_task_tmr.setDeadline(0.1);
 	parking_task_tmr.setPeriod(0.1);
 
-	CollectThreadName("Parking_Task");
-
 	float bearing_begin;
 
 	while (1)
@@ -66,7 +54,8 @@ void *Parking_Task(void * arg)
 		if (driving_mode == PARKING_LEFT)
 		{
 			bearing_begin = bearing_shared;
-			turnOnSpot(FORWARD, LEFT, speed_shared-50);
+			r.inRoverDriving().setSpeed(speed_shared-50);
+			r.inRoverDriving().turnLeft();
 			/**
 			 * The following bearing based parking does currently not work due to very unreliable bearing values
 			 */
@@ -84,34 +73,39 @@ void *Parking_Task(void * arg)
 			delay(3000);
 
 
-			stop();
-			go(FORWARD,speed_shared);
+			r.inRoverDriving().stopRover();
+			r.inRoverDriving().setSpeed(speed_shared);
+			r.inRoverDriving().goForward();
 			delay(2000);
-			stop();
+			r.inRoverDriving().stopRover();
 
 			//bearing_begin = bearing_shared;
-			turnOnSpot(FORWARD, RIGHT, speed_shared-50);
+			r.inRoverDriving().setSpeed(speed_shared-50);
+			r.inRoverDriving().turnRight();
 			//while(((int)bearing_begin+(int)bearing_shared) % 360 <80);
 			delay(3000);
 
-			stop();
+			r.inRoverDriving().stopRover();
 			StopParking();
 		}
 		else if (driving_mode == PARKING_RIGHT)
 		{
 			bearing_begin = bearing_shared;
-			turnOnSpot(FORWARD, RIGHT, speed_shared-50);
+			r.inRoverDriving().setSpeed(speed_shared-50);
+			r.inRoverDriving().turnRight();
 			//while(((int)bearing_begin+(int)bearing_shared) % 360 <85);
 			delay(3000);
 
-			go(FORWARD,speed_shared);
+			r.inRoverDriving().setSpeed(speed_shared);
+			r.inRoverDriving().goForward();
 			delay(2000);
 
 			bearing_begin = bearing_shared;
-			turnOnSpot(FORWARD, LEFT, speed_shared-50);
+			r.inRoverDriving().setSpeed(speed_shared-50);
+			r.inRoverDriving().turnLeft();
 			delay(3000);
 
-			stop();
+			r.inRoverDriving().stopRover();
 			StopParking();
 		}
 

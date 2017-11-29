@@ -66,7 +66,7 @@ typedef uint8_t byte;
 #define _BV(bit) (1 << (bit))
 
 // GCC Missing
-#define max(a,b) (a>b?a:b)
-#define min(a,b) (a<b?a:b)
+//#define max(a,b) (a>b?a:b)
+//#define min(a,b) (a<b?a:b)
 
 #endif

@@ -15,16 +15,13 @@
 
 #include <tasks/booth_modes_task.h>
 
-#include <wiringPi.h>
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 #include <softPwm.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
 
 void *Booth_Modes_Task(void * arg)
@@ -33,8 +30,6 @@ void *Booth_Modes_Task(void * arg)
 	booth_task_tmr.setTaskID("BM");
 	booth_task_tmr.setDeadline(0.1);
 	booth_task_tmr.setPeriod(0.1);
-
-	CollectThreadName("Booth_Modes_Task");
 
 	while (1)
 	{

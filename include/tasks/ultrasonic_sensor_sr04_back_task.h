@@ -49,14 +49,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
-#define TRIG1 1   //BCM-18   ->  WiringPi 1
-#define ECHO1 2   //BCM-27   ->  WiringPi 2
-
 void *Ultrasonic_Sensor_SR04_Back_Task(void *);
-int getCM_HCSR04UltrasonicBack();
-void setup_HCSR04UltrasonicBack();
-
 
 #endif /* TASKS_ULTRASONIC_SENSOR_SR04_BACK_TASK_H_ */

@@ -14,25 +14,14 @@
 */
 
 #include <tasks/external_gpio_task.h>
-#include <tasks/oled_task.h>
-#include <wiringPi.h>
 
 #include <ctime>
-#include <wiringPi.h>
-#include <softTone.h>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
-
-void setupBuzzer (void)
-{
-	softToneCreate(BUZZER_PIN);
-}
 
 /* Checks global variable buzzer_status */
 /* 1-> ON    0-> OFF */
@@ -62,61 +51,46 @@ void buzzerHandler (void)
 
 void buttonHandler (void)
 {
-	if (digitalRead(SHUTDOWN_BUTTON_PIN) == LOW)
+#ifndef DEBUG_WO_RSL
+	if (r.inRoverGpio().readShutdownButton() == LOW)
 	{
-		shutdownOSwithDisplay();
+		r.shutdown();
 	}
-}
 
+	if (r.inRoverGpio().readUserButton() == LOW)
+	{
+		display_use_elsewhere_shared = 1;
+		r.sleep(500);
 
+		//r.inRoverDisplay().initialize();
+		r.inRoverDisplay().clearDisplay();
+		r.inRoverDisplay().setTextSize(2);
+		r.inRoverDisplay().setTextColor(WHITE);
 
-void turnBuzzerOn (void)
-{
-	pthread_mutex_lock(&buzzer_status_shared_lock);
-	buzzer_status_shared = 1;
-	pthread_mutex_unlock(&buzzer_status_shared_lock);
-}
+		r.inRoverDisplay().setCursor(10,5);
+		r.inRoverDisplay().print("User");
+		r.inRoverDisplay().setCursor(20,25);
+		r.inRoverDisplay().print("Button");
+		r.inRoverDisplay().setCursor(30,45);
+		r.inRoverDisplay().print("Pressed");
 
-void playShutdownTone (void)
-{
-	softToneWrite (BUZZER_PIN, BUZZER_SHUTDOWN_FREQ);
-	delay(2000);
-	softToneWrite (BUZZER_PIN, BUZZER_OFF_FREQ);
-}
+		r.inRoverDisplay().display();
 
-void playOnTone (void)
-{
-	softToneWrite (BUZZER_PIN, BUZZER_ON_FREQ);
-	delay(1000);
-	softToneWrite (BUZZER_PIN, BUZZER_OFF_FREQ);
-}
+		r.inRoverGpio().shutdownTone();
 
-void turnBuzzerOff (void)
-{
-	pthread_mutex_lock(&buzzer_status_shared_lock);
-	buzzer_status_shared = 0;
-	pthread_mutex_unlock(&buzzer_status_shared_lock);
-}
-
-/* Simply shuts down the operating system, preferrably after
- * OLED is done showing the indicator */
-void shutdownOS (void)
-{
-	system("halt");
+		r.sleep(1000);
+		display_use_elsewhere_shared = 0;
+	}
+#endif
 }
 
 void *External_GPIO_Task(void *arg)
 {
 	timing extgpio_task_tmr;
 
-	CollectThreadName("External_GPIO_Task");
-
 	extgpio_task_tmr.setTaskID("GPIO");
 	extgpio_task_tmr.setDeadline(0.2);
 	extgpio_task_tmr.setPeriod(0.2);
-
-	/* Setup Buzzer */
-	setupBuzzer();
 
 	while (1)
 	{

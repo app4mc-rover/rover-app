@@ -22,25 +22,20 @@
  */
 
 #include <tasks/motordriver_task.h>
-#include <tasks/oled_task.h>
 
-#include <wiringPi.h>
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
-#include <softPwm.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
 
 void ExitAutomaticModes(void)
 {
 	if (driving_mode == ACC || driving_mode == PARKING_LEFT || driving_mode == PARKING_RIGHT || driving_mode == BOOTH1 || driving_mode == BOOTH2)
 	{
-		stop(); //Stop the rover first.
+		r.inRoverDriving().stopRover(); //Stop the rover first.
 		pthread_mutex_lock(&driving_mode_lock);
 			driving_mode = MANUAL;
 		pthread_mutex_unlock(&driving_mode_lock);
@@ -51,7 +46,7 @@ void ManualModeSet(void)
 {
 	if (driving_mode == ACC || driving_mode == PARKING_LEFT || driving_mode == PARKING_RIGHT || driving_mode == BOOTH1 || driving_mode == BOOTH2)
 	{
-		stop(); //Stop the rover first.
+		r.inRoverDriving().stopRover(); //Stop the rover first.
 	}
 	pthread_mutex_lock(&driving_mode_lock);
 		driving_mode = MANUAL;
@@ -65,7 +60,7 @@ void ParkingRightModeSet(void)
 {
 	if (driving_mode == ACC || driving_mode == MANUAL || driving_mode == BOOTH1 || driving_mode == BOOTH2)
 	{
-		stop(); //Stop the rover first.
+		r.inRoverDriving().stopRover(); //Stop the rover first.
 	}
 	pthread_mutex_lock(&driving_mode_lock);
 		driving_mode = PARKING_RIGHT;
@@ -79,7 +74,7 @@ void ParkingLeftModeSet(void)
 {
 	if (driving_mode == ACC || driving_mode == MANUAL || driving_mode == BOOTH1 || driving_mode == BOOTH2)
 	{
-		stop(); //Stop the rover first.
+		r.inRoverDriving().stopRover(); //Stop the rover first.
 	}
 	pthread_mutex_lock(&driving_mode_lock);
 		driving_mode = PARKING_LEFT;
@@ -93,7 +88,7 @@ void ACCModeSet(void)
 {
 	if (driving_mode == PARKING_LEFT || driving_mode == PARKING_RIGHT || driving_mode == MANUAL || driving_mode == BOOTH1 || driving_mode == BOOTH2   )
 	{
-		stop(); //Stop the rover first.
+		r.inRoverDriving().stopRover(); //Stop the rover first.
 	}
 	pthread_mutex_lock(&driving_mode_lock);
 		driving_mode = ACC;
@@ -107,7 +102,7 @@ void BoothMode1Set(void)
 {
 	if (driving_mode == PARKING_LEFT || driving_mode == PARKING_RIGHT || driving_mode == MANUAL || driving_mode == BOOTH2  || driving_mode == ACC)
 	{
-		stop(); //Stop the rover first.
+		r.inRoverDriving().stopRover(); //Stop the rover first.
 	}
 	pthread_mutex_lock(&driving_mode_lock);
 		driving_mode = BOOTH1;
@@ -121,7 +116,7 @@ void BoothMode2Set(void)
 {
 	if (driving_mode == PARKING_LEFT || driving_mode == PARKING_RIGHT || driving_mode == MANUAL || driving_mode == BOOTH1 || driving_mode == ACC)
 	{
-		stop(); //Stop the rover first.
+		r.inRoverDriving().stopRover(); //Stop the rover first.
 	}
 	pthread_mutex_lock(&driving_mode_lock);
 		driving_mode = BOOTH2;
@@ -136,18 +131,12 @@ void *MotorDriver_Task(void * arg)
 {
 	timing motordriver_task_tmr;
 
-	CollectThreadName("MotorDriver_Task");
-
 	motordriver_task_tmr.setTaskID("MotorDriver");
 	motordriver_task_tmr.setDeadline(0.1);
 	motordriver_task_tmr.setPeriod(0.1);
 
-	init();
 	int running = 1;
 	char local_command = 'f';
-
-	//runside (LEFT, BACKWARD, FULL_SPEED);
-	//runside (RIGHT, BACKWARD, FULL_SPEED);
 
 	while (running)
 	{
@@ -173,42 +162,50 @@ void *MotorDriver_Task(void * arg)
 				break;
 			case 'W':
 				ExitAutomaticModes();
-				go(FORWARD, speed_shared);
+				r.inRoverDriving().setSpeed(speed_shared);
+				r.inRoverDriving().goForward();
 				break;
 			case 'D':
 				ExitAutomaticModes();
-				turn(BACKWARD, LEFT, speed_shared);
+				r.inRoverDriving().setSpeed(speed_shared);
+				r.inRoverDriving().turnBackwardRight();
 				break;
 			case 'S':
 				ExitAutomaticModes();
-				go(BACKWARD, speed_shared);
+				r.inRoverDriving().setSpeed(speed_shared);
+				r.inRoverDriving().goBackward();
 				break;
 			case 'A':
 				ExitAutomaticModes();
-				turn(BACKWARD, RIGHT, speed_shared);
+				r.inRoverDriving().setSpeed(speed_shared);
+				r.inRoverDriving().turnBackwardLeft();
 				break;
 			case 'Q':
 				ExitAutomaticModes();
-				turn(FORWARD, RIGHT, speed_shared);
+				r.inRoverDriving().setSpeed(speed_shared);
+				r.inRoverDriving().turnForwardLeft();
 				break;
 			case 'E':
 				ExitAutomaticModes();
-				turn(FORWARD, LEFT, speed_shared);
+				r.inRoverDriving().setSpeed(speed_shared);
+				r.inRoverDriving().turnForwardRight();
 				break;
 			case 'K':  //turn right on spot
 				ExitAutomaticModes();
-				turnOnSpot(FORWARD, RIGHT, speed_shared);
+				r.inRoverDriving().setSpeed(speed_shared);
+				r.inRoverDriving().turnRight();
 				break;
 			case 'J': //turn left on spot
 				ExitAutomaticModes();
-				turnOnSpot(FORWARD, LEFT, speed_shared);
+				r.inRoverDriving().setSpeed(speed_shared);
+				r.inRoverDriving().turnLeft();
 				break;
 			case 'U':
 				//Calibration mode
 				break;
 			case 'R':
 				//Shutdown hook from web server
-				shutdownOSwithDisplay();
+				r.shutdown();
 				break;
 			case 'M':
 				//ACC mode set
@@ -227,7 +224,7 @@ void *MotorDriver_Task(void * arg)
 				BoothMode2Set();
 				break;
 			case 'F':
-				stop();
+				r.inRoverDriving().stopRover();
 				break;
 		}
 		//Task content ends here -------------------------------------------------

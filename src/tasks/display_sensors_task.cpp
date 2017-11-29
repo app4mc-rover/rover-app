@@ -22,22 +22,17 @@
 
 #include <tasks/display_sensors_task.h>
 
-#include <wiringPi.h>
 #include <unistd.h>
 #include <ctime>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <roverapp.h>
 
 void *DisplaySensors_Task (void * arg)
 {
 	timing display_sensors_task_tmr;
-
-	CollectThreadName("DisplaySensors_Task");
 
 	display_sensors_task_tmr.setTaskID("Display-Sensors");
 	display_sensors_task_tmr.setDeadline(5.0);

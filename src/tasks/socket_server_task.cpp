@@ -17,15 +17,11 @@
 
 #include <string.h>
 #include <ctime>
-#include <wiringPi.h>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
-#include <api/basic_psys_rover.h>
 #include <interfaces.h>
 #include <pthread.h>
-#include <softPwm.h>
 
-#include <libraries/pthread_monitoring/collect_thread_name.h>
 #include <signal.h>
 
 /* Socket defs header */
@@ -94,8 +90,6 @@ void Socket_Server_Task_Terminator (int dummy)
 void *Socket_Server_Task(void * arg)
 {
 	timing socket_server_task_tmr;
-
-	CollectThreadName("Socket_Server_Task");
 
 	socket_server_task_tmr.setTaskID("Socket_Server_Task");
 	socket_server_task_tmr.setDeadline(0.05);
