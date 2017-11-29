@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created C++ API 17.11.2017
+ *    David Schmelter, Fraunhofer IEM - compass sensor initial implementation
  *    Gael Blondelle - initial API and parameters
  *
  */
@@ -201,7 +202,7 @@ void rover::RoverSensors::setupBearingSensor(void)
 	this->calibration_start = millis();
 }
 
-float rover::RoverSensors::readBearing(void)
+float rover::RoverSensors::readBearingFromSunfounder(void)
 {
 	int8_t buffer[6];
 	//potential optimization: wiringPiI2CReadReg16
@@ -241,6 +242,7 @@ float rover::RoverSensors::readBearing(void)
 	yf = yf / (yMinRaw + yMaxRaw) * 2.0f;
 
 	float bearing = atan2(yf, xf);
+	printf("%f\n", bearing);
 
 	//location specific magnetic field correction
 	bearing += this->DECLINATION_ANGLE;
@@ -254,7 +256,7 @@ float rover::RoverSensors::readBearing(void)
 	}
 
 	float headingDegrees = bearing * (180.0 / M_PI);
-
+	printf("%f\n, headingDegrees");
 	return headingDegrees;
 }
 
@@ -441,4 +443,19 @@ float rover::RoverSensors::readHumidity (void)
 
 	/* Return humidity */
 	return h;
+}
+
+void rover::RoverSensors::setHMC588LAddress (int address)
+{
+	this->HMC588L_ADDRESS = address;
+}
+
+void rover::RoverSensors::setHMC588LDeclinationAngle (float angle)
+{
+	this->DECLINATION_ANGLE = angle;
+}
+
+void rover::RoverSensors::setHMC588LCalibrationPeriod(int period)
+{
+	this->CALIBRATION_DURATION = period;
 }

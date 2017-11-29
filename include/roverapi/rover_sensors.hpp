@@ -71,15 +71,15 @@ namespace rover
 			/**
 			 *  @brief Address for compass sensor
 			 */
-			static const int HMC588L_ADDRESS = 0x1E;
+			int HMC588L_ADDRESS = 0x0D; //0x1E;
 			/**
 			 *  @brief Calibration duration for compass sensor
 			 */
-			static const int CALIBRATION_DURATION = 10000; //compass calibration has a duration of 5 seconds
+			int CALIBRATION_DURATION = 10000; //compass calibration has a duration of 5 seconds
 			/**
 			 *  @brief Declination angle / correction factor for compass sensor
 			 */
-			static const float DECLINATION_ANGLE = 0.0413; //correction factor for location Paderborn
+			float DECLINATION_ANGLE = 0.0413; //correction factor for location Paderborn
 
 			/**
 			 * @brief Calibration variable for HMC588L
@@ -183,10 +183,28 @@ namespace rover
 			void calibrateBearingSensor (void);
 
 			/**
-			 * @brief Reads the bearing value from Bearing sensor (float).
+			 * @brief Sets the HMC588L Address
+			 * @return void
+			 */
+			void setHMC588LAddress (int address);
+
+			/**
+			 * @brief Sets the HMC588L Caliration Duration
+			 * @return void
+			 */
+			void setHMC588LCalibrationPeriod(int period);
+
+			/**
+			 * @brief Sets the HMC588L Declination angle
+			 * @return void
+			 */
+			void setHMC588LDeclinationAngle (float angle);
+
+			/**
+			 * @brief Reads the bearing value from Bearing sensor Sunfounder HMC5883L (float).
 			 * @return bearing_val in degrees (float).
 			 */
-			float readBearing (void);
+			float readBearingFromSunfounder (void);
 
 			/**
 			 * @brief Reads the temperature value in Celcius degrees from DHT22 temperature and humidity sensor (float).
