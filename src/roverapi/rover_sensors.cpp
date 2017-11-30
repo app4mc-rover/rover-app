@@ -205,6 +205,11 @@ void rover::RoverSensors::setupBearingSensor(void)
 float rover::RoverSensors::readBearingFromSunfounder(void)
 {
 	int8_t buffer[6];
+
+	this->setHMC588LAddress(0x1E);
+	this->setHMC588LCalibrationPeriod(10000);
+	this->setHMC588LDeclinationAngle(0.0413);
+
 	//potential optimization: wiringPiI2CReadReg16
 	buffer[0] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x03);
 	buffer[1] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x04);
@@ -242,7 +247,7 @@ float rover::RoverSensors::readBearingFromSunfounder(void)
 	yf = yf / (yMinRaw + yMaxRaw) * 2.0f;
 
 	float bearing = atan2(yf, xf);
-	printf("%f\n", bearing);
+	//printf("%f\n", bearing);
 
 	//location specific magnetic field correction
 	bearing += this->DECLINATION_ANGLE;
@@ -256,7 +261,7 @@ float rover::RoverSensors::readBearingFromSunfounder(void)
 	}
 
 	float headingDegrees = bearing * (180.0 / M_PI);
-	printf("%f\n, headingDegrees");
+	//printf("%f\n, headingDegrees");
 	return headingDegrees;
 }
 
