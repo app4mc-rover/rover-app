@@ -103,7 +103,7 @@ int main (void)
 											r_sensors.readInfraredSensor(r_sensors.ROVER_REAR_RIGHT));
 	printf ("Temperature = %f\n",	r_sensors.readTemperature());
 	printf ("Humidity = %f\n",		r_sensors.readHumidity());
-	printf ("Bearing = %f\n",		r_sensors.readBearing());
+	printf ("Bearing = %f\n",		r_sensors.readBearingHMC5883L());
 
 	// Checking if a button is pressed (LOW) and playing a tone with buzzer
 	if (r.inRoverGpio().readUserButton() == r.inRoverGpio().LO)

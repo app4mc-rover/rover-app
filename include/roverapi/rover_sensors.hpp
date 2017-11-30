@@ -11,6 +11,7 @@
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created C++ API 17.11.2017
+ *    										initial QMC5883L driver implemented 30.11.2017
  *    David Schmelter, Fraunhofer IEM - compass sensor initial implementation
  *    Gael Blondelle, Eclipse Foundation - initial API and parameters
  *
@@ -22,6 +23,11 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
+
+
+//To debug the application, uncomment the following
+//#define DEBUG 1
+
 
 namespace rover
 {
@@ -71,7 +77,7 @@ namespace rover
 			/**
 			 *  @brief Address for compass sensor
 			 */
-			int HMC588L_ADDRESS = 0x0D; //0x1E;
+			int HMC588L_ADDRESS = 0x1E; //0x1E;
 			/**
 			 *  @brief Calibration duration for compass sensor
 			 */
@@ -171,10 +177,10 @@ namespace rover
 			float readInfraredSensor (int infrared_sensor_id);
 
 			/**
-			 * @brief Sets up the bearing sensor and its I2C interface
+			 * @brief Sets up the bearing sensor Sunfounder HMC5883L and its I2C interface
 			 * @return void
 			 */
-			void setupBearingSensor (void);
+			void setupBearingHMC5883L (void);
 
 			/**
 			 * @brief Starts calibration for the bearing sensor
@@ -204,7 +210,7 @@ namespace rover
 			 * @brief Reads the bearing value from Bearing sensor Sunfounder HMC5883L (float).
 			 * @return bearing_val in degrees (float).
 			 */
-			float readBearingFromSunfounder (void);
+			float readBearingHMC5883L (void);
 
 			/**
 			 * @brief Reads the temperature value in Celcius degrees from DHT22 temperature and humidity sensor (float).
@@ -217,6 +223,18 @@ namespace rover
 			 * @return humidity_val in percentage (float).
 			 */
 			float readHumidity (void);
+
+			/**
+			 * @brief Sets up the bearing sensor with QMC5883L chip and its I2C interface
+			 * @return void
+			 */
+			void setupBearingQMC5883L (void);
+
+			/**
+			 * @brief Reads the bearing value from Bearing sensor with QMC5883L chip (float).
+			 * @return bearing_val in degrees (float).
+			 */
+			float readBearingQMC5883L (void);
 	};
 }
 

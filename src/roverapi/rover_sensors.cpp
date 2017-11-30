@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created C++ API 17.11.2017
+ *    										initial QMC5883L driver implemented 30.11.2017
  *    David Schmelter, Fraunhofer IEM - compass sensor initial implementation
  *    Gael Blondelle - initial API and parameters
  *
@@ -43,7 +44,8 @@ void rover::RoverSensors::initialize (void)
 	this->setupHCSR04UltrasonicSensor(this->ROVER_FRONT);
 	this->setupHCSR04UltrasonicSensor(this->ROVER_REAR);
 	this->setupInfraredSensors();
-	this->setupBearingSensor();
+	this->setupBearingHMC5883L();
+	this->setupBearingQMC5883L();
 }
 
 void rover::RoverSensors::setupHCSR04UltrasonicSensor (int sensor_id)
@@ -185,8 +187,121 @@ void rover::RoverSensors::calibrateBearingSensor (void)
 	this->calibration_start = millis();
 }
 
-void rover::RoverSensors::setupBearingSensor(void)
+void rover::RoverSensors::setupBearingQMC5883L(void)
 {
+	this->setHMC588LAddress(0x0D);
+	this->setHMC588LCalibrationPeriod(10000);
+	this->setHMC588LDeclinationAngle(0.0413);
+
+	if ((i2c_hmc588l_fd = wiringPiI2CSetup(this->HMC588L_ADDRESS)) < 0)
+	{
+		printf("Failed to initialize HMC588L compass sensor");
+	}
+
+	if (i2c_hmc588l_fd >= 0)
+	{
+		wiringPiI2CWriteReg8 (i2c_hmc588l_fd, 0x0B, 0x01); //init SET/PERIOD register
+
+		/*
+		Define
+		OSR = 512
+		Full Scale Range = 8G(Gauss)
+		ODR = 200HZ
+		set continuous measurement mode
+		*/
+		wiringPiI2CWriteReg8 (i2c_hmc588l_fd, 0x09, 0x1D);
+	}
+
+	this->calibration_start = millis();
+
+	//
+	// To do a software reset
+	// wiringPiI2CWriteReg8 (i2c_hmc588l_fd, 0x0A, 0x80);
+	//
+
+}
+
+float rover::RoverSensors::readBearingQMC5883L(void)
+{
+	int8_t buffer[6];
+
+	//wiringPiI2CWrite (i2c_hmc588l_fd, 0x00); //Start with register 3
+	//delay(25);
+
+	buffer[0] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x00); //LSB x
+	buffer[1] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x01); //MSB x
+	buffer[2] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x02); //LSB y
+	buffer[3] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x03); //MSB y
+	buffer[4] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x04); //LSB z
+	buffer[5] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x05); //MSB z
+
+	int16_t xRaw = (((int16_t) buffer[1] << 8) & 0xff00) | buffer[0];
+	int16_t yRaw = (((int16_t) buffer[3] << 8) & 0xff00) | buffer[2];
+#ifdef DEBUG
+	printf ("%d %d\n",xRaw,yRaw);
+#endif
+
+	//if calibration is active calculate minimum and maximum x/y values for calibration
+	if (millis() <= this->calibration_start + this->CALIBRATION_DURATION) {
+		if (xRaw < xMinRaw) {
+			xMinRaw = xRaw;
+		}
+		if (xRaw > xMaxRaw) {
+			xMaxRaw = xRaw;
+		}
+		if (yRaw < yMinRaw) {
+			yMinRaw = yRaw;
+		}
+		if (yRaw > yMaxRaw) {
+			yMaxRaw = yRaw;
+		}
+	}
+
+	//calibration: move and scale x coordinates based on minimum and maximum values to get a unit circle
+	float xf = xRaw - (float) (xMinRaw + xMaxRaw) / 2.0f;
+	xf = xf / (xMinRaw + xMaxRaw) * 2.0f;
+
+	//calibration: move and scale y coordinates based on minimum and maximum values to get a unit circle
+	float yf = yRaw - (float) (yMinRaw + yMaxRaw) / 2.0f;
+	yf = yf / (yMinRaw + yMaxRaw) * 2.0f;
+
+	float bearing = atan2(yf, xf);
+#ifdef DEBUG
+	printf("%f, bearing\n", bearing);
+#endif
+
+	//location specific magnetic field correction
+	bearing += this->DECLINATION_ANGLE;
+
+	if (bearing < 0) {
+		bearing += 2 * M_PI;
+	}
+
+	if (bearing > 2 * M_PI) {
+		bearing -= 2 * M_PI;
+	}
+
+	float headingDegrees = bearing * (180.0 / M_PI);
+#ifdef DEBUG
+	printf("%lf, headingDegrees\n", headingDegrees);
+#endif
+	return headingDegrees;
+
+
+}
+
+void rover::RoverSensors::setupBearingHMC5883L(void)
+{
+	this->setHMC588LAddress(0x1E);
+	this->setHMC588LCalibrationPeriod(10000);
+	this->setHMC588LDeclinationAngle(0.0413);
+
+#ifdef DEBUG
+	printf ("HMC588L Address is: %x\n", this->HMC588L_ADDRESS);
+	printf ("HMC588L Calibration period is %d\n", this->CALIBRATION_DURATION);
+	printf ("HMC588L Declination angle is %f\n", this->DECLINATION_ANGLE);
+#endif
+
 	if ((i2c_hmc588l_fd = wiringPiI2CSetup(this->HMC588L_ADDRESS)) < 0) {
 		printf("Failed to initialize HMC588L compass sensor");
 	}
@@ -202,21 +317,17 @@ void rover::RoverSensors::setupBearingSensor(void)
 	this->calibration_start = millis();
 }
 
-float rover::RoverSensors::readBearingFromSunfounder(void)
+float rover::RoverSensors::readBearingHMC5883L(void)
 {
 	int8_t buffer[6];
 
-	this->setHMC588LAddress(0x1E);
-	this->setHMC588LCalibrationPeriod(10000);
-	this->setHMC588LDeclinationAngle(0.0413);
-
 	//potential optimization: wiringPiI2CReadReg16
-	buffer[0] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x03);
-	buffer[1] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x04);
-	buffer[2] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x05);
-	buffer[3] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x06);
-	buffer[4] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x07);
-	buffer[5] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x08);
+	buffer[0] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x03); //MSB x
+	buffer[1] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x04); //LSB x
+	buffer[2] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x05); //MSB z
+	buffer[3] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x06); //LSB z
+	buffer[4] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x07); //MSB y
+	buffer[5] = wiringPiI2CReadReg8(i2c_hmc588l_fd, 0x08); //LSB y
 
 	int16_t xRaw = (((int16_t) buffer[0] << 8) & 0xff00) | buffer[1];
 	//int16_t zRaw = (((int16_t) buffer[2] << 8) & 0xff00) | buffer[3];
@@ -247,7 +358,9 @@ float rover::RoverSensors::readBearingFromSunfounder(void)
 	yf = yf / (yMinRaw + yMaxRaw) * 2.0f;
 
 	float bearing = atan2(yf, xf);
-	//printf("%f\n", bearing);
+#ifdef DEBUG
+	printf("%f, bearing\n", bearing);
+#endif
 
 	//location specific magnetic field correction
 	bearing += this->DECLINATION_ANGLE;
@@ -261,7 +374,9 @@ float rover::RoverSensors::readBearingFromSunfounder(void)
 	}
 
 	float headingDegrees = bearing * (180.0 / M_PI);
-	//printf("%f\n, headingDegrees");
+#ifdef DEBUG
+	printf("%lf, headingDegrees\n", headingDegrees);
+#endif
 	return headingDegrees;
 }
 
@@ -343,7 +458,9 @@ float rover::RoverSensors::readTemperature (void)
 				c = -c;
 			}
 			f = c * 1.8f + 32;
-			//printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
+#ifdef DEBUG
+			printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
+#endif
 			try_again = 0;
 		}
 		else
@@ -351,6 +468,7 @@ float rover::RoverSensors::readTemperature (void)
 			/* Data not good */
 			try_again = 1;
 			//printf ("Data not good, skipping\n");
+
 		}
 	}
 
@@ -436,13 +554,16 @@ float rover::RoverSensors::readHumidity (void)
 				c = -c;
 			}
 			f = c * 1.8f + 32;
-			//printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
+#ifdef DEBUG
+			printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
+#endif
 			try_again = 0;
 		}
 		else
 		{
 			/* Data not good */
 			try_again = 1;
+			//printf ("Data not good, skipping\n");
 		}
 	}
 

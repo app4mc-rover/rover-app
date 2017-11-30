@@ -66,7 +66,7 @@ void *CompassSensor_Task(void * arg)
 		//Asynchronous end to calibration mode --> Call EndCalibrationMode()
 
 		pthread_mutex_lock(&compass_lock);
-			bearing_shared = r.inRoverSensors().readBearingFromSunfounder();
+			bearing_shared = r.inRoverSensors().readBearingHMC5883L();
 		pthread_mutex_unlock(&compass_lock);
 
 
