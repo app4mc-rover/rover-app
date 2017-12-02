@@ -52,15 +52,19 @@ void rover::RoverSensors::setupHCSR04UltrasonicSensor (int sensor_id)
 {
 	int trig_pin, echo_pin;
 
-	if (sensor_id == 0)
+	if (sensor_id == this->ROVER_FRONT)
 	{
 		trig_pin = this->TRIG1;
 		echo_pin = this->ECHO1;
 	}
-	else
+	else if (sensor_id == this->ROVER_REAR)
 	{
 		trig_pin = this->TRIG0;
 		echo_pin = this->ECHO0;
+	}
+	else
+	{
+		printf ("Invalid Sensor ID for the Ultrasonic Sensor to function setupHCSR04UltrasonicSensor.\n");
 	}
 
     pinMode(trig_pin, OUTPUT);
@@ -75,15 +79,19 @@ int rover::RoverSensors::readHCSR04UltrasonicSensor (int sensor_id)
 {
 	int trig_pin, echo_pin;
 
-	if (sensor_id == 0)
+	if (sensor_id == this->ROVER_FRONT)
 	{
 		trig_pin = this->TRIG1;
 		echo_pin = this->ECHO1;
 	}
-	else
+	else if (sensor_id == this->ROVER_REAR)
 	{
 		trig_pin = this->TRIG0;
 		echo_pin = this->ECHO0;
+	}
+	else
+	{
+		printf ("Invalid Sensor ID for the Ultrasonic Sensor to function readHCSR04UltrasonicSensor.\n");
 	}
 
 	int distance = 0;
@@ -121,13 +129,17 @@ int rover::RoverSensors::readGrooveUltrasonicSensor (int sensor_id)
 {
 	int sig_pin;
 
-	if (sensor_id == 0)
+	if (sensor_id == this->ROVER_FRONT)
 	{
 		sig_pin = this->SIG1;
 	}
-	else
+	else if (sensor_id == this->ROVER_REAR)
 	{
 		sig_pin = this->SIG0;
+	}
+	else
+	{
+		printf ("Invalid Sensor ID for the Ultrasonic Sensor to function readGrooveUltrasonicSensor.\n");
 	}
 
 	long startTime, stopTime, elapsedTime, distance = 0;
@@ -165,6 +177,14 @@ float rover::RoverSensors::readInfraredSensor (int infrared_sensor_id)
 {
 	float x;
 	float y = analogRead (BASE+infrared_sensor_id);
+
+	if (infrared_sensor_id != this->ROVER_FRONT_LEFT &&
+			infrared_sensor_id != this->ROVER_FRONT_RIGHT &&
+			infrared_sensor_id != this->ROVER_REAR_LEFT &&
+			infrared_sensor_id != this->ROVER_REAR_RIGHT)
+	{
+		printf ("Invalid Sensor ID for the Infrared Sensor to function readInfraredSensor.\n");
+	}
 
 	// 1/cm to output voltage is almost linear between
 	// 80cm->0,4V->123
