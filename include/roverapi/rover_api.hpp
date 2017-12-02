@@ -268,7 +268,7 @@ namespace rover
 
 			/**
 			 * @brief Sleep function to be used in rover applications
-			 * @param Period to sleep in milliseconds
+			 * @param period_ms Period to sleep in milliseconds
 			 * @return void
 			 */
 			void sleep (unsigned int period_ms);

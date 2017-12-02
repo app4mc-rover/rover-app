@@ -96,7 +96,7 @@ namespace rover
 
 			/**
 			 * @brief Sets the default REGISTRATION_PORT variable
-			 * @param Port (int) to be set as REGISTRATION_PORT
+			 * @param port (int) to be set as REGISTRATION_PORT
 			 * @return void
 			 */
 			void setRegistrationPort (int port);
