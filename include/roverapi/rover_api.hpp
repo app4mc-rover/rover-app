@@ -63,7 +63,7 @@ int main (void)
 
 	// Initialize all components of the rover
 	r.initialize();
-    // or use r.initializeRoverSensors(), r.initializeRoverDisplay(), r.initializeRoverDriving(), r.initializeRoverGpio() to initialize individual components
+    // or use r.initializeWiringPi(), r.initializeRoverSensors(), r.initializeRoverDisplay(), r.initializeRoverDriving(), r.initializeRoverGpio() to initialize individual components
 
 	// Set-up cloud instance and register your device
 	RoverCloud r_cloud = r.inRoverCloud();
@@ -229,6 +229,11 @@ namespace rover
 			 */
 			int ROVER_DRIVING_INIT_;
 
+			/**
+			 * @brief Flag for indicating whether wiringPi library initialized or not.
+			 */
+			int WIRINGPI_INIT_;
+
 
 		public:
 			/**
@@ -242,9 +247,17 @@ namespace rover
 			virtual ~RoverBase();
 
 			/**
-			 * @brief Initializes the RoverBase
-			 * @return void
-			 */
+			  *   @brief  Initializes the all classes, sensors, libraries for the Rover.
+			  *   @return void
+			  *
+			  *   \warning This function can only be used once in Rover's Raspberry Pi. You can still use a second RoverBase object and configure that object. However, initializing in the low-level sense causes problems.
+			  *   \code{.cpp}
+			  *   RoverBase r;
+			  *   RoverBase x;
+			  *   r.initialize();
+			  *   x.initialize(); //^^^THIS IS NOT VALID AND WILL PRODUCE ERRORS
+			  *   \endcode
+			  */
 			void initialize (void);
 
 			/**
@@ -319,6 +332,12 @@ namespace rover
 			 * @return void
 			 */
 			void initializeRoverSensors (void);
+
+			/**
+			  *   @brief  Initializes wiringPi library to access GPIO of Rover. This function should be called in every program run and must only be called once.
+			  *   @return void
+			  */
+			void initializeWiringPi (void);
 	};
 }
 

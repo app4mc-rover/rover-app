@@ -28,9 +28,7 @@
   */
 rover::RoverBase::RoverBase()
 {
-	/* wiringPi can only be called once */
-	wiringPiSetup();
-
+	this->WIRINGPI_INIT_ = 0;
 	this->ROVER_DISPLAY_INIT_ = 0;
 	this->ROVER_DRIVING_INIT_ = 0;
 	this->ROVER_GPIO_INIT_ = 0;
@@ -45,20 +43,34 @@ rover::RoverBase::~RoverBase()
 
 }
 
-/**
-  *   @brief  Initializes the all classes, sensors, libraries for the Rover
-  */
+
 void rover::RoverBase::initialize(void)
 {
+	this->initializeWiringPi();
 	this->initializeRoverDisplay();
 	this->initializeRoverDriving();
 	this->initializeRoverGpio();
 	this->initializeRoverSensors();
 }
 
+
+void rover::RoverBase::initializeWiringPi(void)
+{
+	/* wiringPi can only be called once per program, One solution: */
+	static class Once { public: Once(){
+		wiringPiSetup();
+		printf("wiringPi Setup Done..\n");
+	}} Once_;
+	this->WIRINGPI_INIT_ = 1;
+}
+
 void rover::RoverBase::shutdown (void)
 {
-	if (this->ROVER_DISPLAY_INIT_ != 1)
+	if (this->WIRINGPI_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized wiringPi library. Use RoverBase::initialize() !\n");
+	}
+	else if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverBase::initialize() !\n");
 	}
@@ -130,7 +142,11 @@ void rover::RoverBase::shutdown (void)
 
 void rover::RoverBase::sleep (unsigned int period_ms)
 {
-	if (this->ROVER_DRIVING_INIT_ != 1)
+	if (this->WIRINGPI_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized wiringPi library. Use RoverBase::initialize() !\n");
+	}
+	else if (this->ROVER_DRIVING_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDriving. Use RoverBase::initialize() !\n");
 	}
@@ -152,7 +168,11 @@ rover::RoverCloud& rover::RoverBase::inRoverCloud (void)
 
 rover::RoverDriving& rover::RoverBase::inRoverDriving (void)
 {
-	if (this->ROVER_DRIVING_INIT_ != 1)
+	if (this->WIRINGPI_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized wiringPi library. Use RoverBase::initialize() !\n");
+	}
+	else if (this->ROVER_DRIVING_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDriving. Use RoverBase::initialize() !\n");
 	}
@@ -164,7 +184,11 @@ rover::RoverDriving& rover::RoverBase::inRoverDriving (void)
 
 rover::RoverGpio& rover::RoverBase::inRoverGpio (void)
 {
-	if (this->ROVER_GPIO_INIT_ != 1)
+	if (this->WIRINGPI_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized wiringPi library. Use RoverBase::initialize() !\n");
+	}
+	else if (this->ROVER_GPIO_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverGpio::initialize() !\n");
 	}
@@ -176,7 +200,11 @@ rover::RoverGpio& rover::RoverBase::inRoverGpio (void)
 
 rover::RoverDisplay& rover::RoverBase::inRoverDisplay (void)
 {
-	if (this->ROVER_DISPLAY_INIT_ != 1)
+	if (this->WIRINGPI_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized wiringPi library. Use RoverBase::initialize() !\n");
+	}
+	else if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverBase::initialize() !\n");
 	}
@@ -188,7 +216,11 @@ rover::RoverDisplay& rover::RoverBase::inRoverDisplay (void)
 
 rover::RoverSensors& rover::RoverBase::inRoverSensors (void)
 {
-	if (this->ROVER_SENSORS_INIT_ != 1)
+	if (this->WIRINGPI_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized wiringPi library. Use RoverBase::initialize() !\n");
+	}
+	else if (this->ROVER_SENSORS_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverSensors. Use RoverBase::initialize() !\n");
 	}
@@ -200,7 +232,11 @@ rover::RoverSensors& rover::RoverBase::inRoverSensors (void)
 
 void rover::RoverBase::initializeRoverSensors (void)
 {
-	if (this->ROVER_SENSORS_INIT_ != 1)
+	if (this->WIRINGPI_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized wiringPi library. Use RoverBase::initialize() !\n");
+	}
+	else if (this->ROVER_SENSORS_INIT_ != 1)
 	{
 		this->myRoverSensors.initialize();
 		this->ROVER_SENSORS_INIT_ = 1;
@@ -209,7 +245,11 @@ void rover::RoverBase::initializeRoverSensors (void)
 
 void rover::RoverBase::initializeRoverGpio (void)
 {
-	if (this->ROVER_GPIO_INIT_ != 1)
+	if (this->WIRINGPI_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized wiringPi library. Use RoverBase::initialize() !\n");
+	}
+	else if (this->ROVER_GPIO_INIT_ != 1)
 	{
 		this->myRoverGpio.initialize();
 		this->ROVER_GPIO_INIT_ = 1;
@@ -218,7 +258,11 @@ void rover::RoverBase::initializeRoverGpio (void)
 
 void rover::RoverBase::initializeRoverDisplay (void)
 {
-	if (this->ROVER_DISPLAY_INIT_ != 1)
+	if (this->WIRINGPI_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized wiringPi library. Use RoverBase::initialize() !\n");
+	}
+	else if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		this->myRoverDisplay.initialize();
 		this->ROVER_DISPLAY_INIT_ = 1;
@@ -227,7 +271,11 @@ void rover::RoverBase::initializeRoverDisplay (void)
 
 void rover::RoverBase::initializeRoverDriving (void)
 {
-	if (this->ROVER_DRIVING_INIT_ != 1)
+	if (this->WIRINGPI_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized wiringPi library. Use RoverBase::initialize() !\n");
+	}
+	else if (this->ROVER_DRIVING_INIT_ != 1)
 	{
 		this->myRoverDriving.initialize();
 		this->ROVER_DRIVING_INIT_ = 1;
