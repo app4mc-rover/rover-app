@@ -49,7 +49,7 @@ shutting down could be performed.
 
 \image html ./images/rover2.jpg
 
-\section example_usage Rover API Example Usage
+\section example_usage Rover API Example Usage (Using a singleton RoverBase object)
 The following is an example C++ application using some of the Rover API functions:
 
 \code{.cpp}
@@ -103,7 +103,8 @@ int main (void)
 											r_sensors.readInfraredSensor(r_sensors.ROVER_REAR_RIGHT));
 	printf ("Temperature = %f\n",	r_sensors.readTemperature());
 	printf ("Humidity = %f\n",		r_sensors.readHumidity());
-	printf ("Bearing = %f\n",		r_sensors.readBearingHMC5883L());
+	printf ("Bearing with HMC5883L = %f\n",		r_sensors.readBearingHMC5883L());
+	printf ("Bearing with QMC5883L = %f\n",		r_sensors.readBearingQMC5883L());
 
 	// Checking if a button is pressed (LOW) and playing a tone with buzzer
 	if (r.inRoverGpio().readUserButton() == r.inRoverGpio().LO)
@@ -115,7 +116,7 @@ int main (void)
 	r.inRoverGpio.setBuzzerOff();
 
 	// Print core utilization from the rover's OS
-	float *util = r.inRoverUtils.getCoreUtilization();
+	float *util = r.inRoverUtils().getCoreUtilization();
 	printf ("Utilization = [%f %f %f %f]\n", util);
 
 	// Use the OLED display on the rover
@@ -134,6 +135,120 @@ int main (void)
 
 	// Check if internet is connected
 	if (r.inRoverUtils().getInternetStatus() == 1)
+	{
+		my_display.setCursor(50,32);
+		my_display.print("ON");
+	}
+	else
+	{
+		my_display.setCursor(43,32);
+		my_display.print("OFF");
+	}
+
+	// Display now
+	my_display.display();
+
+	// Sleep a bit
+	r.sleep(5000);
+
+	// Shutdown the rover OS and abort the application
+	r.shutdown();
+
+	return 1;
+}
+\endcode
+
+\section example_usage2 Rover API Example Usage (Using individual classes)
+The following is an example C++ application using some of the Rover API functions:
+
+\code{.cpp}
+#include <roverapi/rover_api.hpp>
+
+using namespace rover;
+
+int main (void)
+{
+	RoverBase r;
+	RoverGpio r_gpio;
+	RoverCloud r_cloud;
+	RoverDisplay my_display;
+	RoverSensors r_sensors;
+	RoverUtils r_utils;
+	RoverDriving r_driving;
+
+	// WiringPi must be initialized once per program, before the actual processing..
+	r.initializeWiringPi();
+
+	// Initialize all components of the rover (you can do these partially, depending on which module you want to use
+	r_sensors.initialize();
+	my_display.initialize();
+	r_gpio.initialize();
+	r_driving.initialize();
+
+	// Set-up cloud instance and register your device
+	r_cloud.setHono("localhost", 8080, "DEFAULT_TENANT");
+	r_cloud.setRegistrationPort(28080);
+
+	if (r_cloud.registerDevice("4711") == 1)
+	{
+		printf ("Registered device to Hono cloud using REST API successfully..\n");
+	}
+
+	// Send telemetry data to Hono instance
+	if (r_cloud.sendTelemetry("4711","myuser","mypassword","roverFront", 100.0) == 1)
+	{
+		printf ("Data sent to Hono cloud using REST API successfully..\n");
+	}
+
+	// Driving with rover
+	r_driving.setSpeed (r_driving.HIGHEST_SPEED);
+	r_driving.goForward();
+	r.sleep (500); // Sleep for some time in milliseconds
+	r_driving.turnRight();
+	r.sleep (500); // Sleep for some time in milliseconds
+	r_driving.stopRover();
+
+
+	// Accessing sensors with rover
+
+	printf ("Ultrasonic = [%d %d]\n",	r_sensors.readHCSR04UltrasonicSensor(r_sensors.ROVER_FRONT),
+										r_sensors.readHCSR04UltrasonicSensor(r_sensors.ROVER_REAR));
+	printf ("Infrared = [%f %f %f %f]\n", 	r_sensors.readInfraredSensor(r_sensors.ROVER_FRONT_LEFT),
+											r_sensors.readInfraredSensor(r_sensors.ROVER_FRONT_RIGHT),
+											r_sensors.readInfraredSensor(r_sensors.ROVER_REAR_LEFT),
+											r_sensors.readInfraredSensor(r_sensors.ROVER_REAR_RIGHT));
+	printf ("Temperature = %f\n",	r_sensors.readTemperature());
+	printf ("Humidity = %f\n",		r_sensors.readHumidity());
+	printf ("Bearing with HMC5883L = %f\n",		r_sensors.readBearingHMC5883L());
+	printf ("Bearing with QMC5883L = %f\n",		r_sensors.readBearingQMC5883L());
+
+	// Checking if a button is pressed (LOW) and playing a tone with buzzer
+	if (r_gpio.readUserButton() == r.inRoverGpio().LO)
+	{
+		r_gpio.setBuzzerFrequency(400); //in Hz
+		r_gpio.setBuzzerOn();
+		r.sleep(1000);
+	}
+	r.inRoverGpio.setBuzzerOff();
+
+	// Print core utilization from the rover's OS
+	float *util = r_utils.getCoreUtilization();
+	printf ("Utilization = [%f %f %f %f]\n", util);
+
+	// Use the OLED display on the rover
+	// Prepare display contents
+	my_display.clearDisplay();
+	my_display.setTextSize(2);
+	my_display.setTextColor(my_display.WHITE_COLOR);
+
+	my_display.setCursor(12,10);
+	my_display.print("INTERNET:");
+
+	my_display.setTextSize(3);
+	my_display.setTextColor(my_display.WHITE_COLOR);
+
+	// Check if internet is connected
+	if (r_utils.getInternetStatus() == 1)
 	{
 		my_display.setCursor(50,32);
 		my_display.print("ON");
