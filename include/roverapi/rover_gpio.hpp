@@ -99,7 +99,7 @@ namespace rover
 			 * @brief Constructor function for the RoverGpio class
 			 * @return void
 			 */
-			RoverGpio();
+			explicit RoverGpio();
 
 			/**
 			 * @brief Initializes the RoverGpio functionality: Buzzer and Buttons

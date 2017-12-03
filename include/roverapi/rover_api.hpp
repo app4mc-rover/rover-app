@@ -239,7 +239,7 @@ namespace rover
 			/**
 			 * @brief Constructor for the RoverBase class
 			 */
-			RoverBase();
+			explicit RoverBase();
 
 			/**
 			 * @brief Destructor for the RoverBase class

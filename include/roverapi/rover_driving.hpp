@@ -49,7 +49,7 @@ namespace rover
 			/**
 			 * @brief Constructor for RoverDriving class.
 			 */
-			RoverDriving();
+			explicit RoverDriving();
 
 			/**
 			 * @brief Initializes wiringPi library and Analog to Digital Converter to start driving the rover.

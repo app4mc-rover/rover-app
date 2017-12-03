@@ -53,6 +53,7 @@ void *Parking_Task(void * arg)
 
 		if (driving_mode == PARKING_LEFT)
 		{
+			//printf ("PARKING STARTED\n");
 			bearing_begin = bearing_shared;
 			r.inRoverDriving().setSpeed(speed_shared-50);
 			r.inRoverDriving().turnLeft();
@@ -87,9 +88,11 @@ void *Parking_Task(void * arg)
 
 			r.inRoverDriving().stopRover();
 			StopParking();
+			//printf ("PARKING ENDED \n");
 		}
 		else if (driving_mode == PARKING_RIGHT)
 		{
+			//printf ("PARKING STARTED\n");
 			bearing_begin = bearing_shared;
 			r.inRoverDriving().setSpeed(speed_shared-50);
 			r.inRoverDriving().turnRight();
@@ -107,6 +110,7 @@ void *Parking_Task(void * arg)
 
 			r.inRoverDriving().stopRover();
 			StopParking();
+			//printf ("PARKING ENDED\n");
 		}
 
 		//Task content ends here -------------------------------------------------

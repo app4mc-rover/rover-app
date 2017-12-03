@@ -51,7 +51,7 @@ namespace rover
 			/**
 			 * @brief Constructor for the RoverCloud
 			 */
-			RoverCloud();
+			explicit RoverCloud();
 
 			/**
 			 * @brief Sets private attribute HOST_NAME

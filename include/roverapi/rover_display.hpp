@@ -134,7 +134,7 @@ namespace rover
 			/**
 			 * @brief Sets the text and background color color to either white or black
 			 * @param c is the text color in integer. RoverDisplay::BLACK_COLOR or RoverDisplay::WHITE_COLOR
-			 * @param c is the background color in integer. RoverDisplay::BLACK_COLOR or RoverDisplay::WHITE_COLOR
+			 * @param b is the background color in integer. RoverDisplay::BLACK_COLOR or RoverDisplay::WHITE_COLOR
 			 * @return void
 			 */
 			void setTextColor (uint16_t c, uint16_t b);
