@@ -90,7 +90,7 @@ namespace rover
 			/**
 			 * @brief Calibration variable for HMC588L
 			 */
-			unsigned int calibration_start;
+			mutable unsigned int calibration_start;
 
 		public:
 
@@ -141,14 +141,14 @@ namespace rover
 			 * @brief Sets up the HC-SR04 ultrasonic sensor
 			 * @return void
 			 */
-			void setupHCSR04UltrasonicSensor(int sensor_id);
+			void setupHCSR04UltrasonicSensor(const int sensor_id);
 
 			/**
 			 * @brief Reads from HC-SR04 ultrasonic sensor in centimeters. sensor_id RoverSensors::ROVER_FRONT: Front ultrasonic sensor, RoverSensors::ROVER_REAR: Rear ultrasonic sensor.
 			 * @param sensor_id RoverSensors::ROVER_FRONT: Front ultrasonic sensor, RoverSensors::ROVER_REAR: Rear ultrasonic sensor.
 			 * @return sensor_val in centimeters
 			 */
-			int readHCSR04UltrasonicSensor (int sensor_id);
+			int readHCSR04UltrasonicSensor (const int sensor_id);
 
 			/**
 			 * @brief Sets up the groove ultrasonic sensor
@@ -161,7 +161,7 @@ namespace rover
 			 * @param sensor_id RoverSensors::ROVER_FRONT: Front ultrasonic sensor, RoverSensors::ROVER_REAR: Rear ultrasonic sensor.
 			 * @return sensor_val in centimeters
 			 */
-			int readGrooveUltrasonicSensor (int sensor_id);
+			int readGrooveUltrasonicSensor (const int sensor_id);
 
 			/**
 			 * @brief Sets up the infrared sensors and Analog to digital converter
@@ -174,7 +174,7 @@ namespace rover
 			 * @param infrared_sensor_id Indicates the channel of which on-board sensor is addressed. RoverSensors::ROVER_REAR_RIGHT: Rear-right, RoverSensors::ROVER_REAR_LEFT: Rear-left, RoverSensors::ROVER_FRONT_RIGHT: Front-right, RoverSensors::ROVER_FRONT_LEFT: Front-left.
 			 * @return sensor_val in centimeters (float).
 			 */
-			float readInfraredSensor (int infrared_sensor_id);
+			float readInfraredSensor (const int infrared_sensor_id);
 
 			/**
 			 * @brief Sets up the bearing sensor Sunfounder HMC5883L and its I2C interface
@@ -186,25 +186,25 @@ namespace rover
 			 * @brief Starts calibration for the bearing sensor
 			 * @return void
 			 */
-			void calibrateBearingSensor (void);
+			void calibrateBearingSensor (void) const;
 
 			/**
 			 * @brief Sets the HMC588L Address
 			 * @return void
 			 */
-			void setHMC588LAddress (int address);
+			void setHMC588LAddress (const int address);
 
 			/**
 			 * @brief Sets the HMC588L Caliration Duration
 			 * @return void
 			 */
-			void setHMC588LCalibrationPeriod(int period);
+			void setHMC588LCalibrationPeriod(const int period);
 
 			/**
 			 * @brief Sets the HMC588L Declination angle
 			 * @return void
 			 */
-			void setHMC588LDeclinationAngle (float angle);
+			void setHMC588LDeclinationAngle (const float angle);
 
 			/**
 			 * @brief Reads the bearing value from Bearing sensor Sunfounder HMC5883L (float).

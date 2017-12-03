@@ -26,7 +26,7 @@ rover::RoverDriving::RoverDriving()
 {
 	this->SPEED = this->HIGHEST_SPEED;
 }
-void rover::RoverDriving::setSpeed (int speed_setpoint)
+void rover::RoverDriving::setSpeed (const int speed_setpoint)
 {
 	this->SPEED = speed_setpoint;
 }

@@ -28,24 +28,24 @@ namespace rover
 			/**
 			 * @brief Host name used for connecting to the Eclipse Hono using REST API
 			 */
-			char * HOST_NAME;
+			mutable char * HOST_NAME;
 			/**
 			 * @brief Port used for connecting to the Eclipse Hono using REST API
 			 */
-			int PORT;
+			mutable int PORT;
 			/**
 			 * @brief Port used for registering a device to the Eclipse Hono using REST API
 			 */
-			int REGISTRATION_PORT;
+			mutable int REGISTRATION_PORT;
 			/**
 			 * @brief Tenant name used for connecting to the Eclipse Hono using REST API
 			 */
-			char * TENANT_NAME;
+			mutable char * TENANT_NAME;
 
 			/**
 			 * @brief Checks private attributes and gives an error message and returns 0 if they're invalid.
 			 */
-			int attributeErrorCheck (void);
+			int attributeErrorCheck (void) const;
 
 		public:
 			/**
@@ -57,19 +57,19 @@ namespace rover
 			 * @brief Sets private attribute HOST_NAME
 			 * @param host_name
 			 */
-			void setHostName (char * host_name);
+			void setHostName (char * host_name) const;
 
 			/**
 			 * @brief Sets private attribute PORT
 			 * @param port
 			 */
-			void setPort (int port);
+			void setPort (const int port) const;
 
 			/**
 			 * @brief Sets private attribute TENANT_NAME
 			 * @param tenant
 			 */
-			void setTenantName (char * tenant);
+			void setTenantName (char * tenant) const;
 
 			/**
 			 * @brief Sets up a hono connection using host name, port, and tenant name
@@ -77,35 +77,35 @@ namespace rover
 			 * @param port
 			 * @param tenant
 			 */
-			void setHono (char * host_name, int port, char * tenant);
+			void setHono (char * host_name, const int port, char * tenant) const;
 
 			/**
 			 * @brief Retrieves private attribute HOST_NAME
 			 */
-			char * getHostName (void);
+			char * getHostName (void) const;
 
 			/**
 			 * @brief Retrieves private attribute PORT
 			 */
-			int getPort (void);
+			int getPort (void) const;
 
 			/**
 			 * @brief Retrieves private attribute TENANT_NAME
 			 */
-			char * getTenantName (void);
+			char * getTenantName (void) const;
 
 			/**
 			 * @brief Sets the default REGISTRATION_PORT variable
 			 * @param port (int) to be set as REGISTRATION_PORT
 			 * @return void
 			 */
-			void setRegistrationPort (int port);
+			void setRegistrationPort (const int port) const;
 
 			/**
 			 * @brief Retrieves private attribute REGISTRATION_PORT
 			 * @return Private attribute REGISTRATION_PORT
 			 */
-			int getRegistrationPort (void);
+			int getRegistrationPort (void) const;
 
 			/**
 			 * @brief Constructs curl command to register a device to Hono instance given device ID using REST API

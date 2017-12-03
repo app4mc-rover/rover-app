@@ -271,7 +271,7 @@ namespace rover
 			 * @param period_ms Period to sleep in milliseconds
 			 * @return void
 			 */
-			void sleep (unsigned int period_ms);
+			void sleep (const unsigned int period_ms);
 
 			/**
 			 * @brief Public function to access private RoverCloud instance.

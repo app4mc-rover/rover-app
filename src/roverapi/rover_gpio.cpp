@@ -32,12 +32,12 @@ void rover::RoverGpio::initialize (void)
 }
 
 rover::RoverGpio::RoverGpio()
+:BUZZER_FREQUENCY(200) /* Initialize default buzzer frequency */
 {
-	/* Initialize default buzzer frequency */
-	this->BUZZER_FREQUENCY = 200;
+
 }
 
-void rover::RoverGpio::setBuzzerFrequency (int buzzer_freq)
+void rover::RoverGpio::setBuzzerFrequency (const int buzzer_freq)
 {
 	this->BUZZER_FREQUENCY = buzzer_freq;
 }
@@ -64,7 +64,7 @@ void rover::RoverGpio::shutdownTone (void)
 	softToneWrite (BUZZER_PIN, 0);
 }
 
-void rover::RoverGpio::setBuzzerTone (int buzzer_freq)
+void rover::RoverGpio::setBuzzerTone (const int buzzer_freq)
 {
 	softToneWrite (this->BUZZER_PIN, buzzer_freq);
 }
@@ -79,17 +79,17 @@ int rover::RoverGpio::readShutdownButton (void)
 	return digitalRead (this->SHUTDOWN_BUTTON_PIN);
 }
 
-void rover::RoverGpio::wPiDigitalWrite (int pin, int value)
+void rover::RoverGpio::wPiDigitalWrite (const int pin, const int value)
 {
 	digitalWrite (pin, value);
 }
 
-int rover::RoverGpio::wPiDigitalRead (int pin)
+int rover::RoverGpio::wPiDigitalRead (const int pin)
 {
 	return digitalRead (pin);
 }
 
-void rover::RoverGpio::wPiPinMode (int pin, int set_val)
+void rover::RoverGpio::wPiPinMode (const int pin, const int set_val)
 {
 	pinMode (pin, set_val);
 }

@@ -22,14 +22,15 @@
 #include <string.h>
 
 rover::RoverCloud::RoverCloud()
+:REGISTRATION_PORT(1),
+ TENANT_NAME("N"),
+ PORT(1),
+ HOST_NAME("N")
 {
-	this->REGISTRATION_PORT = 1;
-	this->TENANT_NAME = "N";
-	this->PORT = 1;
-	this->HOST_NAME = "N";
+
 }
 
-int rover::RoverCloud::attributeErrorCheck (void)
+int rover::RoverCloud::attributeErrorCheck (void) const
 {
 	if (this->PORT == 1 || this->TENANT_NAME[0] == 'N' || this->HOST_NAME[0] == 'N')
 	{
@@ -85,7 +86,7 @@ int rover::RoverCloud::sendEvent (char * device_id, char * user, char * password
 	}
 }
 
-void rover::RoverCloud::setHono (char * host_name, int port, char * tenant)
+void rover::RoverCloud::setHono (char * host_name, const int port, char * tenant) const
 {
 
 	this->HOST_NAME = host_name;
@@ -93,42 +94,42 @@ void rover::RoverCloud::setHono (char * host_name, int port, char * tenant)
 	this->TENANT_NAME = tenant;
 }
 
-void rover::RoverCloud::setHostName (char * host_name)
+void rover::RoverCloud::setHostName (char * host_name) const
 {
 	this->HOST_NAME = host_name;
 }
 
-void rover::RoverCloud::setPort (int port)
+void rover::RoverCloud::setPort (const int port) const
 {
 	this->PORT = port;
 }
 
-void rover::RoverCloud::setRegistrationPort (int port)
+void rover::RoverCloud::setRegistrationPort (const int port) const
 {
 	this->REGISTRATION_PORT = port;
 }
 
-int rover::RoverCloud::getRegistrationPort (void)
+int rover::RoverCloud::getRegistrationPort (void) const
 {
 	return this->REGISTRATION_PORT;
 }
 
-void rover::RoverCloud::setTenantName (char * tenant)
+void rover::RoverCloud::setTenantName (char * tenant) const
 {
 	this->TENANT_NAME = tenant;
 }
 
-char * rover::RoverCloud::getHostName (void)
+char * rover::RoverCloud::getHostName (void) const
 {
 	return this->HOST_NAME;
 }
 
-int  rover::RoverCloud::getPort (void)
+int  rover::RoverCloud::getPort (void) const
 {
 	return this->PORT;
 }
 
-char * rover::RoverCloud::getTenantName (void)
+char * rover::RoverCloud::getTenantName (void) const
 {
 	return this->TENANT_NAME;
 }

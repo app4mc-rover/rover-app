@@ -26,13 +26,14 @@
 /**
   *   @brief  Constructor for the RoverBase class
   */
-rover::RoverBase::RoverBase()
+rover::RoverBase::RoverBase():
+WIRINGPI_INIT_(0),
+ROVER_DISPLAY_INIT_(0),
+ROVER_DRIVING_INIT_(0),
+ROVER_GPIO_INIT_(0),
+ROVER_SENSORS_INIT_(0)
 {
-	this->WIRINGPI_INIT_ = 0;
-	this->ROVER_DISPLAY_INIT_ = 0;
-	this->ROVER_DRIVING_INIT_ = 0;
-	this->ROVER_GPIO_INIT_ = 0;
-	this->ROVER_SENSORS_INIT_ = 0;
+
 }
 
 /**
@@ -140,7 +141,7 @@ void rover::RoverBase::shutdown (void)
 	}
 }
 
-void rover::RoverBase::sleep (unsigned int period_ms)
+void rover::RoverBase::sleep (const unsigned int period_ms)
 {
 	if (this->WIRINGPI_INIT_ != 1)
 	{

@@ -112,7 +112,7 @@ namespace rover
 			 * @param buzzer_freq Buzzer frequency to be set in Hz
 			 * @return void
 			 */
-			void setBuzzerFrequency (int buzzer_freq);
+			void setBuzzerFrequency (const int buzzer_freq);
 
 			/**
 			 * @brief Retrieves the default buzzer frequency in Hz.
@@ -137,7 +137,7 @@ namespace rover
 			 * @param buzzer_freq Buzzer frequency to be set in Hz
 			 * @return void
 			 */
-			void setBuzzerTone (int buzzer_freq);
+			void setBuzzerTone (const int buzzer_freq);
 
 			/**
 			 * @brief Plays the shutdown tone.
@@ -163,14 +163,14 @@ namespace rover
 			 * @param value Digital value to be given as output to the pin. LOW -> 0 HIGH -> 1
 			 * @return void
 			 */
-			void wPiDigitalWrite (int pin, int value);
+			void wPiDigitalWrite (const int pin, const int value);
 
 			/**
 			 * @brief Wrapper function to wiringPi's digitalRead function.
 			 * @param pin Pin number (int) to be read from using wiringPi pin descriptions.
 			 * @return value Digital value read from the pin. LOW -> 0 HIGH -> 1
 			 */
-			int wPiDigitalRead (int pin);
+			int wPiDigitalRead (const int pin);
 
 			/**
 			 * @brief Wrapper function to wiringPi's pinMode function.
@@ -178,7 +178,7 @@ namespace rover
 			 * @param set_val Pin Mode to be set for the GPIO pin: RoverGpio::INPUT_, RoverGpio::OUTPUT_, RoverGpio::PWM_OUTPUT_, RoverGpio::GPIO_CLOCK_, RoverGpio::SOFT_PWM_OUTPUT_, RoverGpio::SOFT_TONE_OUTPUT_, RoverGpio::PWM_TONE_OUTPUT_
 			 * @return void
 			 */
-			void wPiPinMode (int pin, int set_val);
+			void wPiPinMode (const int pin, const int set_val);
 	};
 }
 

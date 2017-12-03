@@ -48,7 +48,7 @@ void rover::RoverSensors::initialize (void)
 	this->setupBearingQMC5883L();
 }
 
-void rover::RoverSensors::setupHCSR04UltrasonicSensor (int sensor_id)
+void rover::RoverSensors::setupHCSR04UltrasonicSensor (const int sensor_id)
 {
 	int trig_pin, echo_pin;
 
@@ -75,7 +75,7 @@ void rover::RoverSensors::setupHCSR04UltrasonicSensor (int sensor_id)
     delayMicroseconds(2);
 }
 
-int rover::RoverSensors::readHCSR04UltrasonicSensor (int sensor_id)
+int rover::RoverSensors::readHCSR04UltrasonicSensor (const int sensor_id)
 {
 	int trig_pin, echo_pin;
 
@@ -125,7 +125,7 @@ void rover::RoverSensors::setupGrooveUltrasonicSensor(void) {
 	//wiringPiSetup();   //Since this can only be used once in a program, we do it in main and comment this.
 }
 
-int rover::RoverSensors::readGrooveUltrasonicSensor (int sensor_id)
+int rover::RoverSensors::readGrooveUltrasonicSensor (const int sensor_id)
 {
 	int sig_pin;
 
@@ -173,7 +173,7 @@ void rover::RoverSensors::setupInfraredSensors (void)
 	mcp3004Setup (BASE, SPI_CHAN); // 3004 and 3008 are the same 4/8 channels
 }
 
-float rover::RoverSensors::readInfraredSensor (int infrared_sensor_id)
+float rover::RoverSensors::readInfraredSensor (const int infrared_sensor_id)
 {
 	float x;
 	float y = analogRead (BASE+infrared_sensor_id);
@@ -202,7 +202,7 @@ float rover::RoverSensors::readInfraredSensor (int infrared_sensor_id)
 	return x;
 }
 
-void rover::RoverSensors::calibrateBearingSensor (void)
+void rover::RoverSensors::calibrateBearingSensor (void) const
 {
 	this->calibration_start = millis();
 }
@@ -591,17 +591,17 @@ float rover::RoverSensors::readHumidity (void)
 	return h;
 }
 
-void rover::RoverSensors::setHMC588LAddress (int address)
+void rover::RoverSensors::setHMC588LAddress (const int address)
 {
 	this->HMC588L_ADDRESS = address;
 }
 
-void rover::RoverSensors::setHMC588LDeclinationAngle (float angle)
+void rover::RoverSensors::setHMC588LDeclinationAngle (const float angle)
 {
 	this->DECLINATION_ANGLE = angle;
 }
 
-void rover::RoverSensors::setHMC588LCalibrationPeriod(int period)
+void rover::RoverSensors::setHMC588LCalibrationPeriod(const int period)
 {
 	this->CALIBRATION_DURATION = period;
 }

@@ -64,7 +64,7 @@ namespace rover
 			/**
 			 * @brief Sets the speed. 360 -> Lowest speed (RoverDriving::LOWEST_SPEED), 480 -> Highest speed (RoverDriving::HIGHEST_SPEED)
 			 */
-			void setSpeed (int speed_setpoint);
+			void setSpeed (const int speed_setpoint);
 
 			/**
 			 * @brief Retrieves the current speed setpoint.
