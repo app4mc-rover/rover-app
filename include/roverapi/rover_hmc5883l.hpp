@@ -11,6 +11,7 @@
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created RoverHMC5883L class 04.12.2017
+ *    David Schmelter, Fraunhofer IEM - compass sensor initial implementation
  *
  */
 
