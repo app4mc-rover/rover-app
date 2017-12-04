@@ -60,7 +60,11 @@ using namespace std;
 using namespace rover;
 
 //Create global RoverBase object from Rover API
-RoverBase r;
+RoverBase r_base;
+RoverDriving r_driving;
+RoverDisplay my_display;
+RoverUtils r_utils;
+RoverGpio r_gpio;
 
 /* Threads */
 pthread_t ultrasonic_grove_thread;
@@ -228,14 +232,17 @@ void exitHandler(int dummy)
 
 int main()
 {
-	//Initialize all rover components
-	r.initialize();
+	r_driving = RoverDriving();
+	r_base = RoverBase();
+	my_display = RoverDisplay();
+	r_utils = RoverUtils();
+	r_gpio = RoverGpio();
 
-	//Set-up hono instance attributes and register 4711 device to Hono
-	r.inRoverCloud().setHono("idial.institute", 8080, "DEFAULT_TENANT");
-
-	r.inRoverCloud().setRegistrationPort(28080);
-	r.inRoverCloud().registerDevice("4711");
+	//Initialize some of the rover components
+	r_base.initialize();
+	r_gpio.initialize();
+	r_driving.initialize();
+	my_display.initialize();
 
 	/* Add signals to exit threads properly */
 	signal(SIGINT, exitHandler);
@@ -255,7 +262,7 @@ int main()
 	infrared_shared[3] = 0.0;
 	bearing_shared = 0.0;
 	driving_mode = MANUAL;
-	speed_shared = r.inRoverDriving().HIGHEST_SPEED;
+	speed_shared = HIGHEST_SPEED;
 	buzzer_status_shared = 0;
 	shutdown_hook_shared = 0;
 	running_flag = 1;
