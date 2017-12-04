@@ -29,6 +29,7 @@
 #include <pthread.h>
 
 #include <roverapp.h>
+#include <roverapi/rover_dht22.hpp>
 
 void *Temperature_Task(void *arg)
 {
@@ -40,6 +41,9 @@ void *Temperature_Task(void *arg)
 
 	float temperature, humidity;
 
+	RoverDHT22 r_dht22 = RoverDHT22();
+	r_dht22.setup();
+
 	while (1)
 	{
 		temperature_task_tmr.recordStartTime();
@@ -47,8 +51,8 @@ void *Temperature_Task(void *arg)
 
 		//Task content starts here -----------------------------------------------
 
-		temperature = r.inRoverSensors().readTemperature();
-		humidity = r.inRoverSensors().readHumidity();
+		temperature = r_dht22.readTemperature();
+		humidity = r_dht22.readHumidity();
 
 		pthread_mutex_lock(&temperature_lock);
 			temperature_shared = temperature;

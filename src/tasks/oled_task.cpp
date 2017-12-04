@@ -62,7 +62,6 @@ void *OLED_Task (void * arg)
 
 	int counter_500ms = 0;
 
-	RoverDisplay my_display = r.inRoverDisplay();
 
 	while (1)
 	{
@@ -115,7 +114,7 @@ void *OLED_Task (void * arg)
 						my_display.setTextSize(3);
 						my_display.setTextColor(WHITE);
 
-						if (r.inRoverUtils().getWlanStatus() == 1)
+						if (r_utils.getWlanStatus() == 1)
 						{
 							my_display.setCursor(50,32);
 							my_display.print("ON");
@@ -144,7 +143,7 @@ void *OLED_Task (void * arg)
 						my_display.setTextSize(3);
 						my_display.setTextColor(WHITE);
 
-						if (r.inRoverUtils().getEthernetStatus() == 1)
+						if (r_utils.getEthernetStatus() == 1)
 						{
 							my_display.setCursor(50,32);
 							my_display.print("ON");
@@ -173,7 +172,7 @@ void *OLED_Task (void * arg)
 						my_display.setTextSize(3);
 						my_display.setTextColor(WHITE);
 
-						if (r.inRoverUtils().getInternetStatus() == 1)
+						if (r_utils.getInternetStatus() == 1)
 						{
 							my_display.setCursor(50,32);
 							my_display.print("ON");
@@ -202,7 +201,7 @@ void *OLED_Task (void * arg)
 						my_display.setTextSize(3);
 						my_display.setTextColor(WHITE);
 
-						if (r.inRoverUtils().getBluetoothStatus() == 1)
+						if (r_utils.getBluetoothStatus() == 1)
 						{
 							my_display.setCursor(50,32);
 							my_display.print("ON");
@@ -231,7 +230,7 @@ void *OLED_Task (void * arg)
 						my_display.setTextSize(3);
 						my_display.setTextColor(WHITE);
 
-						if (r.inRoverUtils().getHonoCloudStatus("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret") == 1)
+						if (r_utils.getHonoCloudStatus("idial.institute",8080,"DEFAULT_TENANT", "4711","sensor1","hono-secret") == 1)
 						{
 							my_display.setCursor(50,32);
 							my_display.print("ON");
@@ -259,7 +258,7 @@ void *OLED_Task (void * arg)
 		else
 		{
 			// Proper shutdown function, including showing message in the OLED display
-			r.shutdown();
+			r_base.shutdown();
 		}
 
 		/* If the display is not in use somewhere else asynchronously */

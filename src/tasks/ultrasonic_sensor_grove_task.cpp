@@ -33,6 +33,7 @@
 #include <pthread.h>
 
 #include <roverapp.h>
+#include <roverapi/rover_grooveultrasonic.hpp>
 
 void *Ultrasonic_Sensor_Grove_Task(void *unused)
 {
@@ -41,6 +42,9 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 	ultrasonic_grove_task_tmr.setTaskID("GrooveUltrasonic");
 	ultrasonic_grove_task_tmr.setDeadline(0.5);
 	ultrasonic_grove_task_tmr.setPeriod(0.5);
+
+	RoverGrooveUltrasonic r_groove = RoverGrooveUltrasonic(ROVER_REAR);
+	r_groove.setup();
 
 	while (1)
 	{
@@ -52,7 +56,7 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 			distance_grove_shared = getCM_GrooveUltrasonicRanger();
 		pthread_mutex_unlock(&distance_grove_lock);*/
 		pthread_mutex_lock(&distance_sr04_back_lock);
-			distance_sr04_back_shared = r.inRoverSensors().readGrooveUltrasonicSensor(r.inRoverSensors().ROVER_REAR);
+			distance_sr04_back_shared = (int) r_groove.read();
 		pthread_mutex_unlock(&distance_sr04_back_lock);
 		//printf("Distance: %dcm\n", getCM_GrooveUltrasonicRanger());
 		//Task content ends here -------------------------------------------------

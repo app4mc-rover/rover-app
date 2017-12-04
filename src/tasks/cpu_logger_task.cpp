@@ -29,6 +29,8 @@
 
 #include <roverapp.h>
 
+#include <roverapi/rover_utils.hpp>
+
 void Cpu_Logger_Task_Terminator (int dummy)
 {
 	running_flag = 0;
@@ -47,6 +49,8 @@ void *Cpu_Logger_Task(void * arg)
 	signal(SIGTERM, Cpu_Logger_Task_Terminator);
 	signal(SIGKILL, Cpu_Logger_Task_Terminator);
 
+	RoverUtils r_utils = RoverUtils();
+
 	float *util;
 
 	while (running_flag)
@@ -56,7 +60,7 @@ void *Cpu_Logger_Task(void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		util = r.inRoverUtils().getCoreUtilization();
+		util = r_utils.getCoreUtilization();
 		pthread_mutex_lock(&cpu_util_shared_lock);
 			cpu_util_shared[0] = util[0];
 			cpu_util_shared[1] = util[1];

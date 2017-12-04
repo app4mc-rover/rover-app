@@ -29,7 +29,7 @@
 
 int StopParking (void)
 {
-    r.inRoverDriving().stopRover();
+	r_driving.stopRover();
     pthread_mutex_lock(&driving_mode_lock);
         driving_mode = MANUAL;
     pthread_mutex_unlock(&driving_mode_lock);
@@ -55,8 +55,8 @@ void *Parking_Task(void * arg)
 		{
 			//printf ("PARKING STARTED\n");
 			bearing_begin = bearing_shared;
-			r.inRoverDriving().setSpeed(speed_shared-50);
-			r.inRoverDriving().turnLeft();
+			r_driving.setSpeed(speed_shared-50);
+			r_driving.turnLeft();
 			/**
 			 * The following bearing based parking does currently not work due to very unreliable bearing values
 			 */
@@ -74,19 +74,19 @@ void *Parking_Task(void * arg)
 			delay(3000);
 
 
-			r.inRoverDriving().stopRover();
-			r.inRoverDriving().setSpeed(speed_shared);
-			r.inRoverDriving().goForward();
+			r_driving.stopRover();
+			r_driving.setSpeed(speed_shared);
+			r_driving.goForward();
 			delay(2000);
-			r.inRoverDriving().stopRover();
+			r_driving.stopRover();
 
 			//bearing_begin = bearing_shared;
-			r.inRoverDriving().setSpeed(speed_shared-50);
-			r.inRoverDriving().turnRight();
+			r_driving.setSpeed(speed_shared-50);
+			r_driving.turnRight();
 			//while(((int)bearing_begin+(int)bearing_shared) % 360 <80);
 			delay(3000);
 
-			r.inRoverDriving().stopRover();
+			r_driving.stopRover();
 			StopParking();
 			//printf ("PARKING ENDED \n");
 		}
@@ -94,21 +94,21 @@ void *Parking_Task(void * arg)
 		{
 			//printf ("PARKING STARTED\n");
 			bearing_begin = bearing_shared;
-			r.inRoverDriving().setSpeed(speed_shared-50);
-			r.inRoverDriving().turnRight();
+			r_driving.setSpeed(speed_shared-50);
+			r_driving.turnRight();
 			//while(((int)bearing_begin+(int)bearing_shared) % 360 <85);
 			delay(3000);
 
-			r.inRoverDriving().setSpeed(speed_shared);
-			r.inRoverDriving().goForward();
+			r_driving.setSpeed(speed_shared);
+			r_driving.goForward();
 			delay(2000);
 
 			bearing_begin = bearing_shared;
-			r.inRoverDriving().setSpeed(speed_shared-50);
-			r.inRoverDriving().turnLeft();
+			r_driving.setSpeed(speed_shared-50);
+			r_driving.turnLeft();
 			delay(3000);
 
-			r.inRoverDriving().stopRover();
+			r_driving.stopRover();
 			StopParking();
 			//printf ("PARKING ENDED\n");
 		}

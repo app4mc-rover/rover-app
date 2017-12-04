@@ -18,6 +18,7 @@
 #include <pthread.h>
 
 #include <roverapp.h>
+#include <roverapi/rover_driving.hpp>
 
 void *Adaptive_Cruise_Control_Task(void * arg)
 {
@@ -25,6 +26,9 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 	acc_task_tmr.setTaskID("ACC");
 	acc_task_tmr.setDeadline(0.1);
 	acc_task_tmr.setPeriod(0.1);
+
+	RoverDriving r_driving = RoverDriving();
+	r_driving.initialize();
 
 	while (1)
 	{
@@ -43,32 +47,32 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 			{
 				// go back if distance ok
 				if (distance_sr04_back_shared < CRITICAL_DISTANCE)
-					r.inRoverDriving().stopRover();
+					r_driving.stopRover();
 				else
 				{
-					r.inRoverDriving().setSpeed(r.inRoverDriving().LOWEST_SPEED);
-					r.inRoverDriving().goBackward();
+					r_driving.setSpeed(LOWEST_SPEED);
+					r_driving.goBackward();
 				}
 			}
 
 			// front distance between correct and critical
 			else if (distance_sr04_front_shared < CORRECT_DISTANCE && distance_sr04_front_shared >= CRITICAL_DISTANCE)
 			{
-				r.inRoverDriving().stopRover();
+				r_driving.stopRover();
 			}
 
 			// front distance between safe and correct
 			else if (distance_sr04_front_shared < SAFE_DISTANCE && distance_sr04_front_shared >= CORRECT_DISTANCE)
 			{
-				r.inRoverDriving().setSpeed(r.inRoverDriving().LOWEST_SPEED);
-				r.inRoverDriving().goForward();
+				r_driving.setSpeed(LOWEST_SPEED);
+				r_driving.goForward();
 			}
 
 			// distance > safe
 			else if (distance_sr04_front_shared >= SAFE_DISTANCE)
 			{
-				r.inRoverDriving().setSpeed(speed_shared);
-				r.inRoverDriving().goForward();
+				r_driving.setSpeed(speed_shared);
+				r_driving.goForward();
 			}
 
 

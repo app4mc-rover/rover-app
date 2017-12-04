@@ -31,6 +31,8 @@
 
 #include <roverapp.h>
 
+#include <roverapi/rover_infraredsensor.hpp>
+
 void *InfraredDistance_Task (void * arg)
 {
 	timing infrared_distance_task_tmr;
@@ -39,7 +41,15 @@ void *InfraredDistance_Task (void * arg)
 	infrared_distance_task_tmr.setDeadline(0.5);
 	infrared_distance_task_tmr.setPeriod(0.5);
 
-	int chan;
+	RoverInfraredSensor r_infrared0 = RoverInfraredSensor(ROVER_REAR_RIGHT);
+	RoverInfraredSensor r_infrared1 = RoverInfraredSensor(ROVER_REAR_LEFT);
+	RoverInfraredSensor r_infrared2 = RoverInfraredSensor(ROVER_FRONT_RIGHT);
+	RoverInfraredSensor r_infrared3 = RoverInfraredSensor(ROVER_FRONT_LEFT);
+
+	r_infrared0.setup();
+	r_infrared1.setup();
+	r_infrared2.setup();
+	r_infrared3.setup();
 
 	while (1)
 	{
@@ -49,10 +59,10 @@ void *InfraredDistance_Task (void * arg)
 		//Task content starts here -----------------------------------------------
 		//Setting argument in pthread - whenever you R/W access to temperature_shared, you have to do the same.
 		pthread_mutex_lock(&infrared_lock);
-			for (chan = 0; chan <= 3; chan ++)
-			{
-				infrared_shared[chan] = r.inRoverSensors().readInfraredSensor(chan);
-			}
+			infrared_shared[0] = r_infrared0.read();
+			infrared_shared[1] = r_infrared1.read();
+			infrared_shared[2] = r_infrared2.read();
+			infrared_shared[3] = r_infrared3.read();
 		pthread_mutex_unlock(&infrared_lock);
 		//Task content ends here -------------------------------------------------
 

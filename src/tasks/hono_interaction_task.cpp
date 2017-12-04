@@ -23,6 +23,7 @@
 #include <pthread.h>
 
 #include <roverapp.h>
+#include <roverapi/rover_cloud.hpp>
 
 void *Hono_Interaction_Task(void * arg)
 {
@@ -30,6 +31,14 @@ void *Hono_Interaction_Task(void * arg)
 	hono_task_tmr.setTaskID("HonoTsk");
 	hono_task_tmr.setDeadline(2);
 	hono_task_tmr.setPeriod(2);
+
+	//Set-up hono instance attributes and register 4711 device to Hono
+	RoverCloud r_cloud = RoverCloud();
+
+	r_cloud.setHono("idial.institute", 8080, "DEFAULT_TENANT");
+
+	r_cloud.setRegistrationPort(28080);
+	r_cloud.registerDevice("4711");
 
 	while (1)
 	{
@@ -40,17 +49,17 @@ void *Hono_Interaction_Task(void * arg)
 
 		// Send everything to Hono every second in this task using the following functions
 		// TODO: This can be done with one curl command, probably a better way.
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverFront", distance_sr04_front_shared);
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverFrontLeft",infrared_shared[3]);
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverFrontRight", infrared_shared[2]);
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverRear", distance_sr04_back_shared);
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverRearLeft", infrared_shared[1]);
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverRearRight", infrared_shared[0]);
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverBearing", bearing_shared);
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverUtilCpu1", cpu_util_shared[0]);
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverUtilCpu2", cpu_util_shared[1]);
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverUtilCpu3", cpu_util_shared[2]);
-		r.inRoverCloud().sendTelemetry("4711","sensor1","hono-secret","roverUtilCpu4", cpu_util_shared[3]);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverFront", distance_sr04_front_shared);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverFrontLeft",infrared_shared[3]);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverFrontRight", infrared_shared[2]);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverRear", distance_sr04_back_shared);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverRearLeft", infrared_shared[1]);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverRearRight", infrared_shared[0]);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverBearing", bearing_shared);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverUtilCpu1", cpu_util_shared[0]);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverUtilCpu2", cpu_util_shared[1]);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverUtilCpu3", cpu_util_shared[2]);
+		r_cloud.sendTelemetry("4711","sensor1","hono-secret","roverUtilCpu4", cpu_util_shared[3]);
 
 
 		//Task content ends here -------------------------------------------------

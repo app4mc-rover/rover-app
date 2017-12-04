@@ -52,33 +52,33 @@ void buzzerHandler (void)
 void buttonHandler (void)
 {
 #ifndef DEBUG_WO_RSL
-	if (r.inRoverGpio().readShutdownButton() == LOW)
+	if (r_gpio.readShutdownButton() == r_gpio.LO)
 	{
-		r.shutdown();
+		r_base.shutdown();
 	}
 
-	if (r.inRoverGpio().readUserButton() == LOW)
+	if (r_gpio.readUserButton() == r_gpio.LO)
 	{
 		display_use_elsewhere_shared = 1;
-		r.sleep(500);
+		r_base.sleep(500);
 
 		//r.inRoverDisplay().initialize();
-		r.inRoverDisplay().clearDisplay();
-		r.inRoverDisplay().setTextSize(2);
-		r.inRoverDisplay().setTextColor(WHITE);
+		my_display.clearDisplay();
+		my_display.setTextSize(2);
+		my_display.setTextColor(WHITE);
 
-		r.inRoverDisplay().setCursor(10,5);
-		r.inRoverDisplay().print("User");
-		r.inRoverDisplay().setCursor(20,25);
-		r.inRoverDisplay().print("Button");
-		r.inRoverDisplay().setCursor(30,45);
-		r.inRoverDisplay().print("Pressed");
+		my_display.setCursor(10,5);
+		my_display.print("User");
+		my_display.setCursor(20,25);
+		my_display.print("Button");
+		my_display.setCursor(30,45);
+		my_display.print("Pressed");
 
-		r.inRoverDisplay().display();
+		my_display.display();
 
-		r.inRoverGpio().shutdownTone();
+		r_gpio.shutdownTone();
 
-		r.sleep(1000);
+		r_base.sleep(1000);
 		display_use_elsewhere_shared = 0;
 	}
 #endif

@@ -52,6 +52,7 @@
 #include <pthread.h>
 
 #include <roverapp.h>
+#include <roverapi/rover_hcsr04.hpp>
 
 void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 {
@@ -61,6 +62,9 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 	ultrasonic_sr04_back_task_tmr.setDeadline(0.1);
 	ultrasonic_sr04_back_task_tmr.setPeriod(0.1);
 
+	RoverHCSR04 r_ultrasonicrear = RoverHCSR04(ROVER_REAR);
+	r_ultrasonicrear.setup();
+
 	while (1)
 	{
 		ultrasonic_sr04_back_task_tmr.recordStartTime();
@@ -68,7 +72,7 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 
 		//Task content starts here -----------------------------------------------
 		pthread_mutex_lock(&distance_sr04_back_lock);
-			distance_sr04_back_shared = r.inRoverSensors().readHCSR04UltrasonicSensor(r.inRoverSensors().ROVER_REAR);
+			distance_sr04_back_shared = r_ultrasonicrear.read();
 		pthread_mutex_unlock(&distance_sr04_back_lock);
 
 		//Task content ends here -------------------------------------------------

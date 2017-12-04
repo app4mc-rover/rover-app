@@ -29,6 +29,8 @@
 #include <pthread.h>
 
 #include <roverapp.h>
+#include <roverapi/rover_hmc5883l.hpp>
+#include <roverapi/rover_qmc5883l.hpp>
 
 int EndCalibrationMode (void)
 {
@@ -47,6 +49,9 @@ void *CompassSensor_Task(void * arg)
 	compass_task_tmr.setDeadline(0.1);
 	compass_task_tmr.setPeriod(0.1);
 
+	RoverHMC5883L r_hmc5883l = RoverHMC5883L();
+	r_hmc5883l.setup();
+
 	while (1) {
 		compass_task_tmr.recordStartTime();
 		compass_task_tmr.calculatePreviousSlackTime();
@@ -59,14 +64,14 @@ void *CompassSensor_Task(void * arg)
 		{
 			printf("Starting compass calibration for 5 seconds. Please rotate me 360 degrees.\n");
 			EndCalibrationMode();
-			r.inRoverSensors().calibrateBearingSensor();
+			//r.inRoverSensors().calibrateBearingSensor();
 			//Calibration state..
 			//At the end of calibration to go to the end of calibration mode call EndCalibrationMode()
 		}
 		//Asynchronous end to calibration mode --> Call EndCalibrationMode()
 
 		pthread_mutex_lock(&compass_lock);
-			bearing_shared = r.inRoverSensors().readBearingHMC5883L();
+			bearing_shared = r_hmc5883l.read();
 		pthread_mutex_unlock(&compass_lock);
 
 
