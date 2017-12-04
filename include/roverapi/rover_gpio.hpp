@@ -46,6 +46,11 @@ namespace rover
 			 */
 			int BUZZER_FREQUENCY;
 
+			/**
+			 * @brief Flag to hold if RoverGpio is initialized
+			 */
+			int ROVERGPIO_INIT_;
+
 		public:
 
 			/* Pin Modes */

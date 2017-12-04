@@ -16,6 +16,9 @@
 #include <roverapi/rover_gpio.hpp>
 #include <wiringPi.h>
 #include <softTone.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 void rover::RoverGpio::initialize (void)
 {
@@ -29,10 +32,13 @@ void rover::RoverGpio::initialize (void)
 
 	/* Setup user button */
 	pinMode (this->USER_BUTTON_PIN, INPUT);
+
+	this->ROVERGPIO_INIT_ = 1;
 }
 
 rover::RoverGpio::RoverGpio()
-:BUZZER_FREQUENCY(200) /* Initialize default buzzer frequency */
+:BUZZER_FREQUENCY(200), /* Initialize default buzzer frequency */
+ ROVERGPIO_INIT_(0)
 {
 
 }
@@ -49,47 +55,110 @@ int rover::RoverGpio::getBuzzerFrequency (void)
 
 void rover::RoverGpio::setBuzzerOn (void)
 {
-	softToneWrite (this->BUZZER_PIN, this->BUZZER_FREQUENCY);
+	if (this->ROVERGPIO_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverGpio. Use RoverGpio()::initialize() !\n");
+	}
+	else
+	{
+		softToneWrite (this->BUZZER_PIN, this->BUZZER_FREQUENCY);
+	}
 }
 
 void rover::RoverGpio::setBuzzerOff (void)
 {
-	softToneWrite (this->BUZZER_PIN, 0);
+	if (this->ROVERGPIO_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverGpio. Use RoverGpio()::initialize() !\n");
+	}
+	else
+	{
+		softToneWrite (this->BUZZER_PIN, 0);
+	}
 }
 
 void rover::RoverGpio::shutdownTone (void)
 {
-	softToneWrite (this->BUZZER_PIN, 300);
-	delay(2000);
-	softToneWrite (BUZZER_PIN, 0);
+	if (this->ROVERGPIO_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverGpio. Use RoverGpio()::initialize() !\n");
+	}
+	else
+	{
+		softToneWrite (this->BUZZER_PIN, 300);
+		delay(2000);
+		softToneWrite (BUZZER_PIN, 0);
+	}
 }
 
 void rover::RoverGpio::setBuzzerTone (const int buzzer_freq)
 {
-	softToneWrite (this->BUZZER_PIN, buzzer_freq);
+	if (this->ROVERGPIO_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverGpio. Use RoverGpio()::initialize() !\n");
+	}
+	else
+	{
+		softToneWrite (this->BUZZER_PIN, buzzer_freq);
+	}
 }
 
 int rover::RoverGpio::readUserButton (void)
 {
-	return digitalRead (this->USER_BUTTON_PIN);
+	if (this->ROVERGPIO_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverGpio. Use RoverGpio()::initialize() !\n");
+	}
+	else
+	{
+		return digitalRead (this->USER_BUTTON_PIN);
+	}
 }
 
 int rover::RoverGpio::readShutdownButton (void)
 {
-	return digitalRead (this->SHUTDOWN_BUTTON_PIN);
+	if (this->ROVERGPIO_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverGpio. Use RoverGpio()::initialize() !\n");
+	}
+	else
+	{
+		return digitalRead (this->SHUTDOWN_BUTTON_PIN);
+	}
 }
 
 void rover::RoverGpio::wPiDigitalWrite (const int pin, const int value)
 {
-	digitalWrite (pin, value);
+	if (this->ROVERGPIO_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverGpio. Use RoverGpio()::initialize() !\n");
+	}
+	else
+	{
+		digitalWrite (pin, value);
+	}
 }
 
 int rover::RoverGpio::wPiDigitalRead (const int pin)
 {
-	return digitalRead (pin);
+	if (this->ROVERGPIO_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverGpio. Use RoverGpio()::initialize() !\n");
+	}
+	else
+	{
+		return digitalRead (pin);
+	}
 }
 
 void rover::RoverGpio::wPiPinMode (const int pin, const int set_val)
 {
-	pinMode (pin, set_val);
+	if (this->ROVERGPIO_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverGpio. Use RoverGpio()::initialize() !\n");
+	}
+	else
+	{
+		pinMode (pin, set_val);
+	}
 }
