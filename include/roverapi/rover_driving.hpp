@@ -18,6 +18,22 @@
 
 namespace rover
 {
+	/* Rover driving speeds */
+	/**
+	 * @brief Static definition to hold lowest driving speed for rover.
+	 */
+	static const int LOWEST_SPEED = 360;
+
+	/**
+	 * @brief Static definition to hold highest driving speed for rover.
+	 */
+	static const int HIGHEST_SPEED = 480;
+
+	/**
+	 * @brief Static definition to hold stopping speed for rover.
+	 */
+	static const int STOPPING_SPEED = 0;
+
 	/**
 	 * @brief Contains the member functions to drive the rover using its motors.
 	 */
@@ -29,22 +45,12 @@ namespace rover
 			 */
 			int SPEED;
 
+			/**
+			 * @brief Flag to hold if RoverDriving is initialized
+			 */
+			int ROVERDRIVING_INIT_;
+
 		public:
-			/* Rover driving speeds */
-			/**
-			 * @brief Static definition to hold lowest driving speed for rover.
-			 */
-			static const int LOWEST_SPEED = 360;
-
-			/**
-			 * @brief Static definition to hold highest driving speed for rover.
-			 */
-			static const int HIGHEST_SPEED = 480;
-
-			/**
-			 * @brief Static definition to hold stopping speed for rover.
-			 */
-			static const int STOPPING_SPEED = 0;
 
 			/**
 			 * @brief Constructor for RoverDriving class.

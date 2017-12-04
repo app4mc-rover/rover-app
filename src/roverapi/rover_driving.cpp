@@ -23,8 +23,10 @@
 #include <unistd.h>
 
 rover::RoverDriving::RoverDriving()
+:SPEED(HIGHEST_SPEED),
+ ROVERDRIVING_INIT_(0)
 {
-	this->SPEED = this->HIGHEST_SPEED;
+
 }
 void rover::RoverDriving::setSpeed (const int speed_setpoint)
 {
@@ -48,53 +50,118 @@ void rover::RoverDriving::initialize (void)
 	pinMode (DIRECTION_PIN_RIGHT, OUTPUT) ;
 
 
-	softPwmCreate (SOFT_PWM_ENGINE_LEFT, 0, this->HIGHEST_SPEED) ;
-	softPwmCreate (SOFT_PWM_ENGINE_RIGHT, 0, this->HIGHEST_SPEED) ;
+	softPwmCreate (SOFT_PWM_ENGINE_LEFT, 0, HIGHEST_SPEED) ;
+	softPwmCreate (SOFT_PWM_ENGINE_RIGHT, 0, HIGHEST_SPEED) ;
 
 	pinMode (FLASH_LIGHT_LED, OUTPUT) ;
+
+	this->ROVERDRIVING_INIT_ = 1;
 }
 
 void rover::RoverDriving::turnForwardRight (void)
 {
-	turn(FORWARD, LEFT, this->SPEED);
+	if (this->ROVERDRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverDriving()::initialize() !\n");
+	}
+	else
+	{
+		turn(FORWARD, LEFT, this->SPEED);
+	}
 }
 
 void rover::RoverDriving::turnForwardLeft (void)
 {
-	turn(FORWARD, RIGHT, this->SPEED);
+	if (this->ROVERDRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverDriving()::initialize() !\n");
+	}
+	else
+	{
+		turn(FORWARD, RIGHT, this->SPEED);
+	}
 }
 
 void rover::RoverDriving::turnBackwardRight (void)
 {
-	turn(BACKWARD, LEFT, this->SPEED);
+	if (this->ROVERDRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverDriving()::initialize() !\n");
+	}
+	else
+	{
+		turn(BACKWARD, LEFT, this->SPEED);
+	}
 }
 
 void rover::RoverDriving::turnBackwardLeft (void)
 {
-	turn(BACKWARD, RIGHT, this->SPEED);
+	if (this->ROVERDRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverDriving()::initialize() !\n");
+	}
+	else
+	{
+		turn(BACKWARD, RIGHT, this->SPEED);
+	}
 }
 
 void rover::RoverDriving::turnLeft (void)
 {
-	turnOnSpot(FORWARD, LEFT, this->SPEED);
+	if (this->ROVERDRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverDriving()::initialize() !\n");
+	}
+	else
+	{
+		turnOnSpot(FORWARD, LEFT, this->SPEED);
+	}
 }
 
 void rover::RoverDriving::turnRight (void)
 {
-	turnOnSpot(FORWARD, RIGHT, this->SPEED);
+	if (this->ROVERDRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverDriving()::initialize() !\n");
+	}
+	else
+	{
+		turnOnSpot(FORWARD, RIGHT, this->SPEED);
+	}
 }
 
 void rover::RoverDriving::goForward (void)
 {
-	go(FORWARD, this->SPEED);
+	if (this->ROVERDRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverDriving()::initialize() !\n");
+	}
+	else
+	{
+		go(FORWARD, this->SPEED);
+	}
 }
 
 void rover::RoverDriving::goBackward (void)
 {
-	go(BACKWARD, this->SPEED);
+	if (this->ROVERDRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverDriving()::initialize() !\n");
+	}
+	else
+	{
+		go(BACKWARD, this->SPEED);
+	}
 }
 
 void rover::RoverDriving::stopRover (void)
 {
-	stop();
+	if (this->ROVERDRIVING_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDriving. Use RoverDriving()::initialize() !\n");
+	}
+	else
+	{
+		stop();
+	}
 }
