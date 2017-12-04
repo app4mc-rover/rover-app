@@ -62,7 +62,13 @@ namespace rover
 			 */
 			Adafruit_SSD1306 my_display;
 
+			/**
+			 * @brief Flag to hold if RoverDisplay is initialized.
+			 */
+			int ROVER_DISPLAY_INIT_;
+
 		public:
+
 			/**
 			 * @brief Static definition to indicate BLACK color
 			 */
@@ -72,6 +78,11 @@ namespace rover
 			 * @brief Static definition to indicate WHITE color
 			 */
 			static const int WHITE_COLOR = 1;
+
+			/**
+			 * @brief (Default) Constructor for RoverDisplay class
+			 */
+			RoverDisplay();
 
 			/**
 			 * @brief Initializes the OLED display of the rover

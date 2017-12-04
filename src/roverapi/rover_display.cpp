@@ -44,6 +44,12 @@
 #include <drivers/oled_drivers/ArduiPi_SSD1306.h>
 #include <drivers/oled_drivers/Adafruit_GFX.h>
 
+rover::RoverDisplay::RoverDisplay()
+:ROVER_DISPLAY_INIT_(0)
+{
+
+}
+
 void rover::RoverDisplay::initialize(void)
 {
 	/* Type to describe default options for the OLED initialization */
@@ -65,74 +71,128 @@ void rover::RoverDisplay::initialize(void)
 
 	this->my_display.begin();
 	this->my_display.clearDisplay();   // clears the screen and buffer
+
+	this->ROVER_DISPLAY_INIT_ = 1;
 }
 
 void rover::RoverDisplay::display(void)
 {
-
-	this->my_display.display();
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.display();
+	}
 
 }
 
 void rover::RoverDisplay::clearDisplay(void)
 {
-
-	this->my_display.clearDisplay();
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.clearDisplay();
+	}
 
 }
 
 void rover::RoverDisplay::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color)
 {
-
-	this->my_display.drawBitmap(x, y, bitmap, w, h, color);
-
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.drawBitmap(x, y, bitmap, w, h, color);
+	}
 }
 
 void rover::RoverDisplay::setCursor (int16_t x, int16_t y)
 {
-
-	this->my_display.setCursor (x, y);
-
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.setCursor (x, y);
+	}
 }
 
 void rover::RoverDisplay::setTextSize (uint8_t s)
 {
-
-	this->my_display.setTextSize (s);
-
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.setTextSize (s);
+	}
 }
 
 void rover::RoverDisplay::setTextColor (uint16_t c)
 {
-
-	this->my_display.setTextColor (c);
-
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.setTextColor (c);
+	}
 }
 
 void rover::RoverDisplay::setTextColor (uint16_t c, uint16_t b)
 {
-
-	this->my_display.setTextColor (c, b);
-
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.setTextColor (c, b);
+	}
 }
 
 void rover::RoverDisplay::print (const char * string)
 {
-
-	this->my_display.print (string);
-
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.print (string);
+	}
 }
 
 void rover::RoverDisplay::drawRect (int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
-
-	this->my_display.drawRect (x, y, w, h, color);
-
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.drawRect (x, y, w, h, color);
+	}
 }
 
 Adafruit_SSD1306& rover::RoverDisplay::getDisplay (void)
 {
-
-	return this->my_display;
-
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		return this->my_display;
+	}
 }
