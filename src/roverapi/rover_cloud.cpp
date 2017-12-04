@@ -30,6 +30,14 @@ rover::RoverCloud::RoverCloud()
 
 }
 
+rover::RoverCloud::RoverCloud(char * host_name, const int port, const int registration_port, char * tenant_name)
+{
+	this->HOST_NAME = host_name;
+	this->PORT = port;
+	this->REGISTRATION_PORT = registration_port;
+	this->TENANT_NAME = tenant_name;
+}
+
 int rover::RoverCloud::attributeErrorCheck (void) const
 {
 	if (this->PORT == 1 || this->TENANT_NAME[0] == 'N' || this->HOST_NAME[0] == 'N')

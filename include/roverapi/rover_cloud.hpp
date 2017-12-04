@@ -49,9 +49,18 @@ namespace rover
 
 		public:
 			/**
-			 * @brief Constructor for the RoverCloud
+			 * @brief (default) Constructor for the RoverCloud
 			 */
 			explicit RoverCloud();
+
+			/**
+			 * @brief (assigning) Constructor for the RoverCloud
+			 * @param host_name
+			 * @param registration_port
+			 * @param port
+			 * @param tenant
+			 */
+			explicit RoverCloud(char * host_name, const int port, const int registration_port, char * tenant_name);
 
 			/**
 			 * @brief Sets private attribute HOST_NAME
