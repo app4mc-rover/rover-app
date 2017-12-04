@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Description:
- *    Rover API - Interfaces for Rover application development - Header file
+ *    Rover API - Interfaces for basic Rover application development - Header file
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created API 17.11.2017
@@ -18,12 +18,6 @@
 
 #include <stdint.h>
 
-#include <roverapi/rover_display.hpp>
-#include <roverapi/rover_driving.hpp>
-#include <roverapi/rover_gpio.hpp>
-#include <roverapi/rover_sensors.hpp>
-#include <roverapi/rover_utils.hpp>
-#include <roverapi/rover_cloud.hpp>
 
 /**
 \mainpage Rover API Main Page
@@ -36,42 +30,60 @@ It also features drivers for sensors such as magnetometers, accelerometers, vari
 
 Roverapp builds and contains the **Rover API**, which is able to handle subset of its functionality. Example functionality covered in **Rover API** is given below:
 
-\li **RoverBase** class is the main class used for instantiating rover objects.
-Each RoverBase object has private member functions referencing to other API classes exclusive to one RoverBase object.
-Therefore, using one RoverBase class, other classes can be accessed, and operations such as initialization,
-shutting down could be performed.
+\li **RoverBase** RoverBase class provides basic rover functions such as initialization, sleeping, and shutting down.
 \li **RoverCloud** contains the member functions to connect and send data to Eclipse Hono instance using several parameters such as host name, port, tenant name, user name, and password. This class wraps hono_interaction library for Rover-specific interactions.
 \li **RoverDisplay** contains the member functions to control OLED display on the Rover. This class is a wrapper API for Adafruit_GFX and Adafruit_SSD1306 libraries.
 \li **RoverDriving** contains the member functions to drive the rover using its motors.
 \li **RoverGpio** class provides the member functions related to embedded buzzer, user button, and shutdown button on the rover.
-\li **RoverSensors** class contains member functions to setup and read from embedded sensors from rover's RoverSenseLayer sensor layer.
 \li **RoverUtils** contains member functions to retrieve connectivity status and core utilization of the rover. This class wraps status_library lib, developed for the rover-app.
+\li **RoverSensors** is a pure abstract class defining the interface between sensor classes of the rover.
+
+\li **RoverDHT22** is a class that is inherited from RoverSensor abstract class. RoverDHT22 class contains member functions and variables to set up and read from DHT22 temperature and humidity sensor that is embedded on the rover.
+\li **RoverGrooveUltrasonic** is a class that is inherited from RoverSensor abstract class. RoverGrooveUltrasonic class contains member functions and variables to set up and read from Groove ultrasonic sensors that are embedded on the rover.
+\li **RoverHCSR04** is a class that is inherited from RoverSensor abstract class. RoverHCSR04 class contains member functions and variables to set up and read from HCSR-04 ultrasonic sensors that are embedded on the rover.
+\li **RoverInfraredSensor** is a class that is inherited from RoverSensor abstract class. RoverInfraredSensor class contains member functions and variables to set up and read from SHARP infrared sensors that are embedded on the rover.
+\li **RoverGY521** is a class that is inherited from RoverSensor abstract class. RoverGY521 class contains member functions and variables to set up and read from GY521 accelerometer that is embedded on the rover.
+\li **RoverHMC5883L** is a class that is inherited from RoverSensor abstract class. RoverHMC5883L class contains member functions and variables to set up and read from HMC5883L bearing sensor that is embedded on the rover.
+\li **RoverQMC5883L** is a class that is inherited from RoverSensor abstract class. RoverQMC5883L class contains member functions and variables to set up and read from QMC5883L bearing sensor that is embedded on the rover.
 
 \image html ./images/rover2.jpg
 
-\section example_usage Rover API Example Usage (Using a singleton RoverBase object)
+\section example_usage Rover API Example Usage
 The following is an example C++ application using some of the Rover API functions:
 
 \code{.cpp}
+//Basis Include
 #include <roverapi/rover_api.hpp>
+//Other Includes
+#include <roverapi/rover_cloud.hpp>
+#include <roverapi/rover_dht22.hpp>
+#include <roverapi/rover_display.hpp>
+#include <roverapi/rover_driving.hpp>
+#include <roverapi/rover_gpio.hpp>
+#include <roverapi/rover_grooveultrasonic.hpp>
+#include <roverapi/rover_gy521.hpp>
+#include <roverapi/rover_hcsr04.hpp>
+#include <roverapi/rover_hmc5883l.hpp>
+#include <roverapi/rover_infraredsensor.hpp>
+#include <roverapi/rover_qmc5883l.hpp>
+#include <roverapi/rover_utils.hpp>
 
 using namespace rover;
 
 int main (void)
 {
-	RoverBase r;
-
-	// Initialize all components of the rover
-	r.initialize();
-    // or use r.initializeWiringPi(), r.initializeRoverSensors(), r.initializeRoverDisplay(), r.initializeRoverDriving(), r.initializeRoverGpio() to initialize individual components
+	//This initialization is a one time only must-call before every rover application, initializes low-level GPIO driver
+	RoverBase r_base = RoverBase();
+	r_base.initialize();
 
 	// Set-up cloud instance and register your device
-	RoverCloud r_cloud = r.inRoverCloud();
+	RoverCloud r_cloud = RoverCloud("myhost", 8080, 28080, "DEFAULT_TENANT");
 
+	// To override the initial RoverCloud set-up
 	r_cloud.setHono("localhost", 8080, "DEFAULT_TENANT");
-
 	r_cloud.setRegistrationPort(28080);
 
+	// Register a Device
 	if (r_cloud.registerDevice("4711") == 1)
 	{
 		printf ("Registered device to Hono cloud using REST API successfully..\n");
@@ -84,158 +96,79 @@ int main (void)
 	}
 
 	// Driving with rover
-	r.inRoverDriving().setSpeed(r.inRoverDriving().HIGHEST_SPEED);
-	r.inRoverDriving().goForward();
-	r.sleep (500); // Sleep for some time in milliseconds
-	r.inRoverDriving().turnRight();
-	r.sleep (500); // Sleep for some time in milliseconds
-	r.inRoverDriving().stopRover();
-
-
-	// Accessing sensors with rover
-	RoverSensors r_sensors = r.inRoverSensors();
-
-	printf ("Ultrasonic = [%d %d]\n",	r_sensors.readHCSR04UltrasonicSensor(r_sensors.ROVER_FRONT),
-										r_sensors.readHCSR04UltrasonicSensor(r_sensors.ROVER_REAR));
-	printf ("Infrared = [%f %f %f %f]\n", 	r_sensors.readInfraredSensor(r_sensors.ROVER_FRONT_LEFT),
-											r_sensors.readInfraredSensor(r_sensors.ROVER_FRONT_RIGHT),
-											r_sensors.readInfraredSensor(r_sensors.ROVER_REAR_LEFT),
-											r_sensors.readInfraredSensor(r_sensors.ROVER_REAR_RIGHT));
-	printf ("Temperature = %f\n",	r_sensors.readTemperature());
-	printf ("Humidity = %f\n",		r_sensors.readHumidity());
-	printf ("Bearing with HMC5883L = %f\n",		r_sensors.readBearingHMC5883L());
-	printf ("Bearing with QMC5883L = %f\n",		r_sensors.readBearingQMC5883L());
-
-	// Checking if a button is pressed (LOW) and playing a tone with buzzer
-	if (r.inRoverGpio().readUserButton() == r.inRoverGpio().LO)
-	{
-		r.inRoverGpio().setBuzzerFrequency(400); //in Hz
-		r.inRoverGpio().setBuzzerOn();
-		r.sleep(1000);
-	}
-	r.inRoverGpio.setBuzzerOff();
-
-	// Print core utilization from the rover's OS
-	float *util = r.inRoverUtils().getCoreUtilization();
-	printf ("Utilization = [%f %f %f %f]\n", util);
-
-	// Use the OLED display on the rover
-	RoverDisplay my_display = r.inRoverDisplay();
-
-	// Prepare display contents
-	my_display.clearDisplay();
-	my_display.setTextSize(2);
-	my_display.setTextColor(my_display.WHITE_COLOR);
-
-	my_display.setCursor(12,10);
-	my_display.print("INTERNET:");
-
-	my_display.setTextSize(3);
-	my_display.setTextColor(my_display.WHITE_COLOR);
-
-	// Check if internet is connected
-	if (r.inRoverUtils().getInternetStatus() == 1)
-	{
-		my_display.setCursor(50,32);
-		my_display.print("ON");
-	}
-	else
-	{
-		my_display.setCursor(43,32);
-		my_display.print("OFF");
-	}
-
-	// Display now
-	my_display.display();
-
-	// Sleep a bit
-	r.sleep(5000);
-
-	// Shutdown the rover OS and abort the application
-	r.shutdown();
-
-	return 1;
-}
-\endcode
-
-\section example_usage2 Rover API Example Usage (Using individual classes)
-The following is an example C++ application using some of the Rover API functions:
-
-\code{.cpp}
-#include <roverapi/rover_api.hpp>
-
-using namespace rover;
-
-int main (void)
-{
-	RoverBase r;
-	RoverGpio r_gpio;
-	RoverCloud r_cloud;
-	RoverDisplay my_display;
-	RoverSensors r_sensors;
-	RoverUtils r_utils;
-	RoverDriving r_driving;
-
-	// WiringPi must be initialized once per program, before the actual processing..
-	r.initializeWiringPi();
-
-	// Initialize all components of the rover (you can do these partially, depending on which module you want to use
-	r_sensors.initialize();
-	my_display.initialize();
-	r_gpio.initialize();
+	RoverDriving r_driving = RoverDriving();
 	r_driving.initialize();
 
-	// Set-up cloud instance and register your device
-	r_cloud.setHono("localhost", 8080, "DEFAULT_TENANT");
-	r_cloud.setRegistrationPort(28080);
-
-	if (r_cloud.registerDevice("4711") == 1)
-	{
-		printf ("Registered device to Hono cloud using REST API successfully..\n");
-	}
-
-	// Send telemetry data to Hono instance
-	if (r_cloud.sendTelemetry("4711","myuser","mypassword","roverFront", 100.0) == 1)
-	{
-		printf ("Data sent to Hono cloud using REST API successfully..\n");
-	}
-
-	// Driving with rover
-	r_driving.setSpeed (r_driving.HIGHEST_SPEED);
+	r_driving.setSpeed(HIGHEST_SPEED);
 	r_driving.goForward();
-	r.sleep (500); // Sleep for some time in milliseconds
+	r_base.sleep (500); // Sleep for some time in milliseconds
 	r_driving.turnRight();
-	r.sleep (500); // Sleep for some time in milliseconds
+	r_base.sleep (500); // Sleep for some time in milliseconds
 	r_driving.stopRover();
 
+	// Instantiation of Rover sensors
+	RoverHCSR04 r_front = RoverHCSR04(ROVER_FRONT);
+	RoverHCSR04 r_rear = RoverHCSR04(ROVER_REAR);
+	// or  RoverGrooveUltrasonic r_rear = RoverGrooveUltrasonic(ROVER_REAR);
+	RoverInfraredSensor r_infrared0 = RoverInfraredSensor(ROVER_REAR_RIGHT);
+	RoverInfraredSensor r_infrared1 = RoverInfraredSensor(ROVER_REAR_LEFT);
+	RoverInfraredSensor r_infrared2 = RoverInfraredSensor(ROVER_FRONT_RIGHT);
+	RoverInfraredSensor r_infrared3 = RoverInfraredSensor(ROVER_FRONT_LEFT);
+	RoverDHT22 r_dht22 = RoverDHT22();
+	RoverHMC5883L r_hmc = RoverHMC5883L();
+	// or RoverQMC5883L r_qmc = RoverQMC5883L();
 
-	// Accessing sensors with rover
+	// Set up ultrasonic sensors
+	r_front.setup();
+	r_rear.setup();
 
-	printf ("Ultrasonic = [%d %d]\n",	r_sensors.readHCSR04UltrasonicSensor(r_sensors.ROVER_FRONT),
-										r_sensors.readHCSR04UltrasonicSensor(r_sensors.ROVER_REAR));
-	printf ("Infrared = [%f %f %f %f]\n", 	r_sensors.readInfraredSensor(r_sensors.ROVER_FRONT_LEFT),
-											r_sensors.readInfraredSensor(r_sensors.ROVER_FRONT_RIGHT),
-											r_sensors.readInfraredSensor(r_sensors.ROVER_REAR_LEFT),
-											r_sensors.readInfraredSensor(r_sensors.ROVER_REAR_RIGHT));
-	printf ("Temperature = %f\n",	r_sensors.readTemperature());
-	printf ("Humidity = %f\n",		r_sensors.readHumidity());
-	printf ("Bearing with HMC5883L = %f\n",		r_sensors.readBearingHMC5883L());
-	printf ("Bearing with QMC5883L = %f\n",		r_sensors.readBearingQMC5883L());
+	// Set up infrared sensors
+	r_infrared0.setup();
+	r_infrared1.setup();
+	r_infrared2.setup();
+	r_infrared3.setup();
+
+	// Set up DHT22 temperature and humidity sensor
+	r_dht22.setup();
+
+	// Set up HMC5883L or QMC5883L compass sensor
+	r_hmc.setup();
+	//r_qmc.setup();
+
+	printf ("Ultrasonic = [%f %f]\n",	r_front.read(),
+										r_rear.read());
+	printf ("Infrared = [%f %f %f %f]\n", 	r_infrared0.read(),
+											r_infrared1.read(),
+											r_infrared2.read(),
+											r_infrared3.read());
+	printf ("Temperature = %f\n",	r_dht22.readTemperature());
+	printf ("Humidity = %f\n",		r_dht22.readHumidity());
+	printf ("Bearing with HMC5883L = %f\n",		r_hmc.read());
+	// or printf ("Bearing with QMC5883L = %f\n",		r_qmc.read());
+
+	// Instantiate a RoverGpio object to access buzzer and buttons on the rover
+	RoverGpio r_gpio = RoverGpio();
+	r_gpio.initialize();
 
 	// Checking if a button is pressed (LOW) and playing a tone with buzzer
-	if (r_gpio.readUserButton() == r.inRoverGpio().LO)
+	if (r_gpio.readUserButton() == r_gpio.LO)
 	{
 		r_gpio.setBuzzerFrequency(400); //in Hz
 		r_gpio.setBuzzerOn();
-		r.sleep(1000);
+		r_base.sleep(1000);
 	}
-	r.inRoverGpio.setBuzzerOff();
+	r_gpio.setBuzzerOff();
+
+	// Instantiate a RoverUtils object to access member functions that deals with status and performance tasks
+	RoverUtils r_utils = RoverUtils(); //RoverUtils does not need to be initialized
 
 	// Print core utilization from the rover's OS
 	float *util = r_utils.getCoreUtilization();
 	printf ("Utilization = [%f %f %f %f]\n", util);
 
 	// Use the OLED display on the rover
+	RoverDisplay my_display = RoverDisplay();
+
 	// Prepare display contents
 	my_display.clearDisplay();
 	my_display.setTextSize(2);
@@ -263,14 +196,15 @@ int main (void)
 	my_display.display();
 
 	// Sleep a bit
-	r.sleep(5000);
+	r_base.sleep(5000);
 
 	// Shutdown the rover OS and abort the application
-	r.shutdown();
+	r_base.shutdown();
 
 	return 1;
 }
 \endcode
+
 
 \section roverdocs Rover Documentation
 
@@ -280,75 +214,18 @@ Link: <a href="http://app4mc-rover.github.io/rover-docs">Rover Complete Document
 
 */
 
+
 /**
   *   @brief  rover Namespace contains classes to manage Rover sensors, gpio, driving, utilities, and cloud.
   */
 namespace rover
 {
+
 	/**
-	  *   @brief  RoverBase class is the main class used for instantiating rover objects.
-	  *   Each RoverBase object has private member functions referencing to other API classes exclusive to one RoverBase object.
-	  *   Therefore, using one RoverBase class, other classes can be accessed, and operations such as initialization,
-	  *   shutting down could be performed.
+	  *   @brief  RoverBase class provides basic rover functions such as initialization, sleeping, and shutting down.
 	  */
 	class RoverBase
 	{
-		private:
-			/**
-			 * @brief Private RoverCloud instance that is accessed from RoverBase
-			 */
-			RoverCloud myRoverCloud;
-
-			/**
-			 * @brief Private RoverDisplay instance that is accessed from RoverBase
-			 */
-			RoverDisplay myRoverDisplay;
-
-			/**
-			 * @brief Private RoverDriving instance that is accessed from RoverBase
-			 */
-			RoverDriving myRoverDriving;
-
-			/**
-			 * @brief Private RoverGpio instance that is accessed from RoverBase
-			 */
-			RoverGpio myRoverGpio;
-
-			/**
-			 * @brief Private RoverSensors instance that is accessed from RoverBase
-			 */
-			RoverSensors myRoverSensors;
-
-			/**
-			 * @brief Private RoverUtils instance that is accessed from RoverBase
-			 */
-			RoverUtils myRoverUtils;
-
-			/**
-			 * @brief Flag for indicating whether private RoverGpio object initialized or not.
-			 */
-			int ROVER_GPIO_INIT_;
-
-			/**
-			 * @brief Flag for indicating whether private RoverSensors object initialized or not.
-			 */
-			int ROVER_SENSORS_INIT_;
-
-			/**
-			 * @brief Flag for indicating whether private RoverDisplay object initialized or not.
-			 */
-			int ROVER_DISPLAY_INIT_;
-
-			/**
-			 * @brief Flag for indicating whether private RoverDriving object initialized or not.
-			 */
-			int ROVER_DRIVING_INIT_;
-
-			/**
-			 * @brief Flag for indicating whether wiringPi library initialized or not.
-			 */
-			int WIRINGPI_INIT_;
-
 
 		public:
 			/**
@@ -362,15 +239,14 @@ namespace rover
 			virtual ~RoverBase();
 
 			/**
-			  *   @brief  Initializes the all classes, sensors, libraries for the Rover.
+			  *   @brief  Initializes the wiringPi library
 			  *   @return void
 			  *
-			  *   \warning This function can only be used once in Rover's Raspberry Pi. You can still use a second RoverBase object and configure that object. However, initializing in the low-level sense causes problems.
+			  *   \warning This function should be called once per application.
 			  *   \code{.cpp}
-			  *   RoverBase r;
-			  *   RoverBase x;
-			  *   r.initialize();
-			  *   x.initialize(); //^^^THIS IS NOT VALID AND WILL PRODUCE ERRORS
+			  *   RoverBase r_base = RoverBase();
+			  *   r_base.initialize();
+			  *   //.. Here comes all the rover objects and apps..
 			  *   \endcode
 			  */
 			void initialize (void);
@@ -388,71 +264,17 @@ namespace rover
 			 */
 			void sleep (const unsigned int period_ms);
 
-			/**
-			 * @brief Public function to access private RoverCloud instance.
-			 * @return RoverCloud instance
-			 */
-			rover::RoverCloud& inRoverCloud (void);
-
-			/**
-			 * @brief Public function to access private RoverDisplay instance.
-			 * @return RoverDisplay instance
-			 */
-			rover::RoverDisplay& inRoverDisplay (void);
-
-			/**
-			 * @brief Public function to access private RoverDriving instance.
-			 * @return RoverDriving instance
-			 */
-			rover::RoverDriving& inRoverDriving (void);
-
-			/**
-			 * @brief Public function to access private RoverGpio instance.
-			 * @return RoverGpio instance
-			 */
-			rover::RoverGpio& inRoverGpio (void);
-
-			/**
-			 * @brief Public function to access private RoverSensors instance.
-			 * @return RoverSensors instance
-			 */
-			rover::RoverSensors& inRoverSensors (void);
-
-			/**
-			 * @brief Public function to access private RoverUtils instance.
-			 * @return RoverUtils instance
-			 */
-			rover::RoverUtils& inRoverUtils (void);
-
-			/**
-			 * @brief Initializes private RoverDriving object instance.
-			 * @return void
-			 */
-			void initializeRoverDriving (void);
-
-			/**
-			 * @brief Initializes private RoverGpio object instance.
-			 * @return void
-			 */
-			void initializeRoverGpio (void);
-
-			/**
-			 * @brief Initializes private RoverDisplay object instance.
-			 * @return void
-			 */
-			void initializeRoverDisplay (void);
-
-			/**
-			 * @brief Initializes private RoverSensors object instance.
-			 * @return void
-			 */
-			void initializeRoverSensors (void);
-
+		private:
 			/**
 			  *   @brief  Initializes wiringPi library to access GPIO of Rover. This function should be called in every program run and must only be called once.
 			  *   @return void
 			  */
 			void initializeWiringPi (void);
+
+			/**
+			 * @brief Flag for indicating whether wiringPi library initialized or not.
+			 */
+			int WIRINGPI_INIT_;
 	};
 }
 
