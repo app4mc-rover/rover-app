@@ -58,7 +58,7 @@ namespace rover
 			explicit RoverDriving();
 
 			/**
-			 * @brief Initializes wiringPi library and Analog to Digital Converter to start driving the rover.
+			 * @brief Initializes RoverDriving features.
 			 */
 			void initialize();
 
