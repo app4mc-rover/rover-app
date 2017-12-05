@@ -70,3 +70,8 @@ int rover::RoverButton::readButton (void)
 		return this->wPiDigitalRead (this->buttonPin);
 	}
 }
+
+void rover::RoverButton::setButtonPin (const int button_pin)
+{
+	this->buttonPin = button_pin;
+}

@@ -77,6 +77,13 @@ namespace rover
 			 * @return val RoverGpio::LO (low) or RoverGpio::HI (high). Embedded shutdown and user buttons are pulled-up. Therefore, when the button is pressed a LOW (0) is returned.
 			 */
 			int readButton (void);
+
+			/**
+			 * @brief Overrides the default button pin used in wiringPi format
+			 * @param button_pin
+			 * @return void
+			 */
+			void setButtonPin (const int button_pin);
 	};
 }
 
