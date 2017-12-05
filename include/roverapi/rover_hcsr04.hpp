@@ -81,7 +81,7 @@ namespace rover
 			 * @brief Function to setup HCSR04 sensor
 			 * @return void
 			 */
-			void setup (void);
+			void initialize (void);
 
 			/**
 			 * @brief Member function to read from HC-SR04 ultrasonic sensor given its sensor id.

@@ -46,10 +46,10 @@ void *InfraredDistance_Task (void * arg)
 	RoverInfraredSensor r_infrared2 = RoverInfraredSensor(ROVER_FRONT_RIGHT);
 	RoverInfraredSensor r_infrared3 = RoverInfraredSensor(ROVER_FRONT_LEFT);
 
-	r_infrared0.setup();
-	r_infrared1.setup();
-	r_infrared2.setup();
-	r_infrared3.setup();
+	r_infrared0.initialize();
+	r_infrared1.initialize();
+	r_infrared2.initialize();
+	r_infrared3.initialize();
 
 	while (1)
 	{

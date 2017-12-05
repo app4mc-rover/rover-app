@@ -63,7 +63,7 @@ void *Ultrasonic_Sensor_SR04_Front_Task(void *unused)
 	ultrasonic_sr04_front_task_tmr.setPeriod(0.1);
 
 	RoverHCSR04 r_ultrasonicfront = RoverHCSR04 (ROVER_FRONT);
-	r_ultrasonicfront.setup();
+	r_ultrasonicfront.initialize();
 
 	while (1)
 	{

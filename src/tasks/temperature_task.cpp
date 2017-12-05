@@ -42,7 +42,7 @@ void *Temperature_Task(void *arg)
 	float temperature, humidity;
 
 	RoverDHT22 r_dht22 = RoverDHT22();
-	r_dht22.setup();
+	r_dht22.initialize();
 
 	while (1)
 	{

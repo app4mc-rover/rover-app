@@ -19,7 +19,7 @@
 #include <roverapi/rover_cloud.hpp>
 #include <roverapi/rover_utils.hpp>
 #include <roverapi/rover_driving.hpp>
-#include <roverapi/rover_gpio.hpp>
+#include <roverapi/rover_buzzer.hpp>
 #include <roverapi/rover_display.hpp>
 #include <roverapi/rover_sensor.hpp>
 
@@ -66,8 +66,9 @@ void rover::RoverBase::shutdown (void)
 	else
 	{
 		RoverDisplay my_display = RoverDisplay();
-		RoverGpio r_gpio_loc = RoverGpio();
-		r_gpio_loc.initialize();
+		RoverBuzzer r_buzzer = RoverBuzzer();
+		r_buzzer.initialize();
+
 		my_display.initialize();
 
 		/* Prepare "Shutting Down..." */
@@ -88,7 +89,7 @@ void rover::RoverBase::shutdown (void)
 		my_display.display();
 
 		/* Play the shutdown tone..*/
-		r_gpio_loc.shutdownTone();
+		r_buzzer.shutdownTone();
 
 		/* Prepare "Shutting Down..." */
 		my_display.clearDisplay();

@@ -27,7 +27,7 @@ rover::RoverGY521::RoverGY521()
 
 rover::RoverGY521::~RoverGY521(){}
 
-void rover::RoverGY521::setup (void)
+void rover::RoverGY521::initialize (void)
 {
 
 }

@@ -34,7 +34,9 @@ Roverapp builds and contains the **Rover API**, which is able to handle subset o
 \li **RoverCloud** contains the member functions to connect and send data to Eclipse Hono instance using several parameters such as host name, port, tenant name, user name, and password. This class wraps hono_interaction library for Rover-specific interactions.
 \li **RoverDisplay** contains the member functions to control OLED display on the Rover. This class is a wrapper API for Adafruit_GFX and Adafruit_SSD1306 libraries.
 \li **RoverDriving** contains the member functions to drive the rover using its motors.
-\li **RoverGpio** class provides the member functions related to embedded buzzer, user button, and shutdown button on the rover.
+\li **RoverGpio** class provides the member functions related to low-level pin driving. This class wraps wiringPi library and is inherited by RoverButton and RoverBuzzer classes.
+\li **RoverBuzzer** class provides the member functions related to embedded buzzer on the rover.
+\li **RoverButton** class contains member functions to access Shutdown button, User button, and customly installed buttons on the rover.
 \li **RoverUtils** contains member functions to retrieve connectivity status and core utilization of the rover. This class wraps status_library lib, developed for the rover-app.
 \li **RoverSensors** is a pure abstract class defining the interface between sensor classes of the rover.
 
@@ -48,6 +50,12 @@ Roverapp builds and contains the **Rover API**, which is able to handle subset o
 
 \image html ./images/rover2.jpg
 
+
+\section overview1 UML Diagram Overview
+
+\image html ./images/RoverAPI_Overview.jpg
+Updated: 05.12.2017
+
 \section example_usage Rover API Example Usage
 The following is an example C++ application using some of the Rover API functions:
 
@@ -59,7 +67,8 @@ The following is an example C++ application using some of the Rover API function
 #include <roverapi/rover_dht22.hpp>
 #include <roverapi/rover_display.hpp>
 #include <roverapi/rover_driving.hpp>
-#include <roverapi/rover_gpio.hpp>
+#include <roverapi/rover_buzzer.hpp>
+#include <roverapi/rover_button.hpp>
 #include <roverapi/rover_grooveultrasonic.hpp>
 #include <roverapi/rover_gy521.hpp>
 #include <roverapi/rover_hcsr04.hpp>
@@ -119,21 +128,21 @@ int main (void)
 	// or RoverQMC5883L r_qmc = RoverQMC5883L();
 
 	// Set up ultrasonic sensors
-	r_front.setup();
-	r_rear.setup();
+	r_front.initialize();
+	r_rear.initialize();
 
 	// Set up infrared sensors
-	r_infrared0.setup();
-	r_infrared1.setup();
-	r_infrared2.setup();
-	r_infrared3.setup();
+	r_infrared0.initialize();
+	r_infrared1.initialize();
+	r_infrared2.initialize();
+	r_infrared3.initialize();
 
 	// Set up DHT22 temperature and humidity sensor
-	r_dht22.setup();
+	r_dht22.initialize();
 
 	// Set up HMC5883L or QMC5883L compass sensor
-	r_hmc.setup();
-	//r_qmc.setup();
+	r_hmc.initialize();
+	//r_qmc.initialize();
 
 	printf ("Ultrasonic = [%f %f]\n",	r_front.read(),
 										r_rear.read());
@@ -146,18 +155,23 @@ int main (void)
 	printf ("Bearing with HMC5883L = %f\n",		r_hmc.read());
 	// or printf ("Bearing with QMC5883L = %f\n",		r_qmc.read());
 
-	// Instantiate a RoverGpio object to access buzzer and buttons on the rover
-	RoverGpio r_gpio = RoverGpio();
-	r_gpio.initialize();
+	// Instantiate objects to access buzzer and buttons on the rover
+	RoverButton user_b = RoverButton (USER_BUTTON);
+	RoverButton shutdown_b = RoverButton (SHUTDOWN_BUTTON);
+	RoverBuzzer buzzer = RoverBuzzer();
+
+	user_b.initialize();
+	shutdown_b.initialize();
+	buzzer.initialize();
 
 	// Checking if a button is pressed (LOW) and playing a tone with buzzer
-	if (r_gpio.readUserButton() == r_gpio.LO)
+	if (user_b.readButton() == user_b.LO)
 	{
-		r_gpio.setBuzzerFrequency(400); //in Hz
-		r_gpio.setBuzzerOn();
+		buzzer.setBuzzerFrequency(400); //in Hz
+		buzzer.setBuzzerOn();
 		r_base.sleep(1000);
 	}
-	r_gpio.setBuzzerOff();
+	buzzer.setBuzzerOff();
 
 	// Instantiate a RoverUtils object to access member functions that deals with status and performance tasks
 	RoverUtils r_utils = RoverUtils(); //RoverUtils does not need to be initialized
@@ -205,7 +219,6 @@ int main (void)
 }
 \endcode
 
-
 \section roverdocs Rover Documentation
 
 Link: <a href="http://app4mc-rover.github.io/rover-docs">Rover Complete Documentation</a>
@@ -216,7 +229,7 @@ Link: <a href="http://app4mc-rover.github.io/rover-docs">Rover Complete Document
 
 
 /**
-  *   @brief  rover Namespace contains classes to manage Rover sensors, gpio, driving, utilities, and cloud.
+  *   @brief  rover Namespace contains classes to manage Rover sensors, gpio, buzzer, buttons, driving, utilities, and cloud.
   */
 namespace rover
 {

@@ -28,7 +28,7 @@ rover::RoverDHT22::RoverDHT22()
 
 rover::RoverDHT22::~RoverDHT22(){}
 
-void rover::RoverDHT22::setup(void)
+void rover::RoverDHT22::initialize(void)
 {
 	this->DHT22_SETUP_ = 1;
 }

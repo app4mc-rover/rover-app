@@ -72,7 +72,7 @@ namespace rover
 			 * @brief Function to setup HMC5883L sensor
 			 * @return void
 			 */
-			void setup (void);
+			void initialize (void);
 
 			/**
 			 * @brief Reads the bearing value from Bearing sensor Sunfounder HMC5883L (float).

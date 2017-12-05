@@ -60,7 +60,7 @@ namespace rover
 			 * @brief Function to setup DHT22 sensor
 			 * @return void
 			 */
-			void setup (void);
+			void initialize (void);
 
 			/**
 			 * @brief Reads the temperature value from DHT22 (float).

@@ -64,7 +64,6 @@ RoverBase r_base;
 RoverDriving r_driving;
 RoverDisplay my_display;
 RoverUtils r_utils;
-RoverGpio r_gpio;
 
 /* Threads */
 pthread_t ultrasonic_grove_thread;
@@ -236,11 +235,9 @@ int main()
 	r_base = RoverBase();
 	my_display = RoverDisplay();
 	r_utils = RoverUtils();
-	r_gpio = RoverGpio();
 
 	//Initialize some of the rover components
 	r_base.initialize();
-	r_gpio.initialize();
 	r_driving.initialize();
 	my_display.initialize();
 

@@ -19,38 +19,10 @@
 namespace rover
 {
 	/**
-	 * @brief RoverGpio class provides the member functions related to embedded buzzer, user button, and shutdown button on the rover.
+	 * @brief RoverGpio class provides the member functions related to basic GPIO operations. This class wraps wiringPi library.
 	 */
 	class RoverGpio
 	{
-		private:
-			/* Pins */
-			/**
-			 * @brief Buzzer pin in wiringPi format
-			 */
-			static const int BUZZER_PIN = 28;			//BCM-20, wiringpi 28
-
-			/**
-			 * @brief Shutdown button pin in wiringPi format
-			 */
-			static const int SHUTDOWN_BUTTON_PIN = 29;	//BCM-21, wiringpi 29
-
-			/**
-			 * @brief User button pin in wiringPi format
-			 */
-			static const int USER_BUTTON_PIN = 27;		//BCM-16, wiringpi 27
-
-			/* Variable members */
-			/**
-			 * @brief Default buzzer frequency used by setBuzzerOn function.
-			 */
-			int BUZZER_FREQUENCY;
-
-			/**
-			 * @brief Flag to hold if RoverGpio is initialized
-			 */
-			int ROVERGPIO_INIT_;
-
 		public:
 
 			/* Pin Modes */
@@ -106,61 +78,6 @@ namespace rover
 			 */
 			explicit RoverGpio();
 
-			/**
-			 * @brief Initializes the RoverGpio functionality: Buzzer and Buttons
-			 * @return void
-			 */
-			void initialize (void);
-
-			/**
-			 * @brief Sets the default buzzer frequency in Hz. Values between 0-1000 Hz are conventionally used for the buzzer frequency.
-			 * @param buzzer_freq Buzzer frequency to be set in Hz
-			 * @return void
-			 */
-			void setBuzzerFrequency (const int buzzer_freq);
-
-			/**
-			 * @brief Retrieves the default buzzer frequency in Hz.
-			 * @return buzzer_freq Default buzzer frequency in Hz.
-			 */
-			int getBuzzerFrequency (void);
-
-			/**
-			 * @brief Plays the buzzer with the default frequency.
-			 * @return void
-			 */
-			void setBuzzerOn (void);
-
-			/**
-			 * @brief Turns off the buzzer.
-			 * @return void
-			 */
-			void setBuzzerOff (void);
-
-			/**
-			 * @brief Plays the buzzer with custom buzzer frequency.
-			 * @param buzzer_freq Buzzer frequency to be set in Hz
-			 * @return void
-			 */
-			void setBuzzerTone (const int buzzer_freq);
-
-			/**
-			 * @brief Plays the shutdown tone.
-			 * @return void
-			 */
-			void shutdownTone (void);
-
-			/**
-			 * @brief Reads the digital value of the user button (USER_BUTTON).
-			 * @return user_button_val RoverGpio::LO (low) or RoverGpio::HI (high). Default is LOW and when pressed, user_button_val gives HIGH.
-			 */
-			int readUserButton (void);
-
-			/**
-			 * @brief Reads the digital value of the shutdown button (SHUTDOWN_BUTTON).
-			 * @return shutdown_button_val RoverGpio::LO (low) or RoverGpio::HI (high). Default is LOW and when pressed, shutdown_button_val gives HIGH.
-			 */
-			int readShutdownButton (void);
 
 			/**
 			 * @brief Wrapper function to wiringPi's digitalWrite function
@@ -184,6 +101,28 @@ namespace rover
 			 * @return void
 			 */
 			void wPiPinMode (const int pin, const int set_val);
+
+			/**
+			 * @brief Wrapper function to wiringPi's softToneCreate function. Sets up a pin to have PWM  soft tone output.
+			 * @param pin Pin number (int) to be set
+			 * @return void
+			 */
+			void wPiSoftToneCreate (const int pin);
+
+			/**
+			 * @brief Wrapper function to wiringPi's softToneWrite function. Sets up a pin to have PWM  soft tone output.
+			 * @param pin Pin number (int) to be set
+			 * @param tone Tone frequency to create in Hz
+			 * @return void
+			 */
+			void wPiSoftToneWrite (const int pin, const int tone);
+
+			/**
+			 * @brief Delay function. Blocks some time in milliseconds
+			 * @param period_ms Period in milliseconds
+			 * @return void
+			 */
+			void wPiDelay (const int period_ms);
 	};
 }
 

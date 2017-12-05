@@ -68,7 +68,7 @@ namespace rover
 			 * @brief Function to setup QMC5883L sensor
 			 * @return void
 			 */
-			void setup (void);
+			void initialize (void);
 
 			/**
 			 * @brief Reads the bearing value from Bearing sensor QMC5883L (float).

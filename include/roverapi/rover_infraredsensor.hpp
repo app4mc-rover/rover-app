@@ -54,7 +54,7 @@ namespace rover
 			 * @brief Function to setup Analog to Digital converter used in infrared sensors. Should be called once per program.
 			 * @return void
 			 */
-			void setup (void);
+			void initialize (void);
 
 			/**
 			 * @brief Member function to read from infrared proximity sensor given its sensor id.

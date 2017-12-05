@@ -39,7 +39,7 @@ rover::RoverInfraredSensor::RoverInfraredSensor (const RoverSensorID_t sensor_id
 
 rover::RoverInfraredSensor::~RoverInfraredSensor(){}
 
-void rover::RoverInfraredSensor::setup (void)
+void rover::RoverInfraredSensor::initialize (void)
 {
 	/* mcp3004Setup can only be called once per program, One solution: */
 	static class Once2 { public: Once2(){

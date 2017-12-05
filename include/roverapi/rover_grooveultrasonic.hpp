@@ -63,7 +63,7 @@ namespace rover
 			 * @brief Function to setup Groove Ultrasonic sensor
 			 * @return void
 			 */
-			void setup (void);
+			void initialize (void);
 
 			/**
 			 * @brief Member function to read from Groove ultrasonic sensor given its sensor id.

@@ -42,7 +42,7 @@ rover::RoverQMC5883L::RoverQMC5883L()
 
 rover::RoverQMC5883L::~RoverQMC5883L(){}
 
-void rover::RoverQMC5883L::setup (void)
+void rover::RoverQMC5883L::initialize (void)
 {
 	if ((i2c_qmc588l_fd = wiringPiI2CSetup(this->QMC5883L_ADDRESS)) < 0)
 	{

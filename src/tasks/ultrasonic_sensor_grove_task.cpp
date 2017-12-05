@@ -44,7 +44,7 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 	ultrasonic_grove_task_tmr.setPeriod(0.5);
 
 	RoverGrooveUltrasonic r_groove = RoverGrooveUltrasonic(ROVER_REAR);
-	r_groove.setup();
+	r_groove.initialize();
 
 	while (1)
 	{

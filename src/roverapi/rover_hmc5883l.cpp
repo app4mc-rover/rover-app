@@ -41,7 +41,7 @@ rover::RoverHMC5883L::RoverHMC5883L()
 
 rover::RoverHMC5883L::~RoverHMC5883L(){}
 
-void rover::RoverHMC5883L::setup (void)
+void rover::RoverHMC5883L::initialize (void)
 {
 #ifdef DEBUG
 	printf ("HMC588L Address is: %x\n", this->HMC588L_ADDRESS);

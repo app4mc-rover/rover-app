@@ -52,7 +52,7 @@ namespace rover
 			 * @brief Virtual function (interface) for setting up sensors
 			 * @return void
 			 */
-			virtual void setup (void) = 0;
+			virtual void initialize (void) = 0;
 
 			/**
 			 * @brief Virtual function (interface) for reading from sensors

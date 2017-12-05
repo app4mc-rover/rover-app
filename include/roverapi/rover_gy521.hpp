@@ -43,7 +43,7 @@ namespace rover
 			 * @brief Function to setup RoverGY521 sensor
 			 * @return void
 			 */
-			void setup (void);
+			void initialize (void);
 
 			float read (void);
 

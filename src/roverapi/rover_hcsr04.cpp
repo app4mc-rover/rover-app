@@ -44,7 +44,7 @@ rover::RoverHCSR04::RoverHCSR04 (const RoverSensorID_t sensor_id)
 
 rover::RoverHCSR04::~RoverHCSR04(){}
 
-void rover::RoverHCSR04::setup (void)
+void rover::RoverHCSR04::initialize (void)
 {
     pinMode(this->trigPin, OUTPUT);
     pinMode(this->echoPin, INPUT);

@@ -63,7 +63,7 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 	ultrasonic_sr04_back_task_tmr.setPeriod(0.1);
 
 	RoverHCSR04 r_ultrasonicrear = RoverHCSR04(ROVER_REAR);
-	r_ultrasonicrear.setup();
+	r_ultrasonicrear.initialize();
 
 	while (1)
 	{

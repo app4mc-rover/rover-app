@@ -23,6 +23,9 @@
 
 #include <roverapp.h>
 
+#include <roverapi/rover_buzzer.hpp>
+#include <roverapi/rover_button.hpp>
+
 /* Checks global variable buzzer_status */
 /* 1-> ON    0-> OFF */
 void buzzerHandler (void)
@@ -52,12 +55,20 @@ void buzzerHandler (void)
 void buttonHandler (void)
 {
 #ifndef DEBUG_WO_RSL
-	if (r_gpio.readShutdownButton() == r_gpio.LO)
+	RoverButton user_b = RoverButton (USER_BUTTON);
+	RoverButton shutdown_b = RoverButton (SHUTDOWN_BUTTON);
+	RoverBuzzer buzzer = RoverBuzzer();
+
+	user_b.initialize();
+	shutdown_b.initialize();
+	buzzer.initialize();
+
+	if (shutdown_b.readButton() == shutdown_b.LO)
 	{
 		r_base.shutdown();
 	}
 
-	if (r_gpio.readUserButton() == r_gpio.LO)
+	if (user_b.readButton() == user_b.LO)
 	{
 		display_use_elsewhere_shared = 1;
 		r_base.sleep(500);
@@ -76,7 +87,7 @@ void buttonHandler (void)
 
 		my_display.display();
 
-		r_gpio.shutdownTone();
+		buzzer.shutdownTone();
 
 		r_base.sleep(1000);
 		display_use_elsewhere_shared = 0;

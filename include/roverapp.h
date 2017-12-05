@@ -35,7 +35,6 @@
 #include <roverapi/rover_driving.hpp>
 #include <roverapi/rover_display.hpp>
 #include <roverapi/rover_utils.hpp>
-#include <roverapi/rover_gpio.hpp>
 
 //Use the following when cross compiling with Eclipse CDT SDK
 //#define CROSS_COMPILE_ECLIPSE 1
@@ -53,7 +52,6 @@ extern RoverBase r_base;
 extern RoverDriving r_driving;
 extern RoverDisplay my_display;
 extern RoverUtils r_utils;
-extern RoverGpio r_gpio;
 
 extern pthread_t oled_thread;
 

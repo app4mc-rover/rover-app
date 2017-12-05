@@ -40,7 +40,7 @@ rover::RoverGrooveUltrasonic::RoverGrooveUltrasonic (const RoverSensorID_t senso
 
 rover::RoverGrooveUltrasonic::~RoverGrooveUltrasonic(){}
 
-void rover::RoverGrooveUltrasonic::setup (void)
+void rover::RoverGrooveUltrasonic::initialize (void)
 {
 
 }
