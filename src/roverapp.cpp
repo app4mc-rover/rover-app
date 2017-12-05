@@ -493,6 +493,7 @@ int main()
 		//What main thread does should come here..
 		// ...
 
+
 		delayMicroseconds(1* SECONDS_TO_MICROSECONDS);
 	}
 	pthread_exit(NULL);

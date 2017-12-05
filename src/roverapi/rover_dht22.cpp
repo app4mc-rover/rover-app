@@ -37,7 +37,7 @@ float rover::RoverDHT22::read(void)
 {
 	if (this->DHT22_SETUP_ != 1)
 	{
-		fprintf(stderr,"You havent set up RoverDHT22. Use RoverDHT22::setup() !\n");
+		fprintf(stderr,"You havent set up RoverDHT22. Use RoverDHT22::initialize() !\n");
 	}
 	else
 	{
@@ -49,7 +49,7 @@ float rover::RoverDHT22::readTemperature (void)
 {
 	if (this->DHT22_SETUP_ != 1)
 	{
-		fprintf(stderr,"You havent set up RoverDHT22. Use RoverDHT22::setup() !\n");
+		fprintf(stderr,"You havent set up RoverDHT22. Use RoverDHT22::initialize() !\n");
 	}
 	else
 	{
@@ -152,7 +152,7 @@ float rover::RoverDHT22::readHumidity (void)
 {
 	if (this->DHT22_SETUP_ != 1)
 	{
-		fprintf(stderr,"You havent set up RoverDHT22. Use RoverDHT22::setup() !\n");
+		fprintf(stderr,"You havent set up RoverDHT22. Use RoverDHT22::initialize() !\n");
 	}
 	else
 	{

@@ -54,7 +54,7 @@ float rover::RoverInfraredSensor::read (void)
 {
 	if (this->ROVERINFRAREDSENSOR_SETUP_ != 1)
 	{
-		fprintf(stderr,"You havent set up RoverInraredSensor. Use RoverInfraredSensor()::setup() !\n");
+		fprintf(stderr,"You havent set up RoverInraredSensor. Use RoverInfraredSensor()::initialize() !\n");
 	}
 	else
 	{

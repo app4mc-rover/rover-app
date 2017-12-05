@@ -70,7 +70,7 @@ float rover::RoverHMC5883L::read (void)
 {
 	if (this->ROVERHMC5883L_SETUP_ != 1)
 	{
-		fprintf(stderr,"You havent initialized RoverHMC5883L. Use RoverHMC5883L()::setup() !\n");
+		fprintf(stderr,"You havent initialized RoverHMC5883L. Use RoverHMC5883L()::initialize() !\n");
 	}
 	else
 	{

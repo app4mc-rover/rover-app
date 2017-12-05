@@ -29,14 +29,18 @@
 #include <pthread.h>
 
 #include <roverapp.h>
+#include <roverapi/rover_gy521.hpp>
 
 void *DisplaySensors_Task (void * arg)
 {
 	timing display_sensors_task_tmr;
 
 	display_sensors_task_tmr.setTaskID("Display-Sensors");
-	display_sensors_task_tmr.setDeadline(5.0);
-	display_sensors_task_tmr.setPeriod(5.0);
+	display_sensors_task_tmr.setDeadline(3.0);
+	display_sensors_task_tmr.setPeriod(3.0);
+
+	RoverGY521 r_accel = RoverGY521();
+	r_accel.initialize();
 
 	while (1)
 	{
@@ -63,6 +67,10 @@ void *DisplaySensors_Task (void * arg)
 		printf("DistanceInfraredChan3: %f cm\n", infrared_shared[3]);
 
 		printf("Bearing: %f\n", bearing_shared);
+
+		printf("Accelerometer acceleration:\t%d\t\t%d\t\t%d\n", r_accel.getAccelX(), r_accel.getAccelY(), r_accel.getAccelZ());
+		printf("Accelerometer angles:\t\t%f\t%f\t%f\n", r_accel.getAngleX(), r_accel.getAngleY(), r_accel.getAngleZ());
+
 
 		//Task content ends here -------------------------------------------------
 		display_sensors_task_tmr.recordEndTime();

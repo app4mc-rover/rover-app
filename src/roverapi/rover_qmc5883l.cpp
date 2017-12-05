@@ -77,7 +77,7 @@ float rover::RoverQMC5883L::read (void)
 {
 	if (this->ROVERQMC5883L_SETUP_ != 1)
 	{
-		fprintf(stderr,"You havent set up RoverQMC5883L. Use RoverQMC5883L()::setup() !\n");
+		fprintf(stderr,"You havent set up RoverQMC5883L. Use RoverQMC5883L()::initialize() !\n");
 	}
 	else
 	{

@@ -60,7 +60,7 @@ float rover::RoverHCSR04::read (void)
 {
 	if (this->ROVERHCSR04_SETUP_ != 1)
 	{
-		fprintf(stderr,"You havent set up RoverHCSR04. Use RoverHCSR04()::setup() !\n");
+		fprintf(stderr,"You havent set up RoverHCSR04. Use RoverHCSR04()::initialize() !\n");
 	}
 	else
 	{
