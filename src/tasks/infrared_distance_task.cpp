@@ -70,7 +70,7 @@ void *InfraredDistance_Task (void * arg)
 		infrared_distance_task_tmr.calculateExecutionTime();
 		infrared_distance_task_tmr.calculateDeadlineMissPercentage();
 		infrared_distance_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&infrared_distance_task_ti_l);
+		pthread_mutex_lock(&infrared_distance_task_ti.mutex);
 			infrared_distance_task_ti.deadline = infrared_distance_task_tmr.getDeadline();
 			infrared_distance_task_ti.deadline_miss_percentage = infrared_distance_task_tmr.getDeadlineMissPercentage();
 			infrared_distance_task_ti.execution_time = infrared_distance_task_tmr.getExecutionTime();
@@ -79,11 +79,10 @@ void *InfraredDistance_Task (void * arg)
 			infrared_distance_task_ti.task_id = infrared_distance_task_tmr.getTaskID();
 			infrared_distance_task_ti.start_time = infrared_distance_task_tmr.getStartTime();
 			infrared_distance_task_ti.end_time = infrared_distance_task_tmr.getEndTime();
-		pthread_mutex_unlock(&infrared_distance_task_ti_l);
+		pthread_mutex_unlock(&infrared_distance_task_ti.mutex);
 		infrared_distance_task_tmr.sleepToMatchPeriod();
 	}
 
 	/* the function must return something - NULL will do */
 	return NULL;
 }
-

@@ -17,7 +17,7 @@
 
 #include <libraries/status_library/status_library.h>
 
-float * rover::RoverUtils::getCoreUtilization (void)
+void rover::RoverUtils::getCoreUtilization (float coreUtil[numberOfCores])
 {
 	FILE *fp;
 	char buffer[128];
@@ -38,10 +38,8 @@ float * rover::RoverUtils::getCoreUtilization (void)
 	//printf("buf:%s\n",buffer);
 
 	/* Parse */
-	sscanf(buffer,"[%f, %f, %f, %f]",&util[0], &util[1], &util[2], &util[3]);
+	sscanf(buffer,"[%f, %f, %f, %f]",&coreUtil[0], &coreUtil[1], &coreUtil[2], &coreUtil[3]);
 
-	/* Return */
-	return util;
 }
 
 int rover::RoverUtils::getWlanStatus (void)

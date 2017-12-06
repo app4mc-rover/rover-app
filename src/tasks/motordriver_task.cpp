@@ -233,7 +233,7 @@ void *MotorDriver_Task(void * arg)
 		motordriver_task_tmr.calculateExecutionTime();
 		motordriver_task_tmr.calculateDeadlineMissPercentage();
 		motordriver_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&motordriver_task_ti_l);
+		pthread_mutex_lock(&motordriver_task_ti.mutex);
 			motordriver_task_ti.deadline = motordriver_task_tmr.getDeadline();
 			motordriver_task_ti.deadline_miss_percentage = motordriver_task_tmr.getDeadlineMissPercentage();
 			motordriver_task_ti.execution_time = motordriver_task_tmr.getExecutionTime();
@@ -242,7 +242,7 @@ void *MotorDriver_Task(void * arg)
 			motordriver_task_ti.task_id = motordriver_task_tmr.getTaskID();
 			motordriver_task_ti.start_time = motordriver_task_tmr.getStartTime();
 			motordriver_task_ti.end_time = motordriver_task_tmr.getEndTime();
-		pthread_mutex_unlock(&motordriver_task_ti_l);
+		pthread_mutex_unlock(&motordriver_task_ti.mutex);
 		motordriver_task_tmr.sleepToMatchPeriod();
 
 	}
@@ -250,6 +250,3 @@ void *MotorDriver_Task(void * arg)
 	/* the function must return something - NULL will do */
 	return NULL;
 }
-
-
-

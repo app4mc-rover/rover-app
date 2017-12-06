@@ -281,7 +281,7 @@ void *OLED_Task (void * arg)
 		oled_task_tmr.calculateExecutionTime();
 		oled_task_tmr.calculateDeadlineMissPercentage();
 		oled_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&oled_task_ti_l);
+		pthread_mutex_lock(&oled_task_ti.mutex);
 			oled_task_ti.deadline = oled_task_tmr.getDeadline();
 			oled_task_ti.deadline_miss_percentage = oled_task_tmr.getDeadlineMissPercentage();
 			oled_task_ti.execution_time = oled_task_tmr.getExecutionTime();
@@ -290,13 +290,10 @@ void *OLED_Task (void * arg)
 			oled_task_ti.task_id = oled_task_tmr.getTaskID();
 			oled_task_ti.start_time = oled_task_tmr.getStartTime();
 			oled_task_ti.end_time = oled_task_tmr.getEndTime();
-		pthread_mutex_unlock(&oled_task_ti_l);
+		pthread_mutex_unlock(&oled_task_ti.mutex);
 		oled_task_tmr.sleepToMatchPeriod();
 	}
 
 	/* the function must return something - NULL will do */
 	return NULL;
 }
-
-
-

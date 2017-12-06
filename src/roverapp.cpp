@@ -53,7 +53,6 @@
 #include <interfaces.h>
 #include <signal.h>
 
-
 using namespace std;
 
 //Using rover namespace from Rover API
@@ -90,72 +89,28 @@ pthread_t socket_server_thread;
 
 /* Timing interfaces for thread measurement */
 timing_interface compass_task_ti;
-pthread_mutex_t compass_task_ti_l;
-
 timing_interface temperature_task_ti;
-pthread_mutex_t temperature_task_ti_l;
-
 timing_interface display_sensors_task_ti;
-pthread_mutex_t display_sensors_task_ti_l;
-
 timing_interface infrared_distance_task_ti;
-pthread_mutex_t infrared_distance_task_ti_l;
-
 timing_interface keycommand_task_ti;
-pthread_mutex_t keycommand_task_ti_l;
-
 timing_interface motordriver_task_ti;
-pthread_mutex_t motordriver_task_ti_l;
-
 timing_interface ultrasonic_grove_task_ti;
-pthread_mutex_t ultrasonic_grove_task_ti_l;
-
 timing_interface ultrasonic_sr04_front_task_ti;
-pthread_mutex_t  ultrasonic_sr04_front_task_ti_l;
-
 timing_interface ultrasonic_sr04_back_task_ti;
-pthread_mutex_t  ultrasonic_sr04_back_task_ti_l;
-
 timing_interface compass_sensor_task_ti;
-pthread_mutex_t compass_sensor_task_ti_l;
-
 timing_interface acc_task_ti;
-pthread_mutex_t acc_task_ti_l;
-
 timing_interface record_timing_task_ti;
-
 timing_interface parking_task_ti;
-pthread_mutex_t parking_task_ti_l;
-
 timing_interface hono_task_ti;
-pthread_mutex_t hono_task_ti_l;
-
 timing_interface cpu_logger_task_ti;
-pthread_mutex_t cpu_logger_task_ti_l;
-
 timing_interface oled_task_ti;
-pthread_mutex_t oled_task_ti_l;
-
 timing_interface srf02_task_ti;
-pthread_mutex_t srf02_task_ti_l;
-
 timing_interface bluetooth_task_ti;
-pthread_mutex_t bluetooth_task_ti_l;
-
 timing_interface extgpio_task_ti;
-pthread_mutex_t extgpio_task_ti_l;
-
 timing_interface imgproc_task_ti;
-pthread_mutex_t imgproc_task_ti_l;
-
 timing_interface booth_task_ti;
-pthread_mutex_t booth_task_ti_l;
-
 timing_interface socket_client_task_ti;
-pthread_mutex_t socket_client_task_ti_l;
-
 timing_interface socket_server_task_ti;
-pthread_mutex_t socket_server_task_ti_l;
 
 //Shared data between threads
 
@@ -501,4 +456,3 @@ int main()
 	//Return 0
 	return 0;
 }
-

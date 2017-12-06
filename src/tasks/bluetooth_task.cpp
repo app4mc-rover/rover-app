@@ -128,7 +128,7 @@ void *Bluetooth_Task (void * arg)
 		bluetooth_task_tmr.calculateExecutionTime();
 		bluetooth_task_tmr.calculateDeadlineMissPercentage();
 		bluetooth_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&bluetooth_task_ti_l);
+		pthread_mutex_lock(&bluetooth_task_ti.mutex);
 			bluetooth_task_ti.deadline = bluetooth_task_tmr.getDeadline();
 			bluetooth_task_ti.deadline_miss_percentage = bluetooth_task_tmr.getDeadlineMissPercentage();
 			bluetooth_task_ti.execution_time = bluetooth_task_tmr.getExecutionTime();
@@ -137,7 +137,7 @@ void *Bluetooth_Task (void * arg)
 			bluetooth_task_ti.task_id = bluetooth_task_tmr.getTaskID();
 			bluetooth_task_ti.start_time = bluetooth_task_tmr.getStartTime();
 			bluetooth_task_ti.end_time = bluetooth_task_tmr.getEndTime();
-		pthread_mutex_unlock(&bluetooth_task_ti_l);
+		pthread_mutex_unlock(&bluetooth_task_ti.mutex);
 		bluetooth_task_tmr.sleepToMatchPeriod();
 	}
 

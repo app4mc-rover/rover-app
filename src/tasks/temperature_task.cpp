@@ -68,7 +68,7 @@ void *Temperature_Task(void *arg)
 		temperature_task_tmr.calculateExecutionTime();
 		temperature_task_tmr.calculateDeadlineMissPercentage();
 		temperature_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&temperature_task_ti_l);
+		pthread_mutex_lock(&temperature_task_ti.mutex);
 			temperature_task_ti.deadline = temperature_task_tmr.getDeadline();
 			temperature_task_ti.deadline_miss_percentage = temperature_task_tmr.getDeadlineMissPercentage();
 			temperature_task_ti.execution_time = temperature_task_tmr.getExecutionTime();
@@ -77,7 +77,7 @@ void *Temperature_Task(void *arg)
 			temperature_task_ti.task_id = temperature_task_tmr.getTaskID();
 			temperature_task_ti.start_time = temperature_task_tmr.getStartTime();
 			temperature_task_ti.end_time = temperature_task_tmr.getEndTime();
-		pthread_mutex_unlock(&temperature_task_ti_l);
+		pthread_mutex_unlock(&temperature_task_ti.mutex);
 		temperature_task_tmr.sleepToMatchPeriod();
 	}
 

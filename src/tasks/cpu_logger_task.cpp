@@ -36,7 +36,7 @@ void Cpu_Logger_Task_Terminator (int dummy)
 	running_flag = 0;
 }
 
-void *Cpu_Logger_Task(void * arg)
+void *Cpu_Logger_Task(void * arg) 
 {
 
 	timing cpu_logger_task_tmr;
@@ -51,7 +51,7 @@ void *Cpu_Logger_Task(void * arg)
 
 	RoverUtils r_utils = RoverUtils();
 
-	float *util;
+	float util[4];
 
 	while (running_flag)
 	{
@@ -60,7 +60,7 @@ void *Cpu_Logger_Task(void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		util = r_utils.getCoreUtilization();
+		r_utils.getCoreUtilization(util);
 		pthread_mutex_lock(&cpu_util_shared_lock);
 			cpu_util_shared[0] = util[0];
 			cpu_util_shared[1] = util[1];
@@ -76,7 +76,7 @@ void *Cpu_Logger_Task(void * arg)
 		cpu_logger_task_tmr.calculateExecutionTime();
 		cpu_logger_task_tmr.calculateDeadlineMissPercentage();
 		cpu_logger_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&cpu_logger_task_ti_l);
+		pthread_mutex_lock(&cpu_logger_task_ti.mutex);
 			cpu_logger_task_ti.deadline = cpu_logger_task_tmr.getDeadline();
 			cpu_logger_task_ti.deadline_miss_percentage = cpu_logger_task_tmr.getDeadlineMissPercentage();
 			cpu_logger_task_ti.execution_time = cpu_logger_task_tmr.getExecutionTime();
@@ -85,12 +85,10 @@ void *Cpu_Logger_Task(void * arg)
 			cpu_logger_task_ti.task_id = cpu_logger_task_tmr.getTaskID();
 			cpu_logger_task_ti.start_time = cpu_logger_task_tmr.getStartTime();
 			cpu_logger_task_ti.end_time = cpu_logger_task_tmr.getEndTime();
-		pthread_mutex_unlock(&cpu_logger_task_ti_l);
+		pthread_mutex_unlock(&cpu_logger_task_ti.mutex);
 		cpu_logger_task_tmr.sleepToMatchPeriod();
 	}
 
 	/* the function must return something - NULL will do */
 	return NULL;
 }
-
-

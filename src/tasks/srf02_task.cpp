@@ -144,7 +144,7 @@ void *SRF02_Task (void * arg)
 		srf02_task_tmr.calculateExecutionTime();
 		srf02_task_tmr.calculateDeadlineMissPercentage();
 		srf02_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&srf02_task_ti_l);
+		pthread_mutex_lock(&srf02_task_ti.mutex);
 			srf02_task_ti.deadline = srf02_task_tmr.getDeadline();
 			srf02_task_ti.deadline_miss_percentage = srf02_task_tmr.getDeadlineMissPercentage();
 			srf02_task_ti.execution_time = srf02_task_tmr.getExecutionTime();
@@ -153,7 +153,7 @@ void *SRF02_Task (void * arg)
 			srf02_task_ti.task_id = srf02_task_tmr.getTaskID();
 			srf02_task_ti.start_time = srf02_task_tmr.getStartTime();
 			srf02_task_ti.end_time = srf02_task_tmr.getEndTime();
-		pthread_mutex_unlock(&srf02_task_ti_l);
+		pthread_mutex_unlock(&srf02_task_ti.mutex);
 		srf02_task_tmr.sleepToMatchPeriod();
 	}
 

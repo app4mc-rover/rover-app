@@ -120,7 +120,7 @@ void *External_GPIO_Task(void *arg)
 		extgpio_task_tmr.calculateExecutionTime();
 		extgpio_task_tmr.calculateDeadlineMissPercentage();
 		extgpio_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&extgpio_task_ti_l);
+		pthread_mutex_lock(&extgpio_task_ti.mutex);
 			extgpio_task_ti.deadline = extgpio_task_tmr.getDeadline();
 			extgpio_task_ti.deadline_miss_percentage = extgpio_task_tmr.getDeadlineMissPercentage();
 			extgpio_task_ti.execution_time = extgpio_task_tmr.getExecutionTime();
@@ -129,7 +129,7 @@ void *External_GPIO_Task(void *arg)
 			extgpio_task_ti.task_id = extgpio_task_tmr.getTaskID();
 			extgpio_task_ti.start_time = extgpio_task_tmr.getStartTime();
 			extgpio_task_ti.end_time = extgpio_task_tmr.getEndTime();
-		pthread_mutex_unlock(&extgpio_task_ti_l);
+		pthread_mutex_unlock(&extgpio_task_ti.mutex);
 		extgpio_task_tmr.sleepToMatchPeriod();
 	}
 
