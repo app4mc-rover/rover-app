@@ -51,7 +51,7 @@ void rover::RoverGpio::wPiSoftToneWrite (const int pin, const int tone)
 	softToneWrite (pin, tone);
 }
 
-void rover::RoverGpio::wPiDelay (const int period_ms)
+void rover::RoverGpio::wPiDelay (const unsigned int period_ms)
 {
 	delay (period_ms);
 }

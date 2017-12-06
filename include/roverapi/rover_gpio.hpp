@@ -122,7 +122,7 @@ namespace rover
 			 * @param period_ms Period in milliseconds
 			 * @return void
 			 */
-			void wPiDelay (const int period_ms);
+			void wPiDelay (const unsigned int period_ms);
 	};
 }
 
