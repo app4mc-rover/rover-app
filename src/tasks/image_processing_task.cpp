@@ -328,7 +328,7 @@ void *Image_Processing_Task(void *arg)
 		imgproc_task_tmr.calculateExecutionTime();
 		imgproc_task_tmr.calculateDeadlineMissPercentage();
 		imgproc_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&imgproc_task_ti_l);
+		pthread_mutex_lock(&imgproc_task_ti.mutex);
 			imgproc_task_ti.deadline = imgproc_task_tmr.getDeadline();
 			imgproc_task_ti.deadline_miss_percentage = imgproc_task_tmr.getDeadlineMissPercentage();
 			imgproc_task_ti.execution_time = imgproc_task_tmr.getExecutionTime();
@@ -337,7 +337,7 @@ void *Image_Processing_Task(void *arg)
 			imgproc_task_ti.task_id = imgproc_task_tmr.getTaskID();
 			imgproc_task_ti.start_time = imgproc_task_tmr.getStartTime();
 			imgproc_task_ti.end_time = imgproc_task_tmr.getEndTime();
-		pthread_mutex_unlock(&imgproc_task_ti_l);
+		pthread_mutex_unlock(&imgproc_task_ti.mutex);
 		imgproc_task_tmr.sleepToMatchPeriod();
 	}
 
