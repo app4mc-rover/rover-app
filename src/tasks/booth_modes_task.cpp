@@ -54,7 +54,7 @@ void *Booth_Modes_Task(void * arg)
 		booth_task_tmr.calculateExecutionTime();
 		booth_task_tmr.calculateDeadlineMissPercentage();
 		booth_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&booth_task_ti_l);
+		pthread_mutex_lock(&booth_task_ti.mutex);
 			booth_task_ti.deadline = booth_task_tmr.getDeadline();
 			booth_task_ti.deadline_miss_percentage = booth_task_tmr.getDeadlineMissPercentage();
 			booth_task_ti.execution_time = booth_task_tmr.getExecutionTime();
@@ -63,13 +63,10 @@ void *Booth_Modes_Task(void * arg)
 			booth_task_ti.task_id = booth_task_tmr.getTaskID();
 			booth_task_ti.start_time = booth_task_tmr.getStartTime();
 			booth_task_ti.end_time = booth_task_tmr.getEndTime();
-		pthread_mutex_unlock(&booth_task_ti_l);
+		pthread_mutex_unlock(&booth_task_ti.mutex);
 		booth_task_tmr.sleepToMatchPeriod();
 	}
 
 	/* the function must return something - NULL will do */
 	return NULL;
 }
-
-
-

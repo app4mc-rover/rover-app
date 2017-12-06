@@ -65,7 +65,7 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 		ultrasonic_grove_task_tmr.calculateExecutionTime();
 		ultrasonic_grove_task_tmr.calculateDeadlineMissPercentage();
 		ultrasonic_grove_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&ultrasonic_grove_task_ti_l);
+		pthread_mutex_lock(&ultrasonic_grove_task_ti.mutex);
 			ultrasonic_grove_task_ti.deadline = ultrasonic_grove_task_tmr.getDeadline();
 			ultrasonic_grove_task_ti.deadline_miss_percentage = ultrasonic_grove_task_tmr.getDeadlineMissPercentage();
 			ultrasonic_grove_task_ti.execution_time = ultrasonic_grove_task_tmr.getExecutionTime();
@@ -74,7 +74,7 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 			ultrasonic_grove_task_ti.task_id = ultrasonic_grove_task_tmr.getTaskID();
 			ultrasonic_grove_task_ti.start_time = ultrasonic_grove_task_tmr.getStartTime();
 			ultrasonic_grove_task_ti.end_time = ultrasonic_grove_task_tmr.getEndTime();
-		pthread_mutex_unlock(&ultrasonic_grove_task_ti_l); //!!
+		pthread_mutex_unlock(&ultrasonic_grove_task_ti.mutex); //!!
 		ultrasonic_grove_task_tmr.sleepToMatchPeriod();
 	}
 

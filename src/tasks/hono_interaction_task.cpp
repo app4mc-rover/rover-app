@@ -68,7 +68,7 @@ void *Hono_Interaction_Task(void * arg)
 		hono_task_tmr.calculateExecutionTime();
 		hono_task_tmr.calculateDeadlineMissPercentage();
 		hono_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&hono_task_ti_l);
+		pthread_mutex_lock(&hono_task_ti.mutex);
 			hono_task_ti.deadline = hono_task_tmr.getDeadline();
 			hono_task_ti.deadline_miss_percentage = hono_task_tmr.getDeadlineMissPercentage();
 			hono_task_ti.execution_time = hono_task_tmr.getExecutionTime();
@@ -77,11 +77,10 @@ void *Hono_Interaction_Task(void * arg)
 			hono_task_ti.task_id = hono_task_tmr.getTaskID();
 			hono_task_ti.start_time = hono_task_tmr.getStartTime();
 			hono_task_ti.end_time = hono_task_tmr.getEndTime();
-		pthread_mutex_unlock(&hono_task_ti_l);
+		pthread_mutex_unlock(&hono_task_ti.mutex);
 		hono_task_tmr.sleepToMatchPeriod();
 	}
 
 	/* the function must return something - NULL will do */
 	return NULL;
 }
-

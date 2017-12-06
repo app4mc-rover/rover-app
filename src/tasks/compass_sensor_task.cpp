@@ -80,7 +80,7 @@ void *CompassSensor_Task(void * arg)
 		compass_task_tmr.calculateExecutionTime();
 		compass_task_tmr.calculateDeadlineMissPercentage();
 		compass_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&compass_task_ti_l);
+		pthread_mutex_lock(&compass_task_ti.mutex);
 			compass_task_ti.deadline = compass_task_tmr.getDeadline();
 			compass_task_ti.deadline_miss_percentage = compass_task_tmr.getDeadlineMissPercentage();
 			compass_task_ti.execution_time = compass_task_tmr.getExecutionTime();
@@ -89,7 +89,7 @@ void *CompassSensor_Task(void * arg)
 			compass_task_ti.task_id = compass_task_tmr.getTaskID();
 			compass_task_ti.start_time = compass_task_tmr.getStartTime();
 			compass_task_ti.end_time = compass_task_tmr.getEndTime();
-		pthread_mutex_unlock(&compass_task_ti_l);
+		pthread_mutex_unlock(&compass_task_ti.mutex);
 		compass_task_tmr.sleepToMatchPeriod();
 	}
 

@@ -119,7 +119,7 @@ void *Parking_Task(void * arg)
 		parking_task_tmr.calculateExecutionTime();
 		parking_task_tmr.calculateDeadlineMissPercentage();
 		parking_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&parking_task_ti_l);
+		pthread_mutex_lock(&parking_task_ti.mutex);
 			parking_task_ti.deadline = parking_task_tmr.getDeadline();
 			parking_task_ti.deadline_miss_percentage = parking_task_tmr.getDeadlineMissPercentage();
 			parking_task_ti.execution_time = parking_task_tmr.getExecutionTime();
@@ -128,14 +128,10 @@ void *Parking_Task(void * arg)
 			parking_task_ti.task_id = parking_task_tmr.getTaskID();
 			parking_task_ti.start_time = parking_task_tmr.getStartTime();
 			parking_task_ti.end_time = parking_task_tmr.getEndTime();
-		pthread_mutex_unlock(&parking_task_ti_l);
+		pthread_mutex_unlock(&parking_task_ti.mutex);
 		parking_task_tmr.sleepToMatchPeriod();
 	}
 
 	/* the function must return something - NULL will do */
 	return NULL;
 }
-
-
-
-

@@ -77,7 +77,7 @@ void *DisplaySensors_Task (void * arg)
 		display_sensors_task_tmr.calculateExecutionTime();
 		display_sensors_task_tmr.calculateDeadlineMissPercentage();
 		display_sensors_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&display_sensors_task_ti_l);
+		pthread_mutex_lock(&display_sensors_task_ti.mutex);
 			display_sensors_task_ti.deadline = display_sensors_task_tmr.getDeadline();
 			display_sensors_task_ti.deadline_miss_percentage = display_sensors_task_tmr.getDeadlineMissPercentage();
 			display_sensors_task_ti.execution_time = display_sensors_task_tmr.getExecutionTime();
@@ -86,11 +86,10 @@ void *DisplaySensors_Task (void * arg)
 			display_sensors_task_ti.task_id = display_sensors_task_tmr.getTaskID();
 			display_sensors_task_ti.start_time = display_sensors_task_tmr.getStartTime();
 			display_sensors_task_ti.end_time = display_sensors_task_tmr.getEndTime();
-		pthread_mutex_unlock(&display_sensors_task_ti_l);
+		pthread_mutex_unlock(&display_sensors_task_ti.mutex);
 		display_sensors_task_tmr.sleepToMatchPeriod();
 	}
 
 	/* the function must return something - NULL will do */
 	return NULL;
 }
-

@@ -61,7 +61,7 @@ void *KeyCommandInput_Task(void * arg)
 		keycommand_task_tmr.calculateExecutionTime();
 		keycommand_task_tmr.calculateDeadlineMissPercentage();
 		keycommand_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&keycommand_task_ti_l);
+		pthread_mutex_lock(&keycommand_task_ti.mutex);
 			keycommand_task_ti.deadline = keycommand_task_tmr.getDeadline();
 			keycommand_task_ti.deadline_miss_percentage = keycommand_task_tmr.getDeadlineMissPercentage();
 			keycommand_task_ti.execution_time = keycommand_task_tmr.getExecutionTime();
@@ -70,7 +70,7 @@ void *KeyCommandInput_Task(void * arg)
 			keycommand_task_ti.task_id = keycommand_task_tmr.getTaskID();
 			keycommand_task_ti.start_time = keycommand_task_tmr.getStartTime();
 			keycommand_task_ti.end_time = keycommand_task_tmr.getEndTime();
-		pthread_mutex_unlock(&keycommand_task_ti_l);
+		pthread_mutex_unlock(&keycommand_task_ti.mutex);
 		keycommand_task_tmr.sleepToMatchPeriod();
 	}
 

@@ -28,6 +28,7 @@
 #include "glcdfont.c"
 #include "connectivity_icons.c"
 
+#define swap(a, b) { int16_t t = a; a = b; b = t; }
 
 void Adafruit_GFX::constructor (int16_t w, int16_t h)
 {

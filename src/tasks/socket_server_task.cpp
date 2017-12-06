@@ -211,7 +211,7 @@ void *Socket_Server_Task(void * arg)
 		socket_server_task_tmr.calculateExecutionTime();
 		socket_server_task_tmr.calculateDeadlineMissPercentage();
 		socket_server_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&socket_server_task_ti_l);
+		pthread_mutex_lock(&socket_server_task_ti.mutex);
 			socket_server_task_ti.deadline = socket_server_task_tmr.getDeadline();
 			socket_server_task_ti.deadline_miss_percentage = socket_server_task_tmr.getDeadlineMissPercentage();
 			socket_server_task_ti.execution_time = socket_server_task_tmr.getExecutionTime();
@@ -220,7 +220,7 @@ void *Socket_Server_Task(void * arg)
 			socket_server_task_ti.task_id = socket_server_task_tmr.getTaskID();
 			socket_server_task_ti.start_time = socket_server_task_tmr.getStartTime();
 			socket_server_task_ti.end_time = socket_server_task_tmr.getEndTime();
-		pthread_mutex_unlock(&socket_server_task_ti_l);
+		pthread_mutex_unlock(&socket_server_task_ti.mutex);
 		socket_server_task_tmr.sleepToMatchPeriod();
 
 	}

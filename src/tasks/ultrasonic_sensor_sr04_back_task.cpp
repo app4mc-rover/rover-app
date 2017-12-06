@@ -80,7 +80,7 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 		ultrasonic_sr04_back_task_tmr.calculateExecutionTime();
 		ultrasonic_sr04_back_task_tmr.calculateDeadlineMissPercentage();
 		ultrasonic_sr04_back_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&ultrasonic_sr04_back_task_ti_l);
+		pthread_mutex_lock(&ultrasonic_sr04_back_task_ti.mutex);
 			ultrasonic_sr04_back_task_ti.deadline = ultrasonic_sr04_back_task_tmr.getDeadline();
 			ultrasonic_sr04_back_task_ti.deadline_miss_percentage = ultrasonic_sr04_back_task_tmr.getDeadlineMissPercentage();
 			ultrasonic_sr04_back_task_ti.execution_time = ultrasonic_sr04_back_task_tmr.getExecutionTime();
@@ -89,7 +89,7 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 			ultrasonic_sr04_back_task_ti.task_id = ultrasonic_sr04_back_task_tmr.getTaskID();
 			ultrasonic_sr04_back_task_ti.start_time = ultrasonic_sr04_back_task_tmr.getStartTime();
 			ultrasonic_sr04_back_task_ti.end_time = ultrasonic_sr04_back_task_tmr.getEndTime();
-		pthread_mutex_unlock(&ultrasonic_sr04_back_task_ti_l); //!!
+		pthread_mutex_unlock(&ultrasonic_sr04_back_task_ti.mutex); //!!
 		ultrasonic_sr04_back_task_tmr.sleepToMatchPeriod();
 	}
 

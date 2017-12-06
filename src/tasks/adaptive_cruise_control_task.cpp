@@ -86,7 +86,7 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 		acc_task_tmr.calculateExecutionTime();
 		acc_task_tmr.calculateDeadlineMissPercentage();
 		acc_task_tmr.incrementTotalCycles();
-		pthread_mutex_lock(&acc_task_ti_l);
+		pthread_mutex_lock(&acc_task_ti.mutex);
 			acc_task_ti.deadline = acc_task_tmr.getDeadline();
 			acc_task_ti.deadline_miss_percentage = acc_task_tmr.getDeadlineMissPercentage();
 			acc_task_ti.execution_time = acc_task_tmr.getExecutionTime();
@@ -95,7 +95,7 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 			acc_task_ti.task_id = acc_task_tmr.getTaskID();
 			acc_task_ti.start_time = acc_task_tmr.getStartTime();
 			acc_task_ti.end_time = acc_task_tmr.getEndTime();
-		pthread_mutex_unlock(&acc_task_ti_l);
+		pthread_mutex_unlock(&acc_task_ti.mutex);
 		acc_task_tmr.sleepToMatchPeriod();
 	}
 
