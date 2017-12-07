@@ -61,16 +61,17 @@ void *DisplaySensors_Task (void * arg)
 		printf("Distance(HCSR04Front): %d cm\n", distance_sr04_front_shared);
 		printf("Distance(HCSR04Back): %d cm\n", distance_sr04_back_shared);
 
-		printf("DistanceInfraredChan0: %f cm\n", infrared_shared[0]);
-		printf("DistanceInfraredChan1: %f cm\n", infrared_shared[1]);
-		printf("DistanceInfraredChan2: %f cm\n", infrared_shared[2]);
-		printf("DistanceInfraredChan3: %f cm\n", infrared_shared[3]);
+		printf("DistanceInfraredRearRight: %f cm\n", infrared_shared[0]);
+		printf("DistanceInfraredRearLeft: %f cm\n", infrared_shared[1]);
+		printf("DistanceInfraredFrontRight: %f cm\n", infrared_shared[2]);
+		printf("DistanceInfraredFrontLeft: %f cm\n", infrared_shared[3]);
 
-		printf("Bearing: %f\n", bearing_shared);
+		printf("Bearing from QMC5883L/HMC5883L: %f\n", bearing_shared);
 
 		printf("Accelerometer acceleration:\t%d\t\t%d\t\t%d\n", r_accel.getAccelX(), r_accel.getAccelY(), r_accel.getAccelZ());
 		printf("Accelerometer angles:\t\t%f\t%f\t%f\n", r_accel.getAngleX(), r_accel.getAngleY(), r_accel.getAngleZ());
 
+		printf("Bearing from accelerometer: %f\n", r_accel.read());
 
 		//Task content ends here -------------------------------------------------
 		display_sensors_task_tmr.recordEndTime();
