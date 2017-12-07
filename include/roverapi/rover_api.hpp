@@ -177,8 +177,9 @@ int main (void)
 	RoverUtils r_utils = RoverUtils(); //RoverUtils does not need to be initialized
 
 	// Print core utilization from the rover's OS
-	float *util = r_utils.getCoreUtilization();
-	printf ("Utilization = [%f %f %f %f]\n", util);
+	float util[4];
+	r_utils.getCoreUtilization(util);
+	printf ("Utilization = [%f %f %f %f]\n", util[0], util[1], util[2], util[3]);
 
 	// Use the OLED display on the rover
 	RoverDisplay my_display = RoverDisplay();
