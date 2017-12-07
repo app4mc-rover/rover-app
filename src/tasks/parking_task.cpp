@@ -30,10 +30,8 @@
 int StopParking (void)
 {
 	r_driving.stopRover();
-    pthread_mutex_lock(&driving_mode_lock);
-        driving_mode = MANUAL;
-    pthread_mutex_unlock(&driving_mode_lock);
-    return 1;
+	driving_mode = MANUAL;
+	return 1;
 }
 
 void *Parking_Task(void * arg)
@@ -51,11 +49,11 @@ void *Parking_Task(void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		if (driving_mode == PARKING_LEFT)
+		if (driving_mode.get() == PARKING_LEFT)
 		{
 			//printf ("PARKING STARTED\n");
-			bearing_begin = bearing_shared;
-			r_driving.setSpeed(speed_shared-50);
+			bearing_begin = bearing_shared.get();
+			r_driving.setSpeed(speed_shared.get()-50);
 			r_driving.turnLeft();
 			/**
 			 * The following bearing based parking does currently not work due to very unreliable bearing values
@@ -75,13 +73,13 @@ void *Parking_Task(void * arg)
 
 
 			r_driving.stopRover();
-			r_driving.setSpeed(speed_shared);
+			r_driving.setSpeed(speed_shared.get());
 			r_driving.goForward();
 			delay(2000);
 			r_driving.stopRover();
 
 			//bearing_begin = bearing_shared;
-			r_driving.setSpeed(speed_shared-50);
+			r_driving.setSpeed(speed_shared.get()-50);
 			r_driving.turnRight();
 			//while(((int)bearing_begin+(int)bearing_shared) % 360 <80);
 			delay(3000);
@@ -90,21 +88,21 @@ void *Parking_Task(void * arg)
 			StopParking();
 			//printf ("PARKING ENDED \n");
 		}
-		else if (driving_mode == PARKING_RIGHT)
+		else if (driving_mode.get() == PARKING_RIGHT)
 		{
 			//printf ("PARKING STARTED\n");
-			bearing_begin = bearing_shared;
-			r_driving.setSpeed(speed_shared-50);
+			bearing_begin = bearing_shared.get();
+			r_driving.setSpeed(speed_shared.get()-50);
 			r_driving.turnRight();
 			//while(((int)bearing_begin+(int)bearing_shared) % 360 <85);
 			delay(3000);
 
-			r_driving.setSpeed(speed_shared);
+			r_driving.setSpeed(speed_shared.get());
 			r_driving.goForward();
 			delay(2000);
 
-			bearing_begin = bearing_shared;
-			r_driving.setSpeed(speed_shared-50);
+			bearing_begin = bearing_shared.get();
+			r_driving.setSpeed(speed_shared.get()-50);
 			r_driving.turnLeft();
 			delay(3000);
 

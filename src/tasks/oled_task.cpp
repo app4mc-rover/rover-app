@@ -70,10 +70,10 @@ void *OLED_Task (void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		if ( shutdown_hook_shared == 0)
+		if ( shutdown_hook_shared.get() == 0)
 		{
 			/* If the display is not in use somewhere else asynchronously */
-			if (display_use_elsewhere_shared == 0)
+			if (display_use_elsewhere_shared.get() == 0)
 			{
 
 				/* Our internal control-timer actions */
@@ -262,7 +262,7 @@ void *OLED_Task (void * arg)
 		}
 
 		/* If the display is not in use somewhere else asynchronously */
-		if (display_use_elsewhere_shared == 0)
+		if (display_use_elsewhere_shared.get() == 0)
 		{
 			/* Display the stuff NOW */
 			my_display.display();

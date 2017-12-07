@@ -114,51 +114,27 @@ timing_interface socket_server_task_ti;
 
 //Shared data between threads
 
-float temperature_shared;
-pthread_mutex_t temperature_lock;
-
-float humidity_shared;
-pthread_mutex_t humidity_lock;
-
-int distance_grove_shared;
-pthread_mutex_t distance_grove_lock;
-
-int distance_sr04_front_shared;
-pthread_mutex_t distance_sr04_front_lock;
-
-int distance_sr04_back_shared;
-pthread_mutex_t distance_sr04_back_lock;
-
-char keycommand_shared;
-pthread_mutex_t keycommand_lock;
+SharedData<float> temperature_shared;
+SharedData<float> humidity_shared;
+SharedData<int> distance_grove_shared;
+SharedData<int> distance_sr04_front_shared;
+SharedData<int> distance_sr04_back_shared;
+SharedData<char>  keycommand_shared;
+SharedData<float> bearing_shared;
+SharedData<float> timing_shared;
+SharedData<int> driving_mode;
+SharedData<int> speed_shared;
+SharedData<int> buzzer_status_shared;
+SharedData<int> shutdown_hook_shared;
+SharedData<int> display_use_elsewhere_shared;
+/* For proper termination */
+SharedData<int> running_flag;
 
 float infrared_shared[4];
 pthread_mutex_t infrared_lock;
 
-float bearing_shared;
-pthread_mutex_t compass_lock;
-
-float timing_shared;
-pthread_mutex_t timing_lock;
-
-int driving_mode;
-pthread_mutex_t driving_mode_lock;
-
-int speed_shared;
-pthread_mutex_t speed_lock;
-
 double cpu_util_shared[4];
 pthread_mutex_t cpu_util_shared_lock;
-
-int buzzer_status_shared;
-pthread_mutex_t buzzer_status_shared_lock;
-
-int shutdown_hook_shared;
-
-int display_use_elsewhere_shared;
-
-/* For proper termination */
-int running_flag;
 
 void exitHandler(int dummy)
 {
@@ -202,7 +178,7 @@ int main()
 	signal(SIGKILL, exitHandler);
 
 	//Initialize shared data
-	temperature_shared = 0.0;
+	temperature_shared.set(0.0);
 	humidity_shared = 0.0;
 	distance_grove_shared = 0;
 	distance_sr04_front_shared = 0;
@@ -221,16 +197,7 @@ int main()
 	display_use_elsewhere_shared = 0;
 
 	//Initialize mutexes
-	pthread_mutex_init(&temperature_lock, NULL);
-	pthread_mutex_init(&humidity_lock, NULL);
-	pthread_mutex_init(&distance_grove_lock, NULL);
-	pthread_mutex_init(&distance_sr04_front_lock, NULL);
-	pthread_mutex_init(&distance_sr04_back_lock, NULL);
-	pthread_mutex_init(&keycommand_lock, NULL);
 	pthread_mutex_init(&infrared_lock, NULL);
-	pthread_mutex_init(&compass_lock, NULL);
-	pthread_mutex_init(&driving_mode_lock, NULL);
-	pthread_mutex_init(&buzzer_status_shared_lock, NULL);
 
 	//Thread objects
 	pthread_t main_thread = pthread_self();
@@ -443,7 +410,7 @@ int main()
 
 
 
-	while (running_flag)
+	while (running_flag.get())
 	{
 		//What main thread does should come here..
 		// ...

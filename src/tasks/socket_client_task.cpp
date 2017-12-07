@@ -60,11 +60,11 @@ Json::Value constructJSONData (int data_type)
 			data["data"]["infrared1"] = ceil(infrared_shared[1]);
 			data["data"]["infrared2"] = ceil(infrared_shared[2]);
 			data["data"]["infrared3"] = ceil (infrared_shared[3]);
-			data["data"]["front"] = ceil (distance_sr04_front_shared);
-			data["data"]["rear"] = ceil (distance_sr04_back_shared);
-			data["data"]["temperature"] = ceil (temperature_shared);
-			data["data"]["humidity"] = ceil (humidity_shared);
-			data["data"]["bearing"] = ceil (bearing_shared);
+			data["data"]["front"] = ceil (distance_sr04_front_shared.get());
+			data["data"]["rear"] = ceil (distance_sr04_back_shared.get());
+			data["data"]["temperature"] = ceil (temperature_shared.get());
+			data["data"]["humidity"] = ceil (humidity_shared.get());
+			data["data"]["bearing"] = ceil (bearing_shared.get());
 			break;
 		case UTIL_DATA:
 			data["rover_dtype"] = "util";
@@ -115,7 +115,7 @@ void *Socket_Client_Task (void * arg)
 	/* Create JSON object to hold sensor data */
 	Json::FastWriter  string_writer;
 
-	while (running_flag)
+	while (running_flag.get())
 	{
 		socket_client_task_tmr.recordStartTime();
 		socket_client_task_tmr.calculatePreviousSlackTime();

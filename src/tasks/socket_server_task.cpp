@@ -58,20 +58,12 @@ void parseJSONData (char *server_buffer)
 
 	if (root["rover_dtype"].asString() == "control")
 	{
-		// Update shared variable
-		pthread_mutex_lock(&keycommand_lock);
 			//Take only the first char - since interface uses 1 char only
 			keycommand_shared = root["data"]["command"].asString()[0];
-			//printf("RECV=%c\n",keycommand_shared);
-		pthread_mutex_unlock(&keycommand_lock);
 	}
 	else if (root["rover_dtype"].asString() == "speed")
 	{
-		// Update shared variable
-		pthread_mutex_lock(&speed_lock);
 			speed_shared = root["data"]["speed"].asInt();
-			//printf("RECV=%d\n",speed_shared);
-		pthread_mutex_unlock(&speed_lock);
 	}
 	else
 	{
@@ -138,7 +130,7 @@ void *Socket_Server_Task(void * arg)
 	listen(roverapp_listen_sockfd,5); // Max 5 connections queued
 	clilen = sizeof(cli_addr);
 
-	while(running_flag)
+	while(running_flag.get())
 	{
 		socket_server_task_tmr.recordStartTime();
 		socket_server_task_tmr.calculatePreviousSlackTime();

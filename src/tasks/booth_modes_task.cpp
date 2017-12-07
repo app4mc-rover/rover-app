@@ -38,12 +38,12 @@ void *Booth_Modes_Task(void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		if (driving_mode == BOOTH1)
+		if (driving_mode.get() == BOOTH1)
 		{
 
 		}
 
-		if (driving_mode == BOOTH2)
+		if (driving_mode.get() == BOOTH2)
 		{
 
 		}

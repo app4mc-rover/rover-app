@@ -34,9 +34,7 @@
 
 int EndCalibrationMode (void)
 {
-	pthread_mutex_lock(&keycommand_lock);
 	keycommand_shared = 'f';
-	pthread_mutex_unlock(&keycommand_lock);
 	return 1;
 }
 
@@ -57,7 +55,7 @@ void *CompassSensor_Task(void * arg)
 		compass_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		local_command = keycommand_shared;
+		local_command = keycommand_shared.get();
 
 		//Calibration routine
 		if (local_command == 'u')
@@ -70,10 +68,7 @@ void *CompassSensor_Task(void * arg)
 		}
 		//Asynchronous end to calibration mode --> Call EndCalibrationMode()
 
-		pthread_mutex_lock(&compass_lock);
-			bearing_shared = r_hmc5883l.read();
-		pthread_mutex_unlock(&compass_lock);
-
+		bearing_shared = r_hmc5883l.read();
 
 		//Task content ends here -------------------------------------------------
 		compass_task_tmr.recordEndTime();

@@ -71,9 +71,7 @@ void *Ultrasonic_Sensor_SR04_Front_Task(void *unused)
 		ultrasonic_sr04_front_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		pthread_mutex_lock(&distance_sr04_front_lock);
-			distance_sr04_front_shared = r_ultrasonicfront.read();
-		pthread_mutex_unlock(&distance_sr04_front_lock);
+		distance_sr04_front_shared = r_ultrasonicfront.read();
 		//Task content ends here -------------------------------------------------
 
 		ultrasonic_sr04_front_task_tmr.recordEndTime();

@@ -53,7 +53,7 @@ void *Cpu_Logger_Task(void * arg)
 
 	float util[4];
 
-	while (running_flag)
+	while (running_flag.get())
 	{
 		cpu_logger_task_tmr.recordStartTime();
 		cpu_logger_task_tmr.calculatePreviousSlackTime();

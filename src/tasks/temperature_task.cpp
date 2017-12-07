@@ -54,13 +54,8 @@ void *Temperature_Task(void *arg)
 		temperature = r_dht22.readTemperature();
 		humidity = r_dht22.readHumidity();
 
-		pthread_mutex_lock(&temperature_lock);
-			temperature_shared = temperature;
-		pthread_mutex_unlock(&temperature_lock);
-
-		pthread_mutex_lock(&humidity_lock);
-			humidity_shared = humidity;
-		pthread_mutex_unlock(&humidity_lock);
+		temperature_shared.set(temperature);
+		humidity_shared = humidity;
 
 		//Task content ends here -------------------------------------------------
 

@@ -47,14 +47,12 @@ void *KeyCommandInput_Task(void * arg)
 		keycommand_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		pthread_mutex_lock(&keycommand_lock);
 			keys = getchar();
 			if (isalpha(keys))
 			{
 				keycommand_shared = keys;
 				//printf("Entered Command = %c\n",keycommand_shared);
 			}
-		pthread_mutex_unlock(&keycommand_lock);
 		//Task content ends here -------------------------------------------------
 
 		keycommand_task_tmr.recordEndTime();
