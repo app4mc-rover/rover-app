@@ -26,6 +26,7 @@
 								<option id="gnu.c.compiler.option.debugging.level.946394944" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1330291241" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\i2c-dev&quot;"/>
 								</option>
@@ -40,6 +41,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.827987504" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1774893963" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include\drivers\oled_drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\jsoncpp\include&quot;"/>
@@ -75,6 +77,10 @@
 									<listOptionValue builtIn="false" value="opencv_core"/>
 									<listOptionValue builtIn="false" value="opencv_highgui"/>
 									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3a"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3as"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3c"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3cs"/>
 									<listOptionValue builtIn="false" value="jsoncpp"/>
 									<listOptionValue builtIn="false" value="bluetooth"/>
 									<listOptionValue builtIn="false" value="wiringPi"/>
@@ -82,6 +88,7 @@
 								</option>
 								<option id="gnu.cpp.link.option.paths.980673877" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\wiringPi-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\pahoo-mqtt-libs&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\raspicam-libs&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\opencv-libs&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\jsoncpp-libs&quot;"/>
