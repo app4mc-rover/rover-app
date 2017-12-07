@@ -26,7 +26,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-
 namespace rover
 {
 	/**
@@ -44,6 +43,21 @@ namespace rover
 			 * @brief I2C address for overriding
 			 */
 			int i2CAddress;
+
+			/**
+			 *  @brief Calibration duration for compass sensor
+			 */
+			int CALIBRATION_DURATION;
+
+			/**
+			 *  @brief Declination angle / correction factor for compass sensor
+			 */
+			float DECLINATION_ANGLE;
+
+			/**
+			 * @brief Calibration variable
+			 */
+			mutable unsigned int calibration_start;
 
 		public:
 			/**
@@ -69,7 +83,8 @@ namespace rover
 			void initialize (void);
 
 			/**
-			 * @brief Overrided unused read function from RoverSensor class.
+			 * @brief Returns heading in float
+			 * @return Bearing
 			 */
 			float read (void);
 
@@ -126,6 +141,40 @@ namespace rover
 			 * @return angle_z
 			 */
 			float getAngleZ (void);
+
+			/**
+			 * @brief Sets the Calibration Duration
+			 * @param period Period to set
+			 * @return void
+			 */
+			void setCalibrationPeriod(const int period);
+
+			/**
+			 * @brief Sets the Declination angle
+			 * @param angle Declination angle to set
+			 * @return void
+			 */
+			void setDeclinationAngle (const float angle);
+
+		private:
+
+			/**
+			 * @brief Inline macro to find minimum of two values regardles of their types (template).
+			 * @param a Parameter 1
+			 * @param b Parameter 2
+			 * @return minimum value
+			 */
+			template<typename T>
+			inline T MINIMUM_ (const T& a, const T& b);
+
+			/**
+			 * @brief Inline macro to find maximum of two values regardles of their types (template).
+			 * @param a Parameter 1
+			 * @param b Parameter 2
+			 * @return maximum value
+			 */
+			template<typename T>
+			inline T MAXIMUM_ (const T& a, const T& b);
 
 	};
 }

@@ -36,17 +36,28 @@
 
 static int gy521_fd = -1;
 
+static int16_t xMinRaw_gy = 0;
+static int16_t xMaxRaw_gy = 0;
+static int16_t yMaxRaw_gy = 0;
+static int16_t yMinRaw_gy = 0;
+
 rover::RoverGY521::RoverGY521()
 :ROVERGY521_SETUP_(0),
-i2CAddress(MPU6050_I2C_ADDRESS)
+i2CAddress(MPU6050_I2C_ADDRESS),
+CALIBRATION_DURATION(10000), 	//compass calibration has a duration of 5 seconds
+DECLINATION_ANGLE(0.0413),  	//correction factor for location Paderborn
+calibration_start(0)
 {
 
 }
 
 rover::RoverGY521::RoverGY521(const int custom_i2c_address)
+: ROVERGY521_SETUP_(0),
+  i2CAddress(custom_i2c_address),
+  CALIBRATION_DURATION(10000), 	//compass calibration has a duration of 5 seconds
+  DECLINATION_ANGLE(0.0413),  	//correction factor for location Paderborn
+  calibration_start(0)
 {
-	this->i2CAddress = custom_i2c_address;
-	this->ROVERGY521_SETUP_ = 0;
 }
 
 rover::RoverGY521::~RoverGY521(){}
@@ -63,11 +74,6 @@ void rover::RoverGY521::initialize (void)
 	wiringPiI2CWriteReg16(gy521_fd, MPU6050_PWR_MGMT_1, 0);
 
 	this->ROVERGY521_SETUP_ = 1;
-}
-
-float rover::RoverGY521::read (void)
-{
-	return 1.0;
 }
 
 int8_t rover::RoverGY521::getGyroX()
@@ -188,4 +194,71 @@ float rover::RoverGY521::getAngleZ()
 		float az = atan((sqrt(y*y+x*x))/z)* 180/M_PI;
 		return az;
 	}
+}
+
+float rover::RoverGY521::read (void)
+{
+	if (this->ROVERGY521_SETUP_ != 1)
+	{
+		fprintf(stderr,"You havent set up RoverGY521. Use RoverGY521::initialize() !\n");
+	}
+	else
+	{
+		int xRaw = getAccelX();
+		int yRaw = getAccelY();
+
+		//if calibration is active calculate minimum and maximum x/y values for calibration
+		if (millis() <= this->calibration_start + this->CALIBRATION_DURATION)
+		{
+			xMinRaw_gy = MINIMUM_<int16_t>(xRaw, xMinRaw_gy);
+
+			xMaxRaw_gy = MAXIMUM_<int16_t>(xRaw, xMaxRaw_gy);
+
+			yMinRaw_gy = MINIMUM_<int16_t>(yRaw, yMinRaw_gy);
+
+			yMaxRaw_gy = MAXIMUM_<int16_t>(yRaw, yMaxRaw_gy);
+		}
+
+		//calibration: move and scale x coordinates based on minimum and maximum values to get a unit circle
+		float xf = xRaw - (float) (xMinRaw_gy + xMaxRaw_gy) / 2.0f;
+		xf = xf / (xMinRaw_gy + xMaxRaw_gy) * 2.0f;
+
+		//calibration: move and scale y coordinates based on minimum and maximum values to get a unit circle
+		float yf = yRaw - (float) (yMinRaw_gy + yMaxRaw_gy) / 2.0f;
+		yf = yf / (yMinRaw_gy + yMaxRaw_gy) * 2.0f;
+
+		float bearing = atan2(yf, xf);
+	#ifdef DEBUG
+		printf("%f, bearing\n", bearing);
+	#endif
+
+		//location specific magnetic field correction
+		bearing += this->DECLINATION_ANGLE;
+
+		if (bearing < 0) {
+			bearing += 2 * M_PI;
+		}
+
+		if (bearing > 2 * M_PI) {
+			bearing -= 2 * M_PI;
+		}
+
+		float headingDegrees = bearing * (180.0 / M_PI);
+	#ifdef DEBUG
+		printf("%lf, headingDegrees\n", headingDegrees);
+	#endif
+		return headingDegrees;
+	}
+}
+
+template<typename T>
+inline T rover::RoverGY521::MINIMUM_(const T& a, const T& b)
+{
+	return (a < b ? a : b);
+}
+
+template<typename T>
+inline T rover::RoverGY521::MAXIMUM_(const T& a, const T& b)
+{
+	return (a > b ? a : b);
 }
