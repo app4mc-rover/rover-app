@@ -16,12 +16,12 @@
 #include <roverapi/rover_api.hpp>
 #include <wiringPi.h>
 
-#include <roverapi/rover_cloud.hpp>
 #include <roverapi/rover_utils.hpp>
 #include <roverapi/rover_driving.hpp>
 #include <roverapi/rover_buzzer.hpp>
 #include <roverapi/rover_display.hpp>
 #include <roverapi/rover_sensor.hpp>
+#include <roverapi/rover_honocloud.hpp>
 
 /**
   *   @brief  Constructor for the RoverBase class

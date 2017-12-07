@@ -63,7 +63,7 @@ The following is an example C++ application using some of the Rover API function
 //Basis Include
 #include <roverapi/rover_api.hpp>
 //Other Includes
-#include <roverapi/rover_cloud.hpp>
+#include <roverapi/rover_honocloud.hpp>
 #include <roverapi/rover_dht22.hpp>
 #include <roverapi/rover_display.hpp>
 #include <roverapi/rover_driving.hpp>
@@ -86,7 +86,7 @@ int main (void)
 	r_base.initialize();
 
 	// Set-up cloud instance and register your device
-	RoverCloud r_cloud = RoverCloud("myhost", 8080, 28080, "DEFAULT_TENANT");
+	RoverHonoCloud r_cloud = RoverHonoCloud ("myhost", 8080, 28080, "DEFAULT_TENANT");
 
 	// To override the initial RoverCloud set-up
 	r_cloud.setHono("localhost", 8080, "DEFAULT_TENANT");
