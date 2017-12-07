@@ -53,6 +53,8 @@
 #include <interfaces.h>
 #include <signal.h>
 
+#define CHECK_RET(ret) if (ret) return ret;
+
 using namespace std;
 
 //Using rover namespace from Rover API
@@ -136,32 +138,83 @@ pthread_mutex_t infrared_lock;
 double cpu_util_shared[4];
 pthread_mutex_t cpu_util_shared_lock;
 
-void exitHandler(int dummy)
-{
-	pthread_kill(ultrasonic_grove_thread, SIGTERM);
-	pthread_kill(ultrasonic_sr04_front_thread, SIGTERM);
-	pthread_kill(ultrasonic_sr04_back_thread, SIGTERM);
-	pthread_kill(temperature_thread, SIGTERM);
-	pthread_kill(motordriver_thread, SIGTERM);
-	pthread_kill(infrared_thread, SIGTERM);
-	pthread_kill(displaysensors_thread, SIGTERM);
-	pthread_kill(compasssensor_thread, SIGTERM);
-	pthread_kill(record_timing_thread, SIGTERM);
-	pthread_kill(adaptive_cruise_control_thread, SIGTERM);
-	pthread_kill(parking_thread, SIGTERM);
-	pthread_kill(hono_interaction_thread, SIGTERM);
-	pthread_kill(cpu_logger_thread, SIGTERM);
-	pthread_kill(oled_thread, SIGTERM);
-	pthread_kill(srf02_thread, SIGTERM);
-	pthread_kill(bluetooth_thread, SIGTERM);
-	pthread_kill(extgpio_thread, SIGTERM);
-	pthread_kill(booth_thread, SIGTERM);
-	pthread_kill(socket_client_thread, SIGTERM);
-	pthread_kill(socket_server_thread, SIGTERM);
+int main_running_flag;
+
+// Function to handle the joining of every threads
+void joinThread(pthread_t * thread_to_join) {
+	char * ret;
+	int thread_ret;
+	char thread_name[10];
+
+	// If there thread wasn't created
+	if (!(*thread_to_join))
+	{
+		return;
+	}
+
+	pthread_getname_np(*thread_to_join, thread_name, 10);
+
+	printf("Joining Thread %d\n", (uint) *thread_to_join);
+
+	thread_ret  = pthread_join(*thread_to_join, (void **) &ret);
+	if (thread_ret)
+	{
+		printf("Error joining thread %s - returning %d.\n", thread_name, thread_ret);
+	}
 }
 
+// Function to create every thread
+int createThread(pthread_t * thread_to_create, void *(*thread_funct) (void *), const char * name) {
+	pthread_attr_t attrs;
+
+	pthread_attr_init(&attrs);
+	pthread_attr_setdetachstate(&attrs, PTHREAD_CREATE_JOINABLE);
+
+	printf("Creating Thread %s\n", name);
+
+	if(pthread_create(thread_to_create, &attrs, thread_funct, NULL)) {
+		fprintf(stderr, "Error creating thread\n");
+		return 1;
+	}
+	else
+	{
+		pthread_setname_np(*thread_to_create, name); //If name is too long, this function silently fails.
+	}
+
+	return 0;
+}
+
+// Singal handler
+void exitHandler(int dummy)
+{
+	running_flag.set(0);
+
+	joinThread(&ultrasonic_grove_thread);
+	joinThread(&ultrasonic_sr04_back_thread);
+	joinThread(&ultrasonic_sr04_front_thread);
+	joinThread(&temperature_thread);
+	joinThread(&motordriver_thread);
+	joinThread(&infrared_thread);
+	joinThread(&compasssensor_thread);
+	joinThread(&record_timing_thread);
+	joinThread(&adaptive_cruise_control_thread);
+	joinThread(&parking_thread);
+	joinThread(&hono_interaction_thread);
+	joinThread(&cpu_logger_thread);
+	joinThread(&oled_thread);
+	joinThread(&extgpio_thread);
+	joinThread(&booth_thread);
+	joinThread(&socket_client_thread);
+	joinThread(&socket_server_thread);
+
+	main_running_flag = 0;
+	return;
+}
+
+// Main function
 int main()
 {
+	int ret = 0;
 	r_driving = RoverDriving();
 	r_base = RoverBase();
 	my_display = RoverDisplay();
@@ -171,11 +224,6 @@ int main()
 	r_base.initialize();
 	r_driving.initialize();
 	my_display.initialize();
-
-	/* Add signals to exit threads properly */
-	signal(SIGINT, exitHandler);
-	signal(SIGTERM, exitHandler);
-	signal(SIGKILL, exitHandler);
 
 	//Initialize shared data
 	temperature_shared.set(0.0);
@@ -195,6 +243,7 @@ int main()
 	shutdown_hook_shared = 0;
 	running_flag = 1;
 	display_use_elsewhere_shared = 0;
+	main_running_flag = 1;
 
 	//Initialize mutexes
 	pthread_mutex_init(&infrared_lock, NULL);
@@ -203,174 +252,62 @@ int main()
 	pthread_t main_thread = pthread_self();
 	pthread_setname_np(main_thread, "main_thread");
 
-
-
 	//Thread creation
-
 #ifdef USE_GROOVE_SENSOR
-	if(pthread_create(&ultrasonic_grove_thread, NULL, Ultrasonic_Sensor_Grove_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(ultrasonic_grove_thread, "US_grove"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&ultrasonic_grove_thread, Ultrasonic_Sensor_Grove_Task, "US_grove");
 #else
-	if(pthread_create(&ultrasonic_sr04_back_thread, NULL, Ultrasonic_Sensor_SR04_Back_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(ultrasonic_sr04_back_thread, "US_sr04_back"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&ultrasonic_sr04_back_thread, Ultrasonic_Sensor_SR04_Back_Task, "US_sr04_back");
 #endif
+	CHECK_RET(ret);
 
-	if(pthread_create(&ultrasonic_sr04_front_thread, NULL, Ultrasonic_Sensor_SR04_Front_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(ultrasonic_sr04_front_thread, "US_sr04_front"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&ultrasonic_sr04_front_thread, Ultrasonic_Sensor_SR04_Front_Task, "US_sr04_front");
+	CHECK_RET(ret);
 
-	if(pthread_create(&temperature_thread, NULL, Temperature_Task, NULL)) {
-			fprintf(stderr, "Error creating thread\n");
-			return 1;
-	}
-	else
-	{
-		pthread_setname_np(temperature_thread, "temperature"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&temperature_thread, Temperature_Task, "temperature");
+	CHECK_RET(ret);
 
-	if(pthread_create(&motordriver_thread, NULL, MotorDriver_Task, NULL)) {
-			fprintf(stderr, "Error creating thread\n");
-			return 1;
-	}
-	else
-	{
-		pthread_setname_np(motordriver_thread, "motordriver"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&motordriver_thread, MotorDriver_Task, "motordriver");
+	CHECK_RET(ret);
 
-	if(pthread_create(&infrared_thread, NULL, InfraredDistance_Task, NULL)) {
-			fprintf(stderr, "Error creating thread\n");
-			return 1;
-	}
-	else
-	{
-		pthread_setname_np(infrared_thread, "infrared"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&infrared_thread, InfraredDistance_Task, "infrared");
+	CHECK_RET(ret);
 
-	if(pthread_create(&displaysensors_thread, NULL, DisplaySensors_Task, NULL)) {
-			fprintf(stderr, "Error creating thread\n");
-			return 1;
-	}
-	else
-	{
-		pthread_setname_np(displaysensors_thread, "displaysensors"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&displaysensors_thread, DisplaySensors_Task, "displaysensors");
+	CHECK_RET(ret);
 
-	if (pthread_create(&compasssensor_thread, NULL, CompassSensor_Task, NULL)) {
-			fprintf(stderr, "Error creating compass sensor thread\n");
-			return 1;
-	}
-	else
-	{
-		pthread_setname_np(compasssensor_thread, "compasssensor"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&compasssensor_thread, CompassSensor_Task, "compasssensor");
+	CHECK_RET(ret);
 
-	if (pthread_create(&record_timing_thread, NULL, Record_Timing_Task, NULL)) {
-		fprintf(stderr, "Error creating compass sensor thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(record_timing_thread, "record_timing"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&record_timing_thread, Record_Timing_Task, "record_timing");
+	CHECK_RET(ret);
 
-	if (pthread_create(&adaptive_cruise_control_thread, NULL, Adaptive_Cruise_Control_Task, NULL))
-	{
-		fprintf(stderr, "Error creating compass sensor thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(adaptive_cruise_control_thread, "acc"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&adaptive_cruise_control_thread, Adaptive_Cruise_Control_Task, "acc");
+	CHECK_RET(ret);
 
-	if(pthread_create(&parking_thread, NULL, Parking_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(parking_thread, "parking"); //If name is too long, this function silently fails.
-	}
+	//
+	ret = createThread(&parking_thread, Parking_Task, "parking");
+	CHECK_RET(ret);
 
-	if(pthread_create(&hono_interaction_thread, NULL, Hono_Interaction_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(hono_interaction_thread, "hono"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&hono_interaction_thread, Hono_Interaction_Task, "hono");
+	CHECK_RET(ret);
 
-	if(pthread_create(&cpu_logger_thread, NULL, Cpu_Logger_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(cpu_logger_thread, "cpulog"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&cpu_logger_thread, Cpu_Logger_Task, "cpulog");
+	CHECK_RET(ret);
 
-	if(pthread_create(&oled_thread, NULL, OLED_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(oled_thread, "oled"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&oled_thread, OLED_Task, "oled");
+	CHECK_RET(ret);
 
-	if(pthread_create(&extgpio_thread, NULL, External_GPIO_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(extgpio_thread, "extg"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&extgpio_thread, External_GPIO_Task, "extg");
+	CHECK_RET(ret);
 
-	if(pthread_create(&booth_thread, NULL, Booth_Modes_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(booth_thread, "booth"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&booth_thread, Booth_Modes_Task, "booth");
+	CHECK_RET(ret);
 
-	if(pthread_create(&socket_client_thread, NULL, Socket_Client_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(socket_client_thread, "SC"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&socket_client_thread, Socket_Client_Task, "SC");
+	CHECK_RET(ret);
 
-	if(pthread_create(&socket_server_thread, NULL, Socket_Server_Task, NULL)) {
-		fprintf(stderr, "Error creating thread\n");
-		return 1;
-	}
-	else
-	{
-		pthread_setname_np(socket_server_thread, "SS"); //If name is too long, this function silently fails.
-	}
+	ret = createThread(&socket_server_thread, Socket_Server_Task, "SS");
+	CHECK_RET(ret);
 
 	/*if(pthread_create(&srf02_thread, NULL, SRF02_Task, NULL)) {
 		fprintf(stderr, "Error creating thread\n");
@@ -408,17 +345,27 @@ int main()
 	placeAThreadToCore (webserver_motordrive_thread, 0);
 	*/
 
+	/* Add signals to exit threads properly */
+	signal(SIGINT, exitHandler);
+	signal(SIGTERM, exitHandler);
+	signal(SIGKILL, exitHandler);
 
-
-	while (running_flag.get())
+	/* Use a different running flag to prevent deadlock because of receiving
+		* signal while having the lock  */
+	while (main_running_flag)
 	{
 		//What main thread does should come here..
 		// ...
-
-
-		delayMicroseconds(1* SECONDS_TO_MICROSECONDS);
+		#if SIMULATOR
+			usleep(1* SECONDS_TO_MICROSECONDS);
+		#else
+			delayMicroseconds(1* SECONDS_TO_MICROSECONDS);
+		#endif
 	}
-	pthread_exit(NULL);
+
+	printf("Normally Exiting\n");
+
+	pthread_exit(0);
 
 	//Return 0
 	return 0;

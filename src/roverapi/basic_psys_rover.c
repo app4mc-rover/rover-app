@@ -25,6 +25,7 @@ static int i2c_th02_fd = 0;
 
 void init(){
 	  //wiringPiSetup () ;
+#if !SIMULATOR
 
 	  pinMode (ENABLE_MOTOR_LEFT, OUTPUT) ;
 	  digitalWrite (ENABLE_MOTOR_LEFT, HIGH) ;
@@ -44,11 +45,16 @@ void init(){
 
 // Init the I2C interface for device 0x40 which is the id of the temperature/humidity sensor
 	   i2c_th02_fd = wiringPiI2CSetup (0x40);
+#endif
 }
 
 float getDistance(int channel){
 	float x;
-	float y=analogRead (BASE+channel);
+	#if !SIMULATOR
+		float y=analogRead (BASE+channel);
+	#else
+		float y=0;
+	#endif
 
 // 1/cm to output voltage is almost linear between
 // 80cm->0,4V->123
@@ -81,20 +87,27 @@ float getTemperature(){
 
 //	wiringPiI2CWriteReg8(i2c_th02_fd, 0x03, 0x01);
 
-	write(i2c_th02_fd,command,2);
+	#if !SIMULATOR
+		write(i2c_th02_fd,command,2);
+	#endif
 
 	// Poll RDY (D0) in STATUS (register 0) until it is low (=0)
 	int status = -1;
 	delay (30);
+	#if !SIMULATOR
 	while ((status & 0x01) != 0) {
 		status = wiringPiI2CReadReg8(i2c_th02_fd,0);
 		printf("Status:%d\n",status);
 	}
+	#endif
 
 	// Read the upper and lower bytes of the temperature value from
 	// DATAh and DATAl (registers 0x01 and 0x02), respectively
 	unsigned char buffer[3]= {0};
-    read(i2c_th02_fd, buffer, 3);
+
+	#if !SIMULATOR
+	read(i2c_th02_fd, buffer, 3);
+	#endif
 
 	int dataH = buffer[1] & 0xff;
 	int dataL = buffer[2] & 0xff;
@@ -125,20 +138,27 @@ float getHumidity(){
 
 //	wiringPiI2CWriteReg8(i2c_th02_fd, 0x03, 0x01);
 
+	#if !SIMULATOR
 	write(i2c_th02_fd,command,2);
+	#endif
 
 	// Poll RDY (D0) in STATUS (register 0) until it is low (=0)
 	int status = -1;
 	delay (30);
+	#if !SIMULATOR
 	while ((status & 0x01) != 0) {
 		status = wiringPiI2CReadReg8(i2c_th02_fd,0);
 		printf("Status:%d\n",status);
 	}
+	#endif
 
 	// Read the upper and lower bytes of the temperature value from
 	// DATAh and DATAl (registers 0x01 and 0x02), respectively
 	unsigned char buffer[3]= {0};
-    read(i2c_th02_fd, buffer, 3);
+
+	#if !SIMULATOR
+	read(i2c_th02_fd, buffer, 3);
+	#endif
 
 	int dataH = buffer[1] & 0xff;
 	int dataL = buffer[2] & 0xff;
@@ -158,11 +178,11 @@ float getHumidity(){
 }
 
 void runside(int side, int direction, int speed){
+	#if !SIMULATOR
 	// POLOLU_2756
 	if (side==LEFT){
 		if (direction>0) {
 			digitalWrite (DIRECTION_PIN_LEFT, HIGH) ;
-
 		} else if (direction<0) {
 			digitalWrite (DIRECTION_PIN_LEFT, LOW) ;
 		} else return;
@@ -176,6 +196,9 @@ void runside(int side, int direction, int speed){
 		} else return;
 		softPwmWrite (SOFT_PWM_ENGINE_RIGHT, speed) ;
 	}
+	#else
+		printf("Run side - side: %d, directio: %d, speed %d");
+	#endif
 }
 
 
@@ -217,8 +240,10 @@ void turnOnSpot (int direction, int side, int speed){
 
 
 void shutdown(){
+	#if !SIMULATOR
 	softPwmStop(SOFT_PWM_ENGINE_LEFT) ;
 	softPwmStop(SOFT_PWM_ENGINE_RIGHT) ;
+	#endif
 }
 
 
@@ -228,5 +253,7 @@ void stop(){
 }
 
 void toggle_light(){
+	#if !SIMULATOR
 	digitalWrite (FLASH_LIGHT_LED, ++led_status % 2) ;
+	#endif
 }

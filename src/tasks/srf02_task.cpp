@@ -15,7 +15,6 @@
 
 #include <tasks/srf02_task.h>
 
-#include <wiringPi.h>
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
@@ -126,7 +125,7 @@ void *SRF02_Task (void * arg)
 
 	unsigned int front_sensor, rear_sensor;
 
-	while (1)
+	while (running_flag.get())
 	{
 		srf02_task_tmr.recordStartTime();
 		srf02_task_tmr.calculatePreviousSlackTime();

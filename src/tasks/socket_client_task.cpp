@@ -31,7 +31,7 @@
 #include <socket_settings.h>
 
 /* json-cpp library */
-#include <json/json.h>
+#include <jsoncpp/json/json.h>
 
 #include <math.h>
 
@@ -80,12 +80,6 @@ Json::Value constructJSONData (int data_type)
 	return data;
 }
 
-void Socket_Client_Task_Terminator (int dummy)
-{
-	close(roverapp_send_sockfd);
-	running_flag = 0;
-}
-
 void *Socket_Client_Task (void * arg)
 {
 	timing socket_client_task_tmr;
@@ -93,11 +87,6 @@ void *Socket_Client_Task (void * arg)
 	socket_client_task_tmr.setTaskID("Socket_Client_Task");
 	socket_client_task_tmr.setDeadline(0.5);
 	socket_client_task_tmr.setPeriod(0.5);
-
-	/* Add termination signal handler to properly close socket */
-	signal(SIGINT, Socket_Client_Task_Terminator);
-	signal(SIGTERM, Socket_Client_Task_Terminator);
-	signal(SIGKILL, Socket_Client_Task_Terminator);
 
 	/* Socket related initializations */
 	int n;
@@ -204,6 +193,8 @@ void *Socket_Client_Task (void * arg)
 		pthread_mutex_unlock(&socket_client_task_ti.mutex);
 		socket_client_task_tmr.sleepToMatchPeriod();
 	}
+
+	close(roverapp_send_sockfd);
 
 	/* the function must return something - NULL will do */
 	return NULL;

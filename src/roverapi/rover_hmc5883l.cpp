@@ -49,6 +49,7 @@ void rover::RoverHMC5883L::initialize (void)
 	printf ("HMC588L Declination angle is %f\n", this->DECLINATION_ANGLE);
 #endif
 
+#if !SIMULATOR
 	if ((i2c_hmc588l_fd = wiringPiI2CSetup(this->HMC588L_ADDRESS)) < 0) {
 		printf("Failed to initialize HMC588L compass sensor");
 	}
@@ -61,13 +62,20 @@ void rover::RoverHMC5883L::initialize (void)
 		wiringPiI2CWriteReg8(i2c_hmc588l_fd, 0x02, 0x00); // Continuous-measurement mode
 	}
 
+	this->calibration_start = millis();
+
+#endif
+
 	this->ROVERHMC5883L_SETUP_ = 1;
 
-	this->calibration_start = millis();
+
 }
 
 float rover::RoverHMC5883L::read (void)
 {
+#if SIMULATOR
+	return 0.5f;
+#else
 	if (this->ROVERHMC5883L_SETUP_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverHMC5883L. Use RoverHMC5883L()::initialize() !\n");
@@ -130,6 +138,7 @@ float rover::RoverHMC5883L::read (void)
 	#endif
 		return headingDegrees;
 	}
+#endif
 }
 
 void rover::RoverHMC5883L::setHMC588LAddress (const int address)
@@ -173,4 +182,3 @@ inline T rover::RoverHMC5883L::MAXIMUM_(const T& a, const T& b)
 {
 	return (a > b ? a : b);
 }
-

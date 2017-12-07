@@ -113,7 +113,7 @@ void *Bluetooth_Task (void * arg)
 	close(client);
 	close(s);
 
-	while (1)
+	while (running_flag.get())
 	{
 		bluetooth_task_tmr.recordStartTime();
 		bluetooth_task_tmr.calculatePreviousSlackTime();

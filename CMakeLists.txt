@@ -17,8 +17,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/ExternalCMakeModu
 
 #For find_package packages, export someextlib_DIR=/path/to/..
 # Required packages
-find_package (OpenCV REQUIRED)
-find_package (raspicam REQUIRED)
+#find_package (OpenCV)
+#find_package (raspicam)
 find_package (Threads)
 
 #Where to put binary files after "make"
@@ -31,6 +31,8 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/libs)
 # INCLUDE DIRECTORIES
 #
 
+add_definitions(-DSIMULATOR)
+
 #Include directories
 include_directories (${CMAKE_SOURCE_DIR}/include)
 
@@ -38,8 +40,8 @@ include_directories (${CMAKE_SOURCE_DIR}/include)
 include_directories (${CMAKE_SOURCE_DIR}/include/drivers/oled_drivers)
 
 #Include directories for external libraries
-include_directories( ${OpenCV_INCLUDE_DIRS} )
-include_directories( ${raspicam_INCLUDE_DIRS} )
+#include_directories( ${OpenCV_INCLUDE_DIRS} )
+#include_directories( ${raspicam_INCLUDE_DIRS} )
 #include_directories( ${jsoncpp_INCLUDE_DIRS} )
 #include_directories( ${bluetooth_INCLUDE_DIRS} )
 
@@ -91,9 +93,10 @@ add_executable(roverapp ${CMAKE_SOURCE_DIR}/src/roverapp.cpp)
 #
 #  LINKING TO ROVER API
 #
-
-target_link_libraries (roverapi wiringPi)
-target_link_libraries (roverapi wiringPiDev)
+if(NOT SIMULATOR)
+    target_link_libraries (roverapi wiringPi)
+    target_link_libraries (roverapi wiringPiDev)
+endif(NOT SIMULATOR)
 
 target_link_libraries(roverapi hono_interaction)
 target_link_libraries(roverapi pthread_distribution)
@@ -110,16 +113,18 @@ target_link_libraries (roverapi roverappdrivers)
 #Link external libraries
 # Search with sudo find / -name *libx*
 # If there is an x.so in /usr/lib/ or /usr/local/lib/, you can link x library
-target_link_libraries (roverapptasks opencv_core)
-target_link_libraries (roverapptasks opencv_imgproc)
-target_link_libraries (roverapptasks opencv_highgui)
+#target_link_libraries (roverapptasks opencv_core)
+#target_link_libraries (roverapptasks opencv_imgproc)
+#target_link_libraries (roverapptasks opencv_highgui)
 target_link_libraries (roverapptasks jsoncpp)
 target_link_libraries (roverapptasks bluetooth)
 target_link_libraries (roverapptasks pthread)
-target_link_libraries (roverapptasks wiringPi)
-target_link_libraries (roverapptasks wiringPiDev)
-target_link_libraries (roverapptasks raspicam)
 
+if(NOT SIMULATOR)
+    target_link_libraries (roverapptasks wiringPi)
+    target_link_libraries (roverapptasks wiringPiDev)
+    #target_link_libraries (roverapptasks raspicam)
+endif(NOT SIMULATOR)
 
 #Linker actions to link our libraries to executable
 target_link_libraries(roverapptasks hono_interaction)
@@ -155,7 +160,7 @@ target_link_libraries(roverapp timing)
 target_link_libraries(roverapp roverapptasks)
 
 #Link drivers
-target_link_libraries (roverapp roverappdrivers)
+target_link_libraries(roverapp roverappdrivers)
 
 #
 # INSTALLING

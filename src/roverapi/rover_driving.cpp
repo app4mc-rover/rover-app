@@ -17,8 +17,8 @@
 #include <roverapi/basic_psys_rover.h>
 
 #include <wiringPi.h>
-#include <softPwm.h>
 #include <wiringPiI2C.h>
+#include <softPwm.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -42,6 +42,7 @@ void rover::RoverDriving::initialize (void)
 {
 	//wiringPiSetup();
 	/* Initialize RoverDriving once */
+#if !SIMULATOR
 	pinMode (ENABLE_MOTOR_LEFT, OUTPUT) ;
 	digitalWrite (ENABLE_MOTOR_LEFT, HIGH) ;
 	pinMode (ENABLE_MOTOR_RIGHT, OUTPUT) ;
@@ -54,6 +55,7 @@ void rover::RoverDriving::initialize (void)
 	softPwmCreate (SOFT_PWM_ENGINE_RIGHT, 0, HIGHEST_SPEED) ;
 
 	pinMode (FLASH_LIGHT_LED, OUTPUT) ;
+#endif
 
 	this->ROVERDRIVING_INIT_ = 1;
 }

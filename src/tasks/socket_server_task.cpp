@@ -28,7 +28,7 @@
 #include <socket_settings.h>
 
 /* json-cpp library */
-#include <json/json.h>
+#include <jsoncpp/json/json.h>
 
 #include <roverapp.h>
 
@@ -72,13 +72,6 @@ void parseJSONData (char *server_buffer)
 
 }
 
-void Socket_Server_Task_Terminator (int dummy)
-{
-	close(roverapp_listen_sockfd);
-	close(newroverapp_listen_sockfd);
-	running_flag = 0;
-}
-
 void *Socket_Server_Task(void * arg)
 {
 	timing socket_server_task_tmr;
@@ -86,11 +79,6 @@ void *Socket_Server_Task(void * arg)
 	socket_server_task_tmr.setTaskID("Socket_Server_Task");
 	socket_server_task_tmr.setDeadline(0.05);
 	socket_server_task_tmr.setPeriod(0.05);
-
-	/* Add termination signal handler to properly close socket */
-	signal(SIGINT, Socket_Server_Task_Terminator);
-	signal(SIGTERM, Socket_Server_Task_Terminator);
-	signal(SIGKILL, Socket_Server_Task_Terminator);
 
 	socklen_t clilen;
 	char server_buffer[JSON_DATA_BUFSIZE];
@@ -132,9 +120,11 @@ void *Socket_Server_Task(void * arg)
 
 	while(running_flag.get())
 	{
+
 		socket_server_task_tmr.recordStartTime();
 		socket_server_task_tmr.calculatePreviousSlackTime();
 
+#if !SIMULATOR
 		//Task content starts here -----------------------------------------------
 		/* Handle client acception or re-acception */
 		/* Checking if client socket is available */
@@ -197,6 +187,8 @@ void *Socket_Server_Task(void * arg)
 			parseJSONData(server_buffer);
 		}
 
+#endif
+
 		//Task content ends here -------------------------------------------------
 
 		socket_server_task_tmr.recordEndTime();
@@ -216,4 +208,9 @@ void *Socket_Server_Task(void * arg)
 		socket_server_task_tmr.sleepToMatchPeriod();
 
 	}
+
+	close(roverapp_listen_sockfd);
+	close(newroverapp_listen_sockfd);
+
+	return NULL;
 }

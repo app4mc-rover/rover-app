@@ -42,7 +42,7 @@ void *DisplaySensors_Task (void * arg)
 	RoverGY521 r_accel = RoverGY521();
 	r_accel.initialize();
 
-	while (1)
+	while (running_flag.get())
 	{
 		display_sensors_task_tmr.recordStartTime();
 		display_sensors_task_tmr.calculatePreviousSlackTime();

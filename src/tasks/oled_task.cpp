@@ -63,7 +63,7 @@ void *OLED_Task (void * arg)
 	int counter_500ms = 0;
 
 
-	while (1)
+	while (running_flag.get())
 	{
 		oled_task_tmr.recordStartTime();
 		oled_task_tmr.calculatePreviousSlackTime();

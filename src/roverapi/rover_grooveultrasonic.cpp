@@ -47,6 +47,9 @@ void rover::RoverGrooveUltrasonic::initialize (void)
 
 float rover::RoverGrooveUltrasonic::read (void)
 {
+#if SIMULATOR
+	return 0.5;
+#else
 	long startTime, stopTime, elapsedTime, distance = 0;
 	pinMode(this->sigPin, OUTPUT);
 	digitalWrite(this->sigPin, LOW);
@@ -71,6 +74,7 @@ float rover::RoverGrooveUltrasonic::read (void)
 		distance = 40;
 
 	return ((float)distance*1.0);
+#endif
 }
 
 void rover::RoverGrooveUltrasonic::setSigPin (const int sig_pin)

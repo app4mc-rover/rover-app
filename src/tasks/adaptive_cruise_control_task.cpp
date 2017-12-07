@@ -30,7 +30,7 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 	RoverDriving r_driving = RoverDriving();
 	r_driving.initialize();
 
-	while (1)
+	while (running_flag.get())
 	{
 		acc_task_tmr.recordStartTime();
 		acc_task_tmr.calculatePreviousSlackTime();

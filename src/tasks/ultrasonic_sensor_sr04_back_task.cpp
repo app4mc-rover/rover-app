@@ -65,8 +65,9 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 	RoverHCSR04 r_ultrasonicrear = RoverHCSR04(ROVER_REAR);
 	r_ultrasonicrear.initialize();
 
-	while (1)
+	while (running_flag.get())
 	{
+			continue;
 		ultrasonic_sr04_back_task_tmr.recordStartTime();
 		ultrasonic_sr04_back_task_tmr.calculatePreviousSlackTime();
 

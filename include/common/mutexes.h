@@ -31,27 +31,26 @@ class SharedData {
 public:
 
 		SharedData() {
-				pthread_rwlock_init(this->lock, NULL);
+				pthread_mutex_init(&this->lock, NULL);
 		}
 
 		~SharedData() {
-				pthread_rwlock_destroy(this->lock);
+				pthread_mutex_destroy(&this->lock);
 		}
 
 		T get() {
-				pthread_rwlock_rdlock(this->lock);
+			T tmp;
+			pthread_mutex_lock(&this->lock);
+			tmp = this->data;
+			pthread_mutex_unlock(&this->lock);
 
-				return this->data;
-
-				pthread_rwlock_unlock(this->lock);
+			return tmp;
 		}
 
 		void set(T data) {
-				pthread_rwlock_wrlock(this->lock);
-
+				pthread_mutex_lock(&this->lock);
 				this->data = data;
-
-				pthread_rwlock_unlock(this->lock);
+				pthread_mutex_unlock(&this->lock);
 		}
 
 		void operator= (T data) {
@@ -59,7 +58,7 @@ public:
 		}
 
 private:
-		pthread_rwlock_t * lock;
+		pthread_mutex_t lock;
 		T data;
 };
 

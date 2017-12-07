@@ -103,7 +103,7 @@ void *External_GPIO_Task(void *arg)
 	extgpio_task_tmr.setDeadline(0.2);
 	extgpio_task_tmr.setPeriod(0.2);
 
-	while (1)
+	while (running_flag.get())
 	{
 		extgpio_task_tmr.recordStartTime();
 		extgpio_task_tmr.calculatePreviousSlackTime();

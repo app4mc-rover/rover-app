@@ -52,6 +52,7 @@ rover::RoverDisplay::RoverDisplay()
 
 void rover::RoverDisplay::initialize(void)
 {
+#if !SIMULATOR
 	/* Type to describe default options for the OLED initialization */
 	struct s_opts
 	{
@@ -71,12 +72,16 @@ void rover::RoverDisplay::initialize(void)
 
 	this->my_display.begin();
 	this->my_display.clearDisplay();   // clears the screen and buffer
+#endif
 
 	this->ROVER_DISPLAY_INIT_ = 1;
 }
 
 void rover::RoverDisplay::display(void)
 {
+#if SIMULATOR
+	return;
+#endif
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
@@ -90,6 +95,9 @@ void rover::RoverDisplay::display(void)
 
 void rover::RoverDisplay::clearDisplay(void)
 {
+#if SIMULATOR
+	return;
+#endif
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
@@ -103,6 +111,9 @@ void rover::RoverDisplay::clearDisplay(void)
 
 void rover::RoverDisplay::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color)
 {
+#if SIMULATOR
+	return;
+#endif
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
@@ -115,6 +126,9 @@ void rover::RoverDisplay::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap
 
 void rover::RoverDisplay::setCursor (int16_t x, int16_t y)
 {
+#if SIMULATOR
+	return;
+#endif
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
@@ -127,6 +141,9 @@ void rover::RoverDisplay::setCursor (int16_t x, int16_t y)
 
 void rover::RoverDisplay::setTextSize (uint8_t s)
 {
+#if SIMULATOR
+	return;
+#endif
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
@@ -139,6 +156,9 @@ void rover::RoverDisplay::setTextSize (uint8_t s)
 
 void rover::RoverDisplay::setTextColor (uint16_t c)
 {
+#if SIMULATOR
+	return;
+#endif
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
@@ -151,6 +171,9 @@ void rover::RoverDisplay::setTextColor (uint16_t c)
 
 void rover::RoverDisplay::setTextColor (uint16_t c, uint16_t b)
 {
+#if SIMULATOR
+	return;
+#endif
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
@@ -163,6 +186,9 @@ void rover::RoverDisplay::setTextColor (uint16_t c, uint16_t b)
 
 void rover::RoverDisplay::print (const char * string)
 {
+#if SIMULATOR
+	return;
+#endif
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
@@ -175,6 +201,9 @@ void rover::RoverDisplay::print (const char * string)
 
 void rover::RoverDisplay::drawRect (int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
+#if SIMULATOR
+	return;
+#endif
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");

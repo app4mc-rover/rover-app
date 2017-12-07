@@ -28,27 +28,37 @@ rover::RoverGpio::RoverGpio()
 
 void rover::RoverGpio::wPiDigitalWrite (const int pin, const int value)
 {
+	#if !SIMULATOR
 	digitalWrite (pin, value);
+	#endif
 }
 
 int rover::RoverGpio::wPiDigitalRead (const int pin)
 {
+	#if !SIMULATOR
 	return digitalRead (pin);
+	#endif
 }
 
 void rover::RoverGpio::wPiPinMode (const int pin, const int set_val)
 {
+	#if !SIMULATOR
 	pinMode (pin, set_val);
+	#endif
 }
 
 void rover::RoverGpio::wPiSoftToneCreate (const int pin)
 {
+	#if !SIMULATOR
 	softToneCreate (pin);
+	#endif
 }
 
 void rover::RoverGpio::wPiSoftToneWrite (const int pin, const int tone)
 {
+	#if !SIMULATOR
 	softToneWrite (pin, tone);
+	#endif
 }
 
 void rover::RoverGpio::wPiDelay (const unsigned int period_ms)

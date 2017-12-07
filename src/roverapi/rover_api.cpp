@@ -50,8 +50,10 @@ void rover::RoverBase::initializeWiringPi(void)
 {
 	/* wiringPi can only be called once per program, One solution: */
 	static class Once { public: Once(){
-		wiringPiSetup();
-		printf("wiringPi Setup Done..\n");
+		#if !SIMULATOR
+			wiringPiSetup();
+			printf("wiringPi Setup Done..\n");
+		#endif
 		printf("RoverBase initialized..\n");
 	}} Once_;
 	this->WIRINGPI_INIT_ = 1;

@@ -179,7 +179,7 @@ void *MotorDriver_Task(void * arg)
 	int running = 1;
 	char local_command = 'f';
 
-	while (running)
+	while (running && running_flag.get())
 	{
 		motordriver_task_tmr.recordStartTime();
 		motordriver_task_tmr.calculatePreviousSlackTime();

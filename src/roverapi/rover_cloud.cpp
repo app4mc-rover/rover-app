@@ -28,6 +28,11 @@ rover::RoverCloud::RoverCloud()
  HOST_NAME("N")
 {
 
+#if SIMULATOR
+	// Just to keep the symbol
+	handleCode(200);
+#endif
+
 }
 
 rover::RoverCloud::RoverCloud(char * host_name, const int port, const int registration_port, char * tenant_name)
@@ -53,6 +58,9 @@ int rover::RoverCloud::attributeErrorCheck (void) const
 
 int rover::RoverCloud::registerDevice (char * device_id)
 {
+#if SIMULATOR
+	return 0;
+#endif
 	if (this->REGISTRATION_PORT != 1)
 	{
 		int status = 0;
@@ -68,6 +76,9 @@ int rover::RoverCloud::registerDevice (char * device_id)
 
 int rover::RoverCloud::sendTelemetry (char * device_id, char * user, char * password, char * field, double value)
 {
+#if SIMULATOR
+	return 0;
+#endif
 	if (this->attributeErrorCheck() == 1)
 	{
 		int status = 0;
@@ -82,6 +93,9 @@ int rover::RoverCloud::sendTelemetry (char * device_id, char * user, char * pass
 
 int rover::RoverCloud::sendEvent (char * device_id, char * user, char * password, char * field, double value)
 {
+#if SIMULATOR
+	return 0;
+#endif
 	if (this->attributeErrorCheck() == 1)
 	{
 		int status = 0;
@@ -96,7 +110,6 @@ int rover::RoverCloud::sendEvent (char * device_id, char * user, char * password
 
 void rover::RoverCloud::setHono (char * host_name, const int port, char * tenant) const
 {
-
 	this->HOST_NAME = host_name;
 	this->PORT = port;
 	this->TENANT_NAME = tenant;

@@ -31,7 +31,7 @@ void *Booth_Modes_Task(void * arg)
 	booth_task_tmr.setDeadline(0.1);
 	booth_task_tmr.setPeriod(0.1);
 
-	while (1)
+	while (running_flag.get())
 	{
 		booth_task_tmr.recordStartTime();
 		booth_task_tmr.calculatePreviousSlackTime();

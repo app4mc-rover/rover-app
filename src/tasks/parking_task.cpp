@@ -43,7 +43,7 @@ void *Parking_Task(void * arg)
 
 	float bearing_begin;
 
-	while (1)
+	while (running_flag.get())
 	{
 		parking_task_tmr.recordStartTime();
 

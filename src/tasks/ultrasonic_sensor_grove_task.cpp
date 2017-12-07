@@ -46,7 +46,7 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 	RoverGrooveUltrasonic r_groove = RoverGrooveUltrasonic(ROVER_REAR);
 	r_groove.initialize();
 
-	while (1)
+	while (running_flag.get())
 	{
 		ultrasonic_grove_task_tmr.recordStartTime();
 		ultrasonic_grove_task_tmr.calculatePreviousSlackTime();

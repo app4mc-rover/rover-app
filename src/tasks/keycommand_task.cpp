@@ -40,8 +40,8 @@ void *KeyCommandInput_Task(void * arg)
 	keycommand_task_tmr.setPeriod(0.2);
 
 	char keys;
-	int running = 1;
-	while (running)
+
+	while (running_flag.get())
 	{
 		keycommand_task_tmr.recordStartTime();
 		keycommand_task_tmr.calculatePreviousSlackTime();

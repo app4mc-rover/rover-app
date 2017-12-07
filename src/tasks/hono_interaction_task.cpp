@@ -40,7 +40,7 @@ void *Hono_Interaction_Task(void * arg)
 	r_cloud.setRegistrationPort(28080);
 	r_cloud.registerDevice("4711");
 
-	while (1)
+	while (running_flag.get())
 	{
 		hono_task_tmr.recordStartTime();
 		hono_task_tmr.calculatePreviousSlackTime();
