@@ -23,7 +23,7 @@
 #include <pthread.h>
 
 #include <roverapp.h>
-#include <roverapi/rover_cloud.hpp>
+#include <roverapi/rover_honocloud.hpp>
 
 void *Hono_Interaction_Task(void * arg)
 {
@@ -33,7 +33,7 @@ void *Hono_Interaction_Task(void * arg)
 	hono_task_tmr.setPeriod(2);
 
 	//Set-up hono instance attributes and register 4711 device to Hono
-	RoverCloud r_cloud = RoverCloud();
+	RoverHonoCloud r_cloud = RoverHonoCloud();
 
 	r_cloud.setHono("idial.institute", 8080, "DEFAULT_TENANT");
 
