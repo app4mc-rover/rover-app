@@ -31,7 +31,11 @@
 #include <socket_settings.h>
 
 /* json-cpp library */
+#if SIMULATOR
 #include <jsoncpp/json/json.h>
+#else
+#include <json/json.h>
+#endif
 
 #include <math.h>
 

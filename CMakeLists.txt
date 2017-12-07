@@ -31,7 +31,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/libs)
 # INCLUDE DIRECTORIES
 #
 
-add_definitions(-DSIMULATOR)
+add_definitions(-DSIMULATOR=OFF)
 
 #Include directories
 include_directories (${CMAKE_SOURCE_DIR}/include)
