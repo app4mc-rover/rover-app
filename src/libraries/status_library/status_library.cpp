@@ -107,7 +107,7 @@ int retrieveBLUETOOTHStatus (void)
 	char buffer[2];
 
 	// Execute the command
-	fp = popen("service bluetooth status | grep inactive | wc -l","r");
+	fp = popen("systemctl status bluetooth | grep inactive | wc -l","r");
 
 	/* Read from pipe */
 	fgets(buffer, 2, fp);
