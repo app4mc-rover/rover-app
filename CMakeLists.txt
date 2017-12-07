@@ -31,7 +31,23 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/libs)
 # INCLUDE DIRECTORIES
 #
 
-add_definitions(-DSIMULATOR=OFF)
+if(DEFINED ENV{SDKTARGETSYSROOT})
+    message(STATUS "SDK Detected")
+    set(SDK_EN 1)
+else(DEFINED ENV{SDKTARGETSYSROOT})
+    set(SDK_EN 0)
+endif(DEFINED ENV{SDKTARGETSYSROOT})
+
+if(${SIM})
+    message(STATUS "Setting SIMULATION Defitnion to ${SIM}")
+    message(STATUS "Compiling in simulator mode")
+    add_definitions(-DSIMULATOR=1)
+else()
+    message(STATUS "Setting SIMULATION Defitnion to false")
+    add_definitions(-DSIMULATOR=0)
+endif()
+
+add_definitions(-DCROSS_COMPILE_SDK=${SDK_EN})
 
 #Include directories
 include_directories (${CMAKE_SOURCE_DIR}/include)
@@ -93,10 +109,10 @@ add_executable(roverapp ${CMAKE_SOURCE_DIR}/src/roverapp.cpp)
 #
 #  LINKING TO ROVER API
 #
-if(NOT SIMULATOR)
+if(NOT DEFINED ${SIM})
     target_link_libraries (roverapi wiringPi)
     target_link_libraries (roverapi wiringPiDev)
-endif(NOT SIMULATOR)
+endif()
 
 target_link_libraries(roverapi hono_interaction)
 target_link_libraries(roverapi pthread_distribution)
@@ -120,11 +136,11 @@ target_link_libraries (roverapptasks jsoncpp)
 target_link_libraries (roverapptasks bluetooth)
 target_link_libraries (roverapptasks pthread)
 
-if(NOT SIMULATOR)
+if(NOT DEFINED ${SIM})
     target_link_libraries (roverapptasks wiringPi)
     target_link_libraries (roverapptasks wiringPiDev)
     #target_link_libraries (roverapptasks raspicam)
-endif(NOT SIMULATOR)
+endif()
 
 #Linker actions to link our libraries to executable
 target_link_libraries(roverapptasks hono_interaction)
