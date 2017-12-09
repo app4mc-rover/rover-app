@@ -30,7 +30,7 @@
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\i2c-dev&quot;"/>
 								</option>
-								<option id="gnu.c.compiler.option.dialect.std.427427400" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.dialect.std.427427400" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1260706612" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
 								</option>
@@ -58,8 +58,9 @@
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\highgui\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgproc\include&quot;"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.dialect.std.667560688" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.default" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.dialect.std.667560688" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1604836710" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.dialect.flags.38238680" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1943364287" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1947517377" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
@@ -192,4 +193,5 @@
 			<resource resourceType="PROJECT" workspacePath="/roverapp"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

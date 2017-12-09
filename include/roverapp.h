@@ -34,7 +34,7 @@
 
 // When debugging without RoverSenseLayer uncomment the following to prevent OS
 // to shutdown.
-//#define DEBUG_WO_RSL 1
+#define DEBUG_WO_RSL 1
 
 // Please comment the line below to work with SR-04 sensor instead of GROOVE for
 // rear proximity sensing.

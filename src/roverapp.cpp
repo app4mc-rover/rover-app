@@ -204,8 +204,8 @@ int main()
 	rover_mqtt_conf.timeout  = 10000L;
 	rover_mqtt_conf.topic    = "rover/RoverDriving/control/1";
 
-	RoverPahoMQTT rover_mqtt = RoverPahoMQTT (	"192.168.168.40",
-												1883,
+	RoverPahoMQTT rover_mqtt = RoverPahoMQTT (	"192.168.1.224",
+												1887,
 												rover_mqtt_conf);
 
 	rover_mqtt.setPayload ("Hi from rover!");

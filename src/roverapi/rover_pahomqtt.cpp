@@ -52,7 +52,7 @@ int rover::RoverPahoMQTT::publish (void)
 
 	char my_addr[20];
 	this->constructAddress (my_addr);
-
+	printf ("address: %s", my_addr);
 	MQTTAsync_create (	&(this->client),
 						my_addr,
 						this->rover_MQTT_configure.clientID,
