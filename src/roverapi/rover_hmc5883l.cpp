@@ -22,19 +22,18 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static int i2c_hmc588l_fd = -1;
-
-static int16_t xMinRaw = 0;
-static int16_t xMaxRaw = 0;
-static int16_t yMaxRaw = 0;
-static int16_t yMinRaw = 0;
 
 rover::RoverHMC5883L::RoverHMC5883L()
 :HMC588L_ADDRESS(0x1E),			//default: 0x1E
  CALIBRATION_DURATION(10000), 	//compass calibration has a duration of 5 seconds
  DECLINATION_ANGLE(0.0413),  	//correction factor for location Paderborn
  calibration_start(0),
- ROVERHMC5883L_SETUP_(0)
+ ROVERHMC5883L_SETUP_(0),
+ xMinRaw(0),
+ xMaxRaw(0),
+ yMinRaw(0),
+ yMaxRaw(0),
+ i2c_hmc588l_fd(-1)
 {
 
 }

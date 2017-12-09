@@ -57,6 +57,31 @@ namespace rover
 			 */
 			int ROVERHMC5883L_SETUP_;
 
+			/**
+			 * @brief Calibration variable to hold the minimum of xRaw results
+			 */
+			int16_t xMinRaw;
+
+			/**
+			 * @brief Calibration variable to hold the maximum of xRaw results
+			 */
+			int16_t xMaxRaw;
+
+			/**
+			 * @brief Calibration variable to hold the minimum of yRaw results
+			 */
+			int16_t yMinRaw;
+
+			/**
+			 * @brief Calibration variable to hold the maximum of yRaw results
+			 */
+			int16_t yMaxRaw;
+
+			/**
+			 * @brief Private member attribute for I2C file descriptor
+			 */
+			int i2c_hmc588l_fd;
+
 		public:
 			/**
 			 * @brief Constructor for the RoverHMC5883L class
