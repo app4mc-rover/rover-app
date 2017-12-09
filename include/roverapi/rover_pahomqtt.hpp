@@ -17,13 +17,27 @@
 #define ROVERAPI_ROVER_PAHOMQTT_HPP_
 
 #include <roverapi/rover_cloud.hpp>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
 #include "MQTTClient.h"
 #include "MQTTAsync.h"
 
-MQTTClient defaultMQTTClient;
+using namespace std;
 
 namespace rover
 {
+
+	typedef struct
+	{
+		char * clientID;
+		char * topic;
+		char * payload;
+		int			qos;		// 1
+		long int	timeout;	// Such as 10000L usec
+	} RoverMQTT_Configure_t;
+
 	/**
 	 * @brief RoverPahoMQTT contains member functions to use rover as a client and to publish / subscribe to Eclipse Paho MQTT server topics.
 	 */
@@ -40,16 +54,31 @@ namespace rover
 			 */
 			int PORT;
 
-		public:
+			RoverMQTT_Configure_t rover_MQTT_configure;
+
+			/* Internal attributes */
+			MQTTAsync client;
+
 			/**
-			 * @brief Default constructor for RoverPahoMQTT
+			 * @brief Connect options
 			 */
-			RoverPahoMQTT();
+			MQTTAsync_connectOptions conn_opts;
+
+			/**
+			 * @brief Disconnect options
+			 */
+			MQTTAsync_disconnectOptions disc_opts;
+
+
+
+		public:
+
+			~RoverPahoMQTT ();
 
 			/**
 			 * @brief Copy constructor for RoverPahoMQTT
 			 */
-			RoverPahoMQTT(const MQTTClient& my_client);
+			RoverPahoMQTT (char * host_name, int port, RoverMQTT_Configure_t MQTT_Configure);
 
 			/**
 			 * @brief Sets private attribute HOST_NAME
@@ -63,13 +92,11 @@ namespace rover
 			 */
 			void setPort (const int port);
 
+			void setPayload (char * payload);
+
+			void setTopic (char * topic);
 
 
-			/**
-			 * @brief Connects to the client
-			 * @param port
-			 */
-			int connect (void);
 
 			int publish (void);
 
@@ -78,6 +105,26 @@ namespace rover
 			int unsubscribe (void);
 
 			int destroy (void);
+
+		private:
+			void constructAddress (char* string);
+
+			/* Internal callbacks */
+			/* Related to publisher */
+			static void onPublisherConnect (void* context, MQTTAsync_successData* response);
+			static void onPublisherSend (void* context, MQTTAsync_successData* response);
+
+			/* Related to subscriber */
+			static void onSubscriberConnect (void* context, MQTTAsync_successData* response);
+			static int onSubscriberMessageArrived (void *context, char *topicName, int topicLen, MQTTAsync_message *message);
+			static void onSubscribe (void* context, MQTTAsync_successData* response);
+			static void onSubscribeFailure (void* context, MQTTAsync_failureData* response);
+
+			/* Related to both */
+			static void onConnectFailure (void* context, MQTTAsync_failureData* response);
+			static void onConnectionLost (void *context, char *cause);
+			static void onDisconnect (void* context, MQTTAsync_successData* response);
+
 	};
 }
 
