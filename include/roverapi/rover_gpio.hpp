@@ -78,7 +78,6 @@ namespace rover
 			 */
 			explicit RoverGpio();
 
-
 			/**
 			 * @brief Wrapper function to wiringPi's digitalWrite function
 			 * @param pin Pin number (int) using wiringPi pin descriptions.
