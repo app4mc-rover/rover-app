@@ -23,19 +23,17 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static int i2c_qmc588l_fd = -1;
-
-static int16_t xMinRaw_ = 0;
-static int16_t xMaxRaw_ = 0;
-static int16_t yMaxRaw_ = 0;
-static int16_t yMinRaw_ = 0;
-
 rover::RoverQMC5883L::RoverQMC5883L()
 :QMC5883L_ADDRESS(0x0D),			//default: 0x0D
  CALIBRATION_DURATION(10000), 	//compass calibration has a duration of 5 seconds
  DECLINATION_ANGLE(0.0413),  	//correction factor for location Paderborn
  calibration_start(0),
- ROVERQMC5883L_SETUP_(0)
+ ROVERQMC5883L_SETUP_(0),
+ xMinRaw(0),
+ xMaxRaw(0),
+ yMinRaw(0),
+ yMaxRaw(0),
+ i2c_qmc588l_fd(-1)
 {
 
 }
@@ -102,22 +100,22 @@ float rover::RoverQMC5883L::read (void)
 		//if calibration is active calculate minimum and maximum x/y values for calibration
 		if (millis() <= this->calibration_start + this->CALIBRATION_DURATION)
 		{
-			xMinRaw_ = MINIMUM_(xRaw, xMinRaw_);
+			xMinRaw = MINIMUM_(xRaw, xMinRaw);
 
-			xMaxRaw_ = MAXIMUM_(xRaw, xMaxRaw_);
+			xMaxRaw = MAXIMUM_(xRaw, xMaxRaw);
 
-			yMinRaw_ = MINIMUM_(yRaw, yMinRaw_);
+			yMinRaw = MINIMUM_(yRaw, yMinRaw);
 
-			yMaxRaw_ = MAXIMUM_(yRaw, yMaxRaw_);
+			yMaxRaw = MAXIMUM_(yRaw, yMaxRaw);
 		}
 
 		//calibration: move and scale x coordinates based on minimum and maximum values to get a unit circle
-		float xf = xRaw - (float) (xMinRaw_ + xMaxRaw_) / 2.0f;
-		xf = xf / (xMinRaw_ + xMaxRaw_) * 2.0f;
+		float xf = xRaw - (float) (xMinRaw + xMaxRaw) / 2.0f;
+		xf = xf / (xMinRaw + xMaxRaw) * 2.0f;
 
 		//calibration: move and scale y coordinates based on minimum and maximum values to get a unit circle
-		float yf = yRaw - (float) (yMinRaw_ + yMaxRaw_) / 2.0f;
-		yf = yf / (yMinRaw_ + yMaxRaw_) * 2.0f;
+		float yf = yRaw - (float) (yMinRaw + yMaxRaw) / 2.0f;
+		yf = yf / (yMinRaw + yMaxRaw) * 2.0f;
 
 		float bearing = atan2(yf, xf);
 	#ifdef DEBUG
