@@ -100,6 +100,10 @@ target_link_libraries(roverapi pthread_distribution)
 target_link_libraries(roverapi status_library)
 target_link_libraries(roverapi pthread_monitoring)
 target_link_libraries(roverapi timing)
+target_link_libraries(roverapi paho-mqtt3a)
+target_link_libraries(roverapi paho-mqtt3as)
+target_link_libraries(roverapi paho-mqtt3c)
+target_link_libraries(roverapi paho-mqtt3cs)
 
 target_link_libraries (roverapi roverappdrivers)
 
