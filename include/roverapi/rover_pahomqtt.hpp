@@ -38,6 +38,14 @@ namespace rover
 		long int	timeout;	// Such as 10000L usec
 	} RoverMQTT_Configure_t;
 
+	typedef struct
+	{
+		int f_mqtt_disconnect_finished;
+		int f_mqtt_finished;
+		int f_mqtt_subscribed;
+		int f_mqtt_publish_successful;
+	} RoverMQTT_StatusFlags_t;
+
 	/**
 	 * @brief RoverPahoMQTT contains member functions to use rover as a client and to publish / subscribe to Eclipse Paho MQTT server topics.
 	 */
@@ -54,7 +62,9 @@ namespace rover
 			 */
 			int PORT;
 
-			RoverMQTT_Configure_t rover_MQTT_configure;
+			RoverMQTT_Configure_t defaultRoverMQTTConfigure;
+
+			RoverMQTT_StatusFlags_t defaultRoverMQTTFlags;
 
 			/* Internal attributes */
 			MQTTAsync client;
@@ -68,6 +78,9 @@ namespace rover
 			 * @brief Disconnect options
 			 */
 			MQTTAsync_disconnectOptions disc_opts;
+
+
+			volatile MQTTAsync_token deliveredtoken;
 
 
 
@@ -106,24 +119,43 @@ namespace rover
 
 			int destroy (void);
 
+
+
 		private:
+			void flushFlags (void);
+
 			void constructAddress (char* string);
 
 			/* Internal callbacks */
 			/* Related to publisher */
-			static void onPublisherConnect (void* context, MQTTAsync_successData* response);
-			static void onPublisherSend (void* context, MQTTAsync_successData* response);
+			static void onPublisherConnect_Redirect (void* context, MQTTAsync_successData* response);
+			void onPublisherConnect (MQTTAsync_successData* response);
+
+			static void onPublisherSend_Redirect (void* context, MQTTAsync_successData* response);
+			void onPublisherSend (MQTTAsync_successData* response);
 
 			/* Related to subscriber */
-			static void onSubscriberConnect (void* context, MQTTAsync_successData* response);
-			static int onSubscriberMessageArrived (void *context, char *topicName, int topicLen, MQTTAsync_message *message);
-			static void onSubscribe (void* context, MQTTAsync_successData* response);
-			static void onSubscribeFailure (void* context, MQTTAsync_failureData* response);
+			static void onSubscriberConnect_Redirect (void* context, MQTTAsync_successData* response);
+			void onSubscriberConnect (MQTTAsync_successData* response);
+
+			static int onSubscriberMessageArrived_Redirect (void *context, char *topicName, int topicLen, MQTTAsync_message *message);
+			int onSubscriberMessageArrived (char *topicName, int topicLen, MQTTAsync_message *message);
+
+			static void onSubscribe_Redirect (void* context, MQTTAsync_successData* response);
+			void onSubscribe (MQTTAsync_successData* response);
+
+			static void onSubscribeFailure_Redirect (void* context, MQTTAsync_failureData* response);
+			void onSubscribeFailure (MQTTAsync_failureData* response);
 
 			/* Related to both */
-			static void onConnectFailure (void* context, MQTTAsync_failureData* response);
-			static void onConnectionLost (void *context, char *cause);
-			static void onDisconnect (void* context, MQTTAsync_successData* response);
+			static void onConnectFailure_Redirect (void* context, MQTTAsync_failureData* response);
+			void onConnectFailure (MQTTAsync_failureData* response);
+
+			static void onConnectionLost_Redirect (void* context, char *cause);
+			void onConnectionLost (char *cause);
+
+			static void onDisconnect_Redirect (void* context, MQTTAsync_successData* response);
+			void onDisconnect (MQTTAsync_successData* response);
 
 	};
 }
