@@ -55,6 +55,7 @@
 #include <signal.h>
 
 #include <roverapi/rover_pahomqtt.hpp>
+#include <roverapi/rover_mqttcommand.hpp>
 
 #define CHECK_RET(ret) if (ret) return ret;
 
@@ -233,27 +234,39 @@ int main()
 	r_driving.initialize();
 	my_display.initialize();
 
-	RoverMQTT_Configure_t rover_mqtt_conf;
-	rover_mqtt_conf.clientID = "rover";
-	rover_mqtt_conf.payload  = "Hello from rover!";
-	rover_mqtt_conf.qos      = 1;
-	rover_mqtt_conf.timeout  = 10000L;
-	rover_mqtt_conf.topic    = "rover/RoverDriving/control/1";
+	//MQTT related
+	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"127.0.0.1",
+														1887,
+														1,
+														"rover");
+	RoverSensorData_t sensor_data;
+	sensor_data.temperature = temperature_shared.get();
+	sensor_data.humidity = humidity_shared.get();
+	sensor_data.ultrasonic_front = distance_sr04_front_shared.get();
+	sensor_data.ultrasonic_rear = distance_sr04_back_shared.get();
+	sensor_data.hmc5883l_bearing = bearing_shared.get();
+	sensor_data.qmc5883l_bearing = 0.0;
+	sensor_data.infrared[0] = infrared_shared[0];
+	sensor_data.infrared[1] = infrared_shared[1];
+	sensor_data.infrared[2] = infrared_shared[2];
+	sensor_data.infrared[3] = infrared_shared[3];
+	sensor_data.gy521_bearing = accelerometerdata_shared.bearing;
+	sensor_data.gy521_accel_x = accelerometerdata_shared.accel_x;
+	sensor_data.gy521_accel_y = accelerometerdata_shared.accel_y;
+	sensor_data.gy521_accel_z = accelerometerdata_shared.accel_z;
+	sensor_data.gy521_gyro_x = accelerometerdata_shared.gyro_x;
+	sensor_data.gy521_gyro_y = accelerometerdata_shared.gyro_y;
+	sensor_data.gy521_gyro_z = accelerometerdata_shared.gyro_z;
+	sensor_data.gy521_angle_x = accelerometerdata_shared.angle_x;
+	sensor_data.gy521_angle_y = accelerometerdata_shared.angle_y;
+	sensor_data.gy521_angle_z = accelerometerdata_shared.angle_z;
 
-	RoverPahoMQTT rover_mqtt = RoverPahoMQTT (	"127.0.0.1",
-												1887,
-												rover_mqtt_conf);
-
-	rover_mqtt.setPayload ("Hi from rover!");
-
-	rover_mqtt.setTopic ("rover/RoverDriving/control/2");
-	rover_mqtt.setPayload ("Hi from rover2!");
-	if (0 == rover_mqtt.publish())
+	if (0 == rover_mqtt.publishToSensorTopic(sensor_data))
 		printf ("Publishing successful!\n");
 	else
 		printf ("Publishing unsuccessful!\n");
 
-	if (0 == rover_mqtt.subscribe())
+	/*if (0 == rover_mqtt.subscribe())
 	{
 		printf ("Subscribe successful!\n");
 	}
@@ -273,15 +286,6 @@ int main()
 	else
 	{
 		printf ("Unsubscribe unsuccessful!\n");
-	}
-
-	/*while (1)
-	{
-		if (rover_mqtt.isDataReady() == 0)
-		{
-			printf ("%s\n",rover_mqtt.read());
-		}
-		usleep(5000L);
 	}*/
 
 	printf ("Wow2! We're here!\n");
