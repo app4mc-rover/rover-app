@@ -185,7 +185,7 @@ void *MotorDriver_Task(void * arg)
 		motordriver_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-			local_command = keycommand_shared.get();
+		local_command = keycommand_shared.get();
 
 		switch (local_command)
 		{

@@ -40,9 +40,9 @@ public:
 
 		T get() {
 			T tmp;
-			pthread_mutex_lock(&this->lock);
+			//pthread_mutex_lock(&this->lock);
 			tmp = this->data;
-			pthread_mutex_unlock(&this->lock);
+			//pthread_mutex_unlock(&this->lock);
 
 			return tmp;
 		}
