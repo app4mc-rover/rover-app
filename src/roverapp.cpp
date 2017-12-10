@@ -288,8 +288,6 @@ int main()
 		printf ("Unsubscribe unsuccessful!\n");
 	}*/
 
-	printf ("Wow2! We're here!\n");
-
 	/* Add signals to exit threads properly */
 	signal(SIGINT, exitHandler);
 	signal(SIGTERM, exitHandler);
