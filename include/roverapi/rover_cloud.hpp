@@ -19,6 +19,9 @@
 
 namespace rover
 {
+	/**
+	 * @brief RoverCloud defines the interfaces that can be used for classes that connect to a remote cloud server
+	 */
 	class RoverCloud
 	{
 		private:

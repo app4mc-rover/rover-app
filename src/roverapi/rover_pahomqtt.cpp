@@ -16,21 +16,16 @@
 
 #include <roverapi/rover_pahomqtt.hpp>
 
+rover::RoverPahoMQTT::RoverPahoMQTT(){}
+
 rover::RoverPahoMQTT::RoverPahoMQTT (char * host_name, int port, RoverMQTT_Configure_t MQTT_Configure)
 {
 	this->HOST_NAME = host_name;
 	this->PORT = port;
 	this->defaultRoverMQTTConfigure = MQTT_Configure;
-	this->defaultRoverMQTTFlags.f_mqtt_disconnect_finished = 0;
-	this->defaultRoverMQTTFlags.f_mqtt_finished = 0;
-	this->defaultRoverMQTTFlags.f_mqtt_subscribed = 0;
-	this->defaultRoverMQTTFlags.f_mqtt_publish_successful = 0;
-	this->deliveredtoken = 0;
-	this->defaultRoverSubscribeData.data_ready = 0;
-	this->defaultRoverSubscribeData.data = "N/A";
-	this->defaultReturnCodes.rc_publish = -1;
-	this->defaultReturnCodes.rc_subscribe = -1;
-	this->defaultReturnCodes.rc_unsubscribe = -1;
+
+	/* Load defaults */
+	this->flushFlags();
 }
 
 rover::RoverPahoMQTT::~RoverPahoMQTT() {}
@@ -48,12 +43,15 @@ void rover::RoverPahoMQTT::constructAddress (char* string)
 void rover::RoverPahoMQTT::flushFlags(void)
 {
 	this->defaultRoverMQTTFlags.f_mqtt_disconnect_finished = 0;
-	this->defaultRoverMQTTFlags.f_mqtt_subscribed = 0;
 	this->defaultRoverMQTTFlags.f_mqtt_finished = 0;
+	this->defaultRoverMQTTFlags.f_mqtt_subscribed = 0;
 	this->defaultRoverMQTTFlags.f_mqtt_publish_successful = 0;
+	this->deliveredtoken = 0;
 	this->defaultRoverSubscribeData.data_ready = 0;
 	this->defaultRoverSubscribeData.data = "N/A";
-	this->deliveredtoken = 0;
+	this->defaultReturnCodes.rc_publish = -1;
+	this->defaultReturnCodes.rc_subscribe = -1;
+	this->defaultReturnCodes.rc_unsubscribe = -1;
 }
 
 int rover::RoverPahoMQTT::publish (void)
@@ -341,7 +339,7 @@ int rover::RoverPahoMQTT::isDataReady (void)
 		return 0;
 	}
 	else
-		return 1;
+		return -1;
 }
 
 void rover::RoverPahoMQTT::onPublisherConnect (MQTTAsync_successData* response)

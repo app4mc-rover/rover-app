@@ -77,7 +77,7 @@ namespace rover
 	 */
 	class RoverPahoMQTT : public RoverCloud
 	{
-		private:
+		protected:
 			/**
 			 * @brief Host name used for connecting to the Eclipse Paho MQTT server
 			 */
@@ -135,6 +135,11 @@ namespace rover
 			~RoverPahoMQTT ();
 
 			/**
+			 * @brief Default constructor for RoverPahoMQTT class
+			 */
+			RoverPahoMQTT();
+
+			/**
 			 * @brief Copy constructor for RoverPahoMQTT
 			 */
 			RoverPahoMQTT (char * host_name, int port, RoverMQTT_Configure_t MQTT_Configure);
@@ -169,7 +174,7 @@ namespace rover
 			char * read (void);
 
 			/**
-			 * @brief Public member function checking if the subscribed data is ready.
+			 * @brief Public member function checking if the subscribed data is ready. 0-> data ready -1-> data not ready
 			 */
 			int isDataReady (void);
 
@@ -192,7 +197,7 @@ namespace rover
 			int unsubscribe (void);
 
 
-		private:
+		protected:
 			/**
 			 * @brief Private member function to flush the connection flags for new operation.
 			 * @return void
