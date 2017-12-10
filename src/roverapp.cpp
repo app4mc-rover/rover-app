@@ -212,12 +212,43 @@ int main()
 
 	rover_mqtt.setTopic ("rover/RoverDriving/control/2");
 	rover_mqtt.setPayload ("Hi from rover2!");
-	if (1 == rover_mqtt.publish())
+	if (0 == rover_mqtt.publish())
 		printf ("Publishing successful!\n");
 	else
 		printf ("Publishing unsuccessful!\n");
 
-	rover_mqtt.publish();
+	if (0 == rover_mqtt.subscribe())
+	{
+		printf ("Subscribe successful!\n");
+	}
+	else
+	{
+		printf ("Subscribe unsuccessful!\n");
+	}
+
+	printf ("received data=%s\n",rover_mqtt.read());
+
+	printf ("Wow! We're here!\n");
+
+	if (0 == rover_mqtt.unsubscribe())
+	{
+		printf ("Unsubscribe successful!\n");
+	}
+	else
+	{
+		printf ("Unsubscribe unsuccessful!\n");
+	}
+
+	while (1)
+	{
+		if (rover_mqtt.isDataReady() == 0)
+		{
+			printf ("%s\n",rover_mqtt.read());
+		}
+		usleep(5000L);
+	}
+
+	printf ("Wow2! We're here!\n");
 
 	/* Add signals to exit threads properly */
 	signal(SIGINT, exitHandler);

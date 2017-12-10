@@ -40,18 +40,40 @@ namespace rover
 
 	typedef struct
 	{
+		int data_ready;
+		char * data;
+	} RoverMQTT_SubscribeData_t;
+
+	typedef struct
+	{
 		int f_mqtt_disconnect_finished;
 		int f_mqtt_finished;
 		int f_mqtt_subscribed;
 		int f_mqtt_publish_successful;
 	} RoverMQTT_StatusFlags_t;
 
+	typedef struct
+	{
+		int rc_publish;
+		int rc_subscribe;
+		int rc_unsubscribe;
+	} RoverMQTT_ReturnCodes_t;
+
 	/**
 	 * @brief RoverPahoMQTT contains member functions to use rover as a client and to publish / subscribe to Eclipse Paho MQTT server topics.
+	 * This class is not thread-safe.
 	 */
 	class RoverPahoMQTT : public RoverCloud
 	{
+		public:
+
+			char * read (void);
+
+			int isDataReady (void);
+
 		private:
+
+
 			/**
 			 * @brief Host name used for connecting to the Eclipse Paho MQTT server
 			 */
@@ -62,9 +84,14 @@ namespace rover
 			 */
 			int PORT;
 
+			RoverMQTT_SubscribeData_t defaultRoverSubscribeData;
+
 			RoverMQTT_Configure_t defaultRoverMQTTConfigure;
 
 			RoverMQTT_StatusFlags_t defaultRoverMQTTFlags;
+
+			RoverMQTT_ReturnCodes_t defaultReturnCodes;
+
 
 			/* Internal attributes */
 			MQTTAsync client;
@@ -116,9 +143,6 @@ namespace rover
 			int subscribe (void);
 
 			int unsubscribe (void);
-
-			int destroy (void);
-
 
 
 		private:
