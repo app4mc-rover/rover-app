@@ -30,6 +30,9 @@ using namespace std;
 namespace rover
 {
 
+	/**
+	 * @brief Data type to store initial configuration information for MQTT communication.
+	 */
 	typedef struct
 	{
 		char * clientID;
@@ -39,12 +42,18 @@ namespace rover
 		long int	timeout;	// Such as 10000L usec
 	} RoverMQTT_Configure_t;
 
+	/**
+	 * @brief Data type to store subscribed data
+	 */
 	typedef struct
 	{
 		int data_ready;
 		char * data;
 	} RoverMQTT_SubscribeData_t;
 
+	/**
+	 * @brief Data type to store internal flags for MQTT communication
+	 */
 	typedef struct
 	{
 		int f_mqtt_disconnect_finished;
@@ -53,6 +62,9 @@ namespace rover
 		int f_mqtt_publish_successful;
 	} RoverMQTT_StatusFlags_t;
 
+	/**
+	 * @brief Data type to store return codes that belong to member functions in RoverPahoMQTT class.
+	 */
 	typedef struct
 	{
 		int rc_publish;
@@ -62,19 +74,10 @@ namespace rover
 
 	/**
 	 * @brief RoverPahoMQTT contains member functions to use rover as a client and to publish / subscribe to Eclipse Paho MQTT server topics.
-	 * This class is not thread-safe.
 	 */
 	class RoverPahoMQTT : public RoverCloud
 	{
-		public:
-
-			char * read (void);
-
-			int isDataReady (void);
-
 		private:
-
-
 			/**
 			 * @brief Host name used for connecting to the Eclipse Paho MQTT server
 			 */
@@ -85,16 +88,29 @@ namespace rover
 			 */
 			int PORT;
 
+			/**
+			 * @brief Member attribute for subscribed data
+			 */
 			RoverMQTT_SubscribeData_t defaultRoverSubscribeData;
 
+			/**
+			 * @brief Member attribute for configuration data
+			 */
 			RoverMQTT_Configure_t defaultRoverMQTTConfigure;
 
+			/**
+			 * @brief Member attribute for flags
+			 */
 			RoverMQTT_StatusFlags_t defaultRoverMQTTFlags;
 
+			/**
+			 * @brief Member attribute for return codes
+			 */
 			RoverMQTT_ReturnCodes_t defaultReturnCodes;
 
-
-			/* Internal attributes */
+			/**
+			 * @brief Client object from MQTTAsync.
+			 */
 			MQTTAsync client;
 
 			/**
@@ -107,13 +123,15 @@ namespace rover
 			 */
 			MQTTAsync_disconnectOptions disc_opts;
 
-
+			/**
+			 * @brief Delivered token
+			 */
 			volatile MQTTAsync_token deliveredtoken;
 
-
-
 		public:
-
+			/**
+			 * @brief Destructor for RoverPahoMQTT class.
+			 */
 			~RoverPahoMQTT ();
 
 			/**
@@ -129,57 +147,208 @@ namespace rover
 
 			/**
 			 * @brief Sets private attribute PORT
-			 * @param port
+			 * @param port Port
 			 */
 			void setPort (const int port);
 
+			/**
+			 * @brief Sets payload
+			 * @param payload Payload
+			 */
 			void setPayload (char * payload);
 
+			/**
+			 * @brief Sets topic name
+			 * @param topic Topic name
+			 */
 			void setTopic (char * topic);
 
+			/**
+			 * @brief Public member function for reading subscribed data. This function requires the RoverPahoMQTT to be subscribed first.
+			 */
+			char * read (void);
 
+			/**
+			 * @brief Public member function checking if the subscribed data is ready.
+			 */
+			int isDataReady (void);
 
+			/**
+			 * @brief Used for publishing to a topic in an MQTT-broker
+			 * @return Return code 0-> success; others-> return codes
+			 */
 			int publish (void);
 
+			/**
+			 * @brief Used for subscribing to a topic in an MQTT-broker. To unsubscribe use: RoverPahoMQTT::unsubscribe()
+			 * @return Return code 0-> success; others-> return codes
+			 */
 			int subscribe (void);
 
+			/**
+			 * @brief Used for unsubscribing and disconnecting from a subscription to a topic in an MQTT-broker.
+			 * @return Return code 0-> success; others-> return codes
+			 */
 			int unsubscribe (void);
 
 
 		private:
+			/**
+			 * @brief Private member function to flush the connection flags for new operation.
+			 * @return void
+			 */
 			void flushFlags (void);
 
+			/**
+			 * @brief Used for constructing the connection address by writing to a string.
+			 * @param string String variable to use
+			 * @return void
+			 */
 			void constructAddress (char* string);
 
 			/* Internal callbacks */
 			/* Related to publisher */
+			/**
+			 * @brief Static function responsible for calling RoverPahoMQTT::onPublisherConnect in a given RoverPahoMQTT context.
+			 * @param context Given context for RoverPahoMQTT. Internal use: this
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			static void onPublisherConnect_Redirect (void* context, MQTTAsync_successData* response);
+
+			/**
+			 * @brief Static function responsible for calling RoverPahoMQTT::onPublisherSend in a given RoverPahoMQTT context.
+			 * @param context Given context for RoverPahoMQTT. Internal use: this
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
+			static void onPublisherSend_Redirect (void* context, MQTTAsync_successData* response);
+
+			/**
+			 * @brief Member callback function for onPublisherConnect actions
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			void onPublisherConnect (MQTTAsync_successData* response);
 
-			static void onPublisherSend_Redirect (void* context, MQTTAsync_successData* response);
+
+			/**
+			 * @brief Member callback function for onPublisherSend actions
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			void onPublisherSend (MQTTAsync_successData* response);
 
+
 			/* Related to subscriber */
+			/**
+			 * @brief Static function responsible for calling RoverPahoMQTT::onSubscriberConnect in a given RoverPahoMQTT context.
+			 * @param context Given context for RoverPahoMQTT. Internal use: this
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			static void onSubscriberConnect_Redirect (void* context, MQTTAsync_successData* response);
+
+			/**
+			 * @brief Static function responsible for calling RoverPahoMQTT::onSubscriberMessageArrived in a given RoverPahoMQTT context.
+			 * @param context Given context for RoverPahoMQTT. Internal use: this
+			 * @param topicName received topic name
+			 * @param topicLen received topic name length
+			 * @param message received message
+			 * @return int
+			 */
+			static int onSubscriberMessageArrived_Redirect (void *context, char *topicName, int topicLen, MQTTAsync_message *message);
+
+			/**
+			 * @brief Static function responsible for calling RoverPahoMQTT::onSubscribe in a given RoverPahoMQTT context.
+			 * @param context Given context for RoverPahoMQTT. Internal use: this
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
+			static void onSubscribe_Redirect (void* context, MQTTAsync_successData* response);
+
+			/**
+			 * @brief Static function responsible for calling RoverPahoMQTT::onSubscribeFailure in a given RoverPahoMQTT context.
+			 * @param context Given context for RoverPahoMQTT. Internal use: this
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
+			static void onSubscribeFailure_Redirect (void* context, MQTTAsync_failureData* response);
+
+			/**
+			 * @brief Member callback function for onSubscriberConnect actions
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			void onSubscriberConnect (MQTTAsync_successData* response);
 
-			static int onSubscriberMessageArrived_Redirect (void *context, char *topicName, int topicLen, MQTTAsync_message *message);
+			/**
+			 * @brief Member callback function for onSubscriberMessageArrived actions
+			 * @param topicName received topic name
+			 * @param topicLen received topic name length
+			 * @param message received message
+			 * @return int
+			 */
 			int onSubscriberMessageArrived (char *topicName, int topicLen, MQTTAsync_message *message);
 
-			static void onSubscribe_Redirect (void* context, MQTTAsync_successData* response);
+			/**
+			 * @brief Member callback function for onSubscribe actions
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			void onSubscribe (MQTTAsync_successData* response);
 
-			static void onSubscribeFailure_Redirect (void* context, MQTTAsync_failureData* response);
+			/**
+			 * @brief Member callback function for onSubscribeFailure actions
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			void onSubscribeFailure (MQTTAsync_failureData* response);
 
 			/* Related to both */
+			/**
+			 * @brief Static function responsible for calling RoverPahoMQTT::onConnectFailure in a given RoverPahoMQTT context.
+			 * @param context Given context for RoverPahoMQTT. Internal use: this
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			static void onConnectFailure_Redirect (void* context, MQTTAsync_failureData* response);
+
+			/**
+			 * @brief Static function responsible for calling RoverPahoMQTT::onConnectionLost in a given RoverPahoMQTT context.
+			 * @param context Given context for RoverPahoMQTT. Internal use: this
+			 * @param cause Cause of connection loss
+			 * @return void
+			 */
+			static void onConnectionLost_Redirect (void* context, char *cause);
+
+			/**
+			 * @brief Member callback function for onConnectFailure actions
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			void onConnectFailure (MQTTAsync_failureData* response);
 
-			static void onConnectionLost_Redirect (void* context, char *cause);
+			/**
+			 * @brief Static function responsible for calling RoverPahoMQTT::onDisconnect in a given RoverPahoMQTT context.
+			 * @param context Given context for RoverPahoMQTT. Internal use: this
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
+			static void onDisconnect_Redirect (void* context, MQTTAsync_successData* response);
+
+			/**
+			 * @brief Member callback function for onConnectionLost actions
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			void onConnectionLost (char *cause);
 
-			static void onDisconnect_Redirect (void* context, MQTTAsync_successData* response);
+			/**
+			 * @brief Member callback function for onDisconnect actions
+			 * @param response Response data from MQTTAsync instance
+			 * @return void
+			 */
 			void onDisconnect (MQTTAsync_successData* response);
 
 	};
