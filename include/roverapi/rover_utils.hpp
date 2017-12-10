@@ -23,8 +23,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-
-
 namespace rover
 {
 	/**
@@ -33,16 +31,16 @@ namespace rover
 	class RoverUtils
 	{
 
-	         public:
+		public:
 			/** Number of cores available in the rover's Raspberry Pi */
 			static const int numberOfCores = 4;
 
 			/**
 			 * @brief Obtain the core utilization of each core in rover's Raspberry Pi.
-			 * @detailed Uses an external script called read_core_usage.py which must be installed within rover-app.
+			 * Uses an external script called read_core_usage.py which must be installed within rover-app.
 			 * @param coreUtil is a float array that contains core usage of each core in rover's Raspberry Pi.
 			 */
-            		void getCoreUtilization (float coreUtil[numberOfCores]);
+			void getCoreUtilization (float coreUtil[numberOfCores]);
 
 			/**
 			 * @brief Returns whether the wlan0 interface is on (1) or off (0).

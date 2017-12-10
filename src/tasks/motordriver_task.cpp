@@ -167,7 +167,6 @@ void BoothMode2Set(void)
 	keycommand_shared = 'F';
 }
 
-
 void *MotorDriver_Task(void * arg)
 {
 	timing motordriver_task_tmr;
