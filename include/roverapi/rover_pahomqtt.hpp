@@ -74,6 +74,61 @@ namespace rover
 
 	/**
 	 * @brief RoverPahoMQTT contains member functions to use rover as a client and to publish / subscribe to Eclipse Paho MQTT server topics.
+	 *
+	 * Example usage of this class is given below:
+	 *
+	 *	\code{.cpp}
+	 * 	#include <roverapi/rover_pahomqtt.hpp>
+	 *
+	 * 	using namespace rover;
+	 *
+	 * 	// Publish to a topic in an MQTTv3 or MQTTv3.1 broker using RoverPahoMQTT class
+	 *
+	 * 	RoverMQTT_Configure_t rover_mqtt_conf;
+	 * 	rover_mqtt_conf.clientID = "rover";							// Identification of the Client
+	 * 	rover_mqtt_conf.payload  = "Hello from rover!";				// Message to send
+	 * 	rover_mqtt_conf.qos      = 1;   							// Quality of Service
+	 * 	rover_mqtt_conf.timeout  = 10000L;  						// Polling timeout, 10000L is fine
+	 * 	rover_mqtt_conf.topic    = "rover/RoverDriving/control/1"; 	// Topic name to publish to or subscribe from
+	 *
+	 * 	RoverPahoMQTT rover_mqtt = RoverPahoMQTT (	"127.0.0.1",	// MQTT-Broker host
+	 *												1883,			// MQTT-Broker port
+	 *												rover_mqtt_conf);
+	 *
+	 * 	// Overriding payload and topic
+	 * 	rover_mqtt.setPayload ("Hi from rover!");
+	 * 	rover_mqtt.setTopic ("rover/RoverDriving/control/2");
+	 *
+	 * 	// Publish is non-blocking, client disconnects afterwards
+	 * 	if (0 == rover_mqtt.publish())
+	 * 		printf ("Publishing successful!\n");
+	 * 	else
+	 * 		printf ("Publishing unsuccessful!\n");
+	 *
+	 * 	// Subscribe is non-blocking, works with internal callbacks
+	 * 	// unsubscribe() method should be used after finished
+	 * 	if (0 == rover_mqtt.subscribe())
+	 * 	{
+	 * 		printf ("Subscribe successful!\n");
+	 * 	}
+	 * 	else
+	 * 	{
+	 * 		printf ("Subscribe unsuccessful!\n");
+	 * 	}
+	 *
+	 * 	// Receive the final message that is arrived from the subscribed topic
+	 * 	printf ("Received data=%s\n", rover_mqtt.read());
+	 *
+	 * 	// Unsubscribe and disconnect
+	 * 	if (0 == rover_mqtt.unsubscribe())
+	 * 	{
+	 * 		printf ("Unsubscribe successful!\n");
+	 * 	}
+	 * 	else
+	 * 	{
+	 * 		printf ("Unsubscribe unsuccessful!\n");
+	 * 	}
+	 * 	\endcode
 	 */
 	class RoverPahoMQTT : public RoverCloud
 	{
