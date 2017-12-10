@@ -46,10 +46,10 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	Json::Value data;
 	data["dht22"]["temperature"] = sensor_data.temperature;
 	data["dht22"]["humidity"] = sensor_data.humidity;
-	data["infrared"]["0"] = sensor_data.infrared[0];
-	data["infrared"]["1"] = sensor_data.infrared[1];
-	data["infrared"]["2"] = sensor_data.infrared[2];
-	data["infrared"]["3"] = sensor_data.infrared[3];
+	data["infrared"]["rear-right"] = sensor_data.infrared[0];
+	data["infrared"]["rear-left"] = sensor_data.infrared[1];
+	data["infrared"]["front-right"] = sensor_data.infrared[2];
+	data["infrared"]["front-left"] = sensor_data.infrared[3];
 	data["ultrasonic"]["front"] = sensor_data.ultrasonic_front;
 	data["ultrasonic"]["rear"] = sensor_data.ultrasonic_rear;
 	data["hmc5883l"]["bearing"] = sensor_data.hmc5883l_bearing;

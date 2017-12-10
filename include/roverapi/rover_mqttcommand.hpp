@@ -69,11 +69,6 @@ namespace rover
 	 */
 	class RoverMQTTCommand: private RoverPahoMQTT
 	{
-		private:
-			char* HOST_NAME;
-
-			int PORT;
-
 		public:
 			/**
 			 * @brief Copy constructor for RoverMQTTCommand class
