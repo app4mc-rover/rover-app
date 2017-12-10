@@ -68,10 +68,14 @@ void *DisplaySensors_Task (void * arg)
 
 		printf("Bearing from QMC5883L/HMC5883L: %f\n", bearing_shared.get());
 
-		printf("Accelerometer acceleration:\t%d\t\t%d\t\t%d\n", r_accel.getAccelX(), r_accel.getAccelY(), r_accel.getAccelZ());
-		printf("Accelerometer angles:\t\t%f\t%f\t%f\n", r_accel.getAngleX(), r_accel.getAngleY(), r_accel.getAngleZ());
+		printf("Accelerometer acceleration:\t%d\t\t%d\t\t%d\n", accelerometerdata_shared.accel_x,
+				                                                accelerometerdata_shared.accel_y,
+																accelerometerdata_shared.accel_z);
+		printf("Accelerometer angles:\t\t%f\t%f\t%f\n", accelerometerdata_shared.angle_x,
+				                                        accelerometerdata_shared.angle_y,
+														accelerometerdata_shared.angle_z);
 
-		printf("Bearing from accelerometer: %f\n", r_accel.read());
+		printf("Bearing from accelerometer: %f\n", accelerometerdata_shared.bearing);
 
 		//Task content ends here -------------------------------------------------
 		display_sensors_task_tmr.recordEndTime();
