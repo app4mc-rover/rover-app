@@ -29,7 +29,6 @@
 #include <pthread.h>
 
 #include <roverapp.h>
-#include <roverapi/rover_gy521.hpp>
 
 void *DisplaySensors_Task (void * arg)
 {
@@ -38,9 +37,6 @@ void *DisplaySensors_Task (void * arg)
 	display_sensors_task_tmr.setTaskID("Display-Sensors");
 	display_sensors_task_tmr.setDeadline(3.0);
 	display_sensors_task_tmr.setPeriod(3.0);
-
-	RoverGY521 r_accel = RoverGY521();
-	r_accel.initialize();
 
 	while (running_flag.get())
 	{
