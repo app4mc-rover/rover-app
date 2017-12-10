@@ -93,4 +93,6 @@ extern timing_interface socket_client_task_ti;
 
 extern timing_interface socket_server_task_ti;
 
+extern timing_interface accelerometer_task_ti;
+
 #endif /* INTERFACES_H_ */

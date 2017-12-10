@@ -82,6 +82,23 @@ extern pthread_mutex_t infrared_lock;
 extern double cpu_util_shared[4];
 extern pthread_mutex_t cpu_util_shared_lock;
 
+typedef struct
+{
+	int8_t gyro_x;
+	int8_t gyro_y;
+	int8_t gyro_z;
+	float angle_x;
+	float angle_y;
+	float angle_z;
+	int8_t accel_x;
+	int8_t accel_y;
+	int8_t accel_z;
+	float bearing;
+} AccelerometerData_t;
+
+extern AccelerometerData_t accelerometerdata_shared;
+extern pthread_mutex_t accelerometerdata_lock;
+
 /* For proper termination */
 extern RoverBase r_base;
 extern RoverDriving r_driving;

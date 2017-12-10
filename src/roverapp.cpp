@@ -49,6 +49,7 @@
 #include <tasks/booth_modes_task.h>
 #include <tasks/socket_client_task.h>
 #include <tasks/socket_server_task.h>
+#include <tasks/accelerometer_task.h>
 
 #include <interfaces.h>
 #include <signal.h>
@@ -90,6 +91,7 @@ pthread_t extgpio_thread;
 pthread_t booth_thread;
 pthread_t socket_client_thread;
 pthread_t socket_server_thread;
+pthread_t accelerometer_thread;
 
 /* Timing interfaces for thread measurement */
 timing_interface compass_task_ti;
@@ -115,6 +117,7 @@ timing_interface imgproc_task_ti;
 timing_interface booth_task_ti;
 timing_interface socket_client_task_ti;
 timing_interface socket_server_task_ti;
+timing_interface accelerometer_task_ti;
 
 //Shared data between threads
 
@@ -133,6 +136,9 @@ SharedData<int> shutdown_hook_shared;
 SharedData<int> display_use_elsewhere_shared;
 /* For proper termination */
 SharedData<int> running_flag;
+
+AccelerometerData_t accelerometerdata_shared;
+pthread_mutex_t accelerometerdata_lock;
 
 float infrared_shared[4];
 pthread_mutex_t infrared_lock;
@@ -269,14 +275,14 @@ int main()
 		printf ("Unsubscribe unsuccessful!\n");
 	}
 
-	while (1)
+	/*while (1)
 	{
 		if (rover_mqtt.isDataReady() == 0)
 		{
 			printf ("%s\n",rover_mqtt.read());
 		}
 		usleep(5000L);
-	}
+	}*/
 
 	printf ("Wow2! We're here!\n");
 
@@ -367,6 +373,9 @@ int main()
 	CHECK_RET(ret);
 
 	ret = createThread(&socket_server_thread, Socket_Server_Task, "SS");
+	CHECK_RET(ret);
+
+	ret = createThread(&accelerometer_thread, Accelerometer_Task, "ACT");
 	CHECK_RET(ret);
 
 	/*if(pthread_create(&srf02_thread, NULL, SRF02_Task, NULL)) {
