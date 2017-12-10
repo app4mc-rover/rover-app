@@ -363,8 +363,8 @@ void rover::RoverPahoMQTT::onPublisherConnect (MQTTAsync_successData* response)
 	if ((rc = MQTTAsync_sendMessage(this->client, this->defaultRoverMQTTConfigure.topic, &pubmsg, &opts)) != MQTTASYNC_SUCCESS)
 	{
 		this->defaultReturnCodes.rc_publish = rc;
-		printf("Failed to start sendMessage, return code %d\n", rc);
-		exit(EXIT_FAILURE);
+		//printf("Failed to start sendMessage, return code %d\n", rc);
+		//exit(EXIT_FAILURE);
 	}
 }
 
