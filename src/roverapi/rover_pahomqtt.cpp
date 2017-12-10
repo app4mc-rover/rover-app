@@ -353,7 +353,7 @@ void rover::RoverPahoMQTT::onPublisherConnect (MQTTAsync_successData* response)
 	opts.onSuccess = rover::RoverPahoMQTT::onPublisherSend_Redirect;
 	opts.context = this;
 
-	pubmsg.payload = &(this->defaultRoverMQTTConfigure.payload);
+	pubmsg.payload = this->defaultRoverMQTTConfigure.payload;
 	pubmsg.payloadlen = strlen(this->defaultRoverMQTTConfigure.payload);
 	pubmsg.qos = this->defaultRoverMQTTConfigure.qos;
 	pubmsg.retained = 0;
