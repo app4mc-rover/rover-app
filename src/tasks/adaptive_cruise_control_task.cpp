@@ -30,23 +30,23 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 	RoverDriving r_driving = RoverDriving();
 	r_driving.initialize();
 
-	while (1)
+	while (running_flag.get())
 	{
 		acc_task_tmr.recordStartTime();
 		acc_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
 
-		if (driving_mode == ACC)
+		if (driving_mode.get() == ACC)
 		{
 			//front sensor -> distance_sr04_front_shared
 			//back sensor -> distance_sr04_back_shared
 
 			// front distance less than critical
-			if (distance_sr04_front_shared < CRITICAL_DISTANCE)
+			if (distance_sr04_front_shared.get() < CRITICAL_DISTANCE)
 			{
 				// go back if distance ok
-				if (distance_sr04_back_shared < CRITICAL_DISTANCE)
+				if (distance_sr04_back_shared.get() < CRITICAL_DISTANCE)
 					r_driving.stopRover();
 				else
 				{
@@ -56,22 +56,22 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 			}
 
 			// front distance between correct and critical
-			else if (distance_sr04_front_shared < CORRECT_DISTANCE && distance_sr04_front_shared >= CRITICAL_DISTANCE)
+			else if (distance_sr04_front_shared.get() < CORRECT_DISTANCE && distance_sr04_front_shared.get() >= CRITICAL_DISTANCE)
 			{
 				r_driving.stopRover();
 			}
 
 			// front distance between safe and correct
-			else if (distance_sr04_front_shared < SAFE_DISTANCE && distance_sr04_front_shared >= CORRECT_DISTANCE)
+			else if (distance_sr04_front_shared.get() < SAFE_DISTANCE && distance_sr04_front_shared.get() >= CORRECT_DISTANCE)
 			{
 				r_driving.setSpeed(LOWEST_SPEED);
 				r_driving.goForward();
 			}
 
 			// distance > safe
-			else if (distance_sr04_front_shared >= SAFE_DISTANCE)
+			else if (distance_sr04_front_shared.get() >= SAFE_DISTANCE)
 			{
-				r_driving.setSpeed(speed_shared);
+				r_driving.setSpeed(speed_shared.get());
 				r_driving.goForward();
 			}
 

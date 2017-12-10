@@ -51,7 +51,7 @@ void *InfraredDistance_Task (void * arg)
 	r_infrared2.initialize();
 	r_infrared3.initialize();
 
-	while (1)
+	while (running_flag.get())
 	{
 		infrared_distance_task_tmr.recordStartTime();
 		infrared_distance_task_tmr.calculatePreviousSlackTime();

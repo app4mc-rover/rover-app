@@ -44,7 +44,7 @@ void *Temperature_Task(void *arg)
 	RoverDHT22 r_dht22 = RoverDHT22();
 	r_dht22.initialize();
 
-	while (1)
+	while (running_flag.get())
 	{
 		temperature_task_tmr.recordStartTime();
 		temperature_task_tmr.calculatePreviousSlackTime();
@@ -54,20 +54,15 @@ void *Temperature_Task(void *arg)
 		temperature = r_dht22.readTemperature();
 		humidity = r_dht22.readHumidity();
 
-		pthread_mutex_lock(&temperature_lock);
-			temperature_shared = temperature;
-		pthread_mutex_unlock(&temperature_lock);
-
-		pthread_mutex_lock(&humidity_lock);
-			humidity_shared = humidity;
-		pthread_mutex_unlock(&humidity_lock);
+		temperature_shared.set(temperature);
+		humidity_shared = humidity;
 
 		//Task content ends here -------------------------------------------------
-
 		temperature_task_tmr.recordEndTime();
 		temperature_task_tmr.calculateExecutionTime();
 		temperature_task_tmr.calculateDeadlineMissPercentage();
 		temperature_task_tmr.incrementTotalCycles();
+
 		pthread_mutex_lock(&temperature_task_ti.mutex);
 			temperature_task_ti.deadline = temperature_task_tmr.getDeadline();
 			temperature_task_ti.deadline_miss_percentage = temperature_task_tmr.getDeadlineMissPercentage();
@@ -79,6 +74,7 @@ void *Temperature_Task(void *arg)
 			temperature_task_ti.end_time = temperature_task_tmr.getEndTime();
 		pthread_mutex_unlock(&temperature_task_ti.mutex);
 		temperature_task_tmr.sleepToMatchPeriod();
+
 	}
 
 	/* the function must return something - NULL will do */

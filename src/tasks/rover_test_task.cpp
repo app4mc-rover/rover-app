@@ -62,7 +62,7 @@ void *Rover_Test_Task(void *unused)
 
 	int running = 1;
 	init();
-	while(running)
+	while(running && running_flag.get())
 	{
 		int c = getchar();
 

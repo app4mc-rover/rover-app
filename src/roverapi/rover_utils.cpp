@@ -19,6 +19,9 @@
 
 void rover::RoverUtils::getCoreUtilization (float coreUtil[numberOfCores])
 {
+#if SIMULATOR
+	return;
+#endif
 	FILE *fp;
 	char buffer[128];
 	float util[5];

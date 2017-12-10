@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2017 FH Dortmund and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,49 +26,63 @@
 
 using namespace rover;
 
-extern float temperature_shared;
-extern pthread_mutex_t temperature_lock;
+template <typename T>
+class SharedData {
+public:
 
-extern float humidity_shared;
-extern pthread_mutex_t humidity_lock;
+		SharedData() {
+				pthread_mutex_init(&this->lock, NULL);
+		}
 
-extern int distance_grove_shared;
-extern pthread_mutex_t distance_grove_lock;
+		~SharedData() {
+				pthread_mutex_destroy(&this->lock);
+		}
 
-extern char keycommand_shared;
-extern pthread_mutex_t keycommand_lock;
+		T get() {
+			T tmp;
+			pthread_mutex_lock(&this->lock);
+			tmp = this->data;
+			pthread_mutex_unlock(&this->lock);
+
+			return tmp;
+		}
+
+		void set(T data) {
+				pthread_mutex_lock(&this->lock);
+				this->data = data;
+				pthread_mutex_unlock(&this->lock);
+		}
+
+		void operator= (T data) {
+				this->set(data);
+		}
+
+private:
+		pthread_mutex_t lock;
+		T data;
+};
+
+extern SharedData<float> temperature_shared;
+extern SharedData<float> humidity_shared;
+extern SharedData<int> distance_grove_shared;
+extern SharedData<char> keycommand_shared;
+extern SharedData<float> bearing_shared;
+extern SharedData<int> distance_sr04_back_shared;
+extern SharedData<int> distance_sr04_front_shared;
+extern SharedData<int> driving_mode;
+extern SharedData<int> speed_shared;
+extern SharedData<int> buzzer_status_shared;
+extern SharedData<int> shutdown_hook_shared;
+extern SharedData<int> display_use_elsewhere_shared;
+extern SharedData<int> running_flag;
 
 extern float infrared_shared[4];
 extern pthread_mutex_t infrared_lock;
 
-extern float bearing_shared;
-extern pthread_mutex_t compass_lock;
-
-extern int distance_sr04_back_shared;
-extern pthread_mutex_t distance_sr04_back_lock;
-
-extern int distance_sr04_front_shared;
-extern pthread_mutex_t distance_sr04_front_lock;
-
-extern int driving_mode;
-extern pthread_mutex_t driving_mode_lock;
-
-extern int speed_shared;
-extern pthread_mutex_t speed_lock;
-
 extern double cpu_util_shared[4];
 extern pthread_mutex_t cpu_util_shared_lock;
 
-extern int buzzer_status_shared;
-extern pthread_mutex_t buzzer_status_shared_lock;
-
-extern int shutdown_hook_shared;
-
-extern int display_use_elsewhere_shared;
-
 /* For proper termination */
-extern int running_flag;
-
 extern RoverBase r_base;
 extern RoverDriving r_driving;
 extern RoverDisplay my_display;

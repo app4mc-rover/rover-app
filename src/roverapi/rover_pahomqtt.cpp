@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created PahoMQTT API 07.12.2017
+ *                                          improved PahoMQTT API 10.12.2017
  *
  */
 
@@ -300,8 +301,8 @@ int rover::RoverPahoMQTT::onSubscriberMessageArrived (char *topicName, int topic
 		//printf ("%s\n",buf);
 		//free(buf);
 
-		MQTTAsync_freeMessage(&message);
-		MQTTAsync_free(topicName);
+		MQTTAsync_freeMessage (&message);
+		MQTTAsync_free (topicName);
 
 		this->defaultRoverSubscribeData.data_ready = 1;
 	}

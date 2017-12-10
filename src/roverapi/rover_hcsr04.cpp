@@ -46,18 +46,23 @@ rover::RoverHCSR04::~RoverHCSR04(){}
 
 void rover::RoverHCSR04::initialize (void)
 {
+#if !SIMULATOR
     pinMode(this->trigPin, OUTPUT);
     pinMode(this->echoPin, INPUT);
 
     //TRIG pin must start LOW
     digitalWrite(this->trigPin, LOW);
     delayMicroseconds(2);
+#endif
 
     this->ROVERHCSR04_SETUP_ = 1;
 }
 
 float rover::RoverHCSR04::read (void)
 {
+#if SIMULATOR
+	return 0.5f;
+#else
 	if (this->ROVERHCSR04_SETUP_ != 1)
 	{
 		fprintf(stderr,"You havent set up RoverHCSR04. Use RoverHCSR04()::initialize() !\n");
@@ -90,6 +95,7 @@ float rover::RoverHCSR04::read (void)
 		//	printf("dist=%d\n",distance);
 		return ((float) distance*1.0);
 	}
+#endif
 }
 
 void rover::RoverHCSR04::setTrigPin (const int trig_pin)

@@ -31,11 +31,6 @@
 
 #include <roverapi/rover_utils.hpp>
 
-void Cpu_Logger_Task_Terminator (int dummy)
-{
-	running_flag = 0;
-}
-
 void *Cpu_Logger_Task(void * arg) 
 {
 
@@ -44,16 +39,11 @@ void *Cpu_Logger_Task(void * arg)
 	cpu_logger_task_tmr.setDeadline(3);
 	cpu_logger_task_tmr.setPeriod(3);
 
-	/* Add termination signal handler to properly close fd */
-	signal(SIGINT, Cpu_Logger_Task_Terminator);
-	signal(SIGTERM, Cpu_Logger_Task_Terminator);
-	signal(SIGKILL, Cpu_Logger_Task_Terminator);
-
 	RoverUtils r_utils = RoverUtils();
 
 	float util[4];
 
-	while (running_flag)
+	while (running_flag.get())
 	{
 		cpu_logger_task_tmr.recordStartTime();
 		cpu_logger_task_tmr.calculatePreviousSlackTime();

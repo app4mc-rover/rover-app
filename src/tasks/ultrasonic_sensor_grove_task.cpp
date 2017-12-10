@@ -46,7 +46,7 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 	RoverGrooveUltrasonic r_groove = RoverGrooveUltrasonic(ROVER_REAR);
 	r_groove.initialize();
 
-	while (1)
+	while (running_flag.get())
 	{
 		ultrasonic_grove_task_tmr.recordStartTime();
 		ultrasonic_grove_task_tmr.calculatePreviousSlackTime();
@@ -55,9 +55,7 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 		/*pthread_mutex_lock(&distance_grove_lock);
 			distance_grove_shared = getCM_GrooveUltrasonicRanger();
 		pthread_mutex_unlock(&distance_grove_lock);*/
-		pthread_mutex_lock(&distance_sr04_back_lock);
 			distance_sr04_back_shared = (int) r_groove.read();
-		pthread_mutex_unlock(&distance_sr04_back_lock);
 		//printf("Distance: %dcm\n", getCM_GrooveUltrasonicRanger());
 		//Task content ends here -------------------------------------------------
 

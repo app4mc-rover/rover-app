@@ -33,97 +33,138 @@
 
 void ExitAutomaticModes(void)
 {
-	if (driving_mode == ACC || driving_mode == PARKING_LEFT || driving_mode == PARKING_RIGHT || driving_mode == BOOTH1 || driving_mode == BOOTH2)
+	int d_mode = driving_mode.get();
+	switch (d_mode)
 	{
-		r_driving.stopRover(); //Stop the rover first.
-		pthread_mutex_lock(&driving_mode_lock);
+		case ACC:
+		case PARKING_LEFT:
+		case PARKING_RIGHT:
+		case BOOTH1:
+		case BOOTH2:
+			r_driving.stopRover(); //Stop the rover first.
 			driving_mode = MANUAL;
-		pthread_mutex_unlock(&driving_mode_lock);
+			break;
+		default:
+			break;
 	}
 }
 
 void ManualModeSet(void)
 {
-	if (driving_mode == ACC || driving_mode == PARKING_LEFT || driving_mode == PARKING_RIGHT || driving_mode == BOOTH1 || driving_mode == BOOTH2)
+	int d_mode = driving_mode.get();
+	switch (d_mode)
 	{
-		r_driving.stopRover(); //Stop the rover first.
+			case ACC:
+			case PARKING_LEFT:
+			case PARKING_RIGHT:
+			case BOOTH1:
+			case BOOTH2:
+					r_driving.stopRover(); //Stop the rover first.
+					break;
+			default:
+					break;
 	}
-	pthread_mutex_lock(&driving_mode_lock);
-		driving_mode = MANUAL;
-	pthread_mutex_unlock(&driving_mode_lock);
-	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'F';
-	pthread_mutex_unlock(&keycommand_lock);
+
+	driving_mode = MANUAL;
+	keycommand_shared = 'F';
 }
 
 void ParkingRightModeSet(void)
 {
-	if (driving_mode == ACC || driving_mode == MANUAL || driving_mode == BOOTH1 || driving_mode == BOOTH2)
+	int d_mode = driving_mode.get();
+	switch (d_mode)
 	{
-		r_driving.stopRover(); //Stop the rover first.
+			case ACC:
+			case MANUAL:
+			case BOOTH1:
+			case BOOTH2:
+					r_driving.stopRover(); //Stop the rover first.
+					break;
+			default:
+					break;
 	}
-	pthread_mutex_lock(&driving_mode_lock);
-		driving_mode = PARKING_RIGHT;
-	pthread_mutex_unlock(&driving_mode_lock);
-	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'F';
-	pthread_mutex_unlock(&keycommand_lock);
+
+	driving_mode = PARKING_RIGHT;
+	keycommand_shared = 'F';
 }
 
 void ParkingLeftModeSet(void)
 {
-	if (driving_mode == ACC || driving_mode == MANUAL || driving_mode == BOOTH1 || driving_mode == BOOTH2)
+	int d_mode = driving_mode.get();
+	switch (d_mode)
 	{
-		r_driving.stopRover(); //Stop the rover first.
+			case ACC:
+			case MANUAL:
+			case BOOTH1:
+			case BOOTH2:
+					r_driving.stopRover(); //Stop the rover first.
+					break;
+			default:
+					break;
 	}
-	pthread_mutex_lock(&driving_mode_lock);
-		driving_mode = PARKING_LEFT;
-	pthread_mutex_unlock(&driving_mode_lock);
-	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'F';
-	pthread_mutex_unlock(&keycommand_lock);
+
+	driving_mode = PARKING_LEFT;
+	keycommand_shared = 'F';
 }
 
 void ACCModeSet(void)
 {
-	if (driving_mode == PARKING_LEFT || driving_mode == PARKING_RIGHT || driving_mode == MANUAL || driving_mode == BOOTH1 || driving_mode == BOOTH2   )
+	int d_mode = driving_mode.get();
+	switch (d_mode)
 	{
-		r_driving.stopRover(); //Stop the rover first.
+			case PARKING_LEFT:
+			case PARKING_RIGHT:
+			case MANUAL:
+			case BOOTH1:
+			case BOOTH2:
+					r_driving.stopRover(); //Stop the rover first.
+					break;
+			default:
+					break;
 	}
-	pthread_mutex_lock(&driving_mode_lock);
-		driving_mode = ACC;
-	pthread_mutex_unlock(&driving_mode_lock);
-	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'F';
-	pthread_mutex_unlock(&keycommand_lock);
+
+	driving_mode = ACC;
+	keycommand_shared = 'F';
 }
 
 void BoothMode1Set(void)
 {
-	if (driving_mode == PARKING_LEFT || driving_mode == PARKING_RIGHT || driving_mode == MANUAL || driving_mode == BOOTH2  || driving_mode == ACC)
+	int d_mode = driving_mode.get();
+	switch (d_mode)
 	{
-		r_driving.stopRover(); //Stop the rover first.
+			case PARKING_LEFT:
+			case PARKING_RIGHT:
+			case MANUAL:
+			case BOOTH1:
+			case BOOTH2:
+					r_driving.stopRover(); //Stop the rover first.
+					break;
+			default:
+					break;
 	}
-	pthread_mutex_lock(&driving_mode_lock);
-		driving_mode = BOOTH1;
-	pthread_mutex_unlock(&driving_mode_lock);
-	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'F';
-	pthread_mutex_unlock(&keycommand_lock);
+
+	driving_mode = BOOTH1;
+	keycommand_shared = 'F';
 }
 
 void BoothMode2Set(void)
 {
-	if (driving_mode == PARKING_LEFT || driving_mode == PARKING_RIGHT || driving_mode == MANUAL || driving_mode == BOOTH1 || driving_mode == ACC)
+	int d_mode = driving_mode.get();
+	switch (d_mode)
 	{
-		r_driving.stopRover(); //Stop the rover first.
+			case PARKING_LEFT:
+			case PARKING_RIGHT:
+			case MANUAL:
+			case BOOTH1:
+			case ACC:
+					r_driving.stopRover(); //Stop the rover first.
+					break;
+			default:
+					break;
 	}
-	pthread_mutex_lock(&driving_mode_lock);
-		driving_mode = BOOTH2;
-	pthread_mutex_unlock(&driving_mode_lock);
-	pthread_mutex_lock(&keycommand_lock);
-		keycommand_shared = 'F';
-	pthread_mutex_unlock(&keycommand_lock);
+
+	driving_mode = BOOTH2;
+	keycommand_shared = 'F';
 }
 
 
@@ -138,16 +179,13 @@ void *MotorDriver_Task(void * arg)
 	int running = 1;
 	char local_command = 'f';
 
-	while (running)
+	while (running && running_flag.get())
 	{
 		motordriver_task_tmr.recordStartTime();
 		motordriver_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		pthread_mutex_lock(&keycommand_lock);
-			local_command = keycommand_shared;
-			//printf("got=%c\n",keycommand_shared);
-		pthread_mutex_unlock(&keycommand_lock);
+			local_command = keycommand_shared.get();
 
 		switch (local_command)
 		{
@@ -162,42 +200,42 @@ void *MotorDriver_Task(void * arg)
 				break;
 			case 'W':
 				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared);
+				r_driving.setSpeed(speed_shared.get());
 				r_driving.goForward();
 				break;
 			case 'D':
 				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared);
+				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnBackwardRight();
 				break;
 			case 'S':
 				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared);
+				r_driving.setSpeed(speed_shared.get());
 				r_driving.goBackward();
 				break;
 			case 'A':
 				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared);
+				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnBackwardLeft();
 				break;
 			case 'Q':
 				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared);
+				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnForwardLeft();
 				break;
 			case 'E':
 				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared);
+				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnForwardRight();
 				break;
 			case 'K':  //turn right on spot
 				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared);
+				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnRight();
 				break;
 			case 'J': //turn left on spot
 				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared);
+				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnLeft();
 				break;
 			case 'U':

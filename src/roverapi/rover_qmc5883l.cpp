@@ -42,6 +42,7 @@ rover::RoverQMC5883L::~RoverQMC5883L(){}
 
 void rover::RoverQMC5883L::initialize (void)
 {
+#if !SIMULATOR
 	if ((i2c_qmc588l_fd = wiringPiI2CSetup(this->QMC5883L_ADDRESS)) < 0)
 	{
 		printf("Failed to initialize QMC588L compass sensor");
@@ -61,10 +62,10 @@ void rover::RoverQMC5883L::initialize (void)
 		wiringPiI2CWriteReg8 (i2c_qmc588l_fd, 0x09, 0x1D);
 	}
 
-	this->ROVERQMC5883L_SETUP_ = 1;
-
 	this->calibration_start = millis();
 
+#endif
+	this->ROVERQMC5883L_SETUP_ = 1;
 	//
 	// To do a software reset
 	// wiringPiI2CWriteReg8 (i2c_hmc588l_fd, 0x0A, 0x80);
@@ -73,6 +74,9 @@ void rover::RoverQMC5883L::initialize (void)
 
 float rover::RoverQMC5883L::read (void)
 {
+#if SIMULATOR
+	return 0.5;
+#else
 	if (this->ROVERQMC5883L_SETUP_ != 1)
 	{
 		fprintf(stderr,"You havent set up RoverQMC5883L. Use RoverQMC5883L()::initialize() !\n");
@@ -139,6 +143,7 @@ float rover::RoverQMC5883L::read (void)
 	#endif
 		return headingDegrees;
 	}
+#endif
 }
 
 void rover::RoverQMC5883L::setQMC5883LAddress (const int address)

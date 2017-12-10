@@ -43,8 +43,10 @@ void rover::RoverInfraredSensor::initialize (void)
 {
 	/* mcp3004Setup can only be called once per program, One solution: */
 	static class Once2 { public: Once2(){
+#if !SIMULATOR
 		/* Init the analog digital converter */
 		mcp3004Setup (BASE, SPI_CHAN); // 3004 and 3008 are the same 4/8 channels
+#endif
 	}} Once2_;
 
 	this->ROVERINFRAREDSENSOR_SETUP_ = 1;
@@ -52,6 +54,9 @@ void rover::RoverInfraredSensor::initialize (void)
 
 float rover::RoverInfraredSensor::read (void)
 {
+#if SIMULATOR
+	return 100.0f;
+#else
 	if (this->ROVERINFRAREDSENSOR_SETUP_ != 1)
 	{
 		fprintf(stderr,"You havent set up RoverInraredSensor. Use RoverInfraredSensor()::initialize() !\n");
@@ -60,6 +65,7 @@ float rover::RoverInfraredSensor::read (void)
 	{
 		float x;
 		float y = analogRead (BASE+this->sensorID);
+
 
 		// 1/cm to output voltage is almost linear between
 		// 80cm->0,4V->123
@@ -76,6 +82,7 @@ float rover::RoverInfraredSensor::read (void)
 
 		return x;
 	}
+#endif
 }
 
 

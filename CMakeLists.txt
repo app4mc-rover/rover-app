@@ -30,6 +30,24 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 #Where to put library files after "make"
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/libs)
 
+if(DEFINED ENV{SDKTARGETSYSROOT})
+    message(STATUS "SDK Detected")
+    set(SDK_EN 1)
+else(DEFINED ENV{SDKTARGETSYSROOT})
+    set(SDK_EN 0)
+endif(DEFINED ENV{SDKTARGETSYSROOT})
+
+if(${SIM})
+    message(STATUS "Setting SIMULATION Defitnion to ${SIM}")
+    message(STATUS "Compiling in simulator mode")
+    add_definitions(-DSIMULATOR=1)
+else()
+    message(STATUS "Setting SIMULATION Defitnion to false")
+    add_definitions(-DSIMULATOR=0)
+endif()
+
+add_definitions(-DCROSS_COMPILE_SDK=${SDK_EN})
+
 #
 # INCLUDE DIRECTORIES
 #
@@ -94,9 +112,10 @@ add_executable(roverapp ${CMAKE_SOURCE_DIR}/src/roverapp.cpp)
 #
 #  LINKING TO ROVER API
 #
-
-target_link_libraries (roverapi wiringPi)
-target_link_libraries (roverapi wiringPiDev)
+if(NOT DEFINED ${SIM})
+    target_link_libraries (roverapi wiringPi)
+    target_link_libraries (roverapi wiringPiDev)
+endif()
 
 target_link_libraries(roverapi hono_interaction)
 target_link_libraries(roverapi pthread_distribution)
@@ -123,10 +142,12 @@ target_link_libraries (roverapptasks opencv_highgui)
 target_link_libraries (roverapptasks jsoncpp)
 target_link_libraries (roverapptasks bluetooth)
 target_link_libraries (roverapptasks pthread)
-target_link_libraries (roverapptasks wiringPi)
-target_link_libraries (roverapptasks wiringPiDev)
-target_link_libraries (roverapptasks raspicam)
 
+if(NOT DEFINED ${SIM})
+    target_link_libraries (roverapptasks wiringPi)
+    target_link_libraries (roverapptasks wiringPiDev)
+    target_link_libraries (roverapptasks raspicam)
+endif()
 
 #Linker actions to link our libraries to executable
 target_link_libraries(roverapptasks hono_interaction)
@@ -162,7 +183,7 @@ target_link_libraries(roverapp timing)
 target_link_libraries(roverapp roverapptasks)
 
 #Link drivers
-target_link_libraries (roverapp roverappdrivers)
+target_link_libraries(roverapp roverappdrivers)
 
 #
 # INSTALLING

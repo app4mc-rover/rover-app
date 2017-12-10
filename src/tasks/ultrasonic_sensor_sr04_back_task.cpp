@@ -65,15 +65,14 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 	RoverHCSR04 r_ultrasonicrear = RoverHCSR04(ROVER_REAR);
 	r_ultrasonicrear.initialize();
 
-	while (1)
+	while (running_flag.get())
 	{
+			continue;
 		ultrasonic_sr04_back_task_tmr.recordStartTime();
 		ultrasonic_sr04_back_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		pthread_mutex_lock(&distance_sr04_back_lock);
-			distance_sr04_back_shared = r_ultrasonicrear.read();
-		pthread_mutex_unlock(&distance_sr04_back_lock);
+		distance_sr04_back_shared = r_ultrasonicrear.read();
 
 		//Task content ends here -------------------------------------------------
 		ultrasonic_sr04_back_task_tmr.recordEndTime(); //!!!

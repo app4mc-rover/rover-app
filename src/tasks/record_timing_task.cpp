@@ -63,7 +63,7 @@ void *Record_Timing_Task (void * arg)
 	record_timing_task_tmr.setDeadline(0.5);
 	record_timing_task_tmr.setPeriod(2.0);
 
-	while (1)
+	while (running_flag.get())
 	{
 		record_timing_task_tmr.recordStartTime();
 		record_timing_task_tmr.calculatePreviousSlackTime();

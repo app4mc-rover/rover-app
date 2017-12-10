@@ -133,6 +133,10 @@ void timing::sleepToMatchPeriod(void)
 	}
 	else
 	{
-		delayMicroseconds(getPeriod() * SECONDS_TO_MICROSECONDS);
+		#if SIMULATOR
+			usleep(getPeriod() * SECONDS_TO_MICROSECONDS);
+		#else
+			delayMicroseconds(getPeriod() * SECONDS_TO_MICROSECONDS);
+		#endif
 	}
 }

@@ -47,6 +47,9 @@ float rover::RoverDHT22::read(void)
 
 float rover::RoverDHT22::readTemperature (void)
 {
+#if SIMULATOR
+	return 32.0;
+#else
 	if (this->DHT22_SETUP_ != 1)
 	{
 		fprintf(stderr,"You havent set up RoverDHT22. Use RoverDHT22::initialize() !\n");
@@ -146,10 +149,14 @@ float rover::RoverDHT22::readTemperature (void)
 		/* Return temperature */
 		return c;
 	}
+#endif
 }
 
 float rover::RoverDHT22::readHumidity (void)
 {
+#if SIMULATOR
+	return 40.0;
+#else
 	if (this->DHT22_SETUP_ != 1)
 	{
 		fprintf(stderr,"You havent set up RoverDHT22. Use RoverDHT22::initialize() !\n");
@@ -248,6 +255,7 @@ float rover::RoverDHT22::readHumidity (void)
 		/* Return humidity */
 		return h;
 	}
+#endif
 }
 
 void rover::RoverDHT22::setDHT22Pin (const int pin)

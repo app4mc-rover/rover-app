@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    M.Ozcelikors <mozcelikors@gmail.com>, created PahoMQTT API 07.12.2017
+ *                                          improved PahoMQTT API 10.12.2017
  *
  */
 

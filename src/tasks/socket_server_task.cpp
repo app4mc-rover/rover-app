@@ -28,7 +28,11 @@
 #include <socket_settings.h>
 
 /* json-cpp library */
+#if SIMULATOR
+#include <jsoncpp/json/json.h>
+#else
 #include <json/json.h>
+#endif
 
 #include <roverapp.h>
 
@@ -58,33 +62,18 @@ void parseJSONData (char *server_buffer)
 
 	if (root["rover_dtype"].asString() == "control")
 	{
-		// Update shared variable
-		pthread_mutex_lock(&keycommand_lock);
 			//Take only the first char - since interface uses 1 char only
 			keycommand_shared = root["data"]["command"].asString()[0];
-			//printf("RECV=%c\n",keycommand_shared);
-		pthread_mutex_unlock(&keycommand_lock);
 	}
 	else if (root["rover_dtype"].asString() == "speed")
 	{
-		// Update shared variable
-		pthread_mutex_lock(&speed_lock);
 			speed_shared = root["data"]["speed"].asInt();
-			//printf("RECV=%d\n",speed_shared);
-		pthread_mutex_unlock(&speed_lock);
 	}
 	else
 	{
 		std::cout << "Unable to parse in socket_server_task.cpp" << std::endl;
 	}
 
-}
-
-void Socket_Server_Task_Terminator (int dummy)
-{
-	close(roverapp_listen_sockfd);
-	close(newroverapp_listen_sockfd);
-	running_flag = 0;
 }
 
 void *Socket_Server_Task(void * arg)
@@ -94,11 +83,6 @@ void *Socket_Server_Task(void * arg)
 	socket_server_task_tmr.setTaskID("Socket_Server_Task");
 	socket_server_task_tmr.setDeadline(0.05);
 	socket_server_task_tmr.setPeriod(0.05);
-
-	/* Add termination signal handler to properly close socket */
-	signal(SIGINT, Socket_Server_Task_Terminator);
-	signal(SIGTERM, Socket_Server_Task_Terminator);
-	signal(SIGKILL, Socket_Server_Task_Terminator);
 
 	socklen_t clilen;
 	char server_buffer[JSON_DATA_BUFSIZE];
@@ -138,11 +122,13 @@ void *Socket_Server_Task(void * arg)
 	listen(roverapp_listen_sockfd,5); // Max 5 connections queued
 	clilen = sizeof(cli_addr);
 
-	while(running_flag)
+	while(running_flag.get())
 	{
+
 		socket_server_task_tmr.recordStartTime();
 		socket_server_task_tmr.calculatePreviousSlackTime();
 
+#if !SIMULATOR
 		//Task content starts here -----------------------------------------------
 		/* Handle client acception or re-acception */
 		/* Checking if client socket is available */
@@ -205,6 +191,8 @@ void *Socket_Server_Task(void * arg)
 			parseJSONData(server_buffer);
 		}
 
+#endif
+
 		//Task content ends here -------------------------------------------------
 
 		socket_server_task_tmr.recordEndTime();
@@ -224,4 +212,9 @@ void *Socket_Server_Task(void * arg)
 		socket_server_task_tmr.sleepToMatchPeriod();
 
 	}
+
+	close(roverapp_listen_sockfd);
+	close(newroverapp_listen_sockfd);
+
+	return NULL;
 }
