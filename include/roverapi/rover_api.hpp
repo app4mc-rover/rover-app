@@ -247,7 +247,9 @@ int main (void)
 	}
 
 	// Receive the final message that is arrived from the subscribed topic
-	printf ("Received data=%s\n", rover_mqtt.read());
+	char data[50];
+	rover_mqtt.read(data);
+	printf ("Received data=%s\n", data);
 
 	// Unsubscribe and disconnect
 	if (0 == rover_mqtt.unsubscribe())
