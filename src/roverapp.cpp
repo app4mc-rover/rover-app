@@ -50,12 +50,12 @@
 #include <tasks/socket_client_task.h>
 #include <tasks/socket_server_task.h>
 #include <tasks/accelerometer_task.h>
+#include <tasks/mqtt_publish_task.h>
+#include <tasks/mqtt_subscribe_task.h>
 
 #include <interfaces.h>
 #include <signal.h>
 
-#include <roverapi/rover_pahomqtt.hpp>
-#include <roverapi/rover_mqttcommand.hpp>
 
 #define CHECK_RET(ret) if (ret) return ret;
 
@@ -93,6 +93,8 @@ pthread_t booth_thread;
 pthread_t socket_client_thread;
 pthread_t socket_server_thread;
 pthread_t accelerometer_thread;
+pthread_t mqtt_publish_thread;
+pthread_t mqtt_subscribe_thread;
 
 /* Timing interfaces for thread measurement */
 timing_interface compass_task_ti;
@@ -119,6 +121,8 @@ timing_interface booth_task_ti;
 timing_interface socket_client_task_ti;
 timing_interface socket_server_task_ti;
 timing_interface accelerometer_task_ti;
+timing_interface mqtt_publish_task_ti;
+timing_interface mqtt_subscribe_task_ti;
 
 //Shared data between threads
 
@@ -215,6 +219,9 @@ void exitHandler(int dummy)
 	joinThread(&booth_thread);
 	joinThread(&socket_client_thread);
 	joinThread(&socket_server_thread);
+	joinThread(&accelerometer_thread);
+	joinThread(&mqtt_publish_thread);
+	joinThread(&mqtt_subscribe_thread);
 
 	main_running_flag = 0;
 	return;
@@ -234,59 +241,6 @@ int main()
 	r_driving.initialize();
 	my_display.initialize();
 
-	//MQTT related
-	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"127.0.0.1",
-														1887,
-														1,
-														"rover");
-	RoverSensorData_t sensor_data;
-	sensor_data.temperature = temperature_shared.get();
-	sensor_data.humidity = humidity_shared.get();
-	sensor_data.ultrasonic_front = distance_sr04_front_shared.get();
-	sensor_data.ultrasonic_rear = distance_sr04_back_shared.get();
-	sensor_data.hmc5883l_bearing = bearing_shared.get();
-	sensor_data.qmc5883l_bearing = 0.0;
-	sensor_data.infrared[0] = infrared_shared[0];
-	sensor_data.infrared[1] = infrared_shared[1];
-	sensor_data.infrared[2] = infrared_shared[2];
-	sensor_data.infrared[3] = infrared_shared[3];
-	sensor_data.gy521_bearing = accelerometerdata_shared.bearing;
-	sensor_data.gy521_accel_x = accelerometerdata_shared.accel_x;
-	sensor_data.gy521_accel_y = accelerometerdata_shared.accel_y;
-	sensor_data.gy521_accel_z = accelerometerdata_shared.accel_z;
-	sensor_data.gy521_gyro_x = accelerometerdata_shared.gyro_x;
-	sensor_data.gy521_gyro_y = accelerometerdata_shared.gyro_y;
-	sensor_data.gy521_gyro_z = accelerometerdata_shared.gyro_z;
-	sensor_data.gy521_angle_x = accelerometerdata_shared.angle_x;
-	sensor_data.gy521_angle_y = accelerometerdata_shared.angle_y;
-	sensor_data.gy521_angle_z = accelerometerdata_shared.angle_z;
-
-	if (0 == rover_mqtt.publishToSensorTopic(sensor_data))
-		printf ("Publishing successful!\n");
-	else
-		printf ("Publishing unsuccessful!\n");
-
-	/*if (0 == rover_mqtt.subscribe())
-	{
-		printf ("Subscribe successful!\n");
-	}
-	else
-	{
-		printf ("Subscribe unsuccessful!\n");
-	}
-
-	printf ("received data=%s\n",rover_mqtt.read());
-
-	printf ("Wow! We're here!\n");
-
-	if (0 == rover_mqtt.unsubscribe())
-	{
-		printf ("Unsubscribe successful!\n");
-	}
-	else
-	{
-		printf ("Unsubscribe unsuccessful!\n");
-	}*/
 
 	/* Add signals to exit threads properly */
 	signal(SIGINT, exitHandler);
@@ -352,7 +306,6 @@ int main()
 	ret = createThread(&adaptive_cruise_control_thread, Adaptive_Cruise_Control_Task, "acc");
 	CHECK_RET(ret);
 
-	//
 	ret = createThread(&parking_thread, Parking_Task, "parking");
 	CHECK_RET(ret);
 
@@ -378,6 +331,12 @@ int main()
 	CHECK_RET(ret);
 
 	ret = createThread(&accelerometer_thread, Accelerometer_Task, "ACT");
+	CHECK_RET(ret);
+
+	ret = createThread(&mqtt_publish_thread, MQTT_Publish_Task, "MQTTP");
+	CHECK_RET(ret);
+
+	ret = createThread(&mqtt_subscribe_thread, MQTT_Subscribe_Task, "MQTTS");
 	CHECK_RET(ret);
 
 	/*if(pthread_create(&srf02_thread, NULL, SRF02_Task, NULL)) {
