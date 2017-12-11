@@ -79,3 +79,71 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	/* Call publish */
 	return this->publish();
 }
+
+int rover::RoverMQTTCommand::subscribeToDrivingTopic (void)
+{
+	/* Set topic */
+	this->setTopic (drivingTopic);
+
+	/* Subscribe */
+	return this->subscribe();
+}
+
+int rover::RoverMQTTCommand::unsubscribeToDrivingTopic (void)
+{
+	/* Unsubscribe */
+	return this->unsubscribe();
+}
+
+rover::RoverControlData_t rover::RoverMQTTCommand::readFromDrivingTopic (void)
+{
+	char data[MQTT_BUFSIZE];
+	RoverControlData_t control_data;
+	bool parsingSuccessful = false;
+
+	/* Read the subscribed data into data array */
+	this->read(data);
+	//printf("data=%s\n",data);
+
+	/* Check if data received is not valid */
+	if (data[0]=='N' && data[1]=='/' && data[2]=='A')
+	{
+		control_data.data_ready = 0;
+	}
+	else
+	{
+		/* Data is ready */
+		control_data.data_ready = 1;
+
+		/* Variables to use in parsing */
+		Json::Value root;
+		Json::Reader reader;
+
+		/* Parse the data and construct control data*/
+		try
+		{
+			parsingSuccessful = reader.parse( data, root );
+			if ( !parsingSuccessful )
+			{
+				fprintf (stderr, "Failed to parse data in RoverMQTTCommand\n");
+			}
+
+			control_data.speed = root["speed"].asInt();
+			control_data.driving_mode = (rover::RoverDrivingMode_t) root["mode"].asInt();
+			control_data.command = root["command"].asString()[0];
+		}
+		catch (int exception_nr)
+		{
+			fprintf (stderr, "An exception with Nr. %d occurred while parsing the data in RoverMQTTCommand\n", exception_nr);
+			parsingSuccessful = false;
+		}
+
+		if (!parsingSuccessful)
+		{
+			control_data.data_ready = 0;
+		}
+	}
+
+	/* Return control data */
+	return control_data;
+}

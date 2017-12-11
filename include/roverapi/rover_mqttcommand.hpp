@@ -21,6 +21,7 @@
 
 #define drivingTopic  "rover/RoverDriving/control"
 #define sensorTopic   "rover/RoverSensor/sensors"
+#define MQTT_BUFSIZE 256
 
 namespace rover
 {
@@ -61,11 +62,89 @@ namespace rover
 		RoverDrivingMode_t driving_mode;
 		int speed;
 		char command;
+		int data_ready;
 	} RoverControlData_t;
 
 	/**
 	 * @brief RoverMQTTCommand class is an implementation class extending RoverPahoMQTT for rover-specific topic subscription and publishing using JSON for parsing and using
 	 * predefined type variables such as RoverControlData_t and RoverSensorData_t.
+	 *
+	 * Example usage of this class as a <b>publisher client</b> is given below:
+	 *
+	 * \code{.cpp}
+	 *
+	 *		#include <roverapi/rover_mqttcommand.hpp>
+	 *
+	 *		RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"127.0.0.1",
+	 *															1883,
+	 *															1,
+	 *															"rover_mqtt_publisher");
+	 *		RoverSensorData_t sensor_data;
+	 *		sensor_data.temperature = temperature_shared.get();
+	 *		sensor_data.humidity = humidity_shared.get();
+	 *		sensor_data.ultrasonic_front = distance_sr04_front_shared.get();
+	 *		sensor_data.ultrasonic_rear = distance_sr04_back_shared.get();
+	 *		sensor_data.hmc5883l_bearing = bearing_shared.get();
+	 *		sensor_data.qmc5883l_bearing = 0.0;
+	 *		sensor_data.infrared[0] = infrared_shared[0];
+	 *		sensor_data.infrared[1] = infrared_shared[1];
+	 *		sensor_data.infrared[2] = infrared_shared[2];
+	 *		sensor_data.infrared[3] = infrared_shared[3];
+	 *		sensor_data.gy521_bearing = accelerometerdata_shared.bearing;
+	 *		sensor_data.gy521_accel_x = accelerometerdata_shared.accel_x;
+	 *		sensor_data.gy521_accel_y = accelerometerdata_shared.accel_y;
+	 *		sensor_data.gy521_accel_z = accelerometerdata_shared.accel_z;
+	 *		sensor_data.gy521_gyro_x = accelerometerdata_shared.gyro_x;
+	 *		sensor_data.gy521_gyro_y = accelerometerdata_shared.gyro_y;
+	 *		sensor_data.gy521_gyro_z = accelerometerdata_shared.gyro_z;
+	 *		sensor_data.gy521_angle_x = accelerometerdata_shared.angle_x;
+	 *		sensor_data.gy521_angle_y = accelerometerdata_shared.angle_y;
+	 *		sensor_data.gy521_angle_z = accelerometerdata_shared.angle_z;
+	 *
+	 *		if (rover_mqtt.publishToSensorTopic(sensor_data) == 0)
+	 *			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
+	 *		else
+	 *			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+	 *
+	 * \endcode
+	 *
+	 * Example usage of this class as a <b>subscriber client</b> is given below:
+	 *
+	 * \code{.cpp}
+	 *
+	 *  #include <roverapi/rover_mqttcommand.hpp>
+	 *
+	 * 	RoverMQTTCommand rover_mqtt = RoverMQTTCommand ("127.0.0.1",
+	 *													1883,
+	 *													1,
+	 *													"rover_mqtt_subscriber");
+	 * 	RoverControlData_t control_data;
+	 *
+	 * 	if (rover_mqtt.subscribeToDrivingTopic() == 0)
+	 * 	{
+	 * 		printf ("Client rover_mqtt_subscriber: Subscription succesful!\n");
+	 * 	}
+	 * 	else
+	 * 	{
+	 * 		printf ("Client rover_mqtt_subscriber: Subscription unsuccessful!\n");
+	 * 	}
+	 *
+	 * 	control_data = rover_mqtt.readFromDrivingTopic();
+	 *
+	 * 	//Override driving-related global variables if data is ready
+	 * 	if (control_data.data_ready == 1)
+	 * 	{
+	 * 		speed_shared = control_data.speed;
+	 * 		keycommand_shared = control_data.command;
+	 * 		driving_mode = control_data.driving_mode;
+	 * 		printf ("Client rover_mqtt_subscriber: Data received: command=%c speed=%d mode=%d\n",
+	 *				                                              control_data.command,
+	 *															  control_data.speed,
+	 *															  control_data.driving_mode);
+	 *	}
+	 *
+	 *	\endcode
+	 *
 	 */
 	class RoverMQTTCommand: private RoverPahoMQTT
 	{
@@ -90,17 +169,17 @@ namespace rover
 			/**
 			 * @brief Subscribes to rover's driving topic
 			 */
-			int subscribeToDrivingTopic ();
+			int subscribeToDrivingTopic (void);
 
 			/**
 			 * @brief Unsubscribes to rover's driving topic
 			 */
-			int unsubscribeToDrivingTopic ();
+			int unsubscribeToDrivingTopic (void);
 
 			/**
 			 * @brief Returns the retrieved driving information
 			 */
-			RoverControlData_t readFromDrivingTopic ();
+			RoverControlData_t readFromDrivingTopic (void);
 
 	};
 }
