@@ -11,6 +11,7 @@ Comprehensive documentation link: https://app4mc-rover.github.io/rover-docs
 
 * Multi-threaded, schedulable and traceable embedded software.
 * Cloud communication to Hono 0.5-M9 infrastructure using REST API, using customly created **hono_interaction** library.
+* Cloud communication using MQTT.
 * Utilized drivers for Linux modules such as bluetooth (bluetooth-dev).
 * I2C drivers and applications (threads) for OLED display, SRF02 ultrasonic sensor, HMC5883L magnetometer, GY-521Y accelerometer, etc.
 * Temperature and humidity measurement using DHT22 sensor.
