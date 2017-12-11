@@ -225,8 +225,9 @@ namespace rover
 
 			/**
 			 * @brief Public member function for reading subscribed data. This function requires the RoverPahoMQTT to be subscribed first.
+			 * @param data char* Data pointer that will be modified.
 			 */
-			char * read (void);
+			void read (char * data);
 
 			/**
 			 * @brief Public member function checking if the subscribed data is ready. 0-> data ready -1-> data not ready

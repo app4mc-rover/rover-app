@@ -137,7 +137,6 @@ int rover::RoverPahoMQTT::subscribe (void)
 	char my_addr[20];
 	this->constructAddress (my_addr);
 
-
 	MQTTAsync_create (	&(this->client),
 							my_addr,
 							this->defaultRoverMQTTConfigure.clientID,
@@ -175,15 +174,15 @@ int rover::RoverPahoMQTT::subscribe (void)
 	return this->defaultReturnCodes.rc_subscribe;
 }
 
-char * rover::RoverPahoMQTT::read (void)
+void rover::RoverPahoMQTT::read (char* data)
 {
 	if (this->defaultRoverSubscribeData.data_ready == 1)
 	{
 		this->defaultRoverSubscribeData.data_ready = 0;
-		return this->defaultRoverSubscribeData.data;
+		sprintf (data, this->defaultRoverSubscribeData.data);
 	}
 	else
-		return "N/A";
+		sprintf (data, "N/A");
 }
 
 void rover::RoverPahoMQTT::setPort (const int port)
