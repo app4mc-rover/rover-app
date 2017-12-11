@@ -36,7 +36,7 @@ void *MQTT_Publish_Task (void * arg)
 	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"127.0.0.1",
 														1887,
 														1,
-														"rover");
+														"rover_mqtt_publisher");
 	RoverSensorData_t sensor_data;
 	sensor_data.temperature = temperature_shared.get();
 	sensor_data.humidity = humidity_shared.get();
@@ -65,10 +65,10 @@ void *MQTT_Publish_Task (void * arg)
 		mqtt_publish_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		if (0 == rover_mqtt.publishToSensorTopic(sensor_data))
-			printf ("Publishing successful!\n");
+		if (rover_mqtt.publishToSensorTopic(sensor_data) == 0)
+			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
 		else
-			printf ("Publishing unsuccessful!\n");
+			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
 
 		//Task content ends here -------------------------------------------------
 

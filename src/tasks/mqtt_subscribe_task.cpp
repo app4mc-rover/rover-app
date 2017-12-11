@@ -36,8 +36,17 @@ void *MQTT_Subscribe_Task (void * arg)
 	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"127.0.0.1",
 														1887,
 														1,
-														"rover");
+														"rover_mqtt_subscriber");
+	RoverControlData_t control_data;
 
+	if (rover_mqtt.subscribeToDrivingTopic() == 0)
+	{
+		printf ("Client rover_mqtt_subscriber: Subscription succesful!\n");
+	}
+	else
+	{
+		printf ("Client rover_mqtt_subscriber: Subscription unsuccessful!\n");
+	}
 
 	while (running_flag.get())
 	{
@@ -46,27 +55,20 @@ void *MQTT_Subscribe_Task (void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		/*if (0 == rover_mqtt.subscribe())
+		control_data = rover_mqtt.readFromDrivingTopic();
+
+		/* Override driving-related global variables if data is ready */
+		if (control_data.data_ready == 1)
 		{
-			printf ("Subscribe successful!\n");
-		}
-		else
-		{
-			printf ("Subscribe unsuccessful!\n");
+			speed_shared = control_data.speed;
+			keycommand_shared = control_data.command;
+			driving_mode = control_data.driving_mode;
+			printf ("Client rover_mqtt_subscriber: Data received: command=%c speed=%d mode=%d\n",
+					                                              control_data.command,
+																  control_data.speed,
+																  control_data.driving_mode);
 		}
 
-		printf ("received data=%s\n",rover_mqtt.read());
-
-		printf ("Wow! We're here!\n");
-
-		if (0 == rover_mqtt.unsubscribe())
-		{
-			printf ("Unsubscribe successful!\n");
-		}
-		else
-		{
-			printf ("Unsubscribe unsuccessful!\n");
-		}*/
 		//Task content ends here -------------------------------------------------
 
 		mqtt_subscribe_task_tmr.recordEndTime();
