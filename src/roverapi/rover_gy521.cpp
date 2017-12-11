@@ -177,7 +177,7 @@ int8_t rover::RoverGY521::getAccelZ()
 float rover::RoverGY521::getAngleX()
 {
 #if SIMULATOR
-	return 10;
+	return 0.0;
 #else
 	if (this->ROVERGY521_SETUP_ != 1)
 	{
@@ -197,7 +197,7 @@ float rover::RoverGY521::getAngleX()
 float rover::RoverGY521::getAngleY()
 {
 #if SIMULATOR
-	return 10;
+	return 0.0;
 #else
 	if (this->ROVERGY521_SETUP_ != 1)
 	{
@@ -217,7 +217,7 @@ float rover::RoverGY521::getAngleY()
 float rover::RoverGY521::getAngleZ()
 {
 #if SIMULATOR
-	return 10;
+	return 0.0;
 #else
 	if (this->ROVERGY521_SETUP_ != 1)
 	{
@@ -236,6 +236,9 @@ float rover::RoverGY521::getAngleZ()
 
 float rover::RoverGY521::read (void)
 {
+#if SIMULATOR
+	return 0.0;
+#else
 	if (this->ROVERGY521_SETUP_ != 1)
 	{
 		fprintf(stderr,"You havent set up RoverGY521. Use RoverGY521::initialize() !\n");
@@ -287,6 +290,7 @@ float rover::RoverGY521::read (void)
 	#endif
 		return headingDegrees;
 	}
+#endif
 }
 
 template<typename T>
