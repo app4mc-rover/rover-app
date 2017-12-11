@@ -31,7 +31,6 @@ It also features drivers for sensors such as magnetometers, accelerometers, vari
 Roverapp builds and contains the **Rover API**, which is able to handle subset of its functionality. Example functionality covered in **Rover API** is given below:
 
 \li **RoverBase** RoverBase class provides basic rover functions such as initialization, sleeping, and shutting down.
-\li **RoverCloud** contains the member functions to connect and send data to Eclipse Hono instance using several parameters such as host name, port, tenant name, user name, and password. This class wraps hono_interaction library for Rover-specific interactions.
 \li **RoverDisplay** contains the member functions to control OLED display on the Rover. This class is a wrapper API for Adafruit_GFX and Adafruit_SSD1306 libraries.
 \li **RoverDriving** contains the member functions to drive the rover using its motors.
 \li **RoverGpio** class provides the member functions related to low-level pin driving. This class wraps wiringPi library and is inherited by RoverButton and RoverBuzzer classes.
@@ -46,7 +45,12 @@ Roverapp builds and contains the **Rover API**, which is able to handle subset o
 \li **RoverInfraredSensor** is a class that is inherited from RoverSensor abstract class. RoverInfraredSensor class contains member functions and variables to set up and read from SHARP infrared sensors that are embedded on the rover.
 \li **RoverGY521** is a class that is inherited from RoverSensor abstract class. RoverGY521 class contains member functions and variables to set up and read from GY521 accelerometer that is embedded on the rover.
 \li **RoverHMC5883L** is a class that is inherited from RoverSensor abstract class. RoverHMC5883L class contains member functions and variables to set up and read from HMC5883L bearing sensor that is embedded on the rover.
+
+\li **RoverCloud** class is a purely abstract interface for cloud communication classes.
 \li **RoverQMC5883L** is a class that is inherited from RoverSensor abstract class. RoverQMC5883L class contains member functions and variables to set up and read from QMC5883L bearing sensor that is embedded on the rover.
+\li **RoverHonoCloud** contains the member functions to connect and send data to Eclipse Hono instance using several parameters such as host name, port, tenant name, user name, and password. This class wraps hono_interaction library for Rover-specific interactions.
+\li **RoverPahoMQTT** contains member functions to use rover as a client and to publish / subscribe to Eclipse Paho MQTT server topics.
+\li **RoverMQTTCommand** class is an implementation class -privately- extending RoverPahoMQTT for rover-specific topic subscription and publishing using JSON for parsing and using predefined type variables such as RoverControlData_t and RoverSensorData_t.
 
 \image html ./images/rover2.jpg
 
@@ -54,7 +58,7 @@ Roverapp builds and contains the **Rover API**, which is able to handle subset o
 \section overview1 UML Diagram Overview
 
 \image html ./images/RoverAPI_Overview.jpg
-Updated: 05.12.2017
+Updated: 11.12.2017
 
 \section example_usage Rover API Example Usage
 The following is an example C++ application using some of the Rover API functions:
@@ -270,6 +274,8 @@ int main (void)
 	return 1;
 }
 \endcode
+
+To see the example code related to classes, you can select classes and see detailed descriptions.
 
 \section roverdocs Rover Documentation
 
