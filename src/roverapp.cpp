@@ -253,7 +253,7 @@ int main()
 	distance_grove_shared = 0;
 	distance_sr04_front_shared = 0;
 	distance_sr04_back_shared = 0;
-	keycommand_shared = 'f';
+	keycommand_shared = 'F';
 	infrared_shared[0] = 0.0;
 	infrared_shared[1] = 0.0;
 	infrared_shared[2] = 0.0;
@@ -384,6 +384,9 @@ int main()
 		* signal while having the lock  */
 	while (main_running_flag)
 	{
+		//To test driving:
+		//printf ("speed_shared=%d\n",speed_shared.get());
+		//printf ("keycommand=%c\n",keycommand_shared.get());
 		//What main thread does should come here..
 		// ...
 		#if SIMULATOR

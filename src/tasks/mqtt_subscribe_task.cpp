@@ -33,8 +33,8 @@ void *MQTT_Subscribe_Task (void * arg)
 	mqtt_subscribe_task_tmr.setDeadline(3.0);
 	mqtt_subscribe_task_tmr.setPeriod(3.0);
 
-	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"127.0.0.1",
-														1887,
+	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"172.22.167.161",
+														1883,
 														1,
 														"rover_mqtt_subscriber");
 	RoverControlData_t control_data;

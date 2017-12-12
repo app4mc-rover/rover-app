@@ -127,10 +127,21 @@ rover::RoverControlData_t rover::RoverMQTTCommand::readFromDrivingTopic (void)
 			{
 				fprintf (stderr, "Failed to parse data in RoverMQTTCommand\n");
 			}
+			else
+			{
+				try
+				{
+					control_data.speed = root["speed"].asInt();
+					control_data.driving_mode = (rover::RoverDrivingMode_t) root["mode"].asInt();
+					control_data.command = root["command"].asString()[0];
+				}
+				catch (int exception_nr)
+				{
+					fprintf (stderr, "An exception with Nr. %d occurred while parsing the data in RoverMQTTCommand\n", exception_nr);
+					parsingSuccessful = false;
+				}
 
-			control_data.speed = root["speed"].asInt();
-			control_data.driving_mode = (rover::RoverDrivingMode_t) root["mode"].asInt();
-			control_data.command = root["command"].asString()[0];
+			}
 		}
 		catch (int exception_nr)
 		{
@@ -141,6 +152,9 @@ rover::RoverControlData_t rover::RoverMQTTCommand::readFromDrivingTopic (void)
 		if (!parsingSuccessful)
 		{
 			control_data.data_ready = 0;
+			control_data.speed = 0;
+			control_data.command = 'F';
+			control_data.driving_mode = NONE_;
 		}
 	}
 

@@ -69,7 +69,6 @@ void *Ultrasonic_Sensor_SR04_Front_Task(void *unused)
 
 	while (running_flag.get())
 	{
-			continue;
 		ultrasonic_sr04_front_task_tmr.recordStartTime();
 		ultrasonic_sr04_front_task_tmr.calculatePreviousSlackTime();
 

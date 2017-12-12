@@ -33,94 +33,56 @@
 
 void ExitAutomaticModes(void)
 {
-	int d_mode = driving_mode.get();
-	switch (d_mode)
+	if (driving_mode.get() == ACC || driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2)
 	{
-		case ACC:
-		case PARKING_LEFT:
-		case PARKING_RIGHT:
-		case BOOTH1:
-		case BOOTH2:
-			r_driving.stopRover(); //Stop the rover first.
-			driving_mode = MANUAL;
-			break;
-		default:
-			break;
+		r_driving.stopRover(); //Stop the rover first.
+
+		driving_mode = MANUAL;
+
 	}
 }
 
 void ManualModeSet(void)
 {
-	int d_mode = driving_mode.get();
-	switch (d_mode)
+	if (driving_mode.get() == ACC || driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2)
 	{
-			case ACC:
-			case PARKING_LEFT:
-			case PARKING_RIGHT:
-			case BOOTH1:
-			case BOOTH2:
-					r_driving.stopRover(); //Stop the rover first.
-					break;
-			default:
-					break;
+		r_driving.stopRover(); //Stop the rover first.
 	}
 
 	driving_mode = MANUAL;
 	keycommand_shared = 'F';
+
 }
 
 void ParkingRightModeSet(void)
 {
-	int d_mode = driving_mode.get();
-	switch (d_mode)
+	if (driving_mode.get() == ACC || driving_mode.get() == MANUAL || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2)
 	{
-			case ACC:
-			case MANUAL:
-			case BOOTH1:
-			case BOOTH2:
-					r_driving.stopRover(); //Stop the rover first.
-					break;
-			default:
-					break;
+		r_driving.stopRover(); //Stop the rover first.
 	}
 
 	driving_mode = PARKING_RIGHT;
 	keycommand_shared = 'F';
+
 }
 
 void ParkingLeftModeSet(void)
 {
-	int d_mode = driving_mode.get();
-	switch (d_mode)
+	if (driving_mode.get() == ACC || driving_mode.get() == MANUAL || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2)
 	{
-			case ACC:
-			case MANUAL:
-			case BOOTH1:
-			case BOOTH2:
-					r_driving.stopRover(); //Stop the rover first.
-					break;
-			default:
-					break;
+		r_driving.stopRover(); //Stop the rover first.
 	}
 
 	driving_mode = PARKING_LEFT;
 	keycommand_shared = 'F';
+
 }
 
 void ACCModeSet(void)
 {
-	int d_mode = driving_mode.get();
-	switch (d_mode)
+	if (driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == MANUAL || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2   )
 	{
-			case PARKING_LEFT:
-			case PARKING_RIGHT:
-			case MANUAL:
-			case BOOTH1:
-			case BOOTH2:
-					r_driving.stopRover(); //Stop the rover first.
-					break;
-			default:
-					break;
+		r_driving.stopRover(); //Stop the rover first.
 	}
 
 	driving_mode = ACC;
@@ -129,18 +91,9 @@ void ACCModeSet(void)
 
 void BoothMode1Set(void)
 {
-	int d_mode = driving_mode.get();
-	switch (d_mode)
+	if (driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == MANUAL || driving_mode.get() == BOOTH2  || driving_mode.get() == ACC)
 	{
-			case PARKING_LEFT:
-			case PARKING_RIGHT:
-			case MANUAL:
-			case BOOTH1:
-			case BOOTH2:
-					r_driving.stopRover(); //Stop the rover first.
-					break;
-			default:
-					break;
+		r_driving.stopRover(); //Stop the rover first.
 	}
 
 	driving_mode = BOOTH1;
@@ -149,23 +102,15 @@ void BoothMode1Set(void)
 
 void BoothMode2Set(void)
 {
-	int d_mode = driving_mode.get();
-	switch (d_mode)
+	if (driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == MANUAL || driving_mode.get() == BOOTH1 || driving_mode.get() == ACC)
 	{
-			case PARKING_LEFT:
-			case PARKING_RIGHT:
-			case MANUAL:
-			case BOOTH1:
-			case ACC:
-					r_driving.stopRover(); //Stop the rover first.
-					break;
-			default:
-					break;
+		r_driving.stopRover(); //Stop the rover first.
 	}
 
 	driving_mode = BOOTH2;
 	keycommand_shared = 'F';
 }
+
 
 void *MotorDriver_Task(void * arg)
 {
@@ -176,7 +121,7 @@ void *MotorDriver_Task(void * arg)
 	motordriver_task_tmr.setPeriod(0.1);
 
 	int running = 1;
-	char local_command = 'f';
+	char local_command = 'F';
 
 	while (running && running_flag.get())
 	{

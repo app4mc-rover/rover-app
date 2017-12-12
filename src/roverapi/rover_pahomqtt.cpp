@@ -136,6 +136,7 @@ int rover::RoverPahoMQTT::subscribe (void)
 	/* Construct the address */
 	char my_addr[20];
 	this->constructAddress (my_addr);
+	//printf("%s\n",my_addr);
 
 	MQTTAsync_create (	&(this->client),
 							my_addr,
