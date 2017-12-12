@@ -82,6 +82,8 @@ extern pthread_mutex_t infrared_lock;
 extern double cpu_util_shared[4];
 extern pthread_mutex_t cpu_util_shared_lock;
 
+extern pthread_mutex_t display_lock;
+
 typedef struct
 {
 	int8_t gyro_x;

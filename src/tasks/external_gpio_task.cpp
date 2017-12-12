@@ -73,6 +73,7 @@ void buttonHandler (void)
 		display_use_elsewhere_shared = 1;
 		r_base.sleep(500);
 
+		pthread_mutex_lock(&display_lock);
 		//r.inRoverDisplay().initialize();
 		my_display.clearDisplay();
 		my_display.setTextSize(2);
@@ -86,6 +87,7 @@ void buttonHandler (void)
 		my_display.print("Pressed");
 
 		my_display.display();
+		pthread_mutex_unlock(&display_lock);
 
 		buzzer.shutdownTone();
 

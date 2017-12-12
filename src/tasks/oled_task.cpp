@@ -75,7 +75,7 @@ void *OLED_Task (void * arg)
 			/* If the display is not in use somewhere else asynchronously */
 			if (display_use_elsewhere_shared.get() == 0)
 			{
-
+				pthread_mutex_lock(&display_lock);
 				/* Our internal control-timer actions */
 				switch (counter_500ms)
 				{
@@ -249,6 +249,8 @@ void *OLED_Task (void * arg)
 
 				} /* switch-end */
 
+				pthread_mutex_unlock(&display_lock);
+
 			} /* if display_use_elsewhere_shared */
 			else
 			{
@@ -264,8 +266,10 @@ void *OLED_Task (void * arg)
 		/* If the display is not in use somewhere else asynchronously */
 		if (display_use_elsewhere_shared.get() == 0)
 		{
+			pthread_mutex_lock(&display_lock);
 			/* Display the stuff NOW */
 			my_display.display();
+			pthread_mutex_unlock(&display_lock);
 
 			/* Increment the counter */
 			counter_500ms += 1;

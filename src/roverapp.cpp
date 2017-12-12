@@ -151,6 +151,8 @@ pthread_mutex_t infrared_lock;
 double cpu_util_shared[4];
 pthread_mutex_t cpu_util_shared_lock;
 
+pthread_mutex_t display_lock;
+
 int main_running_flag;
 
 // Function to handle the joining of every threads
@@ -269,6 +271,7 @@ int main()
 
 	//Initialize mutexes
 	pthread_mutex_init(&infrared_lock, NULL);
+	pthread_mutex_init(&display_lock, NULL);
 
 	//Thread objects
 	pthread_t main_thread = pthread_self();
