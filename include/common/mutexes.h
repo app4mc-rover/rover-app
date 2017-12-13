@@ -76,6 +76,8 @@ extern SharedData<int> shutdown_hook_shared;
 extern SharedData<int> display_use_elsewhere_shared;
 extern SharedData<int> running_flag;
 
+extern SharedData<int> display_mode_shared;
+
 extern float infrared_shared[4];
 extern pthread_mutex_t infrared_lock;
 

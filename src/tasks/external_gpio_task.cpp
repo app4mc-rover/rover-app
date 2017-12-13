@@ -70,29 +70,30 @@ void buttonHandler (void)
 
 	if (user_b.readButton() == user_b.LO)
 	{
-		display_use_elsewhere_shared = 1;
-		r_base.sleep(500);
+		/* Debounce */
 
-		pthread_mutex_lock(&display_lock);
-		//r.inRoverDisplay().initialize();
-		my_display.clearDisplay();
-		my_display.setTextSize(2);
-		my_display.setTextColor(WHITE);
+		#if SIMULATOR
+			usleep(0.1 * SECONDS_TO_MICROSECONDS);
+		#else
+			delayMicroseconds(0.1* SECONDS_TO_MICROSECONDS);
+		#endif
 
-		my_display.setCursor(10,5);
-		my_display.print("User");
-		my_display.setCursor(20,25);
-		my_display.print("Button");
-		my_display.setCursor(30,45);
-		my_display.print("Pressed");
+		if (user_b.readButton() == user_b.LO)
+		{
+			/* Adjust display mode and handle everything in the OLED task. */
+			display_mode_shared = display_mode_shared.get() + 1;
 
-		my_display.display();
-		pthread_mutex_unlock(&display_lock);
+			/* Wrap display_mode variable to started mode */
+			if (display_mode_shared.get() == 2)
+				display_mode_shared = 0;
 
-		buzzer.shutdownTone();
-
-		r_base.sleep(1000);
-		display_use_elsewhere_shared = 0;
+			/* Wait a bit more to prevent double pushes */
+			#if SIMULATOR
+				usleep(0.1 * SECONDS_TO_MICROSECONDS);
+			#else
+				delayMicroseconds(0.1* SECONDS_TO_MICROSECONDS);
+			#endif
+		}
 	}
 #endif
 }

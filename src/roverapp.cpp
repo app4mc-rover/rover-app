@@ -139,6 +139,7 @@ SharedData<int> speed_shared;
 SharedData<int> buzzer_status_shared;
 SharedData<int> shutdown_hook_shared;
 SharedData<int> display_use_elsewhere_shared;
+SharedData<int> display_mode_shared;
 /* For proper termination */
 SharedData<int> running_flag;
 
@@ -268,6 +269,7 @@ int main()
 	running_flag = 1;
 	display_use_elsewhere_shared = 0;
 	main_running_flag = 1;
+	display_mode_shared = 2;
 
 	//Initialize mutexes
 	pthread_mutex_init(&infrared_lock, NULL);
