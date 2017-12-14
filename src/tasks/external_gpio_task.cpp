@@ -73,9 +73,9 @@ void buttonHandler (void)
 		/* Debounce */
 
 		#if SIMULATOR
-			usleep(0.1 * SECONDS_TO_MICROSECONDS);
+			usleep(0.05 * SECONDS_TO_MICROSECONDS);
 		#else
-			delayMicroseconds(0.1* SECONDS_TO_MICROSECONDS);
+			delayMicroseconds(0.05* SECONDS_TO_MICROSECONDS);
 		#endif
 
 		if (user_b.readButton() == user_b.LO)
@@ -84,14 +84,14 @@ void buttonHandler (void)
 			display_mode_shared = display_mode_shared.get() + 1;
 
 			/* Wrap display_mode variable to started mode */
-			if (display_mode_shared.get() == 2)
+			if (display_mode_shared.get() == 3)
 				display_mode_shared = 0;
 
 			/* Wait a bit more to prevent double pushes */
 			#if SIMULATOR
-				usleep(0.1 * SECONDS_TO_MICROSECONDS);
+				usleep(0.05 * SECONDS_TO_MICROSECONDS);
 			#else
-				delayMicroseconds(0.1* SECONDS_TO_MICROSECONDS);
+				delayMicroseconds(0.05* SECONDS_TO_MICROSECONDS);
 			#endif
 		}
 	}

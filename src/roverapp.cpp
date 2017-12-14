@@ -269,7 +269,7 @@ int main()
 	running_flag = 1;
 	display_use_elsewhere_shared = 0;
 	main_running_flag = 1;
-	display_mode_shared = 2;
+	display_mode_shared = 0;
 
 	//Initialize mutexes
 	pthread_mutex_init(&infrared_lock, NULL);
