@@ -225,3 +225,179 @@ Adafruit_SSD1306& rover::RoverDisplay::getDisplay (void)
 		return this->my_display;
 	}
 }
+
+void rover::RoverDisplay::drawPixel (int16_t x, int16_t y, uint16_t color)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.drawPixel (x, y, color);
+	}
+}
+
+void rover::RoverDisplay::drawCircle (int16_t x0, int16_t y0, int16_t r, uint16_t color)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.drawCircle (x0, y0, r, color);
+	}
+}
+
+void rover::RoverDisplay::fillCircle (int16_t x0, int16_t y0, int16_t r, uint16_t color)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.fillCircle (x0, y0, r, color);
+	}
+}
+
+void rover::RoverDisplay::drawLine (int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.drawLine (x0, y0, x1, y1, color);
+	}
+}
+
+void rover::RoverDisplay::fillScreen (uint16_t color)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.fillScreen (color);
+	}
+}
+
+void rover::RoverDisplay::fillRoundRect (int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, uint16_t color)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.fillRoundRect (x, y, w, h, r, color);
+	}
+}
+
+void rover::RoverDisplay::drawTriangle (int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.drawTriangle (x0, y0, x1, y1, x2, y2, color);
+	}
+}
+
+void rover::RoverDisplay::fillTriangle ( int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.fillTriangle (x0, y0, x1, y1, x2, y2, color);
+	}
+}
+
+void rover::RoverDisplay::drawChar (int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg, uint8_t size)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.drawChar (x, y, c, color, bg, size);
+	}
+}
+
+void rover::RoverDisplay::setRotation (uint8_t x)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.setRotation (x);
+	}
+}
+
+void rover::RoverDisplay::invertDisplay (boolean i)
+{
+#if SIMULATOR
+	return;
+#endif
+	if (this->ROVER_DISPLAY_INIT_ != 1)
+	{
+		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+	}
+	else
+	{
+		this->my_display.invertDisplay (i);
+	}
+}
+
+int16_t rover::RoverDisplay::width (void)
+{
+	return this->width();
+}
+
+int16_t rover::RoverDisplay::height (void)
+{
+	return this->height();
+}
+

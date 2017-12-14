@@ -167,6 +167,128 @@ namespace rover
 			 * @return void
 			 */
 			void drawRect (int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
+
+			/**
+			 * @brief Draws a pixel
+			 * @param x X position of the pixel
+			 * @param y Y position of the pixel
+			 * @param color Color of the pixel
+			 */
+			void drawPixel(int16_t x, int16_t y, uint16_t color);
+
+			/**
+			 * @brief Draws a circle
+			 * @param x0 Center point X position
+			 * @param y0 Center point Y position
+			 * @param r Radius of the circle
+			 * @param color Color of the circule
+			 */
+			void drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color);
+
+			/**
+			 * @brief Draws a filled circle
+			 * @param x0 Center point X position
+			 * @param y0 Center point Y position
+			 * @param r Radius of the circle
+			 * @param color Color of the circule
+			 */
+			void fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color);
+
+			/**
+			 * @brief Draws a line
+			 * @param x0 Starting point X position
+			 * @param y0 Starting point Y position
+			 * @param x1 End point X position
+			 * @param y1 End point Y position
+			 * @param color Color of the line
+			 */
+			void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
+
+			/**
+			 * @brief Fills the entire screen
+			 * @param color Color to fill the screen with
+			 */
+			void fillScreen(uint16_t color);
+
+			/**
+			 * @brief Draws a filled rounded rectangle
+			 * @param x Rectangle location X
+			 * @param y Rectangle location Y
+			 * @param w Rectangle width
+			 * @param h Rectangle height
+			 * @param r Radius of the rounded corners
+			 * @param color Color of the filled rounded rectangle.
+			 */
+			void fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, uint16_t color);
+
+			/**
+			 * @brief Draws a rounded rectangle
+			 * @param x Rectangle location X
+			 * @param y Rectangle location Y
+			 * @param w Rectangle width
+			 * @param h Rectangle height
+			 * @param r Radius of the rounded corners
+			 * @param color Color of the rounded rectangle.
+			 */
+			void drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, uint16_t color);
+
+			/**
+			 * @brief Draws a triangle
+			 * @param x0 First point x location
+			 * @param y0 First point y location
+			 * @param x1 Second point x location
+			 * @param y1 Second point y location
+			 * @param x2 Third point x location
+			 * @param y2 Third point y location
+			 * @param color Color of the triangle
+			 */
+			void drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color);
+
+			/**
+			 * @brief Draws a filled triangle
+			 * @param x0 First point x location
+			 * @param y0 First point y location
+			 * @param x1 Second point x location
+			 * @param y1 Second point y location
+			 * @param x2 Third point x location
+			 * @param y2 Third point y location
+			 * @param color Color of the triangle
+			 */
+			void fillTriangle ( int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color);
+
+			/**
+			 * @brief Used to draw a character
+			 * @param x X position of the character
+			 * @param y Y position of the character
+			 * @param bitmap Bitmap to draw
+			 * @param w Width of the bitmap
+			 * @param h Height of the bitmap
+			 * @param color Color
+			 */
+			void drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg, uint8_t size);
+
+			/**
+			 * @brief Used to rotate the display. Can be 0,1,2, or 3.
+			 * @param x Rotation state: 0,1,2, or 3.
+			 */
+			void setRotation(uint8_t x);
+
+			/**
+			 * @brief Inverts the display
+			 */
+			void invertDisplay(boolean i);
+
+			/**
+			 * @brief Returns height of the display
+			 */
+			int16_t width(void);
+
+			/**
+			 * @brief Returns width of the display
+			 */
+			int16_t height(void);
+
+
 	};
 }
 
