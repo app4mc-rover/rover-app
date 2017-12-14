@@ -31,6 +31,7 @@ All text above, and the splash screen below must be included in any redistributi
 #include "Adafruit_GFX.h"
 #include "Adafruit_SSD1306.h"
 
+#define swap(a, b) { int16_t t = a; a = b; b = t; }
   
 inline boolean Adafruit_SSD1306::isSPI(void) {
 	return (cs != -1 ? true : false);
@@ -50,6 +51,44 @@ inline void Adafruit_SSD1306::fastSPIwrite(char* tbuf, uint32_t len) {
 }
 inline void Adafruit_SSD1306::fastI2Cwrite(char* tbuf, uint32_t len) {
 	bcm2835_i2c_write(tbuf, len);
+}
+
+
+// the most basic function, set a single pixel
+void Adafruit_SSD1306::drawPixel(int16_t x, int16_t y, uint16_t color)
+{
+	uint8_t * p = poledbuff ;
+
+	if ((x < 0) || (x >= width()) || (y < 0) || (y >= height()))
+	return;
+
+	// check rotation, move pixel around if necessary
+	switch (getRotation())
+	{
+		case 1:
+			swap(x, y);
+			x = WIDTH - x - 1;
+			break;
+
+		case 2:
+			x = WIDTH - x - 1;
+			y = HEIGHT - y - 1;
+			break;
+
+		case 3:
+			swap(x, y);
+			y = HEIGHT - y - 1;
+			break;
+	}
+
+	// Get where to do the change in the buffer
+	p = poledbuff + (x + (y/8)*ssd1306_lcdwidth );
+
+	// x is which column
+	if (color == WHITE)
+		*p |=  _BV((y%8));
+	else
+		*p &= ~_BV((y%8));
 }
 
 

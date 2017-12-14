@@ -73,7 +73,7 @@ int rover::RoverPahoMQTT::publish (void)
 						MQTTCLIENT_PERSISTENCE_NONE,
 						NULL);
 
-	MQTTAsync_setCallbacks (this->client, NULL, rover::RoverPahoMQTT::onConnectionLost_Redirect, NULL, NULL);
+	//MQTTAsync_setCallbacks (this->client, NULL, rover::RoverPahoMQTT::onConnectionLost_Redirect, NULL, NULL);
 
 	conn_opts.keepAliveInterval = 20;
 	conn_opts.cleansession = 1;
@@ -273,7 +273,7 @@ void rover::RoverPahoMQTT::onSubscriberConnect (MQTTAsync_successData* response)
 	{
 		printf ("Failed to start subscribe, return code %d\n", rc);
 		this->defaultReturnCodes.rc_subscribe = rc;
-		exit (EXIT_FAILURE);
+		//exit (EXIT_FAILURE);
 	}
 }
 

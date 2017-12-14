@@ -23,6 +23,7 @@
 static int led_status = 0;
 static int i2c_th02_fd = 0;
 
+
 void init(){
 	  //wiringPiSetup () ;
 #if !SIMULATOR
@@ -187,6 +188,7 @@ void runside(int side, int direction, int speed){
 			digitalWrite (DIRECTION_PIN_LEFT, LOW) ;
 		} else return;
 		softPwmWrite (SOFT_PWM_ENGINE_LEFT, speed) ;
+		//digitalWrite(SOFT_PWM_ENGINE_LEFT, HIGH);
 	} else if (side==RIGHT){
 		if (direction>0) {
 			digitalWrite (DIRECTION_PIN_RIGHT, HIGH) ;
@@ -195,9 +197,10 @@ void runside(int side, int direction, int speed){
 			digitalWrite (DIRECTION_PIN_RIGHT, LOW) ;
 		} else return;
 		softPwmWrite (SOFT_PWM_ENGINE_RIGHT, speed) ;
+		//digitalWrite(SOFT_PWM_ENGINE_RIGHT, HIGH);
 	}
 	#else
-		printf("Run side - side: %d, directio: %d, speed %d");
+		printf("Run side - side: %d, direction: %d, speed %d");
 	#endif
 }
 

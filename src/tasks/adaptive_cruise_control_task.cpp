@@ -27,8 +27,8 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 	acc_task_tmr.setDeadline(0.1);
 	acc_task_tmr.setPeriod(0.1);
 
-	RoverDriving r_driving = RoverDriving();
-	r_driving.initialize();
+	//RoverDriving r_driving = RoverDriving();
+	//r_driving.initialize();
 
 	while (running_flag.get())
 	{

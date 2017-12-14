@@ -19,13 +19,6 @@
 #ifndef MUTEXES_H_
 #define MUTEXES_H_
 
-#include <roverapi/rover_api.hpp>
-#include <roverapi/rover_display.hpp>
-#include <roverapi/rover_driving.hpp>
-#include <roverapi/rover_utils.hpp>
-
-using namespace rover;
-
 template <typename T>
 class SharedData {
 public:
@@ -103,10 +96,6 @@ typedef struct
 extern AccelerometerData_t accelerometerdata_shared;
 extern pthread_mutex_t accelerometerdata_lock;
 
-/* For proper termination */
-extern RoverBase r_base;
-extern RoverDriving r_driving;
-extern RoverDisplay my_display;
-extern RoverUtils r_utils;
+
 
 #endif /* MUTEXES_H_ */

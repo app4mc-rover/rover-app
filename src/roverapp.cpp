@@ -52,6 +52,7 @@
 #include <tasks/accelerometer_task.h>
 #include <tasks/mqtt_publish_task.h>
 #include <tasks/mqtt_subscribe_task.h>
+#include <roverapi/basic_psys_rover.h>
 
 #include <interfaces.h>
 #include <signal.h>
@@ -66,7 +67,7 @@ using namespace rover;
 
 //Create global RoverBase object from Rover API
 RoverBase r_base;
-RoverDriving r_driving;
+RoverDriving r_driving = RoverDriving();
 RoverDisplay my_display;
 RoverUtils r_utils;
 
@@ -234,7 +235,6 @@ void exitHandler(int dummy)
 int main()
 {
 	int ret = 0;
-	r_driving = RoverDriving();
 	r_base = RoverBase();
 	my_display = RoverDisplay();
 	r_utils = RoverUtils();
@@ -256,7 +256,7 @@ int main()
 	distance_grove_shared = 0;
 	distance_sr04_front_shared = 0;
 	distance_sr04_back_shared = 0;
-	keycommand_shared = 'F';
+	keycommand_shared = 'D';
 	infrared_shared[0] = 0.0;
 	infrared_shared[1] = 0.0;
 	infrared_shared[2] = 0.0;
@@ -280,7 +280,7 @@ int main()
 	pthread_setname_np(main_thread, "main_thread");
 
 	//Thread creation
-#ifdef USE_GROOVE_SENSOR
+	#ifdef USE_GROOVE_SENSOR
 	ret = createThread(&ultrasonic_grove_thread, Ultrasonic_Sensor_Grove_Task, "US_grove");
 #else
 	ret = createThread(&ultrasonic_sr04_back_thread, Ultrasonic_Sensor_SR04_Back_Task, "US_sr04_back");
@@ -343,7 +343,7 @@ int main()
 
 	ret = createThread(&mqtt_subscribe_thread, MQTT_Subscribe_Task, "MQTTS");
 	CHECK_RET(ret);
-
+/**/
 	/*if(pthread_create(&srf02_thread, NULL, SRF02_Task, NULL)) {
 		fprintf(stderr, "Error creating thread\n");
 		return 1;
@@ -389,16 +389,19 @@ int main()
 		* signal while having the lock  */
 	while (main_running_flag)
 	{
+		//r_driving.turnBackwardRight();
 		//To test driving:
 		//printf ("speed_shared=%d\n",speed_shared.get());
 		//printf ("keycommand=%c\n",keycommand_shared.get());
 		//What main thread does should come here..
 		// ...
+
 		#if SIMULATOR
 			usleep(1* SECONDS_TO_MICROSECONDS);
 		#else
 			delayMicroseconds(1* SECONDS_TO_MICROSECONDS);
 		#endif
+
 	}
 
 	printf("Normally Exiting\n");

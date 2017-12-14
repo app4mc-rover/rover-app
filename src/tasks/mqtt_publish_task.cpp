@@ -25,6 +25,8 @@
 #include <roverapi/rover_pahomqtt.hpp>
 #include <roverapi/rover_mqttcommand.hpp>
 
+#include <wiringPi.h>
+
 void *MQTT_Publish_Task (void * arg)
 {
 	timing mqtt_publish_task_tmr;
@@ -32,6 +34,7 @@ void *MQTT_Publish_Task (void * arg)
 	mqtt_publish_task_tmr.setTaskID("MQTTPublish");
 	mqtt_publish_task_tmr.setDeadline(3.0);
 	mqtt_publish_task_tmr.setPeriod(3.0);
+
 
 	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"172.22.167.161",
 														1883,
@@ -59,16 +62,18 @@ void *MQTT_Publish_Task (void * arg)
 	sensor_data.gy521_angle_y = accelerometerdata_shared.angle_y;
 	sensor_data.gy521_angle_z = accelerometerdata_shared.angle_z;
 
+	if (rover_mqtt.publishToSensorTopic(sensor_data) == 0)
+			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
+		else
+			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+
 	while (running_flag.get())
 	{
 		mqtt_publish_task_tmr.recordStartTime();
 		mqtt_publish_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		if (rover_mqtt.publishToSensorTopic(sensor_data) == 0)
-			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
-		else
-			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+
 
 		//Task content ends here -------------------------------------------------
 

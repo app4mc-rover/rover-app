@@ -25,6 +25,8 @@
 #include <roverapi/rover_pahomqtt.hpp>
 #include <roverapi/rover_mqttcommand.hpp>
 
+#include <wiringPi.h>
+
 void *MQTT_Subscribe_Task (void * arg)
 {
 	timing mqtt_subscribe_task_tmr;
@@ -48,6 +50,21 @@ void *MQTT_Subscribe_Task (void * arg)
 		printf ("Client rover_mqtt_subscriber: Subscription unsuccessful!\n");
 	}
 
+	control_data = rover_mqtt.readFromDrivingTopic();
+
+	/* Override driving-related global variables if data is ready */
+	if (control_data.data_ready == 1)
+	{
+		speed_shared = control_data.speed;
+		keycommand_shared = control_data.command;
+		driving_mode = control_data.driving_mode;
+		printf ("Client rover_mqtt_subscriber: Data received: command=%c speed=%d mode=%d\n",
+															  control_data.command,
+															  control_data.speed,
+															  control_data.driving_mode);
+
+	}
+
 	while (running_flag.get())
 	{
 		mqtt_subscribe_task_tmr.recordStartTime();
@@ -55,19 +72,8 @@ void *MQTT_Subscribe_Task (void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		control_data = rover_mqtt.readFromDrivingTopic();
 
-		/* Override driving-related global variables if data is ready */
-		if (control_data.data_ready == 1)
-		{
-			speed_shared = control_data.speed;
-			keycommand_shared = control_data.command;
-			driving_mode = control_data.driving_mode;
-			printf ("Client rover_mqtt_subscriber: Data received: command=%c speed=%d mode=%d\n",
-					                                              control_data.command,
-																  control_data.speed,
-																  control_data.driving_mode);
-		}
+
 
 		//Task content ends here -------------------------------------------------
 

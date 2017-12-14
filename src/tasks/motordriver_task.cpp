@@ -31,6 +31,7 @@
 
 #include <roverapp.h>
 
+
 void ExitAutomaticModes(void)
 {
 	if (driving_mode.get() == ACC || driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2)
@@ -130,7 +131,6 @@ void *MotorDriver_Task(void * arg)
 
 		//Task content starts here -----------------------------------------------
 		local_command = keycommand_shared.get();
-
 		switch (local_command)
 		{
 			case 'G':

@@ -29,6 +29,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <roverapi/rover_api.hpp>
+#include <roverapi/rover_display.hpp>
+#include <roverapi/rover_driving.hpp>
+#include <roverapi/rover_utils.hpp>
+
+using namespace rover;
+
 // Use the following when cross compiling with Eclipse CDT SDK
 //#define CROSS_COMPILE_ECLIPSE 1
 
@@ -38,10 +45,19 @@
 
 // When debugging without RoverSenseLayer uncomment the following to prevent OS
 // to shutdown.
-//#define DEBUG_WO_RSL 1
+#define DEBUG_WO_RSL 1
+
+// HMC5883L or QMC5883L ?
+//#define USE_HMC5883L 1
 
 // Please comment the line below to work with SR-04 sensor instead of GROOVE for
 // rear proximity sensing.
 //#define USE_GROOVE_SENSOR 1
+
+/* For proper termination */
+extern RoverBase r_base;
+extern RoverDriving r_driving;
+extern RoverDisplay my_display;
+extern RoverUtils r_utils;
 
 #endif /* ROVERAPP_H_ */
