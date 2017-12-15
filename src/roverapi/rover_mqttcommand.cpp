@@ -22,11 +22,20 @@
 #include <json/json.h>
 #endif
 
-rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const int qos, char * clientID)
+rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * clientID)
 {
 	/* Assign what is constructed */
 	this->HOST_NAME = host;
 	this->PORT = port;
+	if (roverID < 1 || roverID > 99)
+	{
+		printf ("Invalid roverID in RoverMQTTCommand: It should be 1 to 99!\n");
+		this->ROVER_ID = 99;
+	}
+	else
+	{
+		this->ROVER_ID = roverID;
+	}
 	this->defaultRoverMQTTConfigure.qos = qos;
 	this->defaultRoverMQTTConfigure.clientID = clientID;
 	this->defaultRoverMQTTConfigure.timeout = 10000L;
@@ -39,8 +48,22 @@ rover::RoverMQTTCommand::~RoverMQTTCommand(){}
 
 int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data)
 {
+	/* Common buffer to use */
+	char topicBuffer_RoverMQTTCommand[64];
+	char numBuffer_RoverMQTTCommand[2];
+
 	/* Set topic name */
-	this->setTopic(sensorTopic);
+	/* Add inital part of the topic name */
+	sprintf(topicBuffer_RoverMQTTCommand, topicPrefix);
+
+	/* Concatanate rover ID */
+	snprintf(numBuffer_RoverMQTTCommand, sizeof(numBuffer_RoverMQTTCommand), "%d", this->ROVER_ID);
+	strcat(topicBuffer_RoverMQTTCommand, numBuffer_RoverMQTTCommand);
+	numBuffer_RoverMQTTCommand[0] = 0; //Clear array
+
+	/* Add the rest of the topic name */
+	strcat(topicBuffer_RoverMQTTCommand, sensorSubTopic);
+	this->setTopic (topicBuffer_RoverMQTTCommand);
 
 	/* Construct payload from sensor_data */
 	Json::Value data;
@@ -83,7 +106,22 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 int rover::RoverMQTTCommand::subscribeToDrivingTopic (void)
 {
 	/* Set topic */
-	this->setTopic (drivingTopic);
+	/* Common buffer to use */
+	char topicBuffer_RoverMQTTCommand[64];
+	char numBuffer_RoverMQTTCommand[2];
+
+	/* Set topic name */
+	/* Add inital part of the topic name */
+	sprintf(topicBuffer_RoverMQTTCommand, topicPrefix);
+
+	/* Concatanate rover ID */
+	snprintf(numBuffer_RoverMQTTCommand, sizeof(numBuffer_RoverMQTTCommand), "%d", this->ROVER_ID);
+	strcat(topicBuffer_RoverMQTTCommand, numBuffer_RoverMQTTCommand);
+	numBuffer_RoverMQTTCommand[0] = 0; //Clear array
+
+	/* Add the rest of the topic name */
+	strcat(topicBuffer_RoverMQTTCommand, drivingSubTopic);
+	this->setTopic (topicBuffer_RoverMQTTCommand);
 
 	/* Subscribe */
 	return this->subscribe();
@@ -161,3 +199,19 @@ rover::RoverControlData_t rover::RoverMQTTCommand::readFromDrivingTopic (void)
 	/* Return control data */
 	return control_data;
 }
+
+char * rover::RoverMQTTCommand::getTopicName (void)
+{
+	return this->defaultRoverMQTTConfigure.topic;
+}
+
+int rover::RoverMQTTCommand::getRoverID (void)
+{
+	return this->ROVER_ID;
+}
+
+void rover::RoverMQTTCommand::setRoverID (const int rover_id)
+{
+	this->ROVER_ID = rover_id;
+}
+

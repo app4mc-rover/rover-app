@@ -19,8 +19,15 @@
 
 #include <roverapi/rover_pahomqtt.hpp>
 
-#define drivingTopic  "rover/RoverDriving/control"
-#define sensorTopic   "rover/RoverSensor/sensors"
+/* Defines regarding topic naming */
+// Topic naming is such as the following:
+//  rover/<roverID 1-99>/RoverDriving/control
+//  e.g rover/1/RoverDriving/Control
+#define topicPrefix "rover/"
+#define drivingSubTopic "/RoverDriving/control"
+#define sensorSubTopic  "/RoverSensor/sensors"
+
+/* Buffer size for received message for MQTT */
 #define MQTT_BUFSIZE 256
 
 namespace rover
@@ -148,11 +155,17 @@ namespace rover
 	 */
 	class RoverMQTTCommand: private RoverPahoMQTT
 	{
+		private:
+			/**
+			 * @brief Given rover identification for multi-agent MQTT communication with a single cloud
+			 */
+			int ROVER_ID;
+
 		public:
 			/**
 			 * @brief Copy constructor for RoverMQTTCommand class
 			 */
-			RoverMQTTCommand (char * host, const int port, const int qos, char * clientID);
+			RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * clientID);
 
 			/**
 			 * @brief Destructor for RoverMQTTCommand class
@@ -178,8 +191,27 @@ namespace rover
 
 			/**
 			 * @brief Returns the retrieved driving information
+			 * @return control_data control data that is retrieved
 			 */
 			RoverControlData_t readFromDrivingTopic (void);
+
+			/**
+			 * @brief Retrieves topic name
+			 * @return topic_name Topic name
+			 */
+			char * getTopicName (void);
+
+			/**
+			 * @brief Retrieves Rover ID
+			 * @return rover_id Rover ID
+			 */
+			int getRoverID (void);
+
+			/**
+			 * @brief Sets Rover ID
+			 * @param rover_id Rover ID
+			 */
+			void setRoverID (const int rover_id);
 
 	};
 }

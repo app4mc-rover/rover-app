@@ -389,10 +389,6 @@ int main()
 		* signal while having the lock  */
 	while (main_running_flag)
 	{
-		//r_driving.turnBackwardRight();
-		//To test driving:
-		//printf ("speed_shared=%d\n",speed_shared.get());
-		//printf ("keycommand=%c\n",keycommand_shared.get());
 		//What main thread does should come here..
 		// ...
 
