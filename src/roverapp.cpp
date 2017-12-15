@@ -52,7 +52,6 @@
 #include <tasks/accelerometer_task.h>
 #include <tasks/mqtt_publish_task.h>
 #include <tasks/mqtt_subscribe_task.h>
-#include <roverapi/basic_psys_rover.h>
 
 #include <interfaces.h>
 #include <signal.h>
@@ -256,7 +255,7 @@ int main()
 	distance_grove_shared = 0;
 	distance_sr04_front_shared = 0;
 	distance_sr04_back_shared = 0;
-	keycommand_shared = 'D';
+	keycommand_shared = 'W';
 	infrared_shared[0] = 0.0;
 	infrared_shared[1] = 0.0;
 	infrared_shared[2] = 0.0;
@@ -280,7 +279,7 @@ int main()
 	pthread_setname_np(main_thread, "main_thread");
 
 	//Thread creation
-	#ifdef USE_GROOVE_SENSOR
+#ifdef USE_GROOVE_SENSOR
 	ret = createThread(&ultrasonic_grove_thread, Ultrasonic_Sensor_Grove_Task, "US_grove");
 #else
 	ret = createThread(&ultrasonic_sr04_back_thread, Ultrasonic_Sensor_SR04_Back_Task, "US_sr04_back");
@@ -386,7 +385,7 @@ int main()
 	signal(SIGKILL, exitHandler);
 
 	/* Use a different running flag to prevent deadlock because of receiving
-		* signal while having the lock  */
+	 * signal while having the lock  */
 	while (main_running_flag)
 	{
 		//What main thread does should come here..

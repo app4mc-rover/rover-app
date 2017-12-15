@@ -41,31 +41,6 @@ void *MQTT_Publish_Task (void * arg)
 														1,
 														"rover_mqtt_publisher");
 	RoverSensorData_t sensor_data;
-	sensor_data.temperature = temperature_shared.get();
-	sensor_data.humidity = humidity_shared.get();
-	sensor_data.ultrasonic_front = distance_sr04_front_shared.get();
-	sensor_data.ultrasonic_rear = distance_sr04_back_shared.get();
-	sensor_data.hmc5883l_bearing = bearing_shared.get();
-	sensor_data.qmc5883l_bearing = 0.0;
-	sensor_data.infrared[0] = infrared_shared[0];
-	sensor_data.infrared[1] = infrared_shared[1];
-	sensor_data.infrared[2] = infrared_shared[2];
-	sensor_data.infrared[3] = infrared_shared[3];
-	sensor_data.gy521_bearing = accelerometerdata_shared.bearing;
-	sensor_data.gy521_accel_x = accelerometerdata_shared.accel_x;
-	sensor_data.gy521_accel_y = accelerometerdata_shared.accel_y;
-	sensor_data.gy521_accel_z = accelerometerdata_shared.accel_z;
-	sensor_data.gy521_gyro_x = accelerometerdata_shared.gyro_x;
-	sensor_data.gy521_gyro_y = accelerometerdata_shared.gyro_y;
-	sensor_data.gy521_gyro_z = accelerometerdata_shared.gyro_z;
-	sensor_data.gy521_angle_x = accelerometerdata_shared.angle_x;
-	sensor_data.gy521_angle_y = accelerometerdata_shared.angle_y;
-	sensor_data.gy521_angle_z = accelerometerdata_shared.angle_z;
-
-	if (rover_mqtt.publishToSensorTopic(sensor_data) == 0)
-			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
-		else
-			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
 
 	while (running_flag.get())
 	{
@@ -73,6 +48,32 @@ void *MQTT_Publish_Task (void * arg)
 		mqtt_publish_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
+
+		sensor_data.temperature = temperature_shared.get();
+		sensor_data.humidity = humidity_shared.get();
+		sensor_data.ultrasonic_front = distance_sr04_front_shared.get();
+		sensor_data.ultrasonic_rear = distance_sr04_back_shared.get();
+		sensor_data.hmc5883l_bearing = bearing_shared.get();
+		sensor_data.qmc5883l_bearing = 0.0;
+		sensor_data.infrared[0] = infrared_shared[0];
+		sensor_data.infrared[1] = infrared_shared[1];
+		sensor_data.infrared[2] = infrared_shared[2];
+		sensor_data.infrared[3] = infrared_shared[3];
+		sensor_data.gy521_bearing = accelerometerdata_shared.bearing;
+		sensor_data.gy521_accel_x = accelerometerdata_shared.accel_x;
+		sensor_data.gy521_accel_y = accelerometerdata_shared.accel_y;
+		sensor_data.gy521_accel_z = accelerometerdata_shared.accel_z;
+		sensor_data.gy521_gyro_x = accelerometerdata_shared.gyro_x;
+		sensor_data.gy521_gyro_y = accelerometerdata_shared.gyro_y;
+		sensor_data.gy521_gyro_z = accelerometerdata_shared.gyro_z;
+		sensor_data.gy521_angle_x = accelerometerdata_shared.angle_x;
+		sensor_data.gy521_angle_y = accelerometerdata_shared.angle_y;
+		sensor_data.gy521_angle_z = accelerometerdata_shared.angle_z;
+
+		if (rover_mqtt.publishToSensorTopic(sensor_data) == 0)
+			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
+		else
+			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
 
 
 		//Task content ends here -------------------------------------------------

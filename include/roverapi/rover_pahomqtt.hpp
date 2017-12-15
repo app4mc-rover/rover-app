@@ -168,6 +168,8 @@ namespace rover
 			 */
 			MQTTAsync client;
 
+			MQTTClient client2;
+
 			/**
 			 * @brief Connect options
 			 */
@@ -239,6 +241,8 @@ namespace rover
 			 * @return Return code 0-> success; others-> return codes
 			 */
 			int publish (void);
+
+			int publish2 (void);
 
 			/**
 			 * @brief Used for subscribing to a topic in an MQTT-broker. To unsubscribe use: RoverPahoMQTT::unsubscribe()
