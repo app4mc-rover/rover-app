@@ -168,6 +168,9 @@ namespace rover
 			 */
 			MQTTAsync client;
 
+			/**
+			 * @brief Client object from MQTTClient.
+			 */
 			MQTTClient client2;
 
 			/**
@@ -237,11 +240,15 @@ namespace rover
 			int isDataReady (void);
 
 			/**
-			 * @brief Used for publishing to a topic in an MQTT-broker
+			 * @brief Used for publishing to a topic in an MQTT-broker using asynchronous method
 			 * @return Return code 0-> success; others-> return codes
 			 */
 			int publish (void);
 
+			/**
+			 * @brief Used for publishing to a topic in an MQTT-broker using blocking functions
+			 * @return Return code 0-> success; others-> return codes
+			 */
 			int publish2 (void);
 
 			/**
