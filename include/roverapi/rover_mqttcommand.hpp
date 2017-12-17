@@ -26,6 +26,7 @@
 #define topicPrefix "rover/"
 #define drivingSubTopic "/RoverDriving/control"
 #define sensorSubTopic  "/RoverSensor/sensors"
+#define coreSubTopic "/RoverCore/usage"
 
 /* Buffer size for received message for MQTT */
 #define MQTT_BUFSIZE 256
@@ -178,6 +179,13 @@ namespace rover
 			 * @return int Return code
 			 */
 			int publishToSensorTopic (RoverSensorData_t sensor_data);
+
+			/**
+			 * @brief Publishes a mesage to rover's core usage topic
+			 * @param core_usages Core usage array with 4 cores
+			 * @return int Return code
+			 */
+			int publishToCoreUsageTopic (float* core_usages);
 
 			/**
 			 * @brief Subscribes to rover's driving topic

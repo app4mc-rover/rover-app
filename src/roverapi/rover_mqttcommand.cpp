@@ -46,6 +46,47 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 
 rover::RoverMQTTCommand::~RoverMQTTCommand(){}
 
+int rover::RoverMQTTCommand::publishToCoreUsageTopic (float* core_usages)
+{
+	/* Common buffer to use */
+	char topicBuffer_RoverMQTTCommand[64];
+	char numBuffer_RoverMQTTCommand[2];
+
+	/* Set topic name */
+	/* Add inital part of the topic name */
+	sprintf(topicBuffer_RoverMQTTCommand, topicPrefix);
+
+	/* Concatanate rover ID */
+	snprintf(numBuffer_RoverMQTTCommand, sizeof(numBuffer_RoverMQTTCommand), "%d", this->ROVER_ID);
+	strcat(topicBuffer_RoverMQTTCommand, numBuffer_RoverMQTTCommand);
+	numBuffer_RoverMQTTCommand[0] = 0; //Clear array
+
+	/* Add the rest of the topic name */
+	strcat(topicBuffer_RoverMQTTCommand, coreSubTopic);
+	this->setTopic (topicBuffer_RoverMQTTCommand);
+
+	/* Construct payload from sensor_data */
+	Json::Value data;
+	data["core0"] = core_usages[0];
+	data["core1"] = core_usages[1];
+	data["core2"] = core_usages[2];
+	data["core3"] = core_usages[3];
+
+	/* Convert JSON data to string */
+	Json::FastWriter  string_writer;
+	std::string temp = string_writer.write(data);
+
+	/* Convert from string to char* */
+	char * temp2 = new char [temp.length()+1];
+	std::strcpy (temp2, temp.c_str());
+
+	/* Set payload to constructed char* */
+	this->setPayload(temp2);
+
+	/* Call publish */
+	return this->publish();
+}
+
 int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data)
 {
 	/* Common buffer to use */
@@ -69,10 +110,10 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	Json::Value data;
 	data["dht22"]["temperature"] = sensor_data.temperature;
 	data["dht22"]["humidity"] = sensor_data.humidity;
-	data["infrared"]["rear-right"] = sensor_data.infrared[0];
-	data["infrared"]["rear-left"] = sensor_data.infrared[1];
-	data["infrared"]["front-right"] = sensor_data.infrared[2];
-	data["infrared"]["front-left"] = sensor_data.infrared[3];
+	data["infrared"]["rearright"] = sensor_data.infrared[0];
+	data["infrared"]["rearleft"] = sensor_data.infrared[1];
+	data["infrared"]["frontright"] = sensor_data.infrared[2];
+	data["infrared"]["frontleft"] = sensor_data.infrared[3];
 	data["ultrasonic"]["front"] = sensor_data.ultrasonic_front;
 	data["ultrasonic"]["rear"] = sensor_data.ultrasonic_rear;
 	data["hmc5883l"]["bearing"] = sensor_data.hmc5883l_bearing;

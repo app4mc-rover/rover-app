@@ -41,6 +41,7 @@ void *MQTT_Publish_Task (void * arg)
 														1,
 														"rover_mqtt_publisher");
 	RoverSensorData_t sensor_data;
+	float core_usages[4];
 
 	while (running_flag.get())
 	{
@@ -74,6 +75,18 @@ void *MQTT_Publish_Task (void * arg)
 			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
 		else
 			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+
+		core_usages[0] = cpu_util_shared[0];
+		core_usages[1] = cpu_util_shared[1];
+		core_usages[2] = cpu_util_shared[2];
+		core_usages[3] = cpu_util_shared[3];
+
+		if (rover_mqtt.publishToCoreUsageTopic(core_usages) == 0)
+			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
+		else
+			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+
+
 
 
 		//Task content ends here -------------------------------------------------

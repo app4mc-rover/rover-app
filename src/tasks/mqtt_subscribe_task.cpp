@@ -32,8 +32,8 @@ void *MQTT_Subscribe_Task (void * arg)
 	timing mqtt_subscribe_task_tmr;
 
 	mqtt_subscribe_task_tmr.setTaskID("MQTTSubscribe");
-	mqtt_subscribe_task_tmr.setDeadline(3.0);
-	mqtt_subscribe_task_tmr.setPeriod(3.0);
+	mqtt_subscribe_task_tmr.setDeadline(0.1);
+	mqtt_subscribe_task_tmr.setPeriod(0.1);
 
 	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"127.0.0.1",//"172.22.167.161",
 														1887,//1883,
