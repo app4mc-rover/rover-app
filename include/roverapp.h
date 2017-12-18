@@ -45,7 +45,7 @@ using namespace rover;
 
 // When debugging without RoverSenseLayer uncomment the following to prevent OS
 // to shutdown.
-#define DEBUG_WO_RSL 1
+//#define DEBUG_WO_RSL 1
 
 // HMC5883L or QMC5883L ?
 //#define USE_HMC5883L 1

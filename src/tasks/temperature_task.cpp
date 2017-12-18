@@ -36,8 +36,8 @@ void *Temperature_Task(void *arg)
 	timing temperature_task_tmr;
 
 	temperature_task_tmr.setTaskID("DHT22");
-	temperature_task_tmr.setDeadline(0.5);
-	temperature_task_tmr.setPeriod(0.5);
+	temperature_task_tmr.setDeadline(1);
+	temperature_task_tmr.setPeriod(1);
 
 	float temperature, humidity;
 
@@ -52,6 +52,9 @@ void *Temperature_Task(void *arg)
 		//Task content starts here -----------------------------------------------
 
 		temperature = r_dht22.readTemperature();
+
+
+
 		humidity = r_dht22.readHumidity();
 
 		temperature_shared.set(temperature);

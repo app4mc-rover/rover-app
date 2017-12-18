@@ -73,9 +73,9 @@ void buttonHandler (void)
 		/* Debounce */
 
 		#if SIMULATOR
-			usleep(0.05 * SECONDS_TO_MICROSECONDS);
+			usleep(0.005 * SECONDS_TO_MICROSECONDS);
 		#else
-			delayMicroseconds(0.05* SECONDS_TO_MICROSECONDS);
+			delayMicroseconds(0.005* SECONDS_TO_MICROSECONDS);
 		#endif
 
 		if (user_b.readButton() == user_b.LO)
@@ -89,9 +89,9 @@ void buttonHandler (void)
 
 			/* Wait a bit more to prevent double pushes */
 			#if SIMULATOR
-				usleep(0.05 * SECONDS_TO_MICROSECONDS);
+				usleep(0.4 * SECONDS_TO_MICROSECONDS);
 			#else
-				delayMicroseconds(0.05* SECONDS_TO_MICROSECONDS);
+				delayMicroseconds(0.4* SECONDS_TO_MICROSECONDS);
 			#endif
 		}
 	}

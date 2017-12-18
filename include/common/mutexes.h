@@ -24,6 +24,7 @@ class SharedData {
 public:
 
 		SharedData() {
+				this->data = static_cast <T> (0);
 				pthread_mutex_init(&this->lock, NULL);
 		}
 

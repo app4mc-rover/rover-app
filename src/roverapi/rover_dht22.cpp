@@ -47,6 +47,32 @@ float rover::RoverDHT22::read(void)
 
 float rover::RoverDHT22::readTemperature (void)
 {
+	uint8_t laststate;
+	uint8_t counter;
+	uint8_t j;
+	uint8_t i;
+	int data[5];
+
+	int try_again;
+	float f;
+	float h;
+	float c;
+
+	data[0] = 0;
+	data[1] = 0;
+	data[2] = 0;
+	data[3] = 0;
+	data[4] = 0;
+
+	f = 0.0;
+	h = 0.0;
+	c = 0.0;
+	j = 0;
+	i = 0;
+	counter = 0;
+	laststate = HIGH;
+	try_again = 1;
+
 #if SIMULATOR
 	return 32.0;
 #else
@@ -56,22 +82,21 @@ float rover::RoverDHT22::readTemperature (void)
 	}
 	else
 	{
-		int data[5] = { 0, 0, 0, 0, 0 };
-
-		uint8_t laststate;
-		uint8_t counter;
-		uint8_t j;
-		uint8_t i;
-
-		int try_again = 1;
-		float f, h, c;
-
 		while (try_again == 1)
 		{
-			data[0] = data[1] = data[2] = data[3] = data[4] = 0;
-			laststate = HIGH;
-			counter = 0;
+			data[0] = 0;
+			data[1] = 0;
+			data[2] = 0;
+			data[3] = 0;
+			data[4] = 0;
+
+			f = 0.0;
+			h = 0.0;
+			c = 0.0;
 			j = 0;
+			i = 0;
+			counter = 0;
+			laststate = HIGH;
 
 			/* pull pin down for 18 milliseconds */
 			pinMode( this->DHT22Pin, OUTPUT );
@@ -109,6 +134,8 @@ float rover::RoverDHT22::readTemperature (void)
 					j++;
 				}
 			}
+
+			delay (1000);
 
 			/*
 			 * check we read 40 bits (8bit x 5 ) + verify checksum in the last byte
@@ -149,11 +176,38 @@ float rover::RoverDHT22::readTemperature (void)
 		/* Return temperature */
 		return c;
 	}
+
 #endif
 }
 
 float rover::RoverDHT22::readHumidity (void)
 {
+	uint8_t laststate;
+	uint8_t counter;
+	uint8_t j;
+	uint8_t i;
+	int data[5];
+
+	int try_again;
+	float f;
+	float h;
+	float c;
+
+	data[0] = 0;
+	data[1] = 0;
+	data[2] = 0;
+	data[3] = 0;
+	data[4] = 0;
+
+	f = 0.0;
+	h = 0.0;
+	c = 0.0;
+	j = 0;
+	i = 0;
+	counter = 0;
+	laststate = HIGH;
+	try_again = 1;
+
 #if SIMULATOR
 	return 40.0;
 #else
@@ -163,22 +217,21 @@ float rover::RoverDHT22::readHumidity (void)
 	}
 	else
 	{
-		int data[5] = { 0, 0, 0, 0, 0 };
-
-		uint8_t laststate;
-		uint8_t counter;
-		uint8_t j;
-		uint8_t i;
-
-		int try_again = 1;
-		float f, h, c;
-
 		while (try_again == 1)
 		{
-			data[0] = data[1] = data[2] = data[3] = data[4] = 0;
-			laststate = HIGH;
-			counter = 0;
+			data[0] = 0;
+			data[1] = 0;
+			data[2] = 0;
+			data[3] = 0;
+			data[4] = 0;
+
+			f = 0.0;
+			h = 0.0;
+			c = 0.0;
 			j = 0;
+			i = 0;
+			counter = 0;
+			laststate = HIGH;
 
 			/* pull pin down for 18 milliseconds */
 			pinMode( this->DHT22Pin, OUTPUT );
@@ -217,11 +270,13 @@ float rover::RoverDHT22::readHumidity (void)
 				}
 			}
 
+			delay(1000);
+
 			/*
 			 * check we read 40 bits (8bit x 5 ) + verify checksum in the last byte
 			 * print it out if data is good
 			 */
-			if ( (j >= 40) &&
+			if ((j >= 40) &&
 				 (data[4] == ( (data[0] + data[1] + data[2] + data[3]) & 0xFF) ) )
 			{
 				h = (float)((data[0] << 8) + data[1]) / 10;
