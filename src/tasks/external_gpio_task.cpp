@@ -65,7 +65,11 @@ void buttonHandler (void)
 
 	if (shutdown_b.readButton() == shutdown_b.LO)
 	{
+		display_use_elsewhere_shared = 1;
+		pthread_mutex_lock(&display_lock);
 		r_base.shutdown();
+		pthread_mutex_unlock(&display_lock);
+		display_use_elsewhere_shared = 0;
 	}
 
 	if (user_b.readButton() == user_b.LO)
