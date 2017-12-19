@@ -18,11 +18,25 @@ set (CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 # Those must be added to the CMAKE_MODULE_PATH set below:
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/ExternalCMakeModules)
 
+if(DEFINED ENV{SDKTARGETSYSROOT})
+    message(STATUS "SDK Detected")
+    set(SDK_EN 1)
+
+    # Use OpenCV module
+    set(CMAKE_MODULE_PATH $ENV{SDKTARGETSYSROOT}/usr/share/OpenCV ${CMAKE_MODULE_PATH})
+    # Raspicam module
+    set(CMAKE_MODULE_PATH $ENV{SDKTARGETSYSROOT}/usr/lib/cmake ${CMAKE_MODULE_PATH})
+
+else(DEFINED ENV{SDKTARGETSYSROOT})
+    set(SDK_EN 0)
+endif(DEFINED ENV{SDKTARGETSYSROOT})
+
 #For find_package packages, export someextlib_DIR=/path/to/..
 # Required packages
 find_package (OpenCV REQUIRED)
 find_package (raspicam REQUIRED)
 find_package (Threads)
+
 
 #Where to put binary files after "make"
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
@@ -30,12 +44,6 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 #Where to put library files after "make"
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/libs)
 
-if(DEFINED ENV{SDKTARGETSYSROOT})
-    message(STATUS "SDK Detected")
-    set(SDK_EN 1)
-else(DEFINED ENV{SDKTARGETSYSROOT})
-    set(SDK_EN 0)
-endif(DEFINED ENV{SDKTARGETSYSROOT})
 
 if(${SIM})
     message(STATUS "Setting SIMULATION Defitnion to ${SIM}")
@@ -134,11 +142,14 @@ target_link_libraries (roverapi roverappdrivers)
 #
 
 #Link external libraries
-# Search with sudo find / -name *libx*
-# If there is an x.so in /usr/lib/ or /usr/local/lib/, you can link x library
-target_link_libraries (roverapptasks opencv_core)
-target_link_libraries (roverapptasks opencv_imgproc)
-target_link_libraries (roverapptasks opencv_highgui)
+# Since OpenCV Module don't return full path for libraries 
+find_library(OpenCV_LIB NAMES opencv_core)
+target_link_libraries (roverapptasks ${OpenCV_LIB})
+find_library(OpenCV_LIB NAMES opencv_imgproc)
+target_link_libraries (roverapptasks ${OpenCV_LIB})
+find_library(OpenCV_LIB NAMES opencv_highgui)
+target_link_libraries (roverapptasks ${OpenCV_LIB})
+
 target_link_libraries (roverapptasks jsoncpp)
 target_link_libraries (roverapptasks bluetooth)
 target_link_libraries (roverapptasks pthread)
