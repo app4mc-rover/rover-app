@@ -50,11 +50,11 @@ void init(){
 }
 
 float getDistance(int channel){
-	float x;
+    float x = 0;
 	#if !SIMULATOR
-		float y=analogRead (BASE+channel);
+        float y = analogRead (BASE+channel);
 	#else
-		float y=0;
+        float y = 0;
 	#endif
 
 // 1/cm to output voltage is almost linear between
@@ -77,7 +77,7 @@ float getDistance(int channel){
 }
 
 float getTemperature(){
-	float x;
+    float x = 0;
 
 	unsigned char command[2]= {0};
 
@@ -128,7 +128,7 @@ float getTemperature(){
 }
 
 float getHumidity(){
-	float x;
+    float x = 0;
 
 	unsigned char command[2]= {0};
 

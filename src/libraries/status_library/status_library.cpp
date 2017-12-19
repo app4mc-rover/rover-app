@@ -24,8 +24,8 @@
    Assuming the connection is named by default as 'wlan0' */
 int retrieveWLANStatus (void)
 {
-	FILE *fp;
-	char buffer[2];
+	FILE *fp = nullptr;
+	char buffer[2] = {};
 
 	/* Execute the command */
 	fp = popen("ifconfig wlan0 2>&1 | grep 'RUNNING' | wc -l","r");
@@ -51,8 +51,8 @@ int retrieveWLANStatus (void)
    Assuming the connection is named by default as 'eth0' */
 int retrieveETHStatus (void)
 {
-	FILE *fp;
-	char buffer[2];
+	FILE *fp = nullptr;
+	char buffer[2] = {};
 
 	/* Execute the command */
 	fp = popen("ifconfig eth0 2>&1 | grep 'RUNNING' | wc -l","r");
@@ -77,8 +77,8 @@ int retrieveETHStatus (void)
 /* Returns 1 for ON, 0 for OFF */
 int retrieveINTERNETStatus (void)
 {
-	FILE *fp;
-	char buffer[2];
+	FILE *fp = nullptr;
+	char buffer[2] = {};
 
 	/* Execute the command */
 	fp = popen("ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` 1>/dev/null 2>/dev/null && echo 1 || echo 0","r");
@@ -103,8 +103,8 @@ int retrieveINTERNETStatus (void)
 // Returns 1 for ON, 0 for OFF
 int retrieveBLUETOOTHStatus (void)
 {
-	FILE *fp;
-	char buffer[2];
+	FILE *fp = nullptr;
+	char buffer[2] = {};
 
 	// Execute the command
 	fp = popen("systemctl status bluetooth | grep inactive | wc -l","r");
@@ -131,9 +131,9 @@ int retrieveBLUETOOTHStatus (void)
 int retrieveHONOStatus (void)
 {
 	/* Dumb way to do it :) TODO: Make this more generic */
-	FILE *fp;
-	char buffer[20];
-	int code;
+	FILE *fp = nullptr;
+	char buffer[20] = {};
+	int code = 0;
 	int status = 0;
 
 	/* Execute the command */
@@ -164,12 +164,12 @@ int retrieveHONOStatus (void)
 
 int retrieveHONOStatus (char * host_name, int port, char * tenant_name, char * device_id, char * user, char * password)
 {
-	FILE *fp;
-	int code;
-	int status;
+	FILE *fp = nullptr;
+	int code = 0;
+	int status = 0;
 
-	char buffer[256];
-	char num_buffer[33];
+	char buffer[256] = {};
+	char num_buffer[33] = {};
 
 	//Prepare command as string
 	//Example: "curl -X PUT -i -H 'Content-Type: application/json' --data-binary '{"Bearing": 0.5}' http://idial.institute:8080/telemetry/DEFAULT_TENANT/4711"

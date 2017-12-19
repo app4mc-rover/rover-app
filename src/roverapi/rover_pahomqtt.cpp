@@ -26,13 +26,42 @@ rover::RoverPahoMQTT::RoverPahoMQTT (char * host_name, int port, RoverMQTT_Confi
 
 	/* Load defaults */
 	this->flushFlags();
+
+    /* Construct the address */
+    this->constructAddress (my_address);
+
+    createClient();
+
 }
 
-rover::RoverPahoMQTT::~RoverPahoMQTT() {}
+void rover::RoverPahoMQTT::createClient(void) {
+    MQTTAsync_create (	&(this->client),
+                            my_address,
+                            this->defaultRoverMQTTConfigure.clientID,
+                            MQTTCLIENT_PERSISTENCE_NONE,
+                            NULL);
+
+    MQTTAsync_setCallbacks(this->client, this, 	rover::RoverPahoMQTT::onConnectionLost_Redirect,
+                                                rover::RoverPahoMQTT::onSubscriberMessageArrived_Redirect,
+                                                NULL);
+}
+
+void rover::RoverPahoMQTT::destroyClient(void) {
+    MQTTAsync_destroy(&(this->client));
+}
+
+
+rover::RoverPahoMQTT::~RoverPahoMQTT() {
+    if (this->defaultRoverMQTTConfigure.payload != nullptr) {
+        delete[] this->defaultRoverMQTTConfigure.payload;
+    }
+
+    destroyClient();
+}
 
 void rover::RoverPahoMQTT::constructAddress (char* string)
 {
-	char num_buffer[5];
+    char num_buffer[5] = {};
 	sprintf (string, this->HOST_NAME);
 	strcat (string, ":");
 	snprintf (num_buffer, sizeof(num_buffer), "%d", this->PORT);
@@ -343,9 +372,9 @@ void rover::RoverPahoMQTT::onSubscriberConnect (MQTTAsync_successData* response)
 
 int rover::RoverPahoMQTT::onSubscriberMessageArrived (char *topicName, int topicLen, MQTTAsync_message *message)
 {
-	int i;
-	char* payloadptr;
-	char* buf;
+    int i = 0;
+    char* payloadptr = {};
+    char* buf = {};
 
 	if (this -> defaultRoverSubscribeData.data_ready == 0)
 	{
