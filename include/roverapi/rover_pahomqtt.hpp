@@ -188,6 +188,17 @@ namespace rover
 			 */
 			volatile MQTTAsync_token deliveredtoken;
 
+			/**
+			 * @brief Create the MQTT client object
+			 */
+			void createClient(void);
+			
+			/**
+			 * @brief Destroy the MQTT client object
+			 */
+			void destroyClient(void);
+
+
 		public:
 			/**
 			 * @brief Destructor for RoverPahoMQTT class.
@@ -219,8 +230,9 @@ namespace rover
 			/**
 			 * @brief Sets payload
 			 * @param payload Payload
+			 * @param payloadLen Payload length
 			 */
-            void setPayload (const char * payload, int payloadLen);
+			void setPayload (const char * payload, int payloadLen);
 
 			/**
 			 * @brief Sets topic name
@@ -262,7 +274,6 @@ namespace rover
 			 * @return Return code 0-> success; others-> return codes
 			 */
 			int unsubscribe (void);
-
 
 		protected:
 			/**
@@ -423,16 +434,16 @@ namespace rover
 			 */
 			void onDisconnect (MQTTAsync_successData* response);
 
-    private:
-            /**
-             * @brief Payload pointer to manage memory
-             */
-            char * payload = {};
-
-            /**
-             * @brief MQTT address
-             */
-            char my_address[20] = {};
+	private:
+			/**
+			 * @brief Payload pointer to manage memory
+			 */
+			char * payload = {};
+			
+			/**
+			 * @brief MQTT address
+			 */
+			char my_address[20] = {};
 
 	};
 }

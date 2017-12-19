@@ -28,41 +28,41 @@ rover::RoverPahoMQTT::RoverPahoMQTT (char * host_name, int port, RoverMQTT_Confi
 	/* Load defaults */
 	this->flushFlags();
 
-    /* Construct the address */
-    this->constructAddress (my_address);
+	/* Construct the address */
+	this->constructAddress (my_address);
 
-    createClient();
+	createClient();
 
 }
 
 void rover::RoverPahoMQTT::createClient(void) {
-    MQTTAsync_create (	&(this->client),
+	MQTTAsync_create (&(this->client),
                             my_address,
                             this->defaultRoverMQTTConfigure.clientID,
                             MQTTCLIENT_PERSISTENCE_NONE,
                             NULL);
 
-    MQTTAsync_setCallbacks(this->client, this, 	rover::RoverPahoMQTT::onConnectionLost_Redirect,
+	MQTTAsync_setCallbacks(this->client, this, rover::RoverPahoMQTT::onConnectionLost_Redirect,
                                                 rover::RoverPahoMQTT::onSubscriberMessageArrived_Redirect,
                                                 NULL);
 }
 
 void rover::RoverPahoMQTT::destroyClient(void) {
-    MQTTAsync_destroy(&(this->client));
+	MQTTAsync_destroy(&(this->client));
 }
 
 
 rover::RoverPahoMQTT::~RoverPahoMQTT() {
-    if (this->defaultRoverMQTTConfigure.payload != nullptr) {
-        delete[] this->defaultRoverMQTTConfigure.payload;
-    }
-
-    destroyClient();
+	if (this->defaultRoverMQTTConfigure.payload != nullptr) {
+	    delete[] this->defaultRoverMQTTConfigure.payload;
+	}
+	
+	destroyClient();
 }
 
 void rover::RoverPahoMQTT::constructAddress (char* string)
 {
-    char num_buffer[5] = {};
+	char num_buffer[5] = {};
 	sprintf (string, this->HOST_NAME);
 	strcat (string, ":");
 	snprintf (num_buffer, sizeof(num_buffer), "%d", this->PORT);
@@ -90,17 +90,17 @@ int rover::RoverPahoMQTT::publish2 (void)
 	MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
 	MQTTClient_message pubmsg = MQTTClient_message_initializer;
 	MQTTClient_deliveryToken token;
-	int rc;
-
+	int rc = 0;
+	
 	/* Construct the address */
-	char my_addr[20];
+	char my_addr[20] = {};
 	this->constructAddress (my_addr);
-
+	
 	MQTTClient_create(&client2, my_addr, this->defaultRoverMQTTConfigure.clientID,
-		MQTTCLIENT_PERSISTENCE_NONE, NULL);
+	    MQTTCLIENT_PERSISTENCE_NONE, NULL);
 	conn_opts.keepAliveInterval = 20;
 	conn_opts.cleansession = 1;
-
+	
 	if ((rc = MQTTClient_connect(client2, &conn_opts)) != MQTTCLIENT_SUCCESS)
 	{
 		//printf("Failed to connect!!, return code %d\n", rc);
@@ -123,30 +123,17 @@ int rover::RoverPahoMQTT::publish2 (void)
 
 int rover::RoverPahoMQTT::publish (void)
 {
+	int rc = 0;
+
+	// Only create client if it hasn't been created
 	this->flushFlags ();
-	this->client = new MQTTAsync;
 
 	this->conn_opts = MQTTAsync_connectOptions_initializer;
-
-	int rc;
-
-	/* Construct the address */
-	char my_addr[20];
-	this->constructAddress (my_addr);
-
-	MQTTAsync_create (	&(this->client),
-						my_addr,
-						this->defaultRoverMQTTConfigure.clientID,
-						MQTTCLIENT_PERSISTENCE_NONE,
-						NULL);
-
-	MQTTAsync_setCallbacks (this->client, NULL, rover::RoverPahoMQTT::onConnectionLost_Redirect, NULL, NULL);
-
-	conn_opts.keepAliveInterval = 20;
-	conn_opts.cleansession = 1;
-	conn_opts.onSuccess = rover::RoverPahoMQTT::onPublisherConnect_Redirect;
-	conn_opts.onFailure = rover::RoverPahoMQTT::onConnectFailure_Redirect;
-	conn_opts.context = this;
+	this->conn_opts.keepAliveInterval = 20;
+	this->conn_opts.cleansession = 1;
+	this->conn_opts.onSuccess = rover::RoverPahoMQTT::onPublisherConnect_Redirect;
+	this->conn_opts.onFailure = rover::RoverPahoMQTT::onConnectFailure_Redirect;
+	this->conn_opts.context = this;
 
 	if ((rc = MQTTAsync_connect(this->client, &(this->conn_opts))) != MQTTASYNC_SUCCESS)
 	{
@@ -161,16 +148,16 @@ int rover::RoverPahoMQTT::publish (void)
 
 	}
 
-	MQTTAsync_destroy(&(this->client));
-
 	return this->defaultReturnCodes.rc_publish;
 }
 
 int rover::RoverPahoMQTT::unsubscribe (void)
 {
-	int rc;
-
-	disc_opts.onSuccess = rover::RoverPahoMQTT::onDisconnect_Redirect;
+	int rc = 0;
+	
+	this->disc_opts = MQTTAsync_disconnectOptions_initializer;
+	this->disc_opts.context = this; //Important to pass context with options.
+	this->disc_opts.onSuccess = rover::RoverPahoMQTT::onDisconnect_Redirect;
 
 	if ((rc = MQTTAsync_disconnect(this->client, &(this->disc_opts))) != MQTTASYNC_SUCCESS)
 	{
@@ -190,32 +177,10 @@ int rover::RoverPahoMQTT::unsubscribe (void)
 
 int rover::RoverPahoMQTT::subscribe (void)
 {
-	this->flushFlags ();
-	this->client = new MQTTAsync;
+	int rc = 0;
+	int ch = 0;
 
 	this->conn_opts = MQTTAsync_connectOptions_initializer;
-	this->disc_opts = MQTTAsync_disconnectOptions_initializer;
-
-	this->disc_opts.context = this; //Important to pass context with options.
-
-	int rc;
-	int ch;
-
-	/* Construct the address */
-	char my_addr[20];
-	this->constructAddress (my_addr);
-	//printf("%s\n",my_addr);
-
-	MQTTAsync_create (	&(this->client),
-							my_addr,
-							this->defaultRoverMQTTConfigure.clientID,
-							MQTTCLIENT_PERSISTENCE_NONE,
-							NULL);
-
-	MQTTAsync_setCallbacks(this->client, this, 	rover::RoverPahoMQTT::onConnectionLost_Redirect,
-												rover::RoverPahoMQTT::onSubscriberMessageArrived_Redirect,
-												NULL);
-
 	this->conn_opts.keepAliveInterval = 20;
 	this->conn_opts.cleansession = 1;
 	this->conn_opts.onSuccess = rover::RoverPahoMQTT::onSubscriberConnect_Redirect;
@@ -233,11 +198,6 @@ int rover::RoverPahoMQTT::subscribe (void)
 		{
 			usleep(this->defaultRoverMQTTConfigure.timeout);
 		}
-	}
-
-	if (this->defaultRoverMQTTFlags.f_mqtt_finished)
-	{
-		MQTTAsync_destroy(&(this->client));
 	}
 
 	return this->defaultReturnCodes.rc_subscribe;
@@ -267,7 +227,7 @@ void rover::RoverPahoMQTT::setHostName (char * host_name)
 void rover::RoverPahoMQTT::onConnectionLost (char *cause)
 {
 	MQTTAsync_connectOptions conn_opts = MQTTAsync_connectOptions_initializer;
-	int rc;
+	int rc = 0;
 
 	//printf("\nConnection lost\n");
 	//printf("     cause: %s\n", cause);
@@ -298,7 +258,7 @@ void rover::RoverPahoMQTT::onPublisherConnect (MQTTAsync_successData* response)
 {
 	MQTTAsync_responseOptions opts = MQTTAsync_responseOptions_initializer;
 	MQTTAsync_message pubmsg = MQTTAsync_message_initializer;
-	int rc;
+	int rc = 0;
 
 	//printf("Successful connection\n");
 
@@ -322,7 +282,7 @@ void rover::RoverPahoMQTT::onPublisherConnect (MQTTAsync_successData* response)
 void rover::RoverPahoMQTT::onPublisherSend (MQTTAsync_successData* response)
 {
 	MQTTAsync_disconnectOptions opts = MQTTAsync_disconnectOptions_initializer;
-	int rc;
+	int rc = 0;
 
 	//printf("Message with token value %d delivery confirmed\n", response->token);
 
@@ -351,7 +311,7 @@ void rover::RoverPahoMQTT::onConnectFailure (MQTTAsync_failureData* response)
 void rover::RoverPahoMQTT::onSubscriberConnect (MQTTAsync_successData* response)
 {
 	MQTTAsync_responseOptions opts = MQTTAsync_responseOptions_initializer;
-	int rc;
+	int rc = 0;
 
 	//printf("Successful connection\n");
 
@@ -365,7 +325,7 @@ void rover::RoverPahoMQTT::onSubscriberConnect (MQTTAsync_successData* response)
 
 	if ((rc = MQTTAsync_subscribe(this->client, this->defaultRoverMQTTConfigure.topic, this->defaultRoverMQTTConfigure.qos, &opts)) != MQTTASYNC_SUCCESS)
 	{
-		//printf ("Failed to start subscribe, return code %d\n", rc);
+        printf ("Failed to start subscribe, return code %d\n", rc);
 		this->defaultReturnCodes.rc_subscribe = rc;
 		//exit (EXIT_FAILURE);
 	}
@@ -373,9 +333,9 @@ void rover::RoverPahoMQTT::onSubscriberConnect (MQTTAsync_successData* response)
 
 int rover::RoverPahoMQTT::onSubscriberMessageArrived (char *topicName, int topicLen, MQTTAsync_message *message)
 {
-    int i = 0;
-    char* payloadptr = {};
-    char* buf = {};
+	int i = 0;
+	char* payloadptr = {};
+	char* buf = {};
 
 	if (this -> defaultRoverSubscribeData.data_ready == 0)
 	{
@@ -416,9 +376,15 @@ void rover::RoverPahoMQTT::onSubscribe (MQTTAsync_successData* response)
 	this->defaultRoverMQTTFlags.f_mqtt_subscribed = 1;
 }
 
-void rover::RoverPahoMQTT::setPayload (char * payload)
+void rover::RoverPahoMQTT::setPayload (const char * payload, int payloadLen)
 {
-	this->defaultRoverMQTTConfigure.payload = payload;
+	if (this->defaultRoverMQTTConfigure.payload != nullptr) {
+	    delete[] this->defaultRoverMQTTConfigure.payload;
+	    this->defaultRoverMQTTConfigure.payload = nullptr;
+	}
+	
+	this->defaultRoverMQTTConfigure.payload = new char [payloadLen+1];
+	std::strcpy (this->defaultRoverMQTTConfigure.payload, payload);
 }
 
 void rover::RoverPahoMQTT::setTopic (char * topic)
