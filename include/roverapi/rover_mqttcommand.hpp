@@ -185,7 +185,7 @@ namespace rover
 			 * @param core_usages Core usage array with 4 cores
 			 * @return int Return code
 			 */
-			int publishToCoreUsageTopic (float* core_usages);
+            int publishToCoreUsageTopic (float core_usages[4]);
 
 			/**
 			 * @brief Subscribes to rover's driving topic

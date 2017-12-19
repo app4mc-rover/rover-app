@@ -15,6 +15,7 @@
  */
 
 #include <roverapi/rover_pahomqtt.hpp>
+#include <cstring>
 
 rover::RoverPahoMQTT::RoverPahoMQTT(){}
 

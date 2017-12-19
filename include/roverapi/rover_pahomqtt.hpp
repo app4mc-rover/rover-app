@@ -220,7 +220,7 @@ namespace rover
 			 * @brief Sets payload
 			 * @param payload Payload
 			 */
-			void setPayload (char * payload);
+            void setPayload (const char * payload, int payloadLen);
 
 			/**
 			 * @brief Sets topic name
@@ -422,6 +422,17 @@ namespace rover
 			 * @return void
 			 */
 			void onDisconnect (MQTTAsync_successData* response);
+
+    private:
+            /**
+             * @brief Payload pointer to manage memory
+             */
+            char * payload = {};
+
+            /**
+             * @brief MQTT address
+             */
+            char my_address[20] = {};
 
 	};
 }

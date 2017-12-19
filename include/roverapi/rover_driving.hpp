@@ -57,6 +57,11 @@ namespace rover
 			 */
 			explicit RoverDriving();
 
+            /**
+             * @brief Destructor for RoverDriving class.
+             */
+            ~RoverDriving();
+
 			/**
 			 * @brief Initializes RoverDriving features.
 			 */

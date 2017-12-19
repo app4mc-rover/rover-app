@@ -22,12 +22,24 @@
 #include <stdio.h>
 #include <unistd.h>
 
+using namespace std;
+
 rover::RoverDriving::RoverDriving()
 :SPEED(HIGHEST_SPEED),
  ROVERDRIVING_INIT_(0)
 {
 
 }
+
+rover::RoverDriving::~RoverDriving()
+{
+    if (ROVERDRIVING_INIT_)
+    {
+        softPwmStop(SOFT_PWM_ENGINE_LEFT);
+        softPwmStop(SOFT_PWM_ENGINE_RIGHT);
+    }
+}
+
 void rover::RoverDriving::setSpeed (const int speed_setpoint)
 {
 	this->SPEED = speed_setpoint;

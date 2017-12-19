@@ -70,21 +70,17 @@ int rover::RoverMQTTCommand::publishToCoreUsageTopic (float core_usages[4] = {})
 
 	/* Construct payload from sensor_data */
 	Json::Value data;
-	data["core0"] = core_usages[0];
-	data["core1"] = core_usages[1];
-	data["core2"] = core_usages[2];
-	data["core3"] = core_usages[3];
+    data["core0"] = core_usages[0];
+    data["core1"] = core_usages[1];
+    data["core2"] = core_usages[2];
+    data["core3"] = core_usages[3];
 
 	/* Convert JSON data to string */
 	Json::FastWriter  string_writer;
 	std::string temp = string_writer.write(data);
 
-	/* Convert from string to char* */
-	char * temp2 = new char [temp.length()+1];
-	std::strcpy (temp2, temp.c_str());
-
 	/* Set payload to constructed char* */
-	this->setPayload(temp2);
+    this->setPayload(temp.c_str(), temp.length());
 
 	/* Call publish */
 	return this->publish();
@@ -134,15 +130,10 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	data["gy521"]["accel"]["z"] = sensor_data.gy521_accel_z;
 
 	/* Convert JSON data to string */
-	Json::FastWriter  string_writer;
 	std::string temp = string_writer.write(data);
 
-	/* Convert from string to char* */
-	char * temp2 = new char [temp.length()+1];
-	std::strcpy (temp2, temp.c_str());
-
 	/* Set payload to constructed char* */
-	this->setPayload(temp2);
+    this->setPayload(temp.c_str(), temp.length());
 
 	/* Call publish */
 	return this->publish();
