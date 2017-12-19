@@ -283,11 +283,10 @@ namespace rover
 			void flushFlags (void);
 
 			/**
-			 * @brief Used for constructing the connection address by writing to a string.
-			 * @param string String variable to use
+			 * @brief Used for constructing the connection address by writing to private attribute my_address
 			 * @return void
 			 */
-			void constructAddress (char* string);
+			void constructAddress (void);
 
 			/* Internal callbacks */
 			/* Related to publisher */

@@ -29,15 +29,15 @@ rover::RoverPahoMQTT::RoverPahoMQTT (char * host_name, int port, RoverMQTT_Confi
 	this->flushFlags();
 
 	/* Construct the address */
-	this->constructAddress (my_address);
+	this->constructAddress ();
 
-	createClient();
+	this->createClient();
 
 }
 
 void rover::RoverPahoMQTT::createClient(void) {
 	MQTTAsync_create (&(this->client),
-                            my_address,
+                            this->my_address,
                             this->defaultRoverMQTTConfigure.clientID,
                             MQTTCLIENT_PERSISTENCE_NONE,
                             NULL);
@@ -57,17 +57,21 @@ rover::RoverPahoMQTT::~RoverPahoMQTT() {
 	    delete[] this->defaultRoverMQTTConfigure.payload;
 	}
 	
-	destroyClient();
+	this->destroyClient();
 }
 
-void rover::RoverPahoMQTT::constructAddress (char* string)
+void rover::RoverPahoMQTT::constructAddress (void)
 {
 	char num_buffer[5] = {};
+	char string[20] = {};
 	sprintf (string, this->HOST_NAME);
 	strcat (string, ":");
 	snprintf (num_buffer, sizeof(num_buffer), "%d", this->PORT);
 	strcat(string, num_buffer);
 	num_buffer[0] = 0;
+	for (int i = 0; i<20; i++)
+		this->my_address[i] = string[i];
+
 }
 
 void rover::RoverPahoMQTT::flushFlags(void)
@@ -92,11 +96,7 @@ int rover::RoverPahoMQTT::publish2 (void)
 	MQTTClient_deliveryToken token;
 	int rc = 0;
 	
-	/* Construct the address */
-	char my_addr[20] = {};
-	this->constructAddress (my_addr);
-	
-	MQTTClient_create(&client2, my_addr, this->defaultRoverMQTTConfigure.clientID,
+	MQTTClient_create(&client2, this->my_address, this->defaultRoverMQTTConfigure.clientID,
 	    MQTTCLIENT_PERSISTENCE_NONE, NULL);
 	conn_opts.keepAliveInterval = 20;
 	conn_opts.cleansession = 1;
@@ -325,7 +325,7 @@ void rover::RoverPahoMQTT::onSubscriberConnect (MQTTAsync_successData* response)
 
 	if ((rc = MQTTAsync_subscribe(this->client, this->defaultRoverMQTTConfigure.topic, this->defaultRoverMQTTConfigure.qos, &opts)) != MQTTASYNC_SUCCESS)
 	{
-		printf ("Failed to start subscribe, return code %d\n", rc);
+		//printf ("Failed to start subscribe, return code %d\n", rc);
 		this->defaultReturnCodes.rc_subscribe = rc;
 		//exit (EXIT_FAILURE);
 	}

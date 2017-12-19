@@ -44,6 +44,9 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 	/* Load defaults */
 	this->flushFlags();
 
+	/* Construct the address */
+	this->constructAddress ();
+
 	this->createClient();
 }
 
