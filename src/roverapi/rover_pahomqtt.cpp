@@ -73,7 +73,7 @@ int rover::RoverPahoMQTT::publish2 (void)
 
 	if ((rc = MQTTClient_connect(client2, &conn_opts)) != MQTTCLIENT_SUCCESS)
 	{
-		printf("Failed to connect!!, return code %d\n", rc);
+		//printf("Failed to connect!!, return code %d\n", rc);
 		this->defaultReturnCodes.rc_publish = rc;
 		return this->defaultReturnCodes.rc_publish;
 		//exit(EXIT_FAILURE);
@@ -85,7 +85,7 @@ int rover::RoverPahoMQTT::publish2 (void)
 	MQTTClient_publishMessage(client2, this->defaultRoverMQTTConfigure.topic, &pubmsg, &token);
 	rc = MQTTClient_waitForCompletion(client2, token, 10000L);
 	this->defaultReturnCodes.rc_publish = rc;
-	printf("Message with delivery token %d delivered\n", token);
+	//printf("Message with delivery token %d delivered\n", token);
 	MQTTClient_disconnect(client2, 10000);
 	MQTTClient_destroy(&client2);
 	return this->defaultReturnCodes.rc_publish;
@@ -120,7 +120,7 @@ int rover::RoverPahoMQTT::publish (void)
 
 	if ((rc = MQTTAsync_connect(this->client, &(this->conn_opts))) != MQTTASYNC_SUCCESS)
 	{
-		printf("Failed to start connect, return code %d\n", rc);
+		//printf("Failed to start connect, return code %d\n", rc);
 		this->defaultReturnCodes.rc_publish = rc;
 		//return rc;
 	}
@@ -247,7 +247,7 @@ void rover::RoverPahoMQTT::onConnectionLost (char *cause)
 	conn_opts.cleansession = 1;
 	if ((rc = MQTTAsync_connect(this->client, &conn_opts)) != MQTTASYNC_SUCCESS)
 	{
-		printf("Failed to start connect, return code %d\n", rc);
+		//printf("Failed to start connect, return code %d\n", rc);
 		this->defaultReturnCodes.rc_publish = rc;
 		this->defaultReturnCodes.rc_subscribe = rc;
 		this->defaultRoverMQTTFlags.f_mqtt_finished = 1;
@@ -256,7 +256,7 @@ void rover::RoverPahoMQTT::onConnectionLost (char *cause)
 
 void rover::RoverPahoMQTT::onDisconnect (MQTTAsync_successData* response)
 {
-	printf("Successful disconnection\n");
+	//printf("Successful disconnection\n");
 	this->defaultRoverMQTTFlags.f_mqtt_finished = 1;
 	this->defaultRoverMQTTFlags.f_mqtt_disconnect_finished = 1;
 	this->defaultRoverMQTTFlags.f_mqtt_subscribed = 0;
@@ -270,7 +270,7 @@ void rover::RoverPahoMQTT::onPublisherConnect (MQTTAsync_successData* response)
 	MQTTAsync_message pubmsg = MQTTAsync_message_initializer;
 	int rc;
 
-	printf("Successful connection\n");
+	//printf("Successful connection\n");
 
 	opts.onSuccess = rover::RoverPahoMQTT::onPublisherSend_Redirect;
 	opts.context = this;
@@ -294,7 +294,7 @@ void rover::RoverPahoMQTT::onPublisherSend (MQTTAsync_successData* response)
 	MQTTAsync_disconnectOptions opts = MQTTAsync_disconnectOptions_initializer;
 	int rc;
 
-	printf("Message with token value %d delivery confirmed\n", response->token);
+	//printf("Message with token value %d delivery confirmed\n", response->token);
 
 	opts.onSuccess = rover::RoverPahoMQTT::onDisconnect_Redirect;
 	opts.context = this;
