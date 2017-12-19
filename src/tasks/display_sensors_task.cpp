@@ -57,10 +57,10 @@ void *DisplaySensors_Task (void * arg)
 		printf("Distance(HCSR04Front): %d cm\n", distance_sr04_front_shared.get());
 		printf("Distance(HCSR04Back): %d cm\n", distance_sr04_back_shared.get());
 
-		printf("DistanceInfraredRearRight: %f cm\n", infrared_shared[0]);
-		printf("DistanceInfraredRearLeft: %f cm\n", infrared_shared[1]);
-		printf("DistanceInfraredFrontRight: %f cm\n", infrared_shared[2]);
-		printf("DistanceInfraredFrontLeft: %f cm\n", infrared_shared[3]);
+		printf("DistanceInfraredRearRight: %f cm\n", infrared_shared.get(0));
+		printf("DistanceInfraredRearLeft: %f cm\n", infrared_shared.get(1));
+		printf("DistanceInfraredFrontRight: %f cm\n", infrared_shared.get(2));
+		printf("DistanceInfraredFrontLeft: %f cm\n", infrared_shared.get(3));
 
 		printf("Bearing from QMC5883L/HMC5883L: %f\n", bearing_shared.get());
 

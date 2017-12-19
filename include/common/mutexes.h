@@ -23,37 +23,83 @@ template <typename T>
 class SharedData {
 public:
 
-		SharedData() {
-				this->data = static_cast <T> (0);
-				pthread_mutex_init(&this->lock, NULL);
-		}
+	SharedData() 
+	{
+		this->data = static_cast <T> (0);
+		pthread_mutex_init(&this->lock, NULL);
+	}
 
-		~SharedData() {
-				pthread_mutex_destroy(&this->lock);
-		}
+	~SharedData() 
+	{
+		pthread_mutex_destroy(&this->lock);
+	}
 
-		T get() {
-			T tmp;
-			//pthread_mutex_lock(&this->lock);
-			tmp = this->data;
-			//pthread_mutex_unlock(&this->lock);
+	T get() 
+	{
+		T tmp = 0;
+		pthread_mutex_lock(&this->lock);
+		tmp = this->data;
+		pthread_mutex_unlock(&this->lock);
 
-			return tmp;
-		}
+		return tmp;
+	}
 
-		void set(T data) {
-				pthread_mutex_lock(&this->lock);
-				this->data = data;
-				pthread_mutex_unlock(&this->lock);
-		}
+	void set(T data) 
+	{
+		pthread_mutex_lock(&this->lock);
+		this->data = data;
+		pthread_mutex_unlock(&this->lock);
+	}
 
-		void operator= (T data) {
-				this->set(data);
-		}
+	void operator= (T data) 
+	{
+		this->set(data);
+	}
 
 private:
-		pthread_mutex_t lock;
-		T data;
+	pthread_mutex_t lock;
+	T data  = {};
+};
+
+template <typename T, int N>
+class SharedDataArray {
+public:
+
+	SharedDataArray()
+	{
+		for (int i = 0; i < N; i++) 
+		{
+			this->data[i] = static_cast <T> (0);
+		}
+		pthread_mutex_init(&this->lock, NULL);
+        }
+
+        ~SharedDataArray() 
+	{
+		pthread_mutex_destroy(&this->lock);
+        }
+
+        T get(int i) 
+	{
+		T tmp = 0;
+		pthread_mutex_lock(&this->lock);
+		tmp = this->data[i];
+		pthread_mutex_unlock(&this->lock);
+
+		return tmp;
+	}
+
+        void set(int i, T data) 
+	{
+		pthread_mutex_lock(&this->lock);
+		this->data[i] = data;
+		pthread_mutex_unlock(&this->lock);
+	}
+
+private:
+	T data[N] = {};
+        pthread_mutex_t lock;
+
 };
 
 extern SharedData<float> temperature_shared;
@@ -72,11 +118,8 @@ extern SharedData<int> running_flag;
 
 extern SharedData<int> display_mode_shared;
 
-extern float infrared_shared[4];
-extern pthread_mutex_t infrared_lock;
-
-extern double cpu_util_shared[4];
-extern pthread_mutex_t cpu_util_shared_lock;
+extern SharedDataArray<double, 4> cpu_util_shared;
+extern SharedDataArray<float, 4> infrared_shared;
 
 extern pthread_mutex_t display_lock;
 

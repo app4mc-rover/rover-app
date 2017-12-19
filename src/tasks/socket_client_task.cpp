@@ -60,10 +60,10 @@ Json::Value constructJSONData (int data_type)
 	{
 		case SENSOR_DATA:
 			data["rover_dtype"] = "sensor";
-			data["data"]["infrared0"] = ceil(infrared_shared[0]);
-			data["data"]["infrared1"] = ceil(infrared_shared[1]);
-			data["data"]["infrared2"] = ceil(infrared_shared[2]);
-			data["data"]["infrared3"] = ceil (infrared_shared[3]);
+			data["data"]["infrared0"] = ceil(infrared_shared.get(0));
+			data["data"]["infrared1"] = ceil(infrared_shared.get(1));
+			data["data"]["infrared2"] = ceil(infrared_shared.get(2));
+			data["data"]["infrared3"] = ceil (infrared_shared.get(3));
 			data["data"]["front"] = ceil (distance_sr04_front_shared.get());
 			data["data"]["rear"] = ceil (distance_sr04_back_shared.get());
 			data["data"]["temperature"] = ceil (temperature_shared.get());
@@ -72,10 +72,10 @@ Json::Value constructJSONData (int data_type)
 			break;
 		case UTIL_DATA:
 			data["rover_dtype"] = "util";
-			data["data"]["core0"] = cpu_util_shared[0];
-			data["data"]["core1"] = cpu_util_shared[1];
-			data["data"]["core2"] = cpu_util_shared[2];
-			data["data"]["core3"] = cpu_util_shared[3];
+			data["data"]["core0"] = cpu_util_shared.get(0);
+			data["data"]["core1"] = cpu_util_shared.get(1);
+			data["data"]["core2"] = cpu_util_shared.get(2);
+			data["data"]["core3"] = cpu_util_shared.get(3);
 			break;
 		default:
 			data["rover_dtype"] = "none";

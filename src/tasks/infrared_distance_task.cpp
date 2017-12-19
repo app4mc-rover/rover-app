@@ -58,12 +58,10 @@ void *InfraredDistance_Task (void * arg)
 
 		//Task content starts here -----------------------------------------------
 		//Setting argument in pthread - whenever you R/W access to temperature_shared, you have to do the same.
-		pthread_mutex_lock(&infrared_lock);
-			infrared_shared[0] = r_infrared0.read();
-			infrared_shared[1] = r_infrared1.read();
-			infrared_shared[2] = r_infrared2.read();
-			infrared_shared[3] = r_infrared3.read();
-		pthread_mutex_unlock(&infrared_lock);
+		infrared_shared.set(0, r_infrared0.read());
+		infrared_shared.set(1, r_infrared1.read());
+		infrared_shared.set(2, r_infrared2.read());
+		infrared_shared.set(3, r_infrared3.read());
 		//Task content ends here -------------------------------------------------
 
 		infrared_distance_task_tmr.recordEndTime();

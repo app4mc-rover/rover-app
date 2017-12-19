@@ -114,22 +114,22 @@ void *OLED_Task (void * arg)
 								my_display.setCursor(5,5);
 								my_display.print("------INFRARED------");
 
-								s = std::to_string((int) infrared_shared[0]);
+								s = std::to_string((int) infrared_shared.get(0));
 								my_display.setCursor(5,15);
 								my_display.print("Rear-Right:     ");
 								my_display.print(s.c_str());
 
-								s = std::to_string((int) infrared_shared[1]);
+								s = std::to_string((int) infrared_shared.get(1));
 								my_display.setCursor(5,25);
 								my_display.print("Rear-Left:      ");
 								my_display.print(s.c_str());
 
-								s = std::to_string((int) infrared_shared[2]);
+								s = std::to_string((int) infrared_shared.get(2));
 								my_display.setCursor(5,35);
 								my_display.print("Front-Right:    ");
 								my_display.print(s.c_str());
 
-								s = std::to_string((int) infrared_shared[3]);
+								s = std::to_string((int) infrared_shared.get(3));
 								my_display.setCursor(5,45);
 								my_display.print("Front-Left:     ");
 								my_display.print(s.c_str());

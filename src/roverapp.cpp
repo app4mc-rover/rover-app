@@ -146,21 +146,18 @@ SharedData<int> running_flag;
 AccelerometerData_t accelerometerdata_shared;
 pthread_mutex_t accelerometerdata_lock;
 
-float infrared_shared[4];
-pthread_mutex_t infrared_lock;
-
-double cpu_util_shared[4];
-pthread_mutex_t cpu_util_shared_lock;
+SharedDataArray<double, 4> cpu_util_shared;
+SharedDataArray<float, 4> infrared_shared;
 
 pthread_mutex_t display_lock;
 
-int main_running_flag;
+int main_running_flag = 1;
 
 // Function to handle the joining of every threads
 void joinThread(pthread_t * thread_to_join) {
-	char * ret;
-	int thread_ret;
-	char thread_name[10];
+	char * ret = nullptr;
+	int thread_ret = 0;
+	char thread_name[10] = {};
 
 	// If there thread wasn't created
 	if (!(*thread_to_join))
@@ -210,6 +207,7 @@ void exitHandler(int dummy)
 	joinThread(&ultrasonic_sr04_front_thread);
 	joinThread(&temperature_thread);
 	joinThread(&motordriver_thread);
+	joinThread(&displaysensors_thread);
 	joinThread(&infrared_thread);
 	joinThread(&compasssensor_thread);
 	joinThread(&record_timing_thread);
@@ -250,28 +248,13 @@ int main()
 	signal(SIGKILL, exitHandler);
 
 	//Initialize shared data
-	temperature_shared.set(0.0);
-	humidity_shared = 0.0;
-	distance_grove_shared = 0;
-	distance_sr04_front_shared = 0;
-	distance_sr04_back_shared = 0;
-	keycommand_shared = 'W';
-	infrared_shared[0] = 0.0;
-	infrared_shared[1] = 0.0;
-	infrared_shared[2] = 0.0;
-	infrared_shared[3] = 0.0;
-	bearing_shared = 0.0;
 	driving_mode = MANUAL;
 	speed_shared = HIGHEST_SPEED;
-	buzzer_status_shared = 0;
-	shutdown_hook_shared = 0;
 	running_flag = 1;
-	display_use_elsewhere_shared = 0;
 	main_running_flag = 1;
-	display_mode_shared = 0;
+	keycommand_shared = 'F';
 
 	//Initialize mutexes
-	pthread_mutex_init(&infrared_lock, NULL);
 	pthread_mutex_init(&display_lock, NULL);
 
 	//Thread objects

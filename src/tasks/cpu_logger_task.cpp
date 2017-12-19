@@ -41,7 +41,7 @@ void *Cpu_Logger_Task(void * arg)
 
 	RoverUtils r_utils = RoverUtils();
 
-	float util[4];
+    float util[4] = {};
 
 	while (running_flag.get())
 	{
@@ -51,12 +51,11 @@ void *Cpu_Logger_Task(void * arg)
 		//Task content starts here -----------------------------------------------
 
 		r_utils.getCoreUtilization(util);
-		pthread_mutex_lock(&cpu_util_shared_lock);
-			cpu_util_shared[0] = util[0];
-			cpu_util_shared[1] = util[1];
-			cpu_util_shared[2] = util[2];
-			cpu_util_shared[3] = util[3];
-		pthread_mutex_unlock(&cpu_util_shared_lock);
+		cpu_util_shared.set(0, util[0]);
+		cpu_util_shared.set(1, util[1]);
+		cpu_util_shared.set(2, util[2]);
+		cpu_util_shared.set(3, util[3]);
+
 		//To debug:
 		//printf ("%f %f %f %f",cpu_util_shared[0],cpu_util_shared[1],cpu_util_shared[2],cpu_util_shared[3]);
 
