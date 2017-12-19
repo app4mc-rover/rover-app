@@ -76,10 +76,10 @@ void *MQTT_Publish_Task (void * arg)
 		else
 			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
 
-        core_usages[0] = cpu_util_shared.get(0);
-        core_usages[1] = cpu_util_shared.get(1);
-        core_usages[2] = cpu_util_shared.get(2);
-        core_usages[3] = cpu_util_shared.get(3);
+		core_usages[0] = cpu_util_shared.get(0);
+		core_usages[1] = cpu_util_shared.get(1);
+		core_usages[2] = cpu_util_shared.get(2);
+		core_usages[3] = cpu_util_shared.get(3);
 
 		if (rover_mqtt.publishToCoreUsageTopic(core_usages) == 0)
 			printf ("Client rover_mqtt_publisher: Publishing successful!\n");

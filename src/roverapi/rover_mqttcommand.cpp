@@ -39,12 +39,12 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 	this->defaultRoverMQTTConfigure.qos = qos;
 	this->defaultRoverMQTTConfigure.clientID = clientID;
 	this->defaultRoverMQTTConfigure.timeout = 10000L;
-    this->defaultRoverMQTTConfigure.payload = nullptr;
+	this->defaultRoverMQTTConfigure.payload = nullptr;
 
 	/* Load defaults */
 	this->flushFlags();
 
-    this->createClient();
+	this->createClient();
 }
 
 rover::RoverMQTTCommand::~RoverMQTTCommand(){}
@@ -52,8 +52,8 @@ rover::RoverMQTTCommand::~RoverMQTTCommand(){}
 int rover::RoverMQTTCommand::publishToCoreUsageTopic (float core_usages[4] = {})
 {
 	/* Common buffer to use */
-    char topicBuffer_RoverMQTTCommand[64] = { };
-    char numBuffer_RoverMQTTCommand[2]  = { };
+	char topicBuffer_RoverMQTTCommand[64] = { };
+	char numBuffer_RoverMQTTCommand[2]  = { };
 
 	/* Set topic name */
 	/* Add inital part of the topic name */
@@ -70,17 +70,17 @@ int rover::RoverMQTTCommand::publishToCoreUsageTopic (float core_usages[4] = {})
 
 	/* Construct payload from sensor_data */
 	Json::Value data;
-    data["core0"] = core_usages[0];
-    data["core1"] = core_usages[1];
-    data["core2"] = core_usages[2];
-    data["core3"] = core_usages[3];
+	data["core0"] = core_usages[0];
+	data["core1"] = core_usages[1];
+	data["core2"] = core_usages[2];
+	data["core3"] = core_usages[3];
 
 	/* Convert JSON data to string */
 	Json::FastWriter  string_writer;
 	std::string temp = string_writer.write(data);
 
 	/* Set payload to constructed char* */
-    this->setPayload(temp.c_str(), temp.length());
+	this->setPayload(temp.c_str(), temp.length());
 
 	/* Call publish */
 	return this->publish();
@@ -89,10 +89,10 @@ int rover::RoverMQTTCommand::publishToCoreUsageTopic (float core_usages[4] = {})
 int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data)
 {
 	/* Common buffer to use */
-    char topicBuffer_RoverMQTTCommand[64] = {};
-    char numBuffer_RoverMQTTCommand[2] = {};
-    Json::Value data;
-    Json::FastWriter  string_writer;
+	char topicBuffer_RoverMQTTCommand[64] = {};
+	char numBuffer_RoverMQTTCommand[2] = {};
+	Json::Value data;
+	Json::FastWriter  string_writer;
 
 	/* Set topic name */
 	/* Add inital part of the topic name */
@@ -133,7 +133,7 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	std::string temp = string_writer.write(data);
 
 	/* Set payload to constructed char* */
-    this->setPayload(temp.c_str(), temp.length());
+	this->setPayload(temp.c_str(), temp.length());
 
 	/* Call publish */
 	return this->publish();
@@ -143,8 +143,8 @@ int rover::RoverMQTTCommand::subscribeToDrivingTopic (void)
 {
 	/* Set topic */
 	/* Common buffer to use */
-    char topicBuffer_RoverMQTTCommand[64] = {};
-    char numBuffer_RoverMQTTCommand[2] = {};
+	char topicBuffer_RoverMQTTCommand[64] = {};
+	char numBuffer_RoverMQTTCommand[2] = {};
 
 	/* Set topic name */
 	/* Add inital part of the topic name */
@@ -171,7 +171,7 @@ int rover::RoverMQTTCommand::unsubscribeToDrivingTopic (void)
 
 rover::RoverControlData_t rover::RoverMQTTCommand::readFromDrivingTopic (void)
 {
-    char data[MQTT_BUFSIZE] = {};
+	char data[MQTT_BUFSIZE] = {};
 	RoverControlData_t control_data;
 	bool parsingSuccessful = false;
 
@@ -227,7 +227,7 @@ rover::RoverControlData_t rover::RoverMQTTCommand::readFromDrivingTopic (void)
 		{
 			control_data.data_ready = 0;
 			control_data.speed = 0;
-            control_data.command = 'F';
+			control_data.command = 'F';
 			control_data.driving_mode = NONE_;
 		}
 	}

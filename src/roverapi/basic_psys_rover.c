@@ -50,7 +50,7 @@ void init(){
 }
 
 float getDistance(int channel){
-    float x = 0;
+	float x = 0;
 	#if !SIMULATOR
         float y = analogRead (BASE+channel);
 	#else
@@ -70,14 +70,14 @@ float getDistance(int channel){
 		x = 1/inverse;
 	}
 
-    printf("Distance channel row data %d:%f\n",channel,y);
-    printf("Distance channel (cm) %d:%f\n",channel,x);
+	printf("Distance channel row data %d:%f\n",channel,y);
+	printf("Distance channel (cm) %d:%f\n",channel,x);
 
 	return x;
 }
 
 float getTemperature(){
-    float x = 0;
+	float x = 0;
 
 	unsigned char command[2]= {0};
 
@@ -128,7 +128,7 @@ float getTemperature(){
 }
 
 float getHumidity(){
-    float x = 0;
+	float x = 0;
 
 	unsigned char command[2]= {0};
 

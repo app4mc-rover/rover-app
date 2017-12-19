@@ -325,7 +325,7 @@ void rover::RoverPahoMQTT::onSubscriberConnect (MQTTAsync_successData* response)
 
 	if ((rc = MQTTAsync_subscribe(this->client, this->defaultRoverMQTTConfigure.topic, this->defaultRoverMQTTConfigure.qos, &opts)) != MQTTASYNC_SUCCESS)
 	{
-        printf ("Failed to start subscribe, return code %d\n", rc);
+		printf ("Failed to start subscribe, return code %d\n", rc);
 		this->defaultReturnCodes.rc_subscribe = rc;
 		//exit (EXIT_FAILURE);
 	}

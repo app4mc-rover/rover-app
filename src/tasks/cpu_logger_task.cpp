@@ -41,7 +41,7 @@ void *Cpu_Logger_Task(void * arg)
 
 	RoverUtils r_utils = RoverUtils();
 
-    float util[4] = {};
+	float util[4] = {};
 
 	while (running_flag.get())
 	{
