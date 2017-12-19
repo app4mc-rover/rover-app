@@ -176,24 +176,54 @@ namespace rover
 			/**
 			 * @brief Publishes a message to rover's sensor topic
 			 * @param sensor_data Sensor data to be used in the message
-			 * @return int Return code
+			 * @return Return code 0-> success; others-> fail sreturn codes
+			 *  **1**: Connection refused: Unacceptable protocol version \n
+			 *	**2**: Connection refused: Identifier rejected \n
+			 *	**3**: Connection refused: Server unavailable \n
+			 *	**4**: Connection refused: Bad user name or password \n
+			 *	**5**: Connection refused: Not authorized \n
+			 *	**6-255**: Reserved for future use \n
+			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
 			 */
 			int publishToSensorTopic (RoverSensorData_t sensor_data);
 
 			/**
 			 * @brief Publishes a mesage to rover's core usage topic
 			 * @param core_usages Core usage array with 4 cores
-			 * @return int Return code
+			 * @return Return code 0-> success; others-> fail sreturn codes
+			 *  **1**: Connection refused: Unacceptable protocol version \n
+			 *	**2**: Connection refused: Identifier rejected \n
+			 *	**3**: Connection refused: Server unavailable \n
+			 *	**4**: Connection refused: Bad user name or password \n
+			 *	**5**: Connection refused: Not authorized \n
+			 *	**6-255**: Reserved for future use \n
+			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
 			 */
 			int publishToCoreUsageTopic (float core_usages[4]);
 
 			/**
 			 * @brief Subscribes to rover's driving topic
+			 * @return Return code 0-> success; others-> fail sreturn codes
+			 *  **1**: Connection refused: Unacceptable protocol version \n
+			 *	**2**: Connection refused: Identifier rejected \n
+			 *	**3**: Connection refused: Server unavailable \n
+			 *	**4**: Connection refused: Bad user name or password \n
+			 *	**5**: Connection refused: Not authorized \n
+			 *	**6-255**: Reserved for future use \n
+			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
 			 */
 			int subscribeToDrivingTopic (void);
 
 			/**
 			 * @brief Unsubscribes to rover's driving topic
+			 * @return Return code 0-> success; others-> fail sreturn codes
+			 *  **1**: Connection refused: Unacceptable protocol version \n
+			 *	**2**: Connection refused: Identifier rejected \n
+			 *	**3**: Connection refused: Server unavailable \n
+			 *	**4**: Connection refused: Bad user name or password \n
+			 *	**5**: Connection refused: Not authorized \n
+			 *	**6-255**: Reserved for future use \n
+			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
 			 */
 			int unsubscribeToDrivingTopic (void);
 

@@ -51,8 +51,6 @@ void *MQTT_Subscribe_Task (void * arg)
 		printf ("Client rover_mqtt_subscriber: Subscription unsuccessful!\n");
 	}
 
-
-
 	while (running_flag.get())
 	{
 		mqtt_subscribe_task_tmr.recordStartTime();

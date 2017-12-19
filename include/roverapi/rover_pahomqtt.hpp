@@ -253,25 +253,53 @@ namespace rover
 
 			/**
 			 * @brief Used for publishing to a topic in an MQTT-broker using asynchronous method
-			 * @return Return code 0-> success; others-> return codes
+			 * @return Return code 0-> success; others-> fail return codes \n
+			 * 	**1**: Connection refused: Unacceptable protocol version \n
+			 *	**2**: Connection refused: Identifier rejected \n
+			 *	**3**: Connection refused: Server unavailable \n
+			 *	**4**: Connection refused: Bad user name or password \n
+			 *	**5**: Connection refused: Not authorized \n
+			 *	**6-255**: Reserved for future use \n
+			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
 			 */
 			int publish (void);
 
 			/**
 			 * @brief Used for publishing to a topic in an MQTT-broker using blocking functions
-			 * @return Return code 0-> success; others-> return codes
+			 * @return Return code 0-> success; others-> fail return codes
+			 *	**1**: Connection refused: Unacceptable protocol version \n
+			 *	**2**: Connection refused: Identifier rejected \n
+			 *	**3**: Connection refused: Server unavailable \n
+			 *	**4**: Connection refused: Bad user name or password \n
+			 *	**5**: Connection refused: Not authorized \n
+			 *	**6-255**: Reserved for future use \n
+			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
 			 */
 			int publish2 (void);
 
 			/**
 			 * @brief Used for subscribing to a topic in an MQTT-broker. To unsubscribe use: RoverPahoMQTT::unsubscribe()
-			 * @return Return code 0-> success; others-> return codes
+			 * @return Return code 0-> success; others-> fail return codes
+			 *  **1**: Connection refused: Unacceptable protocol version \n
+			 *	**2**: Connection refused: Identifier rejected \n
+			 *	**3**: Connection refused: Server unavailable \n
+			 *	**4**: Connection refused: Bad user name or password \n
+			 *	**5**: Connection refused: Not authorized \n
+			 *	**6-255**: Reserved for future use \n
+			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
 			 */
 			int subscribe (void);
 
 			/**
 			 * @brief Used for unsubscribing and disconnecting from a subscription to a topic in an MQTT-broker.
-			 * @return Return code 0-> success; others-> return codes
+			 * @return Return code 0-> success; others-> fail sreturn codes
+			 *  **1**: Connection refused: Unacceptable protocol version \n
+			 *	**2**: Connection refused: Identifier rejected \n
+			 *	**3**: Connection refused: Server unavailable \n
+			 *	**4**: Connection refused: Bad user name or password \n
+			 *	**5**: Connection refused: Not authorized \n
+			 *	**6-255**: Reserved for future use \n
+			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
 			 */
 			int unsubscribe (void);
 
