@@ -39,6 +39,11 @@ void *Temperature_Task(void *arg)
 	temperature_task_tmr.setDeadline(1);
 	temperature_task_tmr.setPeriod(1);
 
+	//Set priority
+	//struct sched_param param ;
+	//param.sched_priority = sched_get_priority_max (SCHED_RR) ;
+	//pthread_setschedparam (pthread_self(), SCHED_RR, &param) ;
+
 	float temperature, humidity;
 
 	RoverDHT22 r_dht22 = RoverDHT22();
@@ -50,15 +55,19 @@ void *Temperature_Task(void *arg)
 		temperature_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-
-		temperature = r_dht22.readTemperature();
-
-
-
-		humidity = r_dht22.readHumidity();
+#ifndef SIMULATOR
+		pthread_mutex_lock(&gpio_intensive_operation_lock);
+			temperature = r_dht22.readTemperature();
+		pthread_mutex_unlock(&gpio_intensive_operation_lock);
 
 		temperature_shared.set(temperature);
+
+		pthread_mutex_lock(&gpio_intensive_operation_lock);
+			humidity = r_dht22.readHumidity();
+		pthread_mutex_unlock(&gpio_intensive_operation_lock);
+
 		humidity_shared = humidity;
+#endif
 
 		//Task content ends here -------------------------------------------------
 		temperature_task_tmr.recordEndTime();

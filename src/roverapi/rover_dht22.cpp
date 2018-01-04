@@ -84,6 +84,7 @@ float rover::RoverDHT22::readTemperature (void)
 	{
 		while (try_again == 1)
 		{
+			delay(100);
 			data[0] = 0;
 			data[1] = 0;
 			data[2] = 0;
@@ -135,7 +136,6 @@ float rover::RoverDHT22::readTemperature (void)
 				}
 			}
 
-			delay (1000);
 
 			/*
 			 * check we read 40 bits (8bit x 5 ) + verify checksum in the last byte
@@ -219,6 +219,7 @@ float rover::RoverDHT22::readHumidity (void)
 	{
 		while (try_again == 1)
 		{
+			delay(100);
 			data[0] = 0;
 			data[1] = 0;
 			data[2] = 0;
@@ -270,7 +271,6 @@ float rover::RoverDHT22::readHumidity (void)
 				}
 			}
 
-			delay(1000);
 
 			/*
 			 * check we read 40 bits (8bit x 5 ) + verify checksum in the last byte
