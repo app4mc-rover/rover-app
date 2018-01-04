@@ -34,20 +34,34 @@
 
 void ExitAutomaticModes(void)
 {
-	if (driving_mode.get() == ACC || driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2)
+	switch(driving_mode.get())
 	{
-		r_driving.stopRover(); //Stop the rover first.
-
-		driving_mode = MANUAL;
-
+		case ACC:
+		case PARKING_LEFT:
+		case PARKING_RIGHT:
+		case BOOTH1:
+		case BOOTH2:
+			r_driving.stopRover(); //Stop the rover first.
+			driving_mode = MANUAL;
+			break;
+		default:
+			;// Do nothing
 	}
 }
 
 void ManualModeSet(void)
 {
-	if (driving_mode.get() == ACC || driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2)
+	switch(driving_mode.get())
 	{
-		r_driving.stopRover(); //Stop the rover first.
+		case ACC:
+		case PARKING_LEFT:
+		case PARKING_RIGHT:
+		case BOOTH1:
+		case BOOTH2:
+			r_driving.stopRover(); //Stop the rover first.
+			break;
+		default:
+			;// Do nothing
 	}
 
 	driving_mode = MANUAL;
@@ -57,9 +71,16 @@ void ManualModeSet(void)
 
 void ParkingRightModeSet(void)
 {
-	if (driving_mode.get() == ACC || driving_mode.get() == MANUAL || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2)
+	switch(driving_mode.get())
 	{
-		r_driving.stopRover(); //Stop the rover first.
+		case ACC:
+		case MANUAL:
+		case BOOTH1:
+		case BOOTH2:
+			r_driving.stopRover(); //Stop the rover first.
+			break;
+		default:
+			;// Do nothing
 	}
 
 	driving_mode = PARKING_RIGHT;
@@ -69,9 +90,16 @@ void ParkingRightModeSet(void)
 
 void ParkingLeftModeSet(void)
 {
-	if (driving_mode.get() == ACC || driving_mode.get() == MANUAL || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2)
+	switch(driving_mode.get())
 	{
-		r_driving.stopRover(); //Stop the rover first.
+		case ACC:
+		case MANUAL:
+		case BOOTH1:
+		case BOOTH2:
+			r_driving.stopRover(); //Stop the rover first.
+			break;
+		default:
+			;// Do nothing
 	}
 
 	driving_mode = PARKING_LEFT;
@@ -81,9 +109,18 @@ void ParkingLeftModeSet(void)
 
 void ACCModeSet(void)
 {
-	if (driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == MANUAL || driving_mode.get() == BOOTH1 || driving_mode.get() == BOOTH2   )
+
+	switch(driving_mode.get())
 	{
-		r_driving.stopRover(); //Stop the rover first.
+		case PARKING_LEFT:
+		case PARKING_RIGHT:
+		case MANUAL:
+		case BOOTH1:
+		case BOOTH2:
+			r_driving.stopRover(); //Stop the rover first.
+			break;
+		default:
+			;// Do nothing
 	}
 
 	driving_mode = ACC;
@@ -92,9 +129,18 @@ void ACCModeSet(void)
 
 void BoothMode1Set(void)
 {
-	if (driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == MANUAL || driving_mode.get() == BOOTH2  || driving_mode.get() == ACC)
+
+	switch(driving_mode.get())
 	{
-		r_driving.stopRover(); //Stop the rover first.
+		case PARKING_LEFT:
+		case PARKING_RIGHT:
+		case MANUAL:
+		case ACC:
+		case BOOTH2:
+			r_driving.stopRover(); //Stop the rover first.
+			break;
+		default:
+			;// Do nothing
 	}
 
 	driving_mode = BOOTH1;
@@ -103,9 +149,18 @@ void BoothMode1Set(void)
 
 void BoothMode2Set(void)
 {
-	if (driving_mode.get() == PARKING_LEFT || driving_mode.get() == PARKING_RIGHT || driving_mode.get() == MANUAL || driving_mode.get() == BOOTH1 || driving_mode.get() == ACC)
+
+	switch(driving_mode.get())
 	{
-		r_driving.stopRover(); //Stop the rover first.
+		case PARKING_LEFT:
+		case PARKING_RIGHT:
+		case MANUAL:
+		case ACC:
+		case BOOTH1:
+			r_driving.stopRover(); //Stop the rover first.
+			break;
+		default:
+			;// Do nothing
 	}
 
 	driving_mode = BOOTH2;

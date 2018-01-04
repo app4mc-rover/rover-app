@@ -36,6 +36,8 @@ int retrieveWLANStatus (void)
 	/* Test the output char */
 	//printf("buf=%c\n",buffer[0]);
 
+	pclose(fp);
+
 	/* Return */
 	if (buffer[0] == '0')
 	{
@@ -63,6 +65,8 @@ int retrieveETHStatus (void)
 	/* Test the output char */
 	//printf("buf=%c\n",buffer[0]);
 
+	pclose(fp);
+
 	/* Return */
 	if (buffer[0] == '0')
 	{
@@ -89,6 +93,8 @@ int retrieveINTERNETStatus (void)
 	/* Test the output char */
 	//printf("buf=%c\n",buffer[0]);
 
+	pclose(fp);
+
 	/* Return */
 	if (buffer[0] == '0')
 	{
@@ -114,6 +120,8 @@ int retrieveBLUETOOTHStatus (void)
 
 	/* Test the output char */
 	//printf("buf=%c\n",buffer[0]);
+
+	pclose(fp);
 
 	/* Return */
 	if (buffer[0] == '1')
@@ -150,6 +158,8 @@ int retrieveHONOStatus (void)
 
 	/* Get status */
 	status = handleCode(code);
+
+	pclose(fp);
 
 	/* Return */
 	if (status == 1)
@@ -219,6 +229,8 @@ int retrieveHONOStatus (char * host_name, int port, char * tenant_name, char * d
 
 	/* Get status */
 	status = handleCode(code);
+
+	pclose(fp);
 
 	/* Return */
 	if (status == 1)

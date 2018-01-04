@@ -205,7 +205,7 @@ void runside(int side, int direction, int speed){
 		//digitalWrite(SOFT_PWM_ENGINE_RIGHT, HIGH);
 	}
 	#else
-		printf("Run side - side: %d, direction: %d, speed %d");
+		printf("Run side - side: %d, direction: %d, speed %d\n", side, direction, speed);
 	#endif
 }
 

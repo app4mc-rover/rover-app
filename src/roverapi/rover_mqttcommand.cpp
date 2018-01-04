@@ -95,7 +95,7 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	char topicBuffer_RoverMQTTCommand[64] = {};
 	char numBuffer_RoverMQTTCommand[2] = {};
 	Json::Value data;
-	Json::FastWriter  string_writer;
+	Json::FastWriter string_writer;
 
 	/* Set topic name */
 	/* Add inital part of the topic name */

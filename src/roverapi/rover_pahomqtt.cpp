@@ -29,7 +29,7 @@ rover::RoverPahoMQTT::RoverPahoMQTT (char * host_name, int port, RoverMQTT_Confi
 	this->flushFlags();
 
 	/* Construct the address */
-	this->constructAddress ();
+	this->constructAddress();
 
 	this->createClient();
 
@@ -56,7 +56,11 @@ rover::RoverPahoMQTT::~RoverPahoMQTT() {
 	if (this->defaultRoverMQTTConfigure.payload != nullptr) {
 	    delete[] this->defaultRoverMQTTConfigure.payload;
 	}
-	
+
+	if (this->defaultRoverSubscribeData.data != nullptr) {
+		free(this->defaultRoverSubscribeData.data);
+	}
+
 	this->destroyClient();
 }
 
@@ -82,7 +86,7 @@ void rover::RoverPahoMQTT::flushFlags(void)
 	this->defaultRoverMQTTFlags.f_mqtt_publish_successful = 0;
 	this->deliveredtoken = 0;
 	this->defaultRoverSubscribeData.data_ready = 0;
-	this->defaultRoverSubscribeData.data = "N/A";
+	this->defaultRoverSubscribeData.data = nullptr;
 	this->defaultReturnCodes.rc_publish = -1;
 	this->defaultReturnCodes.rc_subscribe = -1;
 	this->defaultReturnCodes.rc_unsubscribe = -1;
@@ -95,12 +99,12 @@ int rover::RoverPahoMQTT::publish2 (void)
 	MQTTClient_message pubmsg = MQTTClient_message_initializer;
 	MQTTClient_deliveryToken token;
 	int rc = 0;
-	
+
 	MQTTClient_create(&client2, this->my_address, this->defaultRoverMQTTConfigure.clientID,
 	    MQTTCLIENT_PERSISTENCE_NONE, NULL);
 	conn_opts.keepAliveInterval = 20;
 	conn_opts.cleansession = 1;
-	
+
 	if ((rc = MQTTClient_connect(client2, &conn_opts)) != MQTTCLIENT_SUCCESS)
 	{
 		//printf("Failed to connect!!, return code %d\n", rc);
@@ -337,9 +341,13 @@ int rover::RoverPahoMQTT::onSubscriberMessageArrived (char *topicName, int topic
 	char* payloadptr = {};
 	char* buf = {};
 
-	if (this -> defaultRoverSubscribeData.data_ready == 0)
+	if (this->defaultRoverSubscribeData.data_ready == 0)
 	{
 		buf = (char *) malloc (sizeof(char *) * message->payloadlen + 1);
+		// If memory couldn't be allocated
+		if (!buf) {
+			return 0;
+		}
 
 		payloadptr = (char *) message->payload;
 		for(i=0; i<message->payloadlen; i++)
@@ -348,6 +356,12 @@ int rover::RoverPahoMQTT::onSubscriberMessageArrived (char *topicName, int topic
 			payloadptr++;
 		}
 		buf[message->payloadlen] = 0;
+
+		// Delete pre-existing data
+		if (this->defaultRoverSubscribeData.data)
+		{
+			free(this->defaultRoverSubscribeData.data);
+		}
 
 		this->defaultRoverSubscribeData.data = buf;
 		//printf ("%s\n",buf);
@@ -382,7 +396,7 @@ void rover::RoverPahoMQTT::setPayload (const char * payload, int payloadLen)
 	    delete[] this->defaultRoverMQTTConfigure.payload;
 	    this->defaultRoverMQTTConfigure.payload = nullptr;
 	}
-	
+
 	this->defaultRoverMQTTConfigure.payload = new char [payloadLen+1];
 	std::strcpy (this->defaultRoverMQTTConfigure.payload, payload);
 }
