@@ -72,14 +72,14 @@ public:
 			this->data[i] = static_cast <T> (0);
 		}
 		pthread_mutex_init(&this->lock, NULL);
-        }
+	}
 
-        ~SharedDataArray() 
+	~SharedDataArray()
 	{
 		pthread_mutex_destroy(&this->lock);
-        }
+	}
 
-        T get(int i) 
+	T get(int i)
 	{
 		T tmp = 0;
 		pthread_mutex_lock(&this->lock);
@@ -89,7 +89,7 @@ public:
 		return tmp;
 	}
 
-        void set(int i, T data) 
+	void set(int i, T data)
 	{
 		pthread_mutex_lock(&this->lock);
 		this->data[i] = data;
@@ -98,8 +98,7 @@ public:
 
 private:
 	T data[N] = {};
-        pthread_mutex_t lock;
-
+	pthread_mutex_t lock;
 };
 
 extern SharedData<float> temperature_shared;
@@ -122,6 +121,8 @@ extern SharedDataArray<double, 4> cpu_util_shared;
 extern SharedDataArray<float, 4> infrared_shared;
 
 extern pthread_mutex_t display_lock;
+
+extern pthread_mutex_t gpio_intensive_operation_lock;
 
 typedef struct
 {
