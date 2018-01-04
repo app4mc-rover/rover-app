@@ -32,8 +32,8 @@ void *MQTT_Publish_Task (void * arg)
 	timing mqtt_publish_task_tmr;
 
 	mqtt_publish_task_tmr.setTaskID("MQTTPublish");
-	mqtt_publish_task_tmr.setDeadline(3.0);
-	mqtt_publish_task_tmr.setPeriod(3.0);
+	mqtt_publish_task_tmr.setDeadline(1.0);
+	mqtt_publish_task_tmr.setPeriod(1.0);
 
 	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"127.0.0.1",//"172.22.167.161",
 														1887,//1883,
