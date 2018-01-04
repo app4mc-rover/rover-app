@@ -187,7 +187,7 @@ void runside(int side, int direction, int speed){
 		} else if (direction<0) {
 			digitalWrite (DIRECTION_PIN_LEFT, LOW) ;
 		} else return;
-		softPwmCreate (SOFT_PWM_ENGINE_LEFT, 0, FULL_SPEED);
+		//softPwmCreate (SOFT_PWM_ENGINE_LEFT, 0, FULL_SPEED);
 		softPwmWrite (SOFT_PWM_ENGINE_LEFT, speed) ;
 		//pwmWrite (SOFT_PWM_ENGINE_LEFT, speed);
 		//digitalWrite(SOFT_PWM_ENGINE_LEFT, HIGH);
@@ -198,7 +198,7 @@ void runside(int side, int direction, int speed){
 		} else if (direction<0) {
 			digitalWrite (DIRECTION_PIN_RIGHT, LOW) ;
 		} else return;
-		softPwmCreate (SOFT_PWM_ENGINE_LEFT, 0, FULL_SPEED);
+		//softPwmCreate (SOFT_PWM_ENGINE_LEFT, 0, FULL_SPEED);
 		softPwmWrite (SOFT_PWM_ENGINE_RIGHT, speed) ;
 		//pwmWrite (SOFT_PWM_ENGINE_LEFT, speed);
 		//softToneWrite (2, 400);
