@@ -247,14 +247,6 @@ void turnOnSpot (int direction, int side, int speed){
 }
 
 
-void shutdown(){
-	#if !SIMULATOR
-	softPwmStop(SOFT_PWM_ENGINE_LEFT) ;
-	softPwmStop(SOFT_PWM_ENGINE_RIGHT) ;
-	#endif
-}
-
-
 void stop(){
 	runside (LEFT, FORWARD,0);
 	runside (RIGHT, FORWARD,0);

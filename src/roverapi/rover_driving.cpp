@@ -35,8 +35,9 @@ rover::RoverDriving::~RoverDriving()
 {
     if (ROVERDRIVING_INIT_)
     {
-        softPwmStop(SOFT_PWM_ENGINE_LEFT);
-        softPwmStop(SOFT_PWM_ENGINE_RIGHT);
+	this->stopRover();
+	softPwmStop(SOFT_PWM_ENGINE_LEFT);
+	softPwmStop(SOFT_PWM_ENGINE_RIGHT);
     }
 }
 

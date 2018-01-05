@@ -284,6 +284,8 @@ void *MotorDriver_Task(void * arg)
 
 	}
 
+	r_driving.~RoverDriving(); 
+
 	/* the function must return something - NULL will do */
 	return NULL;
 }
