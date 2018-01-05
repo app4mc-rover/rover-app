@@ -205,7 +205,7 @@ void runside(int side, int direction, int speed){
 		//digitalWrite(SOFT_PWM_ENGINE_RIGHT, HIGH);
 	}
 	#else
-		printf("Run side - side: %d, direction: %d, speed %d");
+		printf("Run side - side: %d, direction: %d, speed %d\n", side, direction, speed);
 	#endif
 }
 
@@ -244,14 +244,6 @@ void turnOnSpot (int direction, int side, int speed){
 //		runside (RIGHT, direction, 0);
 	}
 	//delay (DEFAULT_DELAY) ;
-}
-
-
-void shutdown(){
-	#if !SIMULATOR
-	softPwmStop(SOFT_PWM_ENGINE_LEFT) ;
-	softPwmStop(SOFT_PWM_ENGINE_RIGHT) ;
-	#endif
 }
 
 

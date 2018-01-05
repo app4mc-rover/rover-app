@@ -43,6 +43,8 @@ void rover::RoverUtils::getCoreUtilization (float coreUtil[numberOfCores])
 	/* Parse */
 	sscanf(buffer,"[%f, %f, %f, %f]",&coreUtil[0], &coreUtil[1], &coreUtil[2], &coreUtil[3]);
 
+	pclose(fp);
+
 }
 
 int rover::RoverUtils::getWlanStatus (void)
