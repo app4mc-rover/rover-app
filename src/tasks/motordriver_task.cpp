@@ -261,7 +261,8 @@ void *MotorDriver_Task(void * arg)
 				BoothMode2Set();
 				break;
 			case 'F':
-				r_driving.stopRover();
+				if (driving_mode.get() == MANUAL)
+					r_driving.stopRover();
 				break;
 		}
 		//Task content ends here -------------------------------------------------

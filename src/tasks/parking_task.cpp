@@ -51,7 +51,7 @@ void *Parking_Task(void * arg)
 
 		if (driving_mode.get() == PARKING_LEFT)
 		{
-			//printf ("PARKING STARTED\n");
+			//printf ("PARKING STARTED %c\n",keycommand_shared.get());
 			bearing_begin = bearing_shared.get();
 			r_driving.setSpeed(speed_shared.get()-50);
 			r_driving.turnLeft();

@@ -36,8 +36,8 @@ void *Temperature_Task(void *arg)
 	timing temperature_task_tmr;
 
 	temperature_task_tmr.setTaskID("DHT22");
-	temperature_task_tmr.setDeadline(1);
-	temperature_task_tmr.setPeriod(1);
+	temperature_task_tmr.setDeadline(4);
+	temperature_task_tmr.setPeriod(4);
 
 	//Set priority
 	//struct sched_param param ;
@@ -55,18 +55,24 @@ void *Temperature_Task(void *arg)
 		temperature_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
+		// TODO: A dirty solution for temperature sensor messing up with the ultrasonic sensor
+		// timing. With this, temperature sensor only works with manual driving, i.e. non- proximity-
+		// sensor-critical driving mode.
+		if (driving_mode.get() == MANUAL)
+		{
 #ifndef SIMULATOR
-		pthread_mutex_lock(&gpio_intensive_operation_lock);
-			temperature = r_dht22.readTemperature();
-		pthread_mutex_unlock(&gpio_intensive_operation_lock);
+			pthread_mutex_lock(&gpio_intensive_operation_lock);
+				temperature = r_dht22.readTemperature();
+			pthread_mutex_unlock(&gpio_intensive_operation_lock);
 
-		temperature_shared.set(temperature);
+			temperature_shared.set(temperature);
 
-		pthread_mutex_lock(&gpio_intensive_operation_lock);
-			humidity = r_dht22.readHumidity();
-		pthread_mutex_unlock(&gpio_intensive_operation_lock);
+			pthread_mutex_lock(&gpio_intensive_operation_lock);
+				humidity = r_dht22.readHumidity();
+			pthread_mutex_unlock(&gpio_intensive_operation_lock);
 
-		humidity_shared = humidity;
+			humidity_shared = humidity;
+		}
 #endif
 
 		//Task content ends here -------------------------------------------------

@@ -39,6 +39,7 @@ void *Adaptive_Cruise_Control_Task(void * arg)
 
 		if (driving_mode.get() == ACC)
 		{
+
 			//front sensor -> distance_sr04_front_shared
 			//back sensor -> distance_sr04_back_shared
 
