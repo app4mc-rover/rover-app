@@ -31,6 +31,10 @@ void *MQTT_Subscribe_Task (void * arg)
 {
 	timing mqtt_subscribe_task_tmr;
 
+	int rt = 0;
+	int try_count = 0;
+	int max_tries = 20;
+
 	mqtt_subscribe_task_tmr.setTaskID("MQTTSubscribe");
 	mqtt_subscribe_task_tmr.setDeadline(0.1);
 	mqtt_subscribe_task_tmr.setPeriod(0.1);
@@ -42,15 +46,32 @@ void *MQTT_Subscribe_Task (void * arg)
 														"rover_mqtt_subscriber");
 	RoverControlData_t control_data;
 
-	if (rover_mqtt.subscribeToDrivingTopic() == 0)
+	/* Try to subscribe to the driving topic for a while (max_tries times) */
+	do
 	{
-		printf ("Client rover_mqtt_subscriber: Subscription succesful!\n");
+		if (running_flag.get())
+		{
+			rt = rover_mqtt.subscribeToDrivingTopic();
+			if (rt == 0)
+			{
+				printf ("Client rover_mqtt_subscriber: Subscription succesful!\n");
+				break;
+			}
+			else
+			{
+				printf ("Client rover_mqtt_subscriber: Subscription unsuccessful!\n");
+			}
+			if (try_count >= max_tries - 1)
+				break;
+			try_count += 1;
+			delay (1500);
+		}
+		else
+			break;
 	}
-	else
-	{
-		printf ("Client rover_mqtt_subscriber: Subscription unsuccessful!\n");
-	}
+	while (rt != 0);
 
+	/* Main thread loop */
 	while (running_flag.get())
 	{
 		mqtt_subscribe_task_tmr.recordStartTime();
