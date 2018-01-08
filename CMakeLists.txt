@@ -22,8 +22,8 @@ if(DEFINED ENV{SDKTARGETSYSROOT})
     message(STATUS "SDK Detected")
     set(SDK_EN 1)
 
-    # Use OpenCV module
-    set(CMAKE_MODULE_PATH $ENV{SDKTARGETSYSROOT}/usr/share/OpenCV ${CMAKE_MODULE_PATH})
+    # Use OpenCV config from Yocto SDK (WA)
+    set(OpenCV_DIR $ENV{SDKTARGETSYSROOT}/usr/share/OpenCV)
     # Raspicam module
     set(CMAKE_MODULE_PATH $ENV{SDKTARGETSYSROOT}/usr/lib/cmake ${CMAKE_MODULE_PATH})
 
@@ -143,11 +143,6 @@ target_link_libraries (roverapi roverappdrivers)
 
 #Link external libraries
 # Since OpenCV Module don't return full path for libraries 
-find_library(OpenCV_LIB NAMES opencv_core)
-target_link_libraries (roverapptasks ${OpenCV_LIB})
-find_library(OpenCV_LIB NAMES opencv_imgproc)
-target_link_libraries (roverapptasks ${OpenCV_LIB})
-find_library(OpenCV_LIB NAMES opencv_highgui)
 target_link_libraries (roverapptasks ${OpenCV_LIB})
 
 target_link_libraries (roverapptasks jsoncpp)
