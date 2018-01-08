@@ -40,8 +40,8 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 	timing ultrasonic_grove_task_tmr;
 
 	ultrasonic_grove_task_tmr.setTaskID("GrooveUltrasonic");
-	ultrasonic_grove_task_tmr.setDeadline(0.5);
-	ultrasonic_grove_task_tmr.setPeriod(0.5);
+	ultrasonic_grove_task_tmr.setDeadline(0.2);
+	ultrasonic_grove_task_tmr.setPeriod(0.2);
 
 	RoverGrooveUltrasonic r_groove = RoverGrooveUltrasonic(ROVER_REAR);
 	r_groove.initialize();
