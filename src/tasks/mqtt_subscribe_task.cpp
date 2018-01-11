@@ -33,16 +33,16 @@ void *MQTT_Subscribe_Task (void * arg)
 
 	int rt = 0;
 	int try_count = 0;
-	int max_tries = 20;
+	const int max_tries = 20;
 
 	mqtt_subscribe_task_tmr.setTaskID("MQTTSubscribe");
 	mqtt_subscribe_task_tmr.setDeadline(0.1);
 	mqtt_subscribe_task_tmr.setPeriod(0.1);
 
-	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	"127.0.0.1",//"172.22.167.161",
-														1887,//1883,
-														1,
-														1,
+	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	MQTT_BROKER,//"172.22.167.161",
+														MQTT_BROKER_PORT,//1883,
+														ROVER_IDENTITY,
+														ROVER_MQTT_QOS,
 														"rover_mqtt_subscriber");
 	RoverControlData_t control_data;
 

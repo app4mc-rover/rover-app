@@ -54,6 +54,14 @@ using namespace rover;
 // rear proximity sensing.
 //#define USE_GROOVE_SENSOR 1
 
+// Rover ID to be compiled
+#define ROVER_IDENTITY 1
+
+// For MQTT clients
+#define MQTT_BROKER "127.0.0.1"
+#define MQTT_BROKER_PORT 1887
+#define ROVER_MQTT_QOS 1
+
 /* For proper termination */
 extern RoverBase r_base;
 extern RoverDriving r_driving;
