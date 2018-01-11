@@ -13,11 +13,13 @@
  *
  */
 
+#include <stdio.h>
+
 //Basis Include
 #include <roverapi/rover_api.hpp>
 
 //Sensor APIs Include
-#include <roverapi/roverxxxx.hpp>
+//#include <roverapi/roverxxxx.hpp>
 
 //Using rover namespace from Rover API
 using namespace rover;

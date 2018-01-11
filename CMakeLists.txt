@@ -199,16 +199,16 @@ target_link_libraries(roverapp roverappdrivers)
 add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/display_control.cpp)
 target_link_libraries (display_control roverapi)
 
-add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/driving_control.cpp)
+add_executable(driving_control ${CMAKE_SOURCE_DIR}/src/examples/driving_control.cpp)
 target_link_libraries (driving_control roverapi)
 
-add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/mqtt_telemetry.cpp)
+add_executable(mqtt_telemetry ${CMAKE_SOURCE_DIR}/src/examples/mqtt_telemetry.cpp)
 target_link_libraries (mqtt_telemetry roverapi)
 
-add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/sensor_reading.cpp)
+add_executable(sensor_reading ${CMAKE_SOURCE_DIR}/src/examples/sensor_reading.cpp)
 target_link_libraries (sensor_reading roverapi)
 
-add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/utility_info.cpp)
+add_executable(utility_info ${CMAKE_SOURCE_DIR}/src/examples/utility_info.cpp)
 target_link_libraries (utility_info roverapi)
 
 

@@ -14,6 +14,8 @@
  *
  */
 
+#include <stdio.h>
+
 //Basis Include
 #include <roverapi/rover_api.hpp>
 
