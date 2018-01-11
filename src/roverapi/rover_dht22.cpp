@@ -58,6 +58,9 @@ float rover::RoverDHT22::readTemperature (void)
 	float h;
 	float c;
 
+	int try_count = 0;
+	const int max_tries = 20;
+
 	data[0] = 0;
 	data[1] = 0;
 	data[2] = 0;
@@ -84,7 +87,17 @@ float rover::RoverDHT22::readTemperature (void)
 	{
 		while (try_again == 1)
 		{
+			if (try_count >= max_tries)
+			{
+				c = 0;
+				h = 0;
+				break;
+			}
+
+			try_count += 1;
+
 			delay(100);
+
 			data[0] = 0;
 			data[1] = 0;
 			data[2] = 0;
@@ -193,6 +206,9 @@ float rover::RoverDHT22::readHumidity (void)
 	float h;
 	float c;
 
+	int try_count = 0;
+	const int max_tries = 20;
+
 	data[0] = 0;
 	data[1] = 0;
 	data[2] = 0;
@@ -219,7 +235,17 @@ float rover::RoverDHT22::readHumidity (void)
 	{
 		while (try_again == 1)
 		{
+			if (try_count >= max_tries)
+			{
+				c = 0;
+				h = 0;
+				break;
+			}
+
+			try_count += 1;
+
 			delay(100);
+
 			data[0] = 0;
 			data[1] = 0;
 			data[2] = 0;
