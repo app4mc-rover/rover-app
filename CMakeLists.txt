@@ -134,6 +134,7 @@ target_link_libraries(roverapi paho-mqtt3a)
 target_link_libraries(roverapi paho-mqtt3as)
 target_link_libraries(roverapi paho-mqtt3c)
 target_link_libraries(roverapi paho-mqtt3cs)
+target_link_libraries(roverapi jsoncpp)
 
 target_link_libraries (roverapi roverappdrivers)
 
@@ -190,6 +191,14 @@ target_link_libraries(roverapp roverapptasks)
 
 #Link drivers
 target_link_libraries(roverapp roverappdrivers)
+
+#
+# EXAMPLES
+#
+
+add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/display_control.cpp)
+target_link_libraries (display_control roverapi)
+
 
 #
 # INSTALLING
