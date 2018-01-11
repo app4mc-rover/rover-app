@@ -230,7 +230,8 @@ int main (void)
 												rover_mqtt_conf);
 
 	// Overriding payload and topic
-	rover_mqtt.setPayload ("Hi from rover!");
+	char payloadMsg[] = "Hi from rover!";
+    rover_mqtt.setPayload (payloadMsg, strlen(payloadMsg));
 	rover_mqtt.setTopic ("rover/RoverDriving/control/2");
 
 	// Publish is non-blocking, client disconnects afterwards
