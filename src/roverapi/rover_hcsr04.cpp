@@ -77,12 +77,21 @@ float rover::RoverHCSR04::read (void)
 
 		//Wait for echo start
 		long startTime = micros();
+
 		while(digitalRead(this->echoPin) == LOW && micros() < startTime + 100000);
 
 		//Wait for echo end
 		startTime = micros();
-		while(digitalRead(this->echoPin) == HIGH);
+
+		while(digitalRead(this->echoPin) == HIGH && micros() < startTime + 2000000);
+		//Added timeout here to make it unblocking..
+
 		long travelTime = micros() - startTime;
+
+		if (travelTime > 2000000)
+		{
+			return 0.0;
+		}
 
 		//Get distance in cm
 		distance = travelTime * 34300;

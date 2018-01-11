@@ -62,11 +62,13 @@ float rover::RoverGrooveUltrasonic::read (void)
 	startTime = micros();
 	while (digitalRead(this->sigPin) == LOW  );
 	startTime = micros();
+
 	// For values above 40cm, groove sensor is unable to receive signals which causes it to stuck
 	// This is resolved by adding the timeout below.
 	// However, this timeout cause values bigger than 40 to fluctuate
 	while (digitalRead(this->sigPin) == HIGH && micros() < startTime + 100000);
 	stopTime = micros();
+
 	elapsedTime = stopTime - startTime;
 	distance = elapsedTime / 29 /2;
 	// The below protection is to ensure there is no value fluctuation
