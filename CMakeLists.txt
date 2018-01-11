@@ -211,6 +211,12 @@ target_link_libraries (sensor_reading roverapi)
 add_executable(utility_info ${CMAKE_SOURCE_DIR}/src/examples/utility_info.cpp)
 target_link_libraries (utility_info roverapi)
 
+add_executable(mqtt_publisher ${CMAKE_SOURCE_DIR}/src/examples/mqtt_publisher.cpp)
+target_link_libraries (mqtt_publisher roverapi)
+
+add_executable(mqtt_subscriber ${CMAKE_SOURCE_DIR}/src/examples/mqtt_subscriber.cpp)
+target_link_libraries (mqtt_subscriber roverapi)
+
 
 #
 # INSTALLING

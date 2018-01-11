@@ -41,6 +41,7 @@ int main()
     
     // Use the OLED display on the rover
     RoverDisplay my_display = RoverDisplay();
+    my_display.initialize();
     
     // Prepare display contents
     my_display.clearDisplay();

@@ -21,8 +21,20 @@
 //MQTTCommand Include
 #include <roverapi/rover_mqttcommand.hpp>
 
-//Driving Include
-#include <roverapi/rover_mqttcommand.hpp>
+//Sensor APIs Include
+#include <roverapi/rover_grooveultrasonic.hpp>
+#include <roverapi/rover_gy521.hpp>
+#include <roverapi/rover_hcsr04.hpp>
+#include <roverapi/rover_hmc5883l.hpp>
+#include <roverapi/rover_infraredsensor.hpp>
+#include <roverapi/rover_qmc5883l.hpp>
+#include <roverapi/rover_dht22.hpp>
+
+//Your MQTT Broker credentials
+#define MQTT_BROKER "127.0.0.1"
+#define MQTT_BROKER_PORT 1883
+#define ROVER_IDENTITY 1 //Rover ID
+#define ROVER_MQTT_QOS 1 //Quality of service
 
 //Using rover namespace from Rover API
 using namespace rover;
@@ -36,7 +48,22 @@ int main()
     RoverBase r_base = RoverBase();
     r_base.initialize();
     
-  
+    //MQTT Publisher
+    RoverMQTTCommand rover_mqtt_publisher = RoverMQTTCommand (	MQTT_BROKER,
+														MQTT_BROKER_PORT,
+														ROVER_IDENTITY,
+														ROVER_MQTT_QOS,
+														"rover_mqtt_publisher");
+	
+	//MQTT Subscriber
+    RoverMQTTCommand rover_mqtt_subscriber = RoverMQTTCommand (	MQTT_BROKER,
+														MQTT_BROKER_PORT,
+														ROVER_IDENTITY,
+														ROVER_MQTT_QOS,
+														"rover_mqtt_subscriber");
+														
+														
+	//TODO: Write a single thread telemetry controller!
 
 	printf("Exiting.\n");
 

@@ -34,7 +34,13 @@ int main()
     RoverBase r_base = RoverBase();
     r_base.initialize();
     
-  
+     // Instantiate a RoverUtils object to access member functions that deals with status and performance tasks
+    RoverUtils r_utils = RoverUtils(); //RoverUtils does not need to be initialized
+    
+    // Print core utilization from the rover's OS
+    float util[4];
+    r_utils.getCoreUtilization(util);
+    printf ("Utilization = [%f %f %f %f]\n", util[0], util[1], util[2], util[3]);
 
 	printf("Exiting.\n");
 
