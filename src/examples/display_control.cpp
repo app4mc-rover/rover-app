@@ -10,7 +10,7 @@
  *        Displays the internet status on the OLED display
  *
  * Author:
- *    M. Ozcelikors <mozcelikors@gmail.com>
+ *    M. Ozcelikors, FH Dortmund <mozcelikors@gmail.com> - 11.01.2018
  *
  */
 
