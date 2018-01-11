@@ -58,9 +58,9 @@ void *Temperature_Task(void *arg)
 		// TODO: A dirty solution for temperature sensor messing up with the ultrasonic sensor
 		// timing. With this, temperature sensor only works with manual driving, i.e. non- proximity-
 		// sensor-critical driving mode.
+#ifndef SIMULATOR
 		if (driving_mode.get() == MANUAL)
 		{
-#ifndef SIMULATOR
 			pthread_mutex_lock(&gpio_intensive_operation_lock);
 				temperature = r_dht22.readTemperature();
 			pthread_mutex_unlock(&gpio_intensive_operation_lock);
