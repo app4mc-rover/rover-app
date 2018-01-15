@@ -108,7 +108,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -158,7 +158,798 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.18801986">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.18801986" moduleId="org.eclipse.cdt.core.settings" name="display_control">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.18801986" name="display_control" parent="cdt.managedbuild.config.gnu.cross.exe.debug">
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.18801986." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.1421036913" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.121819473" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PREFIX)" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1425983298" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PATH)\bin" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1805195751" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/roverapp}/Debug" id="cdt.managedbuild.builder.gnu.cross.466791270" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.99991592" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.516560434" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.1477905648" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.2116832953" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\i2c-dev&quot;"/>
+								</option>
+								<option id="gnu.c.compiler.option.dialect.std.1691136714" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1461916638" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1510706230" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.272836808" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.optimization.level.1660115943" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.1307581340" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.2109037910" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include\drivers\oled_drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\jsoncpp\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\bluetooth&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\wiringPi&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\calib3d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\features2d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\flann\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgcodecs\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\ml\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\videoio\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\core\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\highgui\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgproc\include&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.dialect.std.1938533719" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1876352003" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.dialect.flags.958376675" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1964868474" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.672531065" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1027666138" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.355208355" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
+									<listOptionValue builtIn="false" value="raspicam"/>
+									<listOptionValue builtIn="false" value="raspicam_cv"/>
+									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="opencv_ml"/>
+									<listOptionValue builtIn="false" value="opencv_imgcodecs"/>
+									<listOptionValue builtIn="false" value="opencv_videoio"/>
+									<listOptionValue builtIn="false" value="opencv_calib3d"/>
+									<listOptionValue builtIn="false" value="opencv_features2d"/>
+									<listOptionValue builtIn="false" value="opencv_flann"/>
+									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3a"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3as"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3c"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3cs"/>
+									<listOptionValue builtIn="false" value="jsoncpp"/>
+									<listOptionValue builtIn="false" value="bluetooth"/>
+									<listOptionValue builtIn="false" value="wiringPi"/>
+									<listOptionValue builtIn="false" value="wiringPiDev"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.2146956048" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\wiringPi-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\pahoo-mqtt-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\raspicam-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\opencv-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\jsoncpp-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\bluetooth-libs&quot;"/>
+								</option>
+								<option id="gnu.cpp.link.option.flags.1058384658" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="-Wl,-verbose,-rpath-link,&quot;$(RASPBERRY_TOOLCHAIN_PATH)\arm-linux-gnueabihf\sysroot\lib\arm-linux-gnueabihf&quot;" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.193602448" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.481286628" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1225106561" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.745092913" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.872440580">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.872440580" moduleId="org.eclipse.cdt.core.settings" name="driving_control">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.872440580" name="driving_control" parent="cdt.managedbuild.config.gnu.cross.exe.debug">
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.872440580." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.1295859503" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.1922313653" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PREFIX)" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.879339162" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PATH)\bin" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1625571840" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/roverapp}/Debug" id="cdt.managedbuild.builder.gnu.cross.1885879885" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1466919341" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.469278581" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.1958995910" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.1516410088" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\i2c-dev&quot;"/>
+								</option>
+								<option id="gnu.c.compiler.option.dialect.std.71661703" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1490464700" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1095612594" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.43266401" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.optimization.level.1247376733" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.1459278009" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.1451745382" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include\drivers\oled_drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\jsoncpp\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\bluetooth&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\wiringPi&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\calib3d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\features2d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\flann\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgcodecs\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\ml\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\videoio\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\core\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\highgui\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgproc\include&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.dialect.std.483507288" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.2134176853" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.dialect.flags.497672820" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.783142780" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1286902624" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1037414910" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.945759035" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
+									<listOptionValue builtIn="false" value="raspicam"/>
+									<listOptionValue builtIn="false" value="raspicam_cv"/>
+									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="opencv_ml"/>
+									<listOptionValue builtIn="false" value="opencv_imgcodecs"/>
+									<listOptionValue builtIn="false" value="opencv_videoio"/>
+									<listOptionValue builtIn="false" value="opencv_calib3d"/>
+									<listOptionValue builtIn="false" value="opencv_features2d"/>
+									<listOptionValue builtIn="false" value="opencv_flann"/>
+									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3a"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3as"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3c"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3cs"/>
+									<listOptionValue builtIn="false" value="jsoncpp"/>
+									<listOptionValue builtIn="false" value="bluetooth"/>
+									<listOptionValue builtIn="false" value="wiringPi"/>
+									<listOptionValue builtIn="false" value="wiringPiDev"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.1263956876" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\wiringPi-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\pahoo-mqtt-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\raspicam-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\opencv-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\jsoncpp-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\bluetooth-libs&quot;"/>
+								</option>
+								<option id="gnu.cpp.link.option.flags.396378634" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="-Wl,-verbose,-rpath-link,&quot;$(RASPBERRY_TOOLCHAIN_PATH)\arm-linux-gnueabihf\sysroot\lib\arm-linux-gnueabihf&quot;" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.307700549" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1934723834" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.2037531537" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.215100283" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1401768511">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1401768511" moduleId="org.eclipse.cdt.core.settings" name="mqtt_publisher">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1401768511" name="mqtt_publisher" parent="cdt.managedbuild.config.gnu.cross.exe.debug">
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1401768511." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.1628070306" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.1851195358" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PREFIX)" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1445966300" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PATH)\bin" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.504783473" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/roverapp}/Debug" id="cdt.managedbuild.builder.gnu.cross.1694272870" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1737346068" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.492217032" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.506134690" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.205265467" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\i2c-dev&quot;"/>
+								</option>
+								<option id="gnu.c.compiler.option.dialect.std.552380260" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1333617174" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1177811244" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.944891048" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.optimization.level.1167437976" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.678994228" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.1145685608" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include\drivers\oled_drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\jsoncpp\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\bluetooth&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\wiringPi&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\calib3d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\features2d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\flann\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgcodecs\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\ml\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\videoio\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\core\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\highgui\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgproc\include&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.dialect.std.518614638" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.940019829" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.dialect.flags.1309745300" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1671557423" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.591068575" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.98095603" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.1973201035" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
+									<listOptionValue builtIn="false" value="raspicam"/>
+									<listOptionValue builtIn="false" value="raspicam_cv"/>
+									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="opencv_ml"/>
+									<listOptionValue builtIn="false" value="opencv_imgcodecs"/>
+									<listOptionValue builtIn="false" value="opencv_videoio"/>
+									<listOptionValue builtIn="false" value="opencv_calib3d"/>
+									<listOptionValue builtIn="false" value="opencv_features2d"/>
+									<listOptionValue builtIn="false" value="opencv_flann"/>
+									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3a"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3as"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3c"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3cs"/>
+									<listOptionValue builtIn="false" value="jsoncpp"/>
+									<listOptionValue builtIn="false" value="bluetooth"/>
+									<listOptionValue builtIn="false" value="wiringPi"/>
+									<listOptionValue builtIn="false" value="wiringPiDev"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.165443438" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\wiringPi-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\pahoo-mqtt-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\raspicam-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\opencv-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\jsoncpp-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\bluetooth-libs&quot;"/>
+								</option>
+								<option id="gnu.cpp.link.option.flags.2052492615" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="-Wl,-verbose,-rpath-link,&quot;$(RASPBERRY_TOOLCHAIN_PATH)\arm-linux-gnueabihf\sysroot\lib\arm-linux-gnueabihf&quot;" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.4001941" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.568494937" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1642198329" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.2131112340" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1441072511">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1441072511" moduleId="org.eclipse.cdt.core.settings" name="mqtt_subscriber">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1441072511" name="mqtt_subscriber" parent="cdt.managedbuild.config.gnu.cross.exe.debug">
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1441072511." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.566848672" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.662186368" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PREFIX)" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1244523715" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PATH)\bin" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1693966192" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/roverapp}/Debug" id="cdt.managedbuild.builder.gnu.cross.2115566238" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1409644198" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.765793141" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.720221183" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.1221026861" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\i2c-dev&quot;"/>
+								</option>
+								<option id="gnu.c.compiler.option.dialect.std.403837798" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.849331874" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.697585247" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.271012194" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.optimization.level.2096292786" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.1787153059" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.1836140012" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include\drivers\oled_drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\jsoncpp\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\bluetooth&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\wiringPi&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\calib3d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\features2d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\flann\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgcodecs\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\ml\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\videoio\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\core\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\highgui\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgproc\include&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.dialect.std.1661007569" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1156570310" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.dialect.flags.926571738" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1988271327" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.811279901" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.932732378" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.223950444" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
+									<listOptionValue builtIn="false" value="raspicam"/>
+									<listOptionValue builtIn="false" value="raspicam_cv"/>
+									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="opencv_ml"/>
+									<listOptionValue builtIn="false" value="opencv_imgcodecs"/>
+									<listOptionValue builtIn="false" value="opencv_videoio"/>
+									<listOptionValue builtIn="false" value="opencv_calib3d"/>
+									<listOptionValue builtIn="false" value="opencv_features2d"/>
+									<listOptionValue builtIn="false" value="opencv_flann"/>
+									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3a"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3as"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3c"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3cs"/>
+									<listOptionValue builtIn="false" value="jsoncpp"/>
+									<listOptionValue builtIn="false" value="bluetooth"/>
+									<listOptionValue builtIn="false" value="wiringPi"/>
+									<listOptionValue builtIn="false" value="wiringPiDev"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.2011310682" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\wiringPi-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\pahoo-mqtt-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\raspicam-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\opencv-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\jsoncpp-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\bluetooth-libs&quot;"/>
+								</option>
+								<option id="gnu.cpp.link.option.flags.2055133095" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="-Wl,-verbose,-rpath-link,&quot;$(RASPBERRY_TOOLCHAIN_PATH)\arm-linux-gnueabihf\sysroot\lib\arm-linux-gnueabihf&quot;" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1736833875" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1171505975" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.499830614" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.531498880" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1597681091">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1597681091" moduleId="org.eclipse.cdt.core.settings" name="mqtt_telemetry">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1597681091" name="mqtt_telemetry" parent="cdt.managedbuild.config.gnu.cross.exe.debug">
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1597681091." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.256201419" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.899167527" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PREFIX)" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1638485491" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PATH)\bin" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.464581903" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/roverapp}/Debug" id="cdt.managedbuild.builder.gnu.cross.453571825" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.484691102" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.17386479" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.1771702228" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.667653803" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\i2c-dev&quot;"/>
+								</option>
+								<option id="gnu.c.compiler.option.dialect.std.1274146820" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1914584350" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1038881055" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.129579673" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.optimization.level.1802935747" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.1083932381" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.949325768" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include\drivers\oled_drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\jsoncpp\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\bluetooth&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\wiringPi&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\calib3d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\features2d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\flann\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgcodecs\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\ml\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\videoio\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\core\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\highgui\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgproc\include&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.dialect.std.747655089" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.868518170" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.dialect.flags.144103237" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.403066884" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.497050735" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1896572997" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.889192277" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
+									<listOptionValue builtIn="false" value="raspicam"/>
+									<listOptionValue builtIn="false" value="raspicam_cv"/>
+									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="opencv_ml"/>
+									<listOptionValue builtIn="false" value="opencv_imgcodecs"/>
+									<listOptionValue builtIn="false" value="opencv_videoio"/>
+									<listOptionValue builtIn="false" value="opencv_calib3d"/>
+									<listOptionValue builtIn="false" value="opencv_features2d"/>
+									<listOptionValue builtIn="false" value="opencv_flann"/>
+									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3a"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3as"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3c"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3cs"/>
+									<listOptionValue builtIn="false" value="jsoncpp"/>
+									<listOptionValue builtIn="false" value="bluetooth"/>
+									<listOptionValue builtIn="false" value="wiringPi"/>
+									<listOptionValue builtIn="false" value="wiringPiDev"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.957179805" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\wiringPi-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\pahoo-mqtt-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\raspicam-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\opencv-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\jsoncpp-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\bluetooth-libs&quot;"/>
+								</option>
+								<option id="gnu.cpp.link.option.flags.1253021622" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="-Wl,-verbose,-rpath-link,&quot;$(RASPBERRY_TOOLCHAIN_PATH)\arm-linux-gnueabihf\sysroot\lib\arm-linux-gnueabihf&quot;" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.32591590" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.556040548" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.872976508" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1519492918" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1218400266">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1218400266" moduleId="org.eclipse.cdt.core.settings" name="sensor_reading">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1218400266" name="sensor_reading" parent="cdt.managedbuild.config.gnu.cross.exe.debug">
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1218400266." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.1069691025" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.1267644785" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PREFIX)" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.855903620" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PATH)\bin" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1247725513" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/roverapp}/Debug" id="cdt.managedbuild.builder.gnu.cross.337048970" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1027631178" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1152887624" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.557778788" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.297639750" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\i2c-dev&quot;"/>
+								</option>
+								<option id="gnu.c.compiler.option.dialect.std.1724647928" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1515178471" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1407805150" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1712528922" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.optimization.level.1306477378" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.550805903" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.1059927983" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include\drivers\oled_drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\jsoncpp\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\bluetooth&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\wiringPi&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\calib3d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\features2d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\flann\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgcodecs\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\ml\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\videoio\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\core\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\highgui\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgproc\include&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.dialect.std.1730737436" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.982764885" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.dialect.flags.2106382050" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.157302792" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.511358823" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.643767335" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.1374718506" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
+									<listOptionValue builtIn="false" value="raspicam"/>
+									<listOptionValue builtIn="false" value="raspicam_cv"/>
+									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="opencv_ml"/>
+									<listOptionValue builtIn="false" value="opencv_imgcodecs"/>
+									<listOptionValue builtIn="false" value="opencv_videoio"/>
+									<listOptionValue builtIn="false" value="opencv_calib3d"/>
+									<listOptionValue builtIn="false" value="opencv_features2d"/>
+									<listOptionValue builtIn="false" value="opencv_flann"/>
+									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3a"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3as"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3c"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3cs"/>
+									<listOptionValue builtIn="false" value="jsoncpp"/>
+									<listOptionValue builtIn="false" value="bluetooth"/>
+									<listOptionValue builtIn="false" value="wiringPi"/>
+									<listOptionValue builtIn="false" value="wiringPiDev"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.96100895" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\wiringPi-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\pahoo-mqtt-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\raspicam-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\opencv-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\jsoncpp-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\bluetooth-libs&quot;"/>
+								</option>
+								<option id="gnu.cpp.link.option.flags.1227842641" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="-Wl,-verbose,-rpath-link,&quot;$(RASPBERRY_TOOLCHAIN_PATH)\arm-linux-gnueabihf\sysroot\lib\arm-linux-gnueabihf&quot;" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.882815776" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.778216920" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.395769067" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1219397794" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1173995570">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1173995570" moduleId="org.eclipse.cdt.core.settings" name="utility_info">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1173995570" name="utility_info" parent="cdt.managedbuild.config.gnu.cross.exe.debug">
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.1173995570." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.938254205" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.734220950" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PREFIX)" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.2050432082" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PATH)\bin" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.177693774" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/roverapp}/Debug" id="cdt.managedbuild.builder.gnu.cross.1931212584" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1515896491" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.126810205" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.1399739152" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.647372894" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\i2c-dev&quot;"/>
+								</option>
+								<option id="gnu.c.compiler.option.dialect.std.1649390441" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.2014985065" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.563505670" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1391364234" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.optimization.level.419641593" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.539037788" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.1068227836" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include\drivers\oled_drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\jsoncpp\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\bluetooth&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\wiringPi&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\calib3d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\features2d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\flann\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgcodecs\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\ml\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\videoio\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\core\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\highgui\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgproc\include&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.dialect.std.374985845" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1328460211" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.dialect.flags.1209522152" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2115485206" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.453512243" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1548680106" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.1232669945" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
+									<listOptionValue builtIn="false" value="raspicam"/>
+									<listOptionValue builtIn="false" value="raspicam_cv"/>
+									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="opencv_ml"/>
+									<listOptionValue builtIn="false" value="opencv_imgcodecs"/>
+									<listOptionValue builtIn="false" value="opencv_videoio"/>
+									<listOptionValue builtIn="false" value="opencv_calib3d"/>
+									<listOptionValue builtIn="false" value="opencv_features2d"/>
+									<listOptionValue builtIn="false" value="opencv_flann"/>
+									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3a"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3as"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3c"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3cs"/>
+									<listOptionValue builtIn="false" value="jsoncpp"/>
+									<listOptionValue builtIn="false" value="bluetooth"/>
+									<listOptionValue builtIn="false" value="wiringPi"/>
+									<listOptionValue builtIn="false" value="wiringPiDev"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.262066172" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\wiringPi-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\pahoo-mqtt-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\raspicam-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\opencv-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\jsoncpp-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\bluetooth-libs&quot;"/>
+								</option>
+								<option id="gnu.cpp.link.option.flags.1352657236" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="-Wl,-verbose,-rpath-link,&quot;$(RASPBERRY_TOOLCHAIN_PATH)\arm-linux-gnueabihf\sysroot\lib\arm-linux-gnueabihf&quot;" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1080921987" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.410172357" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1248453999" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.571047198" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
