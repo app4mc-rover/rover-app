@@ -143,7 +143,13 @@ target_link_libraries (roverapi roverappdrivers)
 
 #Link external libraries
 # Since OpenCV Module don't return full path for libraries 
-target_link_libraries (roverapptasks ${OpenCV_LIB})
+if(SDK_EN EQUAL 0)
+   target_link_libraries (roverapptasks opencv_core)
+   target_link_libraries (roverapptasks opencv_highgui)
+   target_link_libraries (roverapptasks opencv_imgproc)
+else()
+   target_link_libraries (roverapptasks ${OpenCV_DIR})
+endif()
 
 target_link_libraries (roverapptasks jsoncpp)
 target_link_libraries (roverapptasks bluetooth)
