@@ -23,7 +23,7 @@
 
 //Your MQTT Broker credentials and info
 #define MQTT_BROKER "127.0.0.1"
-#define MQTT_BROKER_PORT 1887 // default:1887
+#define MQTT_BROKER_PORT 1887 // default:1883
 #define ROVER_MQTT_QOS 1 //Quality of service
 #define SUBSCRIBE_TOPIC "rover/1/RoverDriving/control"
 #define RECEIVE_PAYLOAD_BUFSIZE 50 // <-- Here we want to receive up to 50 characters of data
