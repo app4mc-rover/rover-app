@@ -63,6 +63,8 @@ Updated: 11.12.2017
 \section example_usage Rover API Example Usage
 The following is an example C++ application using some of the Rover API functions:
 
+\warning For more concreate examples please go to: https://github.com/app4mc-rover/rover-app/tree/master/src/examples
+
 \code{.cpp}
 //Basis Include
 #include <roverapi/rover_api.hpp>
@@ -220,7 +222,6 @@ int main (void)
 
 	RoverMQTT_Configure_t rover_mqtt_conf;
 	rover_mqtt_conf.clientID = "rover";							// Identification of the Client
-	rover_mqtt_conf.payload  = "Hello from rover!";				// Message to send
 	rover_mqtt_conf.qos      = 1;   							// Quality of Service
 	rover_mqtt_conf.timeout  = 10000L;  						// Polling timeout, 10000L is fine
 	rover_mqtt_conf.topic    = "rover/RoverDriving/control/1"; 	// Topic name to publish to or subscribe from

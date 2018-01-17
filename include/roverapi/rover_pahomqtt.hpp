@@ -86,7 +86,6 @@ namespace rover
 	 *
 	 * 	RoverMQTT_Configure_t rover_mqtt_conf;
 	 * 	rover_mqtt_conf.clientID = "rover";							// Identification of the Client
-	 * 	rover_mqtt_conf.payload  = "Hello from rover!";				// Message to send
 	 * 	rover_mqtt_conf.qos      = 1;   							// Quality of Service
 	 * 	rover_mqtt_conf.timeout  = 10000L;  						// Polling timeout, 10000L is fine
 	 * 	rover_mqtt_conf.topic    = "rover/RoverDriving/control/1"; 	// Topic name to publish to or subscribe from
@@ -96,7 +95,8 @@ namespace rover
 	 *												rover_mqtt_conf);
 	 *
 	 * 	// Overriding payload and topic
-	 * 	rover_mqtt.setPayload ("Hi from rover!");
+	 * 	char payloadMsg[] = "Hi from rover!";
+     *	rover_mqtt.setPayload (payloadMsg, strlen(payloadMsg));
 	 * 	rover_mqtt.setTopic ("rover/RoverDriving/control/2");
 	 *
 	 * 	// Publish is non-blocking, client disconnects afterwards
@@ -129,6 +129,8 @@ namespace rover
 	 * 		printf ("Unsubscribe unsuccessful!\n");
 	 * 	}
 	 * 	\endcode
+	 *
+	 *	\warning For more concreate examples please go to: https://github.com/app4mc-rover/rover-app/tree/master/src/examples
 	 */
 	class RoverPahoMQTT : public RoverCloud
 	{
