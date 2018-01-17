@@ -108,7 +108,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp|examples/buzzer_button_example.cpp|examples/mqtt_telemetry.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -158,7 +158,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp|examples/buzzer_button_example.cpp|examples/mqtt_telemetry.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -271,7 +271,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="tasks|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/buzzer_button_example.cpp|tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/mqtt_telemetry.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -384,7 +384,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="tasks|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/display_control.cpp|examples/buzzer_button_example.cpp|tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/mqtt_telemetry.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -497,7 +497,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="tasks|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_subscriber.cpp|examples/driving_control.cpp|examples/display_control.cpp|examples/buzzer_button_example.cpp|tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/mqtt_telemetry.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -610,7 +610,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="tasks|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp|examples/buzzer_button_example.cpp|tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/mqtt_telemetry.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -723,7 +723,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="tasks|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp|examples/buzzer_button_example.cpp|tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -836,7 +836,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="tasks|examples/utility_info.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp|examples/buzzer_button_example.cpp|tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/mqtt_telemetry.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -949,7 +949,120 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="tasks|examples/sensor_reading.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp|examples/display_control.cpp|examples/buzzer_button_example.cpp|tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/mqtt_telemetry.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.18801986.340767999">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.18801986.340767999" moduleId="org.eclipse.cdt.core.settings" name="buzzer_button_example">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.18801986.340767999" name="buzzer_button_example" parent="cdt.managedbuild.config.gnu.cross.exe.debug">
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.848745760.18801986.340767999." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.267808478" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.2013323394" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PREFIX)" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1044461007" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" useByScannerDiscovery="false" value="$(RASPBERRY_TOOLCHAIN_PATH)\bin" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1864077641" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/roverapp}/Debug" id="cdt.managedbuild.builder.gnu.cross.479215135" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1117320672" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1829067141" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.31989987" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.include.paths.325593357" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\i2c-dev&quot;"/>
+								</option>
+								<option id="gnu.c.compiler.option.dialect.std.750191175" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c11" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.2034775228" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1853733293" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.820284675" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.optimization.level.2048037625" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.1456516584" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.1743026708" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include\drivers\oled_drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\paho-mqtt&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\raspicam-0.1.3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_PROJECT_PATH)\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\jsoncpp\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\bluetooth&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\wiringPi&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\calib3d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\features2d\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\flann\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgcodecs\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\ml\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\videoio\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\core\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\highgui\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\includes\opencv-3.2.0\modules\imgproc\include&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.dialect.std.934573187" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1467023142" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.dialect.flags.815285036" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.96079040" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1615998758" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.384360922" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.84171436" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
+									<listOptionValue builtIn="false" value="raspicam"/>
+									<listOptionValue builtIn="false" value="raspicam_cv"/>
+									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="opencv_ml"/>
+									<listOptionValue builtIn="false" value="opencv_imgcodecs"/>
+									<listOptionValue builtIn="false" value="opencv_videoio"/>
+									<listOptionValue builtIn="false" value="opencv_calib3d"/>
+									<listOptionValue builtIn="false" value="opencv_features2d"/>
+									<listOptionValue builtIn="false" value="opencv_flann"/>
+									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3a"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3as"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3c"/>
+									<listOptionValue builtIn="false" value="paho-mqtt3cs"/>
+									<listOptionValue builtIn="false" value="jsoncpp"/>
+									<listOptionValue builtIn="false" value="bluetooth"/>
+									<listOptionValue builtIn="false" value="wiringPi"/>
+									<listOptionValue builtIn="false" value="wiringPiDev"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.1433483783" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\wiringPi-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\pahoo-mqtt-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\raspicam-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\opencv-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\jsoncpp-libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;$(ROVERAPP_CROSS_SDK_PATH)\shared-libs\bluetooth-libs&quot;"/>
+								</option>
+								<option id="gnu.cpp.link.option.flags.1260941154" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="-Wl,-verbose,-rpath-link,&quot;$(RASPBERRY_TOOLCHAIN_PATH)\arm-linux-gnueabihf\sysroot\lib\arm-linux-gnueabihf&quot;" valueType="string"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.642033210" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.203341981" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1911731378" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.2058635740" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="tasks|examples/display_control.cpp|tasks/ultrasonic_sensor_sr04_front_task.cpp|tasks/ultrasonic_sensor_sr04_back_task.cpp|tasks/ultrasonic_sensor_grove_task.cpp|tasks/temperature_task.cpp|tasks/srf02_task.cpp|tasks/socket_server_task.cpp|tasks/socket_client_task.cpp|tasks/rover_test_task.cpp|tasks/record_timing_task.cpp|tasks/parking_task.cpp|tasks/oled_task.cpp|tasks/mqtt_subscribe_task.cpp|tasks/mqtt_publish_task.cpp|tasks/motordriver_task.cpp|tasks/keycommand_task.cpp|tasks/infrared_distance_task.cpp|tasks/image_processing_task.cpp|tasks/hono_interaction_task.cpp|tasks/external_gpio_task.cpp|tasks/display_sensors_task.cpp|tasks/cpu_logger_task.cpp|tasks/compass_sensor_task.cpp|tasks/booth_modes_task.cpp|tasks/bluetooth_task.cpp|tasks/adaptive_cruise_control_task.cpp|tasks/accelerometer_task.cpp|roverapp.cpp|examples/utility_info.cpp|examples/sensor_reading.cpp|examples/mqtt_telemetry.cpp|examples/mqtt_subscriber.cpp|examples/mqtt_publisher.cpp|examples/driving_control.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

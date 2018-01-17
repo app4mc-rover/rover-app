@@ -39,8 +39,8 @@ void *MQTT_Subscribe_Task (void * arg)
 	mqtt_subscribe_task_tmr.setDeadline(0.1);
 	mqtt_subscribe_task_tmr.setPeriod(0.1);
 
-	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	MQTT_BROKER,//"172.22.167.161",
-														MQTT_BROKER_PORT,//1883,
+	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	MQTT_BROKER,
+														MQTT_BROKER_PORT,
 														ROVER_IDENTITY,
 														ROVER_MQTT_QOS,
 														"rover_mqtt_subscriber");

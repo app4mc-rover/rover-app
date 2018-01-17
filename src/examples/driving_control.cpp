@@ -37,14 +37,22 @@ int main()
     RoverDriving r_driving = RoverDriving();
     r_driving.initialize();
     r_driving.setSpeed(HIGHEST_SPEED);
+
+    printf ("Going forward...\n");
     r_driving.goForward();
-    r_base.sleep (500); // Sleep for some time in milliseconds
+    r_base.sleep (1500); // Sleep for some time in milliseconds
+
+    printf ("Turning right...\n");
     r_driving.turnRight();
-    r_base.sleep (500); // You can also use delay() function
+    r_base.sleep (1500);
+
+    printf ("Turning left...\n");
     r_driving.turnLeft();
-    r_base.sleep (500);  
+    r_base.sleep (1500);
+
+    printf ("Going backward...\n");
      r_driving.goBackward();
-    r_base.sleep (500); 
+    r_base.sleep (1500);
     r_driving.stopRover();
     
 	printf("Exiting.\n");

@@ -43,6 +43,28 @@ int main()
     RoverDisplay my_display = RoverDisplay();
     my_display.initialize();
     
+    //--- Show a "Welcome to Rover" message
+    printf("Showing a 'Welcome to Rover' message\n");
+	// Prepare display contents
+	my_display.clearDisplay();
+	my_display.setTextSize(2);
+	my_display.setTextColor(my_display.WHITE_COLOR);
+	my_display.setCursor(10,10);
+	my_display.print("Welcome");
+	my_display.setTextSize(2);
+	my_display.setTextColor(my_display.WHITE_COLOR);
+
+	my_display.setCursor(10,32);
+	my_display.print("to Rover");
+
+	// Display now
+	my_display.display();
+
+	// Sleep for a bit
+	r_base.sleep (2000);
+
+    //--- Show internet status
+	printf("Showing internet status\n");
     // Prepare display contents
     my_display.clearDisplay();
     my_display.setTextSize(2);
@@ -64,9 +86,9 @@ int main()
         my_display.print("OFF");
     }
     
-    // Display now
-    my_display.display();
 
+    // Display now
+	my_display.display();
 
 	printf("Exiting.\n");
 

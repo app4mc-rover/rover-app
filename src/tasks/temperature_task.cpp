@@ -63,15 +63,15 @@ void *Temperature_Task(void *arg)
 		{
 			pthread_mutex_lock(&gpio_intensive_operation_lock);
 				temperature = r_dht22.readTemperature();
+				if (temperature != 0)
+					temperature_shared.set(temperature);
 			pthread_mutex_unlock(&gpio_intensive_operation_lock);
-
-			temperature_shared.set(temperature);
 
 			pthread_mutex_lock(&gpio_intensive_operation_lock);
 				humidity = r_dht22.readHumidity();
+				if (humidity != 0)
+					humidity_shared = humidity;
 			pthread_mutex_unlock(&gpio_intensive_operation_lock);
-
-			humidity_shared = humidity;
 		}
 #endif
 

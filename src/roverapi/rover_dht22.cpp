@@ -59,7 +59,7 @@ float rover::RoverDHT22::readTemperature (void)
 	float c;
 
 	int try_count = 0;
-	const int max_tries = 20;
+	const int max_tries = 30;
 
 	data[0] = 0;
 	data[1] = 0;
@@ -176,6 +176,11 @@ float rover::RoverDHT22::readTemperature (void)
 				printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
 	#endif
 				try_again = 0;
+
+				if (c == 0)
+				{
+					try_again = 1;
+				}
 			}
 			else
 			{
@@ -207,7 +212,7 @@ float rover::RoverDHT22::readHumidity (void)
 	float c;
 
 	int try_count = 0;
-	const int max_tries = 20;
+	const int max_tries = 30;
 
 	data[0] = 0;
 	data[1] = 0;
@@ -324,6 +329,11 @@ float rover::RoverDHT22::readHumidity (void)
 				printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
 	#endif
 				try_again = 0;
+
+				if (h == 0)
+				{
+					try_again = 1;
+				}
 			}
 			else
 			{

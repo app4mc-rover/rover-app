@@ -24,6 +24,7 @@ rover::RoverPahoMQTT::RoverPahoMQTT (char * host_name, int port, RoverMQTT_Confi
 	this->HOST_NAME = host_name;
 	this->PORT = port;
 	this->defaultRoverMQTTConfigure = MQTT_Configure;
+	this->defaultRoverMQTTConfigure.payload = nullptr;
 
 	/* Load defaults */
 	this->flushFlags();
@@ -207,15 +208,19 @@ int rover::RoverPahoMQTT::subscribe (void)
 	return this->defaultReturnCodes.rc_subscribe;
 }
 
-void rover::RoverPahoMQTT::read (char* data)
+int rover::RoverPahoMQTT::read (char* data)
 {
 	if (this->defaultRoverSubscribeData.data_ready == 1)
 	{
 		this->defaultRoverSubscribeData.data_ready = 0;
 		sprintf (data, this->defaultRoverSubscribeData.data);
+		return 0;
 	}
 	else
+	{
 		sprintf (data, "N/A");
+		return 1;
+	}
 }
 
 void rover::RoverPahoMQTT::setPort (const int port)

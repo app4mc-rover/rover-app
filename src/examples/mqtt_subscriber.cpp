@@ -23,10 +23,11 @@
 
 //Your MQTT Broker credentials and info
 #define MQTT_BROKER "127.0.0.1"
-#define MQTT_BROKER_PORT 1883
-#define ROVER_IDENTITY 1 //Rover ID
+#define MQTT_BROKER_PORT 1887 // default:1887
 #define ROVER_MQTT_QOS 1 //Quality of service
 #define SUBSCRIBE_TOPIC "rover/1/RoverDriving/control"
+#define RECEIVE_PAYLOAD_BUFSIZE 50 // <-- Here we want to receive up to 50 characters of data
+                                   // This should be modified in case you want to receive more!
 
 //Using rover namespace from Rover API
 using namespace rover;
@@ -40,7 +41,8 @@ int main()
     RoverBase r_base = RoverBase();
     r_base.initialize();
     
-    char data[50];
+    char data [RECEIVE_PAYLOAD_BUFSIZE];
+    int8_t second = 0;
     
     // Subscribe
     RoverMQTT_Configure_t rover_mqtt_conf;
@@ -57,15 +59,33 @@ int main()
     if (0 == rover_mqtt.subscribe())
     {
         printf ("Subscribe successful!\n");
+
+        // Try to read any coming data for roughly half a minute
+        printf ("Reading data for half a minute from the topic %s\n", SUBSCRIBE_TOPIC);
+		while (second < 30)
+		{
+			if (0 == rover_mqtt.read(data)) // Read function returns the latest received data from subscribed topic
+			{
+				printf ("Received data=%s\n", data);
+			}
+			else
+			{
+				printf ("No available data\n");
+			}
+
+			second += 1;
+			r_base.sleep(1000);
+		}
+
+		printf ("Done..\n");
+
     }
     else
     {
         printf ("Subscribe unsuccessful!\n");
     }
     
-    // Receive the final message that is arrived from the subscribed topic
-    rover_mqtt.read(data);
-    printf ("Received data=%s\n", data);
+
 
 	printf("Exiting.\n");
 

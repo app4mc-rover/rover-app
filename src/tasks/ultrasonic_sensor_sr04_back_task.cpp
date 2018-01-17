@@ -74,9 +74,7 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 #ifndef SIMULATOR
 #ifndef USE_GROOVE_SENSOR
 		pthread_mutex_lock(&gpio_intensive_operation_lock);
-#endif
 			distance_sr04_back_shared = r_ultrasonicrear.read();
-#ifndef USE_GROOVE_SENSOR
 		pthread_mutex_unlock(&gpio_intensive_operation_lock);
 #endif
 #endif

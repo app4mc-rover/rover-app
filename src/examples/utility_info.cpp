@@ -28,7 +28,7 @@ using namespace rover;
 // Main function
 int main()
 {
-    printf("Started roverapp utility_info example.\n");
+    printf("Started roverapp utility_info example..\n");
     
     //This initialization is a one time only must-call before every rover application.
     RoverBase r_base = RoverBase();
@@ -40,7 +40,14 @@ int main()
     // Print core utilization from the rover's OS
     float util[4];
     r_utils.getCoreUtilization(util);
-    printf ("Utilization = [%f %f %f %f]\n", util[0], util[1], util[2], util[3]);
+    printf ("\nCore Utilization = [%f %f %f %f]\n\n", util[0], util[1], util[2], util[3]);
+
+    /* Read connectivity status messages */
+    printf ("Reading connectivity status from the rover.. (1:on 0:off)\n");
+    printf ("[WLAN     ]\t=\t[%d]\n", r_utils.getWlanStatus());
+    printf ("[ETHERNET ]\t=\t[%d]\n", r_utils.getEthernetStatus());
+    printf ("[INTERNET ]\t=\t[%d]\n", r_utils.getInternetStatus());
+    printf ("[BLUETOOTH]\t=\t[%d]\n", r_utils.getBluetoothStatus());
 
 	printf("Exiting.\n");
 

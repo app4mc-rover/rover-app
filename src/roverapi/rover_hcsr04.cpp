@@ -88,21 +88,23 @@ float rover::RoverHCSR04::read (void)
 
 		long travelTime = micros() - startTime;
 
-		if (travelTime > 2000000)
+		if (travelTime > 1000000) //Timeout reached, no data
 		{
 			return 0.0;
 		}
+		else
+		{
+			//Get distance in cm
+			distance = travelTime * 34300;
+			distance = distance / 1000000;
+			distance = distance / 2;
+			// The below protection is to ensure there is no value fluctuation due to timeout
+			if (distance > 40 )
+				distance = 40;
 
-		//Get distance in cm
-		distance = travelTime * 34300;
-		distance = distance / 1000000;
-		distance = distance / 2;
-		// The below protection is to ensure there is no value fluctuation due to timeout
-		if (distance > 40 )
-			distance = 40;
-
-		//	printf("dist=%d\n",distance);
-		return ((float) distance*1.0);
+			//	printf("dist=%d\n",distance);
+			return ((float) distance*1.0);
+		}
 	}
 #endif
 }
