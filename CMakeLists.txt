@@ -208,8 +208,8 @@ target_link_libraries (display_control roverapi)
 add_executable(driving_control ${CMAKE_SOURCE_DIR}/src/examples/driving_control.cpp)
 target_link_libraries (driving_control roverapi)
 
-add_executable(mqtt_telemetry ${CMAKE_SOURCE_DIR}/src/examples/mqtt_telemetry.cpp)
-target_link_libraries (mqtt_telemetry roverapi)
+add_executable(buzzer_button_example ${CMAKE_SOURCE_DIR}/src/examples/buzzer_button_example.cpp)
+target_link_libraries (buzzer_button_example roverapi)
 
 add_executable(sensor_reading ${CMAKE_SOURCE_DIR}/src/examples/sensor_reading.cpp)
 target_link_libraries (sensor_reading roverapi)
