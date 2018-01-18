@@ -1,0 +1,94 @@
+/*
+ * Copyright (c) 2018 Eclipse Foundation, FH Dortmund and others
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Description:
+ *    Configuration file reader for the rover
+ *
+ * Author:
+ *    M. Ozcelikors,  <mozcelikors@gmail.com> - created 18.01.2018
+ *
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include <libraries/config_reader/config_reader.h>
+
+struct rover_config getRoverConfig(char *filename)
+{
+	struct rover_config configstruct;
+	FILE *file = fopen (filename, "r");
+
+	if (file != NULL)
+	{
+		char line[ROVER_CONFIG_MAXBUF];
+		int i = 0;
+
+		while(fgets(line, sizeof(line), file) != NULL)
+		{
+			char *cfline;
+			cfline = strstr((char *)line,DELIM);
+
+			if (cfline != NULL)
+			{
+				cfline = cfline + strlen(DELIM);
+
+				if (i == 2)
+				{
+					configstruct.ROVER_IDENTITY_C = atoi(cfline);
+					printf("Read config [ROVER_IDENTITY_C = %d]\n",configstruct.ROVER_IDENTITY_C);
+				}
+				else if (i == 3)
+				{
+					memcpy(configstruct.MQTT_BROKER_C,cfline,strlen(cfline)-1);
+					printf("Read config [MQTT_BROKER_C = %s]\n",configstruct.MQTT_BROKER_C);
+				}
+				else if (i == 4)
+				{
+					configstruct.MQTT_BROKER_PORT_C = atoi(cfline);
+					printf("Read config [MQTT_BROKER_PORT_C = %d]\n",configstruct.MQTT_BROKER_PORT_C);
+				}
+				else if (i == 5)
+				{
+					configstruct.ROVER_MQTT_QOS_C = atoi(cfline);
+					printf("Read config [ROVER_MQTT_QOS_C = %d]\n",configstruct.ROVER_MQTT_QOS_C);
+				}
+				else if (i == 6)
+				{
+					configstruct.USE_GROOVE_SENSOR_C = atoi(cfline);
+					printf("Read config [USE_GROOVE_SENSOR_C = %d]\n",configstruct.USE_GROOVE_SENSOR_C);
+				}
+
+			}
+			i++;
+
+		} // End while
+		fclose(file);
+	} // End if file
+	else
+	{
+		fprintf(stderr, "Unable to read rover config file. Check /opt/rover-app/config/rover_config.txt. Program will use default configuration.\n");
+
+		/* Default setup */
+		configstruct.ROVER_IDENTITY_C = 1;
+		memcpy(configstruct.MQTT_BROKER_C,"127.0.0.1",strlen("127.0.0.1"));
+		configstruct.MQTT_BROKER_PORT_C = 1887;
+		configstruct.ROVER_MQTT_QOS_C = 1;
+		configstruct.USE_GROOVE_SENSOR_C = 0;
+
+		printf ("Using following default configuration:\n");
+		printf("[ROVER_IDENTITY_C = %d]\n",configstruct.ROVER_IDENTITY_C);
+		printf("[MQTT_BROKER_C = %s]\n",configstruct.MQTT_BROKER_C);
+		printf("[MQTT_BROKER_PORT_C = %d]\n",configstruct.MQTT_BROKER_PORT_C);
+		printf("[ROVER_MQTT_QOS_C = %d]\n",configstruct.ROVER_MQTT_QOS_C);
+		printf("[USE_GROOVE_SENSOR_C = %d]\n",configstruct.USE_GROOVE_SENSOR_C);
+	}
+
+	return configstruct;
+}
+
