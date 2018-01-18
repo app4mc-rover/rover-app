@@ -72,11 +72,12 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 
 		//Task content starts here -----------------------------------------------
 #ifndef SIMULATOR
-#ifndef USE_GROOVE_SENSOR
-		pthread_mutex_lock(&gpio_intensive_operation_lock);
-			distance_sr04_back_shared = r_ultrasonicrear.read();
-		pthread_mutex_unlock(&gpio_intensive_operation_lock);
-#endif
+		if (rover_config_obj.USE_GROOVE_SENSOR_C == 0)
+		{
+			pthread_mutex_lock(&gpio_intensive_operation_lock);
+				distance_sr04_back_shared = r_ultrasonicrear.read();
+			pthread_mutex_unlock(&gpio_intensive_operation_lock);
+		}
 #endif
 		//Task content ends here -------------------------------------------------
 		ultrasonic_sr04_back_task_tmr.recordEndTime(); //!!!

@@ -96,6 +96,8 @@ add_library (pthread_monitoring SHARED
   ${CUSTOM_LIBS_DIR}/pthread_monitoring/collect_thread_name.cpp)
 add_library (timing SHARED
   ${CUSTOM_LIBS_DIR}/timing/timing.cpp)
+add_library (config_reader SHARED
+  ${CUSTOM_LIBS_DIR}/config_reader/config_reader.cpp)
 
 #Add tasks
 #Add all files to a variable ROVERAPP_TASK_FILES
@@ -130,6 +132,7 @@ target_link_libraries(roverapi pthread_distribution)
 target_link_libraries(roverapi status_library)
 target_link_libraries(roverapi pthread_monitoring)
 target_link_libraries(roverapi timing)
+target_link_libraries(roverapi config_reader)
 target_link_libraries(roverapi paho-mqtt3a)
 target_link_libraries(roverapi paho-mqtt3as)
 target_link_libraries(roverapi paho-mqtt3c)
@@ -168,6 +171,7 @@ target_link_libraries(roverapptasks pthread_distribution)
 target_link_libraries(roverapptasks status_library)
 target_link_libraries(roverapptasks pthread_monitoring)
 target_link_libraries(roverapptasks timing)
+target_link_libraries(roverapptasks config_reader)
 
 #Link api
 target_link_libraries (roverapptasks roverapi)
@@ -191,6 +195,7 @@ target_link_libraries(roverapp pthread_distribution)
 target_link_libraries(roverapp status_library)
 target_link_libraries(roverapp pthread_monitoring)
 target_link_libraries(roverapp timing)
+target_link_libraries(roverapp config_reader)
 
 #Link tasks
 target_link_libraries(roverapp roverapptasks)
@@ -235,6 +240,7 @@ install(
     roverappdrivers
     hono_interaction
     status_library
+    config_reader
     pthread_monitoring
     timing pthread_distribution
   PUBLIC_HEADER
@@ -245,3 +251,6 @@ install(
 #Copy/install files to a certain static directory
 install(FILES ${CMAKE_SOURCE_DIR}/scripts/read_core_usage.py
   DESTINATION /opt/rover-app/scripts/)
+  
+install(FILES ${CMAKE_SOURCE_DIR}/rover_config.txt
+  DESTINATION /opt/rover-app/config/)
