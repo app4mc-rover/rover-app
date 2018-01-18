@@ -10,8 +10,8 @@
 cmake_minimum_required (VERSION 2.8.11)
 project (roverapp)
 
-# Use C++11
-set (CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+# Use C++11 and Supress some warnings  -Wno-write-strings -Wno-deprecated-declarations 
+set (CMAKE_CXX_FLAGS "-std=c++11 -Wno-write-strings -Wno-deprecated-declarations ${CMAKE_CXX_FLAGS}")
 
 # To find modules from other cmake-built projects that are searched with find_package,
 # external cmake modules need to be provided. Those are typically named as Find<package>.cmake or <package>Config.cmake.
