@@ -34,6 +34,8 @@
 #include <roverapi/rover_driving.hpp>
 #include <roverapi/rover_utils.hpp>
 
+#include <libraries/config_reader/config_reader.h>
+
 using namespace rover;
 
 // Use the following when cross compiling with Eclipse CDT SDK
@@ -47,25 +49,13 @@ using namespace rover;
 // to shutdown.
 //#define DEBUG_WO_RSL 1
 
-// HMC5883L or QMC5883L ?
-//#define USE_HMC5883L 1
-
-// Please comment the line below to work with SR-04 sensor instead of GROOVE for
-// rear proximity sensing.
-//#define USE_GROOVE_SENSOR 1
-
-// Rover ID to be compiled
-#define ROVER_IDENTITY 1
-
-// For MQTT clients
-#define MQTT_BROKER "127.0.0.1"
-#define MQTT_BROKER_PORT 1887
-#define ROVER_MQTT_QOS 1
-
 /* For proper termination */
 extern RoverBase r_base;
 extern RoverDriving r_driving;
 extern RoverDisplay my_display;
 extern RoverUtils r_utils;
+
+/* Configuration struct */
+extern rover_config rover_config_obj;
 
 #endif /* ROVERAPP_H_ */

@@ -61,6 +61,9 @@
 
 using namespace std;
 
+/* Configuration struct */
+rover_config rover_config_obj;
+
 //Using rover namespace from Rover API
 using namespace rover;
 
@@ -234,6 +237,9 @@ void exitHandler(int dummy)
 // Main function
 int main()
 {
+	/* Read configuration from config file */
+	rover_config_obj = getRoverConfig(ROVER_CONFIG_FILE);
+
 	int ret = 0;
 	r_base = RoverBase();
 	my_display = RoverDisplay();
@@ -267,11 +273,14 @@ int main()
 
 	//Thread creation
 	/**/
-#ifdef USE_GROOVE_SENSOR
-	ret = createThread(&ultrasonic_grove_thread, Ultrasonic_Sensor_Grove_Task, "US_grove");
-#else
-	ret = createThread(&ultrasonic_sr04_back_thread, Ultrasonic_Sensor_SR04_Back_Task, "US_sr04_back");
-#endif
+	if (rover_config_obj.USE_GROOVE_SENSOR_C == 1)
+	{
+		ret = createThread(&ultrasonic_grove_thread, Ultrasonic_Sensor_Grove_Task, "US_grove");
+	}
+	else
+	{
+		ret = createThread(&ultrasonic_sr04_back_thread, Ultrasonic_Sensor_SR04_Back_Task, "US_sr04_back");
+	}
 	CHECK_RET(ret);
 
 	ret = createThread(&ultrasonic_sr04_front_thread, Ultrasonic_Sensor_SR04_Front_Task, "US_sr04_front");
@@ -360,11 +369,14 @@ int main()
 	//Core pinning/mapping
 /*	placeAThreadToCore (main_thread, 1);
 	placeAThreadToCore (ultrasonic_sr04_front_thread, 2);
-#ifdef USE_GROOVE_SENSOR
-	placeAThreadToCore (ultrasonic_grove_thread, 3);
-#else
-	placeAThreadToCore (ultrasonic_sr04_back_thread, 3);
-#endif
+	if (rover_config_obj.USE_GROOVE_SENSOR_C == 1)
+	{
+		placeAThreadToCore (ultrasonic_grove_thread, 3);
+	}
+	else
+	{
+		placeAThreadToCore (ultrasonic_sr04_back_thread, 3);
+	}
 	placeAThreadToCore (temperature_thread, 3);
 	placeAThreadToCore (compasssensor_thread, 0);
 	placeAThreadToCore (motordriver_thread, 0);
