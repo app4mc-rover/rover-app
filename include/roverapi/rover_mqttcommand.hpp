@@ -164,7 +164,12 @@ namespace rover
 
 		public:
 			/**
-			 * @brief Copy constructor for RoverMQTTCommand class
+			 * @brief Copy constructor for RoverMQTTCommand class that uses username and password
+			 */
+			RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * username, char * password, char * clientID);
+
+			/**
+			 * @brief Copy constructor for RoverMQTTCommand class that doesn't use credentials
 			 */
 			RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * clientID);
 

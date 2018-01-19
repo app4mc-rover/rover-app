@@ -26,6 +26,24 @@ rover::RoverPahoMQTT::RoverPahoMQTT (char * host_name, int port, RoverMQTT_Confi
 	this->defaultRoverMQTTConfigure = MQTT_Configure;
 	this->defaultRoverMQTTConfigure.payload = nullptr;
 
+	if (strlen(MQTT_Configure.username)>1)
+	{
+		this->defaultRoverMQTTConfigure.username = MQTT_Configure.username;
+	}
+	else
+	{
+		this->defaultRoverMQTTConfigure.username = "";
+	}
+
+	if (strlen(MQTT_Configure.password)>1)
+	{
+		this->defaultRoverMQTTConfigure.password = MQTT_Configure.password;
+	}
+	else
+	{
+		this->defaultRoverMQTTConfigure.password = "";
+	}
+
 	/* Load defaults */
 	this->flushFlags();
 
@@ -140,6 +158,15 @@ int rover::RoverPahoMQTT::publish (void)
 	this->conn_opts.onFailure = rover::RoverPahoMQTT::onConnectFailure_Redirect;
 	this->conn_opts.context = this;
 
+	if (strlen(this->defaultRoverMQTTConfigure.username) > 0)
+	{
+		this->conn_opts.username = this->defaultRoverMQTTConfigure.username;
+	}
+	if (strlen(this->defaultRoverMQTTConfigure.password) > 0)
+	{
+		this->conn_opts.password = this->defaultRoverMQTTConfigure.password;
+	}
+
 	if ((rc = MQTTAsync_connect(this->client, &(this->conn_opts))) != MQTTASYNC_SUCCESS)
 	{
 		//printf("Failed to start connect, return code %d\n", rc);
@@ -191,6 +218,14 @@ int rover::RoverPahoMQTT::subscribe (void)
 	this->conn_opts.onSuccess = rover::RoverPahoMQTT::onSubscriberConnect_Redirect;
 	this->conn_opts.onFailure = rover::RoverPahoMQTT::onSubscribeFailure_Redirect;
 	this->conn_opts.context = this;
+	if (strlen(this->defaultRoverMQTTConfigure.username) > 0)
+	{
+		this->conn_opts.username = this->defaultRoverMQTTConfigure.username;
+	}
+	if (strlen(this->defaultRoverMQTTConfigure.password) > 0)
+	{
+		this->conn_opts.password = this->defaultRoverMQTTConfigure.password;
+	}
 
 	if ((rc = MQTTAsync_connect(this->client, &(this->conn_opts))) != MQTTASYNC_SUCCESS)
 	{
@@ -244,6 +279,15 @@ void rover::RoverPahoMQTT::onConnectionLost (char *cause)
 	//printf("Reconnecting\n");
 	conn_opts.keepAliveInterval = 20;
 	conn_opts.cleansession = 1;
+
+	if (strlen(this->defaultRoverMQTTConfigure.username) > 0)
+	{
+		this->conn_opts.username = this->defaultRoverMQTTConfigure.username;
+	}
+	if (strlen(this->defaultRoverMQTTConfigure.password) > 0)
+	{
+		this->conn_opts.password = this->defaultRoverMQTTConfigure.password;
+	}
 	if ((rc = MQTTAsync_connect(this->client, &conn_opts)) != MQTTASYNC_SUCCESS)
 	{
 		//printf("Failed to start connect, return code %d\n", rc);

@@ -30,11 +30,8 @@
 
 #include <roverapp.h>
 
-#ifndef USE_HMC5883L
-#include <roverapi/rover_qmc5883l.hpp>
-#else
 #include <roverapi/rover_hmc5883l.hpp>
-#endif
+
 
 int EndCalibrationMode (void)
 {
@@ -51,13 +48,8 @@ void *CompassSensor_Task(void * arg)
 	compass_task_tmr.setDeadline(0.1);
 	compass_task_tmr.setPeriod(0.1);
 
-#ifndef USE_HMC5883L
-	RoverQMC5883L r_qmc5883l = RoverQMC5883L();
-	r_qmc5883l.initialize();
-#else
 	RoverHMC5883L r_hmc5883l = RoverHMC5883L();
 	r_hmc5883l.initialize();
-#endif
 
 	while (running_flag.get()) {
 		compass_task_tmr.recordStartTime();
@@ -77,11 +69,7 @@ void *CompassSensor_Task(void * arg)
 		}
 		//Asynchronous end to calibration mode --> Call EndCalibrationMode()
 
-#ifndef USE_HMC5883L
-		bearing_shared = r_qmc5883l.read();
-#else
 		bearing_shared = r_hmc5883l.read();
-#endif
 
 		//Task content ends here -------------------------------------------------
 		compass_task_tmr.recordEndTime();

@@ -225,7 +225,8 @@ int main (void)
 	rover_mqtt_conf.qos      = 1;   							// Quality of Service
 	rover_mqtt_conf.timeout  = 10000L;  						// Polling timeout, 10000L is fine
 	rover_mqtt_conf.topic    = "rover/RoverDriving/control/1"; 	// Topic name to publish to or subscribe from
-
+    rover_mqtt_conf.username    = "sensor1@DEFAULT_TENANT";		// Username - Leave empty for no user and password
+    rover_mqtt_conf.password    = "hono-secret";				// Password - Leave empty for no user and password
 	RoverPahoMQTT rover_mqtt = RoverPahoMQTT (	"127.0.0.1",	// MQTT-Broker host
 												1883,			// MQTT-Broker port
 												rover_mqtt_conf);

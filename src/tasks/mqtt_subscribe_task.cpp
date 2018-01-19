@@ -43,6 +43,8 @@ void *MQTT_Subscribe_Task (void * arg)
 														rover_config_obj.MQTT_BROKER_PORT_C,//1883,
 														rover_config_obj.ROVER_IDENTITY_C,
 														rover_config_obj.ROVER_MQTT_QOS_C,
+														rover_config_obj.MQTT_USERNAME_C,
+														rover_config_obj.MQTT_PASSWORD_C,
 														"rover_mqtt_subscriber");
 	RoverControlData_t control_data;
 

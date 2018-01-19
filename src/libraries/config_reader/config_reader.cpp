@@ -45,7 +45,8 @@ struct rover_config getRoverConfig(char *filename)
 				}
 				else if (i == 3)
 				{
-					memcpy(configstruct.MQTT_BROKER_C,cfline,strlen(cfline)-1);
+					memcpy(configstruct.MQTT_BROKER_C,cfline,strlen(cfline));
+					configstruct.MQTT_BROKER_C[strlen(cfline)-1] = 0;
 					printf("Read config [MQTT_BROKER_C = %s]\n",configstruct.MQTT_BROKER_C);
 				}
 				else if (i == 4)
@@ -59,6 +60,34 @@ struct rover_config getRoverConfig(char *filename)
 					printf("Read config [ROVER_MQTT_QOS_C = %d]\n",configstruct.ROVER_MQTT_QOS_C);
 				}
 				else if (i == 6)
+				{
+					if (strlen(cfline) > 1)
+					{
+						memcpy(configstruct.MQTT_USERNAME_C,cfline,strlen(cfline));
+						configstruct.MQTT_USERNAME_C[strlen(cfline)-1] = 0;
+						printf("Read config [MQTT_USERNAME_C = %s]\n",configstruct.MQTT_USERNAME_C);
+					}
+					else
+					{
+						printf("Read config [MQTT_USERNAME_C = <no-username>]\n",configstruct.MQTT_USERNAME_C);
+
+					}
+				}
+				else if (i == 7)
+				{
+					if (strlen(cfline) > 1)
+					{
+						memcpy(configstruct.MQTT_PASSWORD_C,cfline,strlen(cfline));
+						configstruct.MQTT_PASSWORD_C[strlen(cfline)-1] = 0;
+						printf("Read config [MQTT_PASSWORD_C = %s]\n",configstruct.MQTT_PASSWORD_C);
+					}
+					else
+					{
+						printf("Read config [MQTT_PASSWORD_C = <no-password>]\n",configstruct.MQTT_PASSWORD_C);
+
+					}
+				}
+				else if (i == 8)
 				{
 					configstruct.USE_GROOVE_SENSOR_C = atoi(cfline);
 					printf("Read config [USE_GROOVE_SENSOR_C = %d]\n",configstruct.USE_GROOVE_SENSOR_C);
@@ -78,7 +107,9 @@ struct rover_config getRoverConfig(char *filename)
 		configstruct.ROVER_IDENTITY_C = 1;
 		memcpy(configstruct.MQTT_BROKER_C,"127.0.0.1",strlen("127.0.0.1"));
 		configstruct.MQTT_BROKER_PORT_C = 1887;
-		configstruct.ROVER_MQTT_QOS_C = 1;
+		configstruct.ROVER_MQTT_QOS_C = 0;
+		memcpy(configstruct.MQTT_USERNAME_C,"sensor1@DEFAULT_TENANT",strlen("sensor1@DEFAULT_TENANT"));
+		memcpy(configstruct.MQTT_PASSWORD_C,"hono-secret",strlen("hono-secret"));
 		configstruct.USE_GROOVE_SENSOR_C = 0;
 
 		printf ("Using following default configuration:\n");
@@ -86,6 +117,8 @@ struct rover_config getRoverConfig(char *filename)
 		printf("[MQTT_BROKER_C = %s]\n",configstruct.MQTT_BROKER_C);
 		printf("[MQTT_BROKER_PORT_C = %d]\n",configstruct.MQTT_BROKER_PORT_C);
 		printf("[ROVER_MQTT_QOS_C = %d]\n",configstruct.ROVER_MQTT_QOS_C);
+		printf("[MQTT_USERNAME_C = %s]\n",configstruct.MQTT_USERNAME_C);
+		printf("[MQTT_PASSWORD_C = %s]\n",configstruct.MQTT_PASSWORD_C);
 		printf("[USE_GROOVE_SENSOR_C = %d]\n",configstruct.USE_GROOVE_SENSOR_C);
 	}
 

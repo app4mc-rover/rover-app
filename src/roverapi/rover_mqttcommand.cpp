@@ -22,6 +22,36 @@
 #include <json/json.h>
 #endif
 
+rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * username, char * password, char * clientID)
+{
+	/* Assign what is constructed */
+	this->HOST_NAME = host;
+	this->PORT = port;
+	if (roverID < 1 || roverID > 99)
+	{
+		printf ("Invalid roverID in RoverMQTTCommand: It should be 1 to 99!\n");
+		this->ROVER_ID = 99;
+	}
+	else
+	{
+		this->ROVER_ID = roverID;
+	}
+	this->defaultRoverMQTTConfigure.qos = qos;
+	this->defaultRoverMQTTConfigure.clientID = clientID;
+	this->defaultRoverMQTTConfigure.timeout = 10000L;
+	this->defaultRoverMQTTConfigure.payload = nullptr;
+	this->defaultRoverMQTTConfigure.username = username;
+	this->defaultRoverMQTTConfigure.password = password;
+
+	/* Load defaults */
+	this->flushFlags();
+
+	/* Construct the address */
+	this->constructAddress ();
+
+	this->createClient();
+}
+
 rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * clientID)
 {
 	/* Assign what is constructed */
@@ -40,6 +70,8 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 	this->defaultRoverMQTTConfigure.clientID = clientID;
 	this->defaultRoverMQTTConfigure.timeout = 10000L;
 	this->defaultRoverMQTTConfigure.payload = nullptr;
+	this->defaultRoverMQTTConfigure.username = "";
+	this->defaultRoverMQTTConfigure.password = "";
 
 	/* Load defaults */
 	this->flushFlags();
