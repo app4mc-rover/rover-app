@@ -1,5 +1,5 @@
 # Configuration file for roverapp
-# Please ONLY change the values. Refrain from changing the format.
+# Configuration file will be placed to /opt/rover-app/config/rover_config.txt in the target. Please modify file in that location in case you want to change the configuration.
 ROVER_IDENTITY_C=1
 MQTT_BROKER_C=127.0.0.1
 MQTT_BROKER_PORT_C=1883

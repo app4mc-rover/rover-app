@@ -10,8 +10,8 @@
 cmake_minimum_required (VERSION 2.8.11)
 project (roverapp)
 
-# Use C++11
-set (CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+# Use C++11 and Supress some warnings  -Wno-write-strings -Wno-deprecated-declarations 
+set (CMAKE_CXX_FLAGS "-std=c++11 -Wno-write-strings -Wno-deprecated-declarations ${CMAKE_CXX_FLAGS}")
 
 # To find modules from other cmake-built projects that are searched with find_package,
 # external cmake modules need to be provided. Those are typically named as Find<package>.cmake or <package>Config.cmake.
@@ -152,7 +152,7 @@ if(SDK_EN EQUAL 0)
    target_link_libraries (roverapptasks opencv_highgui)
    target_link_libraries (roverapptasks opencv_imgproc)
 else()
-   target_link_libraries (roverapptasks ${OpenCV_DIR})
+   target_link_libraries (roverapptasks ${OpenCV_LIB})
 endif()
 
 target_link_libraries (roverapptasks jsoncpp)
@@ -213,8 +213,8 @@ target_link_libraries (display_control roverapi)
 add_executable(driving_control ${CMAKE_SOURCE_DIR}/src/examples/driving_control.cpp)
 target_link_libraries (driving_control roverapi)
 
-add_executable(mqtt_telemetry ${CMAKE_SOURCE_DIR}/src/examples/mqtt_telemetry.cpp)
-target_link_libraries (mqtt_telemetry roverapi)
+add_executable(buzzer_button_example ${CMAKE_SOURCE_DIR}/src/examples/buzzer_button_example.cpp)
+target_link_libraries (buzzer_button_example roverapi)
 
 add_executable(sensor_reading ${CMAKE_SOURCE_DIR}/src/examples/sensor_reading.cpp)
 target_link_libraries (sensor_reading roverapi)

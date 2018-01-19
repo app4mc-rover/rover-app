@@ -7,6 +7,7 @@
  *
  * Description:
  *    Configuration file reader for the rover
+ *    Configuration file will be placed to /opt/rover-app/config/rover_config.txt in the target. Please modify this file in case you want to change the configuration.
  *
  * Author:
  *    M. Ozcelikors,  <mozcelikors@gmail.com> - created 18.01.2018
