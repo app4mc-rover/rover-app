@@ -23,7 +23,7 @@
 
 //Your MQTT Broker credentials and info
 #define MQTT_BROKER "127.0.0.1"
-#define MQTT_BROKER_PORT 1887  //default:1883
+#define MQTT_BROKER_PORT 1883  //default:1883
 #define ROVER_MQTT_QOS 1 //Quality of service
 #define PUBLISH_TOPIC1 "rover/1/RoverDriving/control"
 #define PUBLISH_TOPIC2 "rover/2/RoverDriving/control"
