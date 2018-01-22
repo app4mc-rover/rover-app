@@ -228,13 +228,6 @@ target_link_libraries (mqtt_publisher roverapi)
 add_executable(mqtt_subscriber ${CMAKE_SOURCE_DIR}/src/examples/mqtt_subscriber.cpp)
 target_link_libraries (mqtt_subscriber roverapi)
 
-
-file (GLOB_RECURSE ROVERAPP_INCLUDE_FILES
-  ${CMAKE_SOURCE_DIR}/include/*
-  ${CMAKE_SOURCE_DIR}/include/*
-)
-set_target_properties(roverapp PROPERTIES PUBLIC_HEADER "${ROVERAPP_INCLUDE_FILES}")
-
 #
 # INSTALLING
 #
@@ -249,7 +242,7 @@ install(
     config_reader
     pthread_monitoring
     timing pthread_distribution
-  PUBLIC_HEADER DESTINATION /usr/include
+  PUBLIC_HEADER
   RUNTIME DESTINATION /usr/bin
   LIBRARY DESTINATION /usr/lib
   ARCHIVE DESTINATION /usr/lib)
@@ -257,4 +250,30 @@ install(
 #Copy/install files to a certain static directory
 install(FILES ${CMAKE_SOURCE_DIR}/scripts/read_core_usage.py
   DESTINATION /opt/rover-app/scripts/)
+
+# Install public headers
+
+file (GLOB_RECURSE ROVERAPI_INCLUDE_FILES
+  ${CMAKE_SOURCE_DIR}/include/roverapi/*
+)
+
+file (GLOB_RECURSE ROVERLIBRARIES_INCLUDE_FILES
+  ${CMAKE_SOURCE_DIR}/include/libraries/*
+)
+
+file (GLOB RECURSE ROVERDRIVERS_INCLUDE_FILES
+  ${CMAKE_SOURCE_DIR}/include/drivers/*
+)
+
+INSTALL(FILES ${ROVERAPI_INCLUDE_FILES}
+  DESTINATION "/usr/include/roverapi"
+)
+
+INSTALL(FILES ${ROVERDRIVERS_INCLUDE_FILES}
+  DESTINATION "/usr/include/drivers"
+)
+
+INSTALL(FILES ${ROVERLIBRARIES_INCLUDE_FILES}
+  DESTINATION "/usr/include/libraries"
+)
 
