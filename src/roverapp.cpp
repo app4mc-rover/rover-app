@@ -221,7 +221,7 @@ void exitHandler(int dummy)
 	joinThread(&record_timing_thread);
 	joinThread(&adaptive_cruise_control_thread);
 	joinThread(&parking_thread);
-	joinThread(&hono_interaction_thread);
+	//joinThread(&hono_interaction_thread);
 	joinThread(&cpu_logger_thread);
 	joinThread(&oled_thread);
 	joinThread(&extgpio_thread);
@@ -314,8 +314,8 @@ int main()
 	ret = createThread(&parking_thread, Parking_Task, "parking");
 	CHECK_RET(ret);
 
-	ret = createThread(&hono_interaction_thread, Hono_Interaction_Task, "hono");
-	CHECK_RET(ret);
+	//ret = createThread(&hono_interaction_thread, Hono_Interaction_Task, "hono");
+	//CHECK_RET(ret);
 
 	ret = createThread(&cpu_logger_thread, Cpu_Logger_Task, "cpulog");
 	CHECK_RET(ret);

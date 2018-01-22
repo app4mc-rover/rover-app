@@ -22,6 +22,13 @@
 #include <json/json.h>
 #endif
 
+#include <fstream>
+#include <string>
+#include <iostream>
+
+//To log sensor data
+//#define LOG_DATA
+
 rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * username, char * password, char * clientID)
 {
 	/* Assign what is constructed */
@@ -114,6 +121,11 @@ int rover::RoverMQTTCommand::publishToCoreUsageTopic (float core_usages[4] = {})
 	Json::FastWriter  string_writer;
 	std::string temp = string_writer.write(data);
 
+#ifdef LOG_DATA
+	std::ofstream out("/home/pi/output.txt", ios::out | ios::app);
+	out << temp;
+#endif
+
 	/* Set payload to constructed char* */
 	this->setPayload(temp.c_str(), temp.length());
 
@@ -170,6 +182,11 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	/* Set payload to constructed char* */
 	this->setPayload(temp.c_str(), temp.length());
 
+#ifdef LOG_DATA
+	std::ofstream out("/home/pi/output.txt", ios::out | ios::app);
+	out << temp;
+#endif
+
 	/* Call publish */
 	return this->publish();
 }
@@ -214,6 +231,7 @@ rover::RoverControlData_t rover::RoverMQTTCommand::readFromDrivingTopic (void)
 	this->read(data);
 	//printf("data=%s\n",data);
 
+
 	/* Check if data received is not valid */
 	if (data[0]=='N' && data[1]=='/' && data[2]=='A')
 	{
@@ -221,6 +239,10 @@ rover::RoverControlData_t rover::RoverMQTTCommand::readFromDrivingTopic (void)
 	}
 	else
 	{
+#ifdef LOG_DATA
+		std::ofstream out("/home/pi/output.txt", ios::out | ios::app);
+		out << data;
+#endif
 		/* Data is ready */
 		control_data.data_ready = 1;
 
