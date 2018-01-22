@@ -229,11 +229,17 @@ add_executable(mqtt_subscriber ${CMAKE_SOURCE_DIR}/src/examples/mqtt_subscriber.
 target_link_libraries (mqtt_subscriber roverapi)
 
 
+file (GLOB_RECURSE ROVERAPP_INCLUDE_FILES
+  ${CMAKE_SOURCE_DIR}/include/*
+  ${CMAKE_SOURCE_DIR}/include/*
+)
+set_target_properties(roverapp PROPERTIES PUBLIC_HEADER "${ROVERAPP_INCLUDE_FILES}")
+
 #
 # INSTALLING
 #
 
-#Install binary, shared library, static library (archives)
+#Install binary, shared library, includes, static library (archives)
 install(
   TARGETS roverapp roverapi
     roverapptasks
@@ -243,7 +249,7 @@ install(
     config_reader
     pthread_monitoring
     timing pthread_distribution
-  PUBLIC_HEADER
+  PUBLIC_HEADER DESTINATION /usr/include
   RUNTIME DESTINATION /usr/bin
   LIBRARY DESTINATION /usr/lib
   ARCHIVE DESTINATION /usr/lib)
