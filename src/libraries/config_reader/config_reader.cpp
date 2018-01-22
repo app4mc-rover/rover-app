@@ -7,7 +7,7 @@
  *
  * Description:
  *    Configuration file reader for the rover
- *    Configuration file will be placed to /opt/rover-app/config/rover_config.txt in the target. Please modify this file in case you want to change the configuration.
+ *    Configuration file is read from /etc/rover.conf. Sample is located at samples/rover.conf.sample
  *
  * Author:
  *    M. Ozcelikors,  <mozcelikors@gmail.com> - created 18.01.2018
@@ -24,6 +24,7 @@ struct rover_config getRoverConfig(char *filename)
 {
 	struct rover_config configstruct;
 	FILE *file = fopen (filename, "r");
+	printf ("Checking /etc/rover.conf\n");
 
 	if (file != NULL)
 	{
@@ -102,7 +103,7 @@ struct rover_config getRoverConfig(char *filename)
 	} // End if file
 	else
 	{
-		fprintf(stderr, "Unable to read rover config file. Check /opt/rover-app/config/rover_config.txt. Program will use default configuration.\n");
+		fprintf(stderr, "Unable to read rover config file. Correct your /etc/rover.conf. Program will use default configuration.\n");
 
 		/* Default setup */
 		configstruct.ROVER_IDENTITY_C = 1;

@@ -8,7 +8,7 @@
  * Description:
  *    Configuration file reader for the rover
  *    	Header file
- *    Configuration file will be placed to /opt/rover-app/config/rover_config.txt in the target. Please modify this file in case you want to change the configuration.
+ *    Configuration file is read from /etc/rover.conf. Sample is located at samples/rover.conf.sample
  *
  * Author:
  *    M. Ozcelikors,  <mozcelikors@gmail.com> - created 18.01.2018
@@ -20,7 +20,7 @@
 
 #define ROVER_CONFIG_MAXBUF 1024
 #define DELIM "="
-#define ROVER_CONFIG_FILE "/opt/rover-app/config/rover_config.txt"
+#define ROVER_CONFIG_FILE "/etc/rover.conf"
 
 typedef struct rover_config
 {

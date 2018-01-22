@@ -8,7 +8,7 @@
  * Description:
  *    pThread skeleton implementation for PolarSys rover
  *
- *    Configuration file is located at /opt/rover-app/config/rover_config.txt
+ *    Configuration file is located at /etc/rover.conf
  *
  * Authors:
  *    M. Ozcelikors,            R.Hottger

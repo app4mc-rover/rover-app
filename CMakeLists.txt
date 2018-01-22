@@ -251,6 +251,4 @@ install(
 #Copy/install files to a certain static directory
 install(FILES ${CMAKE_SOURCE_DIR}/scripts/read_core_usage.py
   DESTINATION /opt/rover-app/scripts/)
-  
-install(FILES ${CMAKE_SOURCE_DIR}/rover_config.txt
-  DESTINATION /opt/rover-app/config/)
+

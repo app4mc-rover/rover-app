@@ -1,0 +1,9 @@
+# Configuration file for roverapp. 
+# Place in /etc/rover.conf
+ROVER_IDENTITY_C=1
+MQTT_BROKER_C=127.0.0.1
+MQTT_BROKER_PORT_C=1883
+ROVER_MQTT_QOS_C=0
+MQTT_USERNAME_C=sensor1@DEFAULT_TENANT
+MQTT_PASSWORD_C=hono-secret
+USE_GROOVE_SENSOR_C=0
