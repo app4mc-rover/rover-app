@@ -71,7 +71,7 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 		ultrasonic_sr04_back_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-#ifndef SIMULATOR
+#if !SIMULATOR
 		if (rover_config_obj.USE_GROOVE_SENSOR_C == 0)
 		{
 			pthread_mutex_lock(&gpio_intensive_operation_lock);

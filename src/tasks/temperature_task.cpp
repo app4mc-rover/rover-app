@@ -58,7 +58,7 @@ void *Temperature_Task(void *arg)
 		// TODO: A dirty solution for temperature sensor messing up with the ultrasonic sensor
 		// timing. With this, temperature sensor only works with manual driving, i.e. non- proximity-
 		// sensor-critical driving mode.
-#ifndef SIMULATOR
+#if !SIMULATOR
 		if (driving_mode.get() == MANUAL)
 		{
 			pthread_mutex_lock(&gpio_intensive_operation_lock);

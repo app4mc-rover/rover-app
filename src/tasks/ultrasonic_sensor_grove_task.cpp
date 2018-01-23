@@ -55,7 +55,7 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 		/*pthread_mutex_lock(&distance_grove_lock);
 			distance_grove_shared = getCM_GrooveUltrasonicRanger();
 		pthread_mutex_unlock(&distance_grove_lock);*/
-#ifndef SIMULATOR
+#if !SIMULATOR
 		if (rover_config_obj.USE_GROOVE_SENSOR_C == 1)
 		{
 			pthread_mutex_lock(&gpio_intensive_operation_lock);
