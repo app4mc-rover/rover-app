@@ -20,9 +20,9 @@
 
 #include <libraries/config_reader/config_reader.h>
 
-struct rover_config getRoverConfig(char *filename)
+rover_config getRoverConfig(char *filename)
 {
-	struct rover_config configstruct;
+	rover_config configstruct = {1, "127.0.0.1", 1883, 0, "", "", 0};
 	FILE *file = fopen (filename, "r");
 	printf ("Checking /etc/rover.conf\n");
 

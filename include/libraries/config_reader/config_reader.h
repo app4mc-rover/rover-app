@@ -22,7 +22,7 @@
 #define DELIM "="
 #define ROVER_CONFIG_FILE "/etc/rover.conf"
 
-typedef struct rover_config
+typedef struct
 {
 	int ROVER_IDENTITY_C;
 	char MQTT_BROKER_C [ROVER_CONFIG_MAXBUF];
@@ -31,7 +31,7 @@ typedef struct rover_config
 	char MQTT_USERNAME_C [ROVER_CONFIG_MAXBUF];
 	char MQTT_PASSWORD_C [ROVER_CONFIG_MAXBUF];
 	int USE_GROOVE_SENSOR_C;
-};
+} rover_config;
 
 rover_config getRoverConfig (char *filename);
 
