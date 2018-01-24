@@ -34,7 +34,7 @@
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1260706612" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
 								</option>
-								<option id="gnu.c.compiler.option.misc.other.1244435803" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -feliminate-unused-debug-types -fstack-protector-strong -pie -fpie -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security -fvisibility-inlines-hidden -march=armv7ve -marm -mfpu=neon-vfpv4  -mfloat-abi=hard" valueType="string"/>
+								<option id="gnu.c.compiler.option.misc.other.1244435803" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -feliminate-unused-debug-types -fstack-protector-strong -pie -fpie -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -fvisibility-inlines-hidden -march=armv7ve -marm -mfpu=neon-vfpv4  -mfloat-abi=hard" valueType="string"/>
 								<option id="gnu.c.compiler.option.warnings.toerrors.1208176731" name="Warnings as errors (-Werror)" superClass="gnu.c.compiler.option.warnings.toerrors" useByScannerDiscovery="false" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.2075130332" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -63,7 +63,7 @@
 								<option id="gnu.cpp.compiler.option.dialect.std.667560688" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1604836710" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
 								<option id="gnu.cpp.compiler.option.dialect.flags.38238680" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
-								<option id="gnu.cpp.compiler.option.other.other.1228981496" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -feliminate-unused-debug-types -fstack-protector-strong -pie -fpie -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security -fvisibility-inlines-hidden -march=armv7ve -marm -mfpu=neon-vfpv4  -mfloat-abi=hard" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.1228981496" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -feliminate-unused-debug-types -fstack-protector-strong -pie -fpie -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -fvisibility-inlines-hidden -march=armv7ve -marm -mfpu=neon-vfpv4  -mfloat-abi=hard" valueType="string"/>
 								<option id="gnu.cpp.compiler.option.warnings.toerrors.1724258631" name="Warnings as errors (-Werror)" superClass="gnu.cpp.compiler.option.warnings.toerrors" useByScannerDiscovery="false" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1943364287" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -427,7 +427,7 @@
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1333617174" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="CROSS_COMPILE_ECLIPSE"/>
 								</option>
-								<option id="gnu.c.compiler.option.misc.other.2120869533" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -feliminate-unused-debug-types -fstack-protector-strong -pie -fpie -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security -fvisibility-inlines-hidden -march=armv7ve -marm -mfpu=neon-vfpv4  -mfloat-abi=hard" valueType="string"/>
+								<option id="gnu.c.compiler.option.misc.other.2120869533" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -feliminate-unused-debug-types -fstack-protector-strong -pie -fpie -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security -fvisibility-inlines-hidden -march=armv7ve -marm -mfpu=neon-vfpv4  -mfloat-abi=hard" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1177811244" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.944891048" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
@@ -455,7 +455,7 @@
 								<option id="gnu.cpp.compiler.option.dialect.std.518614638" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.940019829" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
 								<option id="gnu.cpp.compiler.option.dialect.flags.1309745300" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="" valueType="string"/>
-								<option id="gnu.cpp.compiler.option.other.other.277622141" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -feliminate-unused-debug-types -fstack-protector-strong -pie -fpie -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security -fvisibility-inlines-hidden -march=armv7ve -marm -mfpu=neon-vfpv4  -mfloat-abi=hard" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.277622141" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -feliminate-unused-debug-types -fstack-protector-strong -pie -fpie -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security -fvisibility-inlines-hidden -march=armv7ve -marm -mfpu=neon-vfpv4  -mfloat-abi=hard" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1671557423" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.591068575" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
@@ -1096,6 +1096,14 @@
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="display_control"/>
+		<configuration configurationName="driving_control"/>
+		<configuration configurationName="utility_info"/>
+		<configuration configurationName="mqtt_telemetry"/>
+		<configuration configurationName="mqtt_subscriber"/>
+		<configuration configurationName="mqtt_publisher"/>
+		<configuration configurationName="sensor_reading"/>
+		<configuration configurationName="buzzer_button_example"/>
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/roverapp"/>
 		</configuration>

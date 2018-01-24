@@ -99,7 +99,7 @@ int rover::RoverMQTTCommand::publishToCoreUsageTopic (float core_usages[4] = {})
 
 	/* Set topic name */
 	/* Add inital part of the topic name */
-	sprintf(topicBuffer_RoverMQTTCommand, topicPrefix);
+	sprintf(topicBuffer_RoverMQTTCommand, "%s", topicPrefix);
 
 	/* Concatanate rover ID */
 	snprintf(numBuffer_RoverMQTTCommand, sizeof(numBuffer_RoverMQTTCommand), "%d", this->ROVER_ID);
@@ -143,7 +143,7 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 
 	/* Set topic name */
 	/* Add inital part of the topic name */
-	sprintf(topicBuffer_RoverMQTTCommand, topicPrefix);
+	sprintf(topicBuffer_RoverMQTTCommand, "%s", topicPrefix);
 
 	/* Concatanate rover ID */
 	snprintf(numBuffer_RoverMQTTCommand, sizeof(numBuffer_RoverMQTTCommand), "%d", this->ROVER_ID);
@@ -200,7 +200,7 @@ int rover::RoverMQTTCommand::subscribeToDrivingTopic (void)
 
 	/* Set topic name */
 	/* Add inital part of the topic name */
-	sprintf(topicBuffer_RoverMQTTCommand, topicPrefix);
+	sprintf(topicBuffer_RoverMQTTCommand, "%s", topicPrefix);
 
 	/* Concatanate rover ID */
 	snprintf(numBuffer_RoverMQTTCommand, sizeof(numBuffer_RoverMQTTCommand), "%d", this->ROVER_ID);

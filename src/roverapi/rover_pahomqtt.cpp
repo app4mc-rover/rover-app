@@ -252,7 +252,7 @@ int rover::RoverPahoMQTT::read (char* data)
 	}
 	else
 	{
-		sprintf (data, "N/A");
+		sprintf (data, "%s", "N/A");
 		return 1;
 	}
 }
