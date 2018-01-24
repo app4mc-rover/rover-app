@@ -44,7 +44,7 @@ void *CompassSensor_Task(void * arg)
 	timing compass_task_tmr;
 	char local_command = 'f';
 
-	compass_task_tmr.setTaskID("Compass-Sensor");
+	compass_task_tmr.setTaskID((char*)"Compass-Sensor");
 	compass_task_tmr.setDeadline(0.1);
 	compass_task_tmr.setPeriod(0.1);
 

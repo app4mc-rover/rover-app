@@ -22,7 +22,7 @@
 #include <libraries/timing/timing.h>
 
 timing::timing() {
-	this->_TASK_ID = "None";
+	this->_TASK_ID = (char*)"None";
 	this->_DEADLINE_MISS_PERCENTAGE = 0;
 	this->_START_TIME = (clock_t) 0.0;
 	this->_END_TIME = (clock_t) 0.0;

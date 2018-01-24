@@ -23,9 +23,9 @@
 
 rover::RoverHonoCloud::RoverHonoCloud()
 :REGISTRATION_PORT(1),
- TENANT_NAME("N"),
+ TENANT_NAME((char*)"N"),
  PORT(1),
- HOST_NAME("N")
+ HOST_NAME((char*)"N")
 {
 
 #if SIMULATOR

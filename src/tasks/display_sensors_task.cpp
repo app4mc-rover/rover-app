@@ -34,7 +34,7 @@ void *DisplaySensors_Task (void * arg)
 {
 	timing display_sensors_task_tmr;
 
-	display_sensors_task_tmr.setTaskID("Display-Sensors");
+	display_sensors_task_tmr.setTaskID((char*)"Display-Sensors");
 	display_sensors_task_tmr.setDeadline(3.0);
 	display_sensors_task_tmr.setPeriod(3.0);
 

@@ -35,7 +35,7 @@ void *Cpu_Logger_Task(void * arg)
 {
 
 	timing cpu_logger_task_tmr;
-	cpu_logger_task_tmr.setTaskID("CpuTsk");
+	cpu_logger_task_tmr.setTaskID((char*)"CpuTsk");
 	cpu_logger_task_tmr.setDeadline(3);
 	cpu_logger_task_tmr.setPeriod(3);
 

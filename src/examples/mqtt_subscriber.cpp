@@ -22,14 +22,14 @@
 #include <roverapi/rover_pahomqtt.hpp>
 
 //Your MQTT Broker credentials and info
-#define MQTT_BROKER "127.0.0.1"
+#define MQTT_BROKER (char*)"127.0.0.1"
 #define MQTT_BROKER_PORT 1883 // default:1883
 #define ROVER_MQTT_QOS 0 //Quality of service
-#define SUBSCRIBE_TOPIC "rover/1/RoverDriving/control"
+#define SUBSCRIBE_TOPIC (char*)"rover/1/RoverDriving/control"
 #define RECEIVE_PAYLOAD_BUFSIZE 50 // <-- Here we want to receive up to 50 characters of data
                                    // This should be modified in case you want to receive more!
-#define MQTT_USERNAME "sensor1@DEFAULT_TENANT"
-#define MQTT_PASSWORD "hono-secret"
+#define MQTT_USERNAME (char*)"sensor1@DEFAULT_TENANT"
+#define MQTT_PASSWORD (char*)"hono-secret"
 
 //Using rover namespace from Rover API
 using namespace rover;
@@ -48,8 +48,8 @@ int main()
     
     // Subscribe
     RoverMQTT_Configure_t rover_mqtt_conf;
-    rover_mqtt_conf.clientID = "rover_subscriber";               // Identification of the Client
-    rover_mqtt_conf.payload  = "nothing";                       // Message to send
+    rover_mqtt_conf.clientID = (char*)"rover_subscriber";       // Identification of the Client
+    rover_mqtt_conf.payload  = (char*)"nothing";                // Message to send
     rover_mqtt_conf.qos      = ROVER_MQTT_QOS;                  // Quality of Service
     rover_mqtt_conf.timeout  = 10000L;                          // Polling timeout, 10000L is fine
     rover_mqtt_conf.topic    = SUBSCRIBE_TOPIC;                 // Topic name to subscribe to

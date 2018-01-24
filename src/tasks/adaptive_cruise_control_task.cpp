@@ -23,7 +23,7 @@
 void *Adaptive_Cruise_Control_Task(void * arg)
 {
 	timing acc_task_tmr;
-	acc_task_tmr.setTaskID("ACC");
+	acc_task_tmr.setTaskID((char*)"ACC");
 	acc_task_tmr.setDeadline(0.1);
 	acc_task_tmr.setPeriod(0.1);
 

@@ -119,7 +119,7 @@ unsigned int readFromSRF02 (int deviceAddr)
 void *SRF02_Task (void * arg)
 {
 	timing srf02_task_tmr;
-	srf02_task_tmr.setTaskID("SRF02");
+	srf02_task_tmr.setTaskID((char*)"SRF02");
 	srf02_task_tmr.setDeadline(1);
 	srf02_task_tmr.setPeriod(1);
 

@@ -35,7 +35,7 @@ void *MQTT_Subscribe_Task (void * arg)
 	int try_count = 0;
 	const int max_tries = 20;
 
-	mqtt_subscribe_task_tmr.setTaskID("MQTTSubscribe");
+	mqtt_subscribe_task_tmr.setTaskID((char*)"MQTTSubscribe");
 	mqtt_subscribe_task_tmr.setDeadline(0.1);
 	mqtt_subscribe_task_tmr.setPeriod(0.1);
 

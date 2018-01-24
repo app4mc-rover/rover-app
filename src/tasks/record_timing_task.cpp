@@ -59,7 +59,7 @@ void *Record_Timing_Task (void * arg)
 {
 	timing record_timing_task_tmr;
 
-	record_timing_task_tmr.setTaskID("RecordTiming");
+	record_timing_task_tmr.setTaskID((char*)"RecordTiming");
 	record_timing_task_tmr.setDeadline(0.5);
 	record_timing_task_tmr.setPeriod(2.0);
 

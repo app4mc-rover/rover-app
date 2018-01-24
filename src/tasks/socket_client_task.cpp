@@ -88,16 +88,15 @@ void *Socket_Client_Task (void * arg)
 {
 	timing socket_client_task_tmr;
 
-	socket_client_task_tmr.setTaskID("Socket_Client_Task");
+	socket_client_task_tmr.setTaskID((char*)"Socket_Client_Task");
 	socket_client_task_tmr.setDeadline(0.5);
 	socket_client_task_tmr.setPeriod(0.5);
 
 	/* Socket related initializations */
-	int n;
 	struct sockaddr_in serv_addr;
 	struct hostent *server;
 	char client_buffer[JSON_DATA_BUFSIZE];
-	char * eof_str = "\r\n";
+	char * eof_str = (char*)"\r\n";
 	int connected_flag = 0;
 
 	/* Send these data each iteration*/

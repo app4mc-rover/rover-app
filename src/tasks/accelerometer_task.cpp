@@ -28,7 +28,8 @@ void *Accelerometer_Task (void * arg)
 {
 	timing accelerometer_task_tmr;
 
-	accelerometer_task_tmr.setTaskID("Accelerometer");
+	const char * taskID = "Accelerometer";
+	accelerometer_task_tmr.setTaskID((char*)taskID);
 	accelerometer_task_tmr.setDeadline(3.0);
 	accelerometer_task_tmr.setPeriod(3.0);
 

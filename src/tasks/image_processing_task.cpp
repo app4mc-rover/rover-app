@@ -60,7 +60,7 @@ void *Image_Processing_Task(void *arg)
 {
 	timing imgproc_task_tmr;
 
-	imgproc_task_tmr.setTaskID("ImgPr");
+	imgproc_task_tmr.setTaskID((char*)"ImgPr");
 	imgproc_task_tmr.setDeadline(1);
 	imgproc_task_tmr.setPeriod(1);
 	/*

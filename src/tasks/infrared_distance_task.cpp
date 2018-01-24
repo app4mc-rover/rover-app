@@ -37,7 +37,7 @@ void *InfraredDistance_Task (void * arg)
 {
 	timing infrared_distance_task_tmr;
 
-	infrared_distance_task_tmr.setTaskID("Infrared");
+	infrared_distance_task_tmr.setTaskID((char*)"Infrared");
 	infrared_distance_task_tmr.setDeadline(0.5);
 	infrared_distance_task_tmr.setPeriod(0.5);
 

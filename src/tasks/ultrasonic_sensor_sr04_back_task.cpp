@@ -58,7 +58,7 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 {
 	timing ultrasonic_sr04_back_task_tmr;
 
-	ultrasonic_sr04_back_task_tmr.setTaskID("Ultrasonic_SR04_Back");
+	ultrasonic_sr04_back_task_tmr.setTaskID((char*)"Ultrasonic_SR04_Back");
 	ultrasonic_sr04_back_task_tmr.setDeadline(0.1);
 	ultrasonic_sr04_back_task_tmr.setPeriod(0.1);
 

@@ -37,7 +37,8 @@ int StopParking (void)
 void *Parking_Task(void * arg)
 {
 	timing parking_task_tmr;
-	parking_task_tmr.setTaskID("Parking");
+
+	parking_task_tmr.setTaskID((char*)"Parking");
 	parking_task_tmr.setDeadline(0.1);
 	parking_task_tmr.setPeriod(0.1);
 

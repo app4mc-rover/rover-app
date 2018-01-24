@@ -71,7 +71,7 @@ rover_config getRoverConfig(char *filename)
 					}
 					else
 					{
-						printf("Read config [MQTT_USERNAME_C = <no-username>]\n",configstruct.MQTT_USERNAME_C);
+						printf("Read config [MQTT_USERNAME_C = <no-username>]\n");
 
 					}
 				}
@@ -85,7 +85,7 @@ rover_config getRoverConfig(char *filename)
 					}
 					else
 					{
-						printf("Read config [MQTT_PASSWORD_C = <no-password>]\n",configstruct.MQTT_PASSWORD_C);
+						printf("Read config [MQTT_PASSWORD_C = <no-password>]\n");
 
 					}
 				}

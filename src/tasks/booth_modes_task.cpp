@@ -27,7 +27,7 @@
 void *Booth_Modes_Task(void * arg)
 {
 	timing booth_task_tmr;
-	booth_task_tmr.setTaskID("BM");
+	booth_task_tmr.setTaskID((char*)"BM");
 	booth_task_tmr.setDeadline(0.1);
 	booth_task_tmr.setPeriod(0.1);
 

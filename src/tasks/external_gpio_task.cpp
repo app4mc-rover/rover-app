@@ -106,7 +106,7 @@ void *External_GPIO_Task(void *arg)
 {
 	timing extgpio_task_tmr;
 
-	extgpio_task_tmr.setTaskID("GPIO");
+	extgpio_task_tmr.setTaskID((char*)"GPIO");
 	extgpio_task_tmr.setDeadline(0.2);
 	extgpio_task_tmr.setPeriod(0.2);
 

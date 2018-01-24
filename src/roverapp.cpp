@@ -240,7 +240,7 @@ void exitHandler(int dummy)
 int main()
 {
 	/* Read configuration from config file */
-	rover_config_obj = getRoverConfig(ROVER_CONFIG_FILE);
+	rover_config_obj = getRoverConfig((char*)ROVER_CONFIG_FILE);
 
 	int ret = 0;
 	r_base = RoverBase();

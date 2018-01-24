@@ -80,7 +80,7 @@ void *Socket_Server_Task(void * arg)
 {
 	timing socket_server_task_tmr;
 
-	socket_server_task_tmr.setTaskID("Socket_Server_Task");
+	socket_server_task_tmr.setTaskID((char*)"Socket_Server_Task");
 	socket_server_task_tmr.setDeadline(0.05);
 	socket_server_task_tmr.setPeriod(0.05);
 

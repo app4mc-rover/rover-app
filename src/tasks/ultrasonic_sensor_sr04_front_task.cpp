@@ -60,7 +60,8 @@ void *Ultrasonic_Sensor_SR04_Front_Task(void *unused)
 
 	timing ultrasonic_sr04_front_task_tmr;
 
-	ultrasonic_sr04_front_task_tmr.setTaskID("Ultrasonic_SR04_Front");
+	const char * taskID = "Ultrasonic_SR04_Front";
+	ultrasonic_sr04_front_task_tmr.setTaskID((char*)taskID);
 	ultrasonic_sr04_front_task_tmr.setDeadline(0.1);
 	ultrasonic_sr04_front_task_tmr.setPeriod(0.1);
 

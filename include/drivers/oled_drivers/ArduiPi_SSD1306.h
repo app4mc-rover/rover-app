@@ -48,7 +48,7 @@
 
 #define OLED_LAST_OLED						6 /* always last type, used in code to end array */
 
-
+/*
 static const char * oled_type_str[] = {
 	"Adafruit SPI 128x32",
 	"Adafruit SPI 128x64",
@@ -57,6 +57,7 @@ static const char * oled_type_str[] = {
 	"Seeed I2C 128x64",
 	"Seeed I2C 96x96"
 };
+*/
 
 // Arduino Compatible type
 typedef uint8_t boolean;

@@ -43,6 +43,7 @@ float rover::RoverDHT22::read(void)
 	{
 		return this->readTemperature();
 	}
+	return -1;
 }
 
 float rover::RoverDHT22::readTemperature (void)
@@ -54,7 +55,6 @@ float rover::RoverDHT22::readTemperature (void)
 	int data[5];
 
 	int try_again;
-	float f;
 	float h;
 	float c;
 
@@ -67,7 +67,6 @@ float rover::RoverDHT22::readTemperature (void)
 	data[3] = 0;
 	data[4] = 0;
 
-	f = 0.0;
 	h = 0.0;
 	c = 0.0;
 	j = 0;
@@ -104,7 +103,6 @@ float rover::RoverDHT22::readTemperature (void)
 			data[3] = 0;
 			data[4] = 0;
 
-			f = 0.0;
 			h = 0.0;
 			c = 0.0;
 			j = 0;
@@ -171,7 +169,7 @@ float rover::RoverDHT22::readTemperature (void)
 				{
 					c = -c;
 				}
-				f = c * 1.8f + 32;
+				//f = c * 1.8f + 32;
 	#ifdef DEBUG
 				printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
 	#endif
@@ -207,7 +205,7 @@ float rover::RoverDHT22::readHumidity (void)
 	int data[5];
 
 	int try_again;
-	float f;
+	//float f;
 	float h;
 	float c;
 
@@ -220,7 +218,7 @@ float rover::RoverDHT22::readHumidity (void)
 	data[3] = 0;
 	data[4] = 0;
 
-	f = 0.0;
+	//f = 0.0;
 	h = 0.0;
 	c = 0.0;
 	j = 0;
@@ -257,7 +255,7 @@ float rover::RoverDHT22::readHumidity (void)
 			data[3] = 0;
 			data[4] = 0;
 
-			f = 0.0;
+			//f = 0.0;
 			h = 0.0;
 			c = 0.0;
 			j = 0;
@@ -324,7 +322,7 @@ float rover::RoverDHT22::readHumidity (void)
 				{
 					c = -c;
 				}
-				f = c * 1.8f + 32;
+				//f = c * 1.8f + 32;
 	#ifdef DEBUG
 				printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
 	#endif

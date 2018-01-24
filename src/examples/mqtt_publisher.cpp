@@ -22,14 +22,14 @@
 #include <roverapi/rover_pahomqtt.hpp>
 
 //Your MQTT Broker credentials and info
-#define MQTT_BROKER "127.0.0.1"
+#define MQTT_BROKER (char*)"127.0.0.1"
 #define MQTT_BROKER_PORT 1883  //default:1883
 #define ROVER_MQTT_QOS 0 //Quality of service
-#define PUBLISH_TOPIC1 "rover/1/RoverDriving/control"
-#define PUBLISH_TOPIC2 "rover/2/RoverDriving/control"
-#define PUBLISH_PAYLOAD "Hello from rover!"
-#define MQTT_USERNAME "sensor1@DEFAULT_TENANT"
-#define MQTT_PASSWORD "hono-secret"
+#define PUBLISH_TOPIC1 (char*)"rover/1/RoverDriving/control"
+#define PUBLISH_TOPIC2 (char*)"rover/2/RoverDriving/control"
+#define PUBLISH_PAYLOAD (char*)"Hello from rover!"
+#define MQTT_USERNAME (char*)"sensor1@DEFAULT_TENANT"
+#define MQTT_PASSWORD (char*)"hono-secret"
 
 //Using rover namespace from Rover API
 using namespace rover;
@@ -45,7 +45,7 @@ int main()
     
     // Configure
     RoverMQTT_Configure_t rover_mqtt_conf;
-    rover_mqtt_conf.clientID = "rover_publisher";               // Identification of the Client
+    rover_mqtt_conf.clientID = (char*)"rover_publisher";        // Identification of the Client
     rover_mqtt_conf.qos      = ROVER_MQTT_QOS;                  // Quality of Service
     rover_mqtt_conf.timeout  = 10000L;                          // Polling timeout, 10000L is fine
     rover_mqtt_conf.topic    = PUBLISH_TOPIC1;                  // Topic name to publish to or subscribe from

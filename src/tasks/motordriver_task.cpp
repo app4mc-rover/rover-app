@@ -172,7 +172,7 @@ void *MotorDriver_Task(void * arg)
 {
 	timing motordriver_task_tmr;
 
-	motordriver_task_tmr.setTaskID("MotorDriver");
+	motordriver_task_tmr.setTaskID((char*)"MotorDriver");
 	motordriver_task_tmr.setDeadline(0.1);
 	motordriver_task_tmr.setPeriod(0.1);
 

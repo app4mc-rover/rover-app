@@ -31,7 +31,7 @@ void *MQTT_Publish_Task (void * arg)
 {
 	timing mqtt_publish_task_tmr;
 
-	mqtt_publish_task_tmr.setTaskID("MQTTPublish");
+	mqtt_publish_task_tmr.setTaskID((char*)"MQTTPublish");
 	mqtt_publish_task_tmr.setDeadline(0.8);
 	mqtt_publish_task_tmr.setPeriod(0.8);
 

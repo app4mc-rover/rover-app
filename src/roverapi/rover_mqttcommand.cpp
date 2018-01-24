@@ -77,8 +77,8 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 	this->defaultRoverMQTTConfigure.clientID = clientID;
 	this->defaultRoverMQTTConfigure.timeout = 10000L;
 	this->defaultRoverMQTTConfigure.payload = nullptr;
-	this->defaultRoverMQTTConfigure.username = "";
-	this->defaultRoverMQTTConfigure.password = "";
+	this->defaultRoverMQTTConfigure.username = (char*)"";
+	this->defaultRoverMQTTConfigure.password = (char*)"";
 
 	/* Load defaults */
 	this->flushFlags();

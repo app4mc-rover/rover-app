@@ -35,7 +35,7 @@ void *KeyCommandInput_Task(void * arg)
 {
 	timing keycommand_task_tmr;
 
-	keycommand_task_tmr.setTaskID("KeyCommand");
+	keycommand_task_tmr.setTaskID((char*)"KeyCommand");
 	keycommand_task_tmr.setDeadline(0.2);
 	keycommand_task_tmr.setPeriod(0.2);
 

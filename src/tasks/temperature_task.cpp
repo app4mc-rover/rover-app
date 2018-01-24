@@ -35,7 +35,7 @@ void *Temperature_Task(void *arg)
 {
 	timing temperature_task_tmr;
 
-	temperature_task_tmr.setTaskID("DHT22");
+	temperature_task_tmr.setTaskID((char*)"DHT22");
 	temperature_task_tmr.setDeadline(4);
 	temperature_task_tmr.setPeriod(4);
 

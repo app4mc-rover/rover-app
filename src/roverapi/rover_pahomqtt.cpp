@@ -32,7 +32,7 @@ rover::RoverPahoMQTT::RoverPahoMQTT (char * host_name, int port, RoverMQTT_Confi
 	}
 	else
 	{
-		this->defaultRoverMQTTConfigure.username = "";
+		this->defaultRoverMQTTConfigure.username = (char*)"";
 	}
 
 	if (strlen(MQTT_Configure.password)>1)
@@ -41,7 +41,7 @@ rover::RoverPahoMQTT::RoverPahoMQTT (char * host_name, int port, RoverMQTT_Confi
 	}
 	else
 	{
-		this->defaultRoverMQTTConfigure.password = "";
+		this->defaultRoverMQTTConfigure.password = (char*)"";
 	}
 
 	/* Load defaults */
@@ -87,7 +87,7 @@ void rover::RoverPahoMQTT::constructAddress (void)
 {
 	char num_buffer[5] = {};
 	char string[20] = {};
-	sprintf (string, this->HOST_NAME);
+	sprintf (string, "%s", this->HOST_NAME);
 	strcat (string, ":");
 	snprintf (num_buffer, sizeof(num_buffer), "%d", this->PORT);
 	strcat(string, num_buffer);
@@ -210,7 +210,6 @@ int rover::RoverPahoMQTT::unsubscribe (void)
 int rover::RoverPahoMQTT::subscribe (void)
 {
 	int rc = 0;
-	int ch = 0;
 
 	this->conn_opts = MQTTAsync_connectOptions_initializer;
 	this->conn_opts.keepAliveInterval = 20;
@@ -248,7 +247,7 @@ int rover::RoverPahoMQTT::read (char* data)
 	if (this->defaultRoverSubscribeData.data_ready == 1)
 	{
 		this->defaultRoverSubscribeData.data_ready = 0;
-		sprintf (data, this->defaultRoverSubscribeData.data);
+		sprintf (data, "%s", this->defaultRoverSubscribeData.data);
 		return 0;
 	}
 	else

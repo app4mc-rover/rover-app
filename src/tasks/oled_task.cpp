@@ -57,7 +57,7 @@
 void *OLED_Task (void * arg)
 {
 	timing oled_task_tmr;
-	oled_task_tmr.setTaskID("OLED");
+	oled_task_tmr.setTaskID((char*)"OLED");
 	oled_task_tmr.setDeadline(0.5);
 	oled_task_tmr.setPeriod(0.5);
 

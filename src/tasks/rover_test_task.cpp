@@ -58,7 +58,7 @@ void getDistanceTrain(int channel,int rounds){
 
 void *Rover_Test_Task(void *unused)
 {
-	CollectThreadName("Rover_Test_Task");
+	CollectThreadName((char*)"Rover_Test_Task");
 
 	int running = 1;
 	init();
@@ -116,7 +116,7 @@ void *Rover_Test_Task(void *unused)
 			toggle_light();
 			break;
 		case 'w':
-			say("Good morning! I am the PolarSys Rover!");
+			say((char*)"Good morning! I am the PolarSys Rover!");
 			break;
 		}
 	}

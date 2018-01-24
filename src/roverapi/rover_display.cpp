@@ -219,6 +219,7 @@ Adafruit_SSD1306& rover::RoverDisplay::getDisplay (void)
 	if (this->ROVER_DISPLAY_INIT_ != 1)
 	{
 		fprintf(stderr,"You havent initialized RoverDisplay. Use RoverDisplay()::initialize() !\n");
+		return this->my_display;
 	}
 	else
 	{

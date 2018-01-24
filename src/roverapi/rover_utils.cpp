@@ -24,7 +24,6 @@ void rover::RoverUtils::getCoreUtilization (float coreUtil[numberOfCores])
 #endif
 	FILE *fp;
 	char buffer[128];
-	float util[5];
 	size_t bytes_read;
 
 	/* Execute the command */

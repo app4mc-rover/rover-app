@@ -70,7 +70,7 @@
 void *Bluetooth_Task (void * arg)
 {
 	timing bluetooth_task_tmr;
-	bluetooth_task_tmr.setTaskID("BLE");
+	bluetooth_task_tmr.setTaskID((char*)"BLE");
 	bluetooth_task_tmr.setDeadline(1);
 	bluetooth_task_tmr.setPeriod(1);
 
