@@ -37,6 +37,11 @@
 #include <time.h>
 #include <unistd.h>
 
+/// This means pin HIGH, true, 3.3volts on a pin.
+#define HIGH 0x1
+/// This means pin LOW, false, 0volts on a pin.
+#define LOW  0x0
+
 // This define enables a little test program (by default a blinking output on pin RPI_GPIO_PIN_11)
 // You can do some safe, non-destructive testing on any platform with:
 // gcc bcm2835.c -D BCM2835_TEST

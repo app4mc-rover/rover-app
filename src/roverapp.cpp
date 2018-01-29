@@ -263,7 +263,7 @@ int main()
 	speed_shared = HIGHEST_SPEED;
 	running_flag = 1;
 	main_running_flag = 1;
-	keycommand_shared = 'F';
+    keycommand_shared = 'F';
 
 	//Initialize mutexes
 	pthread_mutex_init(&display_lock, NULL);

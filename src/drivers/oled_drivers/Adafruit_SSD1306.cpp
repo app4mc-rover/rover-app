@@ -31,6 +31,11 @@ All text above, and the splash screen below must be included in any redistributi
 #include "Adafruit_GFX.h"
 #include "Adafruit_SSD1306.h"
 
+/// This means pin HIGH, true, 3.3volts on a pin.
+#define HIGH 0x1
+/// This means pin LOW, false, 0volts on a pin.
+#define LOW  0x0
+
 #define swap(a, b) { int16_t t = a; a = b; b = t; }
   
 inline boolean Adafruit_SSD1306::isSPI(void) {
