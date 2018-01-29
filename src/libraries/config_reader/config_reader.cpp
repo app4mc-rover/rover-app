@@ -103,7 +103,7 @@ rover_config getRoverConfig(char *filename)
 	} // End if file
 	else
 	{
-		fprintf(stderr, "Unable to read rover config file. Correct your /etc/rover.conf. Program will use default configuration.\n");
+        printf("Unable to read rover config file. Correct your /etc/rover.conf. Program will use default configuration.\n");
 
 		/* Default setup */
 		configstruct.ROVER_IDENTITY_C = 1;

@@ -240,7 +240,7 @@ void exitHandler(int dummy)
 int main()
 {
 	/* Read configuration from config file */
-	rover_config_obj = getRoverConfig((char*)ROVER_CONFIG_FILE);
+    rover_config_obj = getRoverConfig((char*)ROVER_CONFIG_FILE);
 
 	int ret = 0;
 	r_base = RoverBase();
@@ -342,7 +342,7 @@ int main()
 	CHECK_RET(ret);
 
 	ret = createThread(&mqtt_subscribe_thread, MQTT_Subscribe_Task, "MQTTS");
-	CHECK_RET(ret);/**/
+    CHECK_RET(ret);/**/
 
 	/* Set priority of a thread */
 	//struct sched_param param ;
