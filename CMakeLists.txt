@@ -12,7 +12,7 @@ project (roverapp)
 
 # Use C++11 and Supress some warnings  -Wno-write-strings -Wno-deprecated-declarations -Wno-unused-local-typedefs
 set (CMAKE_CXX_FLAGS "-std=c++11 -Wno-write-strings -Wno-deprecated-declarations -Wno-unused-local-typedefs ${CMAKE_CXX_FLAGS}")
-
+#set (CMAKE_CXX_FLAGS "-O2 -pipe -g -feliminate-unused-debug-types -fstack-protector-strong -pie -fpie -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -fvisibility-inlines-hidden  -march=armv7ve -marm -mfpu=neon-vfpv4  -mfloat-abi=hard ${CMAKE_CXX_FLAGS}")
 # To find modules from other cmake-built projects that are searched with find_package,
 # external cmake modules need to be provided. Those are typically named as Find<package>.cmake or <package>Config.cmake.
 # Those must be added to the CMAKE_MODULE_PATH set below:
