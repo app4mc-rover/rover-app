@@ -11,7 +11,7 @@ cmake_minimum_required (VERSION 2.8.11)
 project (roverapp)
 
 # Use C++11 and Supress some warnings  -Wno-write-strings -Wno-deprecated-declarations -Wno-unused-local-typedefs
-set (CMAKE_CXX_FLAGS "-std=c++11 -Wno-write-strings -Wno-deprecated-declarations -Wno-unused-local-typedefs ${CMAKE_CXX_FLAGS}")
+set (CMAKE_CXX_FLAGS "-std=c++11 -Wno-write-strings -Wno-deprecated-declarations -Wno-unused-local-typedefs -O2 -pipe -g -feliminate-unused-debug-types  -fstack-protector-strong -pie -fpie -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -fvisibility-inlines-hidden ${CMAKE_CXX_FLAGS}")
 
 # To find modules from other cmake-built projects that are searched with find_package,
 # external cmake modules need to be provided. Those are typically named as Find<package>.cmake or <package>Config.cmake.
@@ -146,7 +146,7 @@ target_link_libraries (roverapi roverappdrivers)
 #
 
 #Link external libraries
-# Since OpenCV Module don't return full path for libraries 
+# Since OpenCV Module don't return full path for libraries
 if(SDK_EN EQUAL 0)
    target_link_libraries (roverapptasks opencv_core)
    target_link_libraries (roverapptasks opencv_highgui)
