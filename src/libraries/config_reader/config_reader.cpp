@@ -107,12 +107,12 @@ rover_config getRoverConfig(char *filename)
 
 		/* Default setup */
 		configstruct.ROVER_IDENTITY_C = 1;
-		memcpy(configstruct.MQTT_BROKER_C,"127.0.0.1",strlen("127.0.0.1"));
-		configstruct.MQTT_BROKER_PORT_C = 1887;
+        memcpy(configstruct.MQTT_BROKER_C,"127.0.0.1",strlen("127.0.0.1"));
+        configstruct.MQTT_BROKER_PORT_C = 1883;
 		configstruct.ROVER_MQTT_QOS_C = 0;
-		memcpy(configstruct.MQTT_USERNAME_C,"sensor1@DEFAULT_TENANT",strlen("sensor1@DEFAULT_TENANT"));
-		memcpy(configstruct.MQTT_PASSWORD_C,"hono-secret",strlen("hono-secret"));
-		configstruct.USE_GROOVE_SENSOR_C = 0;
+        memcpy(configstruct.MQTT_USERNAME_C,"sensor1@DEFAULT_TENANT",strlen("sensor1@DEFAULT_TENANT"));
+        memcpy(configstruct.MQTT_PASSWORD_C,"hono-secret",strlen("hono-secret"));
+        configstruct.USE_GROOVE_SENSOR_C = 0;
 
 		printf ("Using following default configuration:\n");
 		printf("[ROVER_IDENTITY_C = %d]\n",configstruct.ROVER_IDENTITY_C);
