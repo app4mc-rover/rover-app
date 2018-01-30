@@ -25,7 +25,7 @@
  */
 static const int DHT22_RPI_PIN = 24;  //BCM19  -> wiringPi 24
 
-static const int MAX_TIMINGS = 85;
+static const int MAX_TIMINGS = 80;
 
 namespace rover
 {

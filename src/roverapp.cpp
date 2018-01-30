@@ -221,7 +221,7 @@ void exitHandler(int dummy)
 	joinThread(&record_timing_thread);
 	joinThread(&adaptive_cruise_control_thread);
 	joinThread(&parking_thread);
-	//joinThread(&hono_interaction_thread);
+    joinThread(&hono_interaction_thread);
 	joinThread(&cpu_logger_thread);
 	joinThread(&oled_thread);
 	joinThread(&extgpio_thread);
@@ -285,23 +285,25 @@ int main()
 	}
 	CHECK_RET(ret);
 
+    ret = createThread(&displaysensors_thread, DisplaySensors_Task, "displaysensors");
+    CHECK_RET(ret);
+
 	ret = createThread(&ultrasonic_sr04_front_thread, Ultrasonic_Sensor_SR04_Front_Task, "US_sr04_front");
 	CHECK_RET(ret);
 
-
+/**/
 	ret = createThread(&temperature_thread, Temperature_Task, "temperature");
-	CHECK_RET(ret);
+    CHECK_RET(ret);
 
 	ret = createThread(&motordriver_thread, MotorDriver_Task, "motordriver");
 	CHECK_RET(ret);
-	/**/
+
 
 	ret = createThread(&infrared_thread, InfraredDistance_Task, "infrared");
 	CHECK_RET(ret);
 
-	ret = createThread(&displaysensors_thread, DisplaySensors_Task, "displaysensors");
-	CHECK_RET(ret);
-/**/
+
+
 	ret = createThread(&compasssensor_thread, CompassSensor_Task, "compasssensor");
 	CHECK_RET(ret);
 
@@ -314,9 +316,9 @@ int main()
 	ret = createThread(&parking_thread, Parking_Task, "parking");
 	CHECK_RET(ret);
 
-	//ret = createThread(&hono_interaction_thread, Hono_Interaction_Task, "hono");
-	//CHECK_RET(ret);
-
+    ret = createThread(&hono_interaction_thread, Hono_Interaction_Task, "hono");
+    CHECK_RET(ret);
+/**/
 	ret = createThread(&cpu_logger_thread, Cpu_Logger_Task, "cpulog");
 	CHECK_RET(ret);
 
@@ -342,7 +344,7 @@ int main()
 	CHECK_RET(ret);
 
 	ret = createThread(&mqtt_subscribe_thread, MQTT_Subscribe_Task, "MQTTS");
-    CHECK_RET(ret);/**/
+    CHECK_RET(ret);
 
 	/* Set priority of a thread */
 	//struct sched_param param ;

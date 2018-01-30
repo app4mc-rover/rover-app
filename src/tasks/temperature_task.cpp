@@ -44,7 +44,8 @@ void *Temperature_Task(void *arg)
 	//param.sched_priority = sched_get_priority_max (SCHED_RR) ;
 	//pthread_setschedparam (pthread_self(), SCHED_RR, &param) ;
 
-	float temperature, humidity;
+    float temperature = 0.0;
+    float humidity = 0.0;
 
 	RoverDHT22 r_dht22 = RoverDHT22();
 	r_dht22.initialize();

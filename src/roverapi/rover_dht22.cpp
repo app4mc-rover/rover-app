@@ -48,32 +48,18 @@ float rover::RoverDHT22::read(void)
 
 float rover::RoverDHT22::readTemperature (void)
 {
-	uint8_t laststate;
-	uint8_t counter;
-	uint8_t j;
-	uint8_t i;
-	int data[5];
+    uint8_t laststate = HIGH;
+    uint8_t counter = 0;
+    uint8_t j = 0;
+    uint8_t i = 0;
+    int data[5] = {0,0,0,0,0};
 
-	int try_again;
-	float h;
-	float c;
+    int try_again = 1;
+    float h = 0.0;
+    float c = 0.0;
 
-	int try_count = 0;
-	const int max_tries = 30;
-
-	data[0] = 0;
-	data[1] = 0;
-	data[2] = 0;
-	data[3] = 0;
-	data[4] = 0;
-
-	h = 0.0;
-	c = 0.0;
-	j = 0;
-	i = 0;
-	counter = 0;
-	laststate = HIGH;
-	try_again = 1;
+    int try_count = 0;
+    const int max_tries = 30;
 
 #if SIMULATOR
 	return 32.0;
@@ -84,7 +70,7 @@ float rover::RoverDHT22::readTemperature (void)
 	}
 	else
 	{
-		while (try_again == 1)
+        while (try_again == 1)
 		{
 			if (try_count >= max_tries)
 			{
@@ -140,6 +126,7 @@ float rover::RoverDHT22::readTemperature (void)
 				if ( (i >= 4) && (i % 2 == 0) )
 				{
 					/* shove each bit into the storage bytes */
+                    //printf("%d\n",j/8);
 					data[j / 8] <<= 1;
 					if ( counter > 16 )
 						data[j / 8] |= 1;
@@ -185,9 +172,10 @@ float rover::RoverDHT22::readTemperature (void)
 				/* Data not good */
 				try_again = 1;
 				//printf ("Data not good, skipping\n");
+                //return 2.0;
 
 			}
-		}
+        }
 
 		/* Return temperature */
 		return c;
@@ -198,34 +186,18 @@ float rover::RoverDHT22::readTemperature (void)
 
 float rover::RoverDHT22::readHumidity (void)
 {
-	uint8_t laststate;
-	uint8_t counter;
-	uint8_t j;
-	uint8_t i;
-	int data[5];
+    uint8_t laststate = HIGH;
+    uint8_t counter = 0;
+    uint8_t j = 0;
+    uint8_t i = 0;
+    int data[5] = {0,0,0,0,0};
 
-	int try_again;
-	//float f;
-	float h;
-	float c;
+    int try_again = 1;
+    float h = 0.0;
+    float c = 0.0;
 
 	int try_count = 0;
 	const int max_tries = 30;
-
-	data[0] = 0;
-	data[1] = 0;
-	data[2] = 0;
-	data[3] = 0;
-	data[4] = 0;
-
-	//f = 0.0;
-	h = 0.0;
-	c = 0.0;
-	j = 0;
-	i = 0;
-	counter = 0;
-	laststate = HIGH;
-	try_again = 1;
 
 #if SIMULATOR
 	return 40.0;
@@ -236,7 +208,7 @@ float rover::RoverDHT22::readHumidity (void)
 	}
 	else
 	{
-		while (try_again == 1)
+        while (try_again == 1)
 		{
 			if (try_count >= max_tries)
 			{
@@ -293,6 +265,7 @@ float rover::RoverDHT22::readHumidity (void)
 				if ( (i >= 4) && (i % 2 == 0) )
 				{
 					/* shove each bit into the storage bytes */
+                    //printf("%d\n",j/8);
 					data[j / 8] <<= 1;
 					if ( counter > 16 )
 						data[j / 8] |= 1;
@@ -337,9 +310,10 @@ float rover::RoverDHT22::readHumidity (void)
 			{
 				/* Data not good */
 				try_again = 1;
+
 				//printf ("Data not good, skipping\n");
 			}
-		}
+        }
 
 		/* Return humidity */
 		return h;
