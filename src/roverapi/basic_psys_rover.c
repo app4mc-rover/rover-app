@@ -23,7 +23,6 @@
 static int led_status = 0;
 static int i2c_th02_fd = 0;
 
-
 void init(){
 	  //wiringPiSetup () ;
 #if !SIMULATOR

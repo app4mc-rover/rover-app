@@ -48,18 +48,18 @@ float rover::RoverDHT22::read(void)
 
 float rover::RoverDHT22::readTemperature (void)
 {
-    uint8_t laststate = HIGH;
-    uint8_t counter = 0;
-    uint8_t j = 0;
-    uint8_t i = 0;
-    int data[5] = {0,0,0,0,0};
+	uint8_t laststate = HIGH;
+	uint8_t counter = 0;
+	uint8_t j = 0;
+	uint8_t i = 0;
+	int data[5] = {0,0,0,0,0};
 
-    int try_again = 1;
-    float h = 0.0;
-    float c = 0.0;
+	int try_again = 1;
+	float h = 0.0;
+	float c = 0.0;
 
-    int try_count = 0;
-    const int max_tries = 30;
+	int try_count = 0;
+	const int max_tries = 30;
 
 #if SIMULATOR
 	return 32.0;
@@ -157,9 +157,9 @@ float rover::RoverDHT22::readTemperature (void)
 					c = -c;
 				}
 				//f = c * 1.8f + 32;
-	#ifdef DEBUG
+#ifdef DEBUG
 				printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
-	#endif
+#endif
 				try_again = 0;
 
 				if (c == 0)
@@ -172,10 +172,8 @@ float rover::RoverDHT22::readTemperature (void)
 				/* Data not good */
 				try_again = 1;
 				//printf ("Data not good, skipping\n");
-                //return 2.0;
-
 			}
-        }
+		}
 
 		/* Return temperature */
 		return c;
@@ -186,15 +184,15 @@ float rover::RoverDHT22::readTemperature (void)
 
 float rover::RoverDHT22::readHumidity (void)
 {
-    uint8_t laststate = HIGH;
-    uint8_t counter = 0;
-    uint8_t j = 0;
-    uint8_t i = 0;
-    int data[5] = {0,0,0,0,0};
+	uint8_t laststate = HIGH;
+	uint8_t counter = 0;
+	uint8_t j = 0;
+	uint8_t i = 0;
+	int data[5] = {0,0,0,0,0};
 
-    int try_again = 1;
-    float h = 0.0;
-    float c = 0.0;
+	int try_again = 1;
+	float h = 0.0;
+	float c = 0.0;
 
 	int try_count = 0;
 	const int max_tries = 30;
@@ -208,7 +206,7 @@ float rover::RoverDHT22::readHumidity (void)
 	}
 	else
 	{
-        while (try_again == 1)
+		while (try_again == 1)
 		{
 			if (try_count >= max_tries)
 			{
@@ -265,7 +263,7 @@ float rover::RoverDHT22::readHumidity (void)
 				if ( (i >= 4) && (i % 2 == 0) )
 				{
 					/* shove each bit into the storage bytes */
-                    //printf("%d\n",j/8);
+					//printf("%d\n",j/8);
 					data[j / 8] <<= 1;
 					if ( counter > 16 )
 						data[j / 8] |= 1;
@@ -296,9 +294,9 @@ float rover::RoverDHT22::readHumidity (void)
 					c = -c;
 				}
 				//f = c * 1.8f + 32;
-	#ifdef DEBUG
+#ifdef DEBUG
 				printf( "Humidity = %.1f %% Temperature = %.1f *C (%.1f *F)\n", h, c, f );
-	#endif
+#endif
 				try_again = 0;
 
 				if (h == 0)
@@ -313,7 +311,7 @@ float rover::RoverDHT22::readHumidity (void)
 
 				//printf ("Data not good, skipping\n");
 			}
-        }
+		}
 
 		/* Return humidity */
 		return h;
