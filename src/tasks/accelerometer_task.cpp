@@ -30,8 +30,8 @@ void *Accelerometer_Task (void * arg)
 
 	const char * taskID = "Accelerometer";
 	accelerometer_task_tmr.setTaskID((char*)taskID);
-	accelerometer_task_tmr.setDeadline(3.0);
-	accelerometer_task_tmr.setPeriod(3.0);
+	accelerometer_task_tmr.setDeadline(0.3);
+	accelerometer_task_tmr.setPeriod(0.3);
 
 	RoverGY521 r_accel = RoverGY521();
 	r_accel.initialize();
@@ -43,6 +43,7 @@ void *Accelerometer_Task (void * arg)
 
 		//Task content starts here -----------------------------------------------
 		pthread_mutex_lock(&accelerometerdata_lock);
+			accelerometerdata_shared.bearing = r_accel.read();
 			accelerometerdata_shared.accel_x = r_accel.getAccelX();
 			accelerometerdata_shared.accel_y = r_accel.getAccelY();
 			accelerometerdata_shared.accel_z = r_accel.getAccelZ();
@@ -52,7 +53,6 @@ void *Accelerometer_Task (void * arg)
 			accelerometerdata_shared.angle_x = r_accel.getAngleX();
 			accelerometerdata_shared.angle_y = r_accel.getAngleY();
 			accelerometerdata_shared.angle_z = r_accel.getAngleZ();
-			accelerometerdata_shared.bearing = r_accel.read();
 		pthread_mutex_unlock(&accelerometerdata_lock);
 		//Task content ends here -------------------------------------------------
 

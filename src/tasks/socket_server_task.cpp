@@ -91,6 +91,7 @@ void *Socket_Server_Task(void * arg)
 	int true_ = 1;
 	int client_connected_flag = 0;
 
+#if !SIMULATOR
 	/* First call to socket() function */
 	roverapp_listen_sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -121,6 +122,7 @@ void *Socket_Server_Task(void * arg)
 	*/
 	listen(roverapp_listen_sockfd,5); // Max 5 connections queued
 	clilen = sizeof(cli_addr);
+#endif
 
 	while(running_flag.get())
 	{

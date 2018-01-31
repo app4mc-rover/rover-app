@@ -24,7 +24,6 @@
 #include <roverapi/rover_hcsr04.hpp>
 #include <roverapi/rover_hmc5883l.hpp>
 #include <roverapi/rover_infraredsensor.hpp>
-#include <roverapi/rover_qmc5883l.hpp>
 #include <roverapi/rover_dht22.hpp>
 
 //Using rover namespace from Rover API
@@ -49,7 +48,6 @@ int main()
     RoverInfraredSensor r_infrared3 = RoverInfraredSensor(ROVER_FRONT_LEFT);
     RoverDHT22 r_dht22 = RoverDHT22();
     RoverHMC5883L r_hmc = RoverHMC5883L();
-    // or RoverQMC5883L r_qmc = RoverQMC5883L();
     RoverGY521 r_accel = RoverGY521();
     
     // Set up ultrasonic sensors
@@ -64,9 +62,11 @@ int main()
     r_dht22.initialize();
     // Set up HMC5883L or QMC5883L compass sensor
     r_hmc.initialize();
-    //r_qmc.initialize();
+	r_hmc.calibrate();
     // Set up GY521 accelerometer
     r_accel.initialize();
+
+	r_base.sleep(500);
     
     //Read from sensors
     printf ("Ultrasonic = [%f %f]\n",   r_front.read(),
@@ -77,8 +77,10 @@ int main()
                                             r_infrared3.read());// Front-left
     printf ("Temperature = %f\n",   r_dht22.readTemperature());
     printf ("Humidity = %f\n",      r_dht22.readHumidity());
-    printf ("Bearing with HMC5883L = %f\n",     r_hmc.read());
-    // or printf ("Bearing with QMC5883L = %f\n",       r_qmc.read());
+	printf ("Bearing with HMC5883L (first reading) = %f\n",     r_hmc.read());
+	r_base.sleep(500);
+	printf ("Bearing with HMC5883L (second reading) = %f\n",     r_hmc.read());
+
     printf ("GY521 AccelX = %d\n", r_accel.getAccelX());
     printf ("GY521 AccelY = %d\n", r_accel.getAccelY());
     printf ("GY521 AccelZ = %d\n", r_accel.getAccelZ());

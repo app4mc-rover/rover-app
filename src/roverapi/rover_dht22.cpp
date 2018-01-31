@@ -70,7 +70,7 @@ float rover::RoverDHT22::readTemperature (void)
 	}
 	else
 	{
-        while (try_again == 1)
+		while (try_again == 1)
 		{
 			if (try_count >= max_tries)
 			{
@@ -126,7 +126,7 @@ float rover::RoverDHT22::readTemperature (void)
 				if ( (i >= 4) && (i % 2 == 0) )
 				{
 					/* shove each bit into the storage bytes */
-                    //printf("%d\n",j/8);
+					//printf("%d\n",j/8);
 					data[j / 8] <<= 1;
 					if ( counter > 16 )
 						data[j / 8] |= 1;

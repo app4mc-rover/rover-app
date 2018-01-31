@@ -70,6 +70,11 @@ void rover::RoverHMC5883L::initialize (void)
 
 }
 
+void rover::RoverHMC5883L::calibrate (void)
+{
+	this->calibration_start = millis();
+}
+
 float rover::RoverHMC5883L::read (void)
 {
 #if SIMULATOR

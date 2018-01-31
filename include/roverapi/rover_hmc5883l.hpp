@@ -109,7 +109,7 @@ namespace rover
 			 * @brief Starts calibration for the bearing sensor
 			 * @return void
 			 */
-			void calibrate (void) const;
+                        void calibrate (void);
 
 			/**
 			 * @brief Sets the HMC588L Address

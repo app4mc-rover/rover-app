@@ -46,24 +46,14 @@ void *DisplaySensors_Task (void * arg)
 		//Task content starts here -----------------------------------------------
 
 		printf("Temperature: %f deg\n", temperature_shared.get());
-
-		//delayMicroseconds(500000);
-
 		printf("Humidity: %f percent\n", humidity_shared.get());
-
-		//delayMicroseconds(500000);
-		//printf("Distance(Groove): %d cm\n", distance_shared);
-
 		printf("Distance(HCSR04Front): %d cm\n", distance_sr04_front_shared.get());
 		printf("Distance(HCSR04Back): %d cm\n", distance_sr04_back_shared.get());
-
 		printf("DistanceInfraredRearRight: %f cm\n", infrared_shared.get(0));
 		printf("DistanceInfraredRearLeft: %f cm\n", infrared_shared.get(1));
 		printf("DistanceInfraredFrontRight: %f cm\n", infrared_shared.get(2));
 		printf("DistanceInfraredFrontLeft: %f cm\n", infrared_shared.get(3));
-
 		printf("Bearing from QMC5883L/HMC5883L: %f\n", bearing_shared.get());
-
 		printf("Accelerometer acceleration:\t%d\t\t%d\t\t%d\n", accelerometerdata_shared.accel_x,
 				                                                accelerometerdata_shared.accel_y,
 																accelerometerdata_shared.accel_z);

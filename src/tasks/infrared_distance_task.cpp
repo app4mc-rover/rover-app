@@ -57,7 +57,6 @@ void *InfraredDistance_Task (void * arg)
 		infrared_distance_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		//Setting argument in pthread - whenever you R/W access to temperature_shared, you have to do the same.
 		infrared_shared.set(0, r_infrared0.read());
 		infrared_shared.set(1, r_infrared1.read());
 		infrared_shared.set(2, r_infrared2.read());
