@@ -35,10 +35,10 @@ void *Hono_Interaction_Task(void * arg)
 	//Set-up hono instance attributes and register 4711 device to Hono
 	RoverHonoCloud r_cloud = RoverHonoCloud();
 
-	r_cloud.setHono((char*)"idial.institute", 8080, (char*)"DEFAULT_TENANT");
+	r_cloud.setHono(rover_config_obj.HONO_HTTP_HOST_C, rover_config_obj.HONO_HTTP_PORT_C, rover_config_obj.HONO_HTTP_TENANT_NAME_C);
 
-	r_cloud.setRegistrationPort(28080);
-	r_cloud.registerDevice((char*)"4711");
+	r_cloud.setRegistrationPort(rover_config_obj.HONO_HTTP_REGISTER_PORT_C);
+	r_cloud.registerDevice(rover_config_obj.HONO_HTTP_DEVICE_ID_C);
 
 	while (running_flag.get())
 	{
@@ -49,17 +49,17 @@ void *Hono_Interaction_Task(void * arg)
 
 		// Send everything to Hono every second in this task using the following functions
 		// TODO: This can be done with one curl command, probably a better way.
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverFront", distance_sr04_front_shared.get());
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverFrontLeft",infrared_shared.get(3));
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverFrontRight", infrared_shared.get(2));
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverRear", distance_sr04_back_shared.get());
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverRearLeft", infrared_shared.get(1));
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverRearRight", infrared_shared.get(0));
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverBearing", bearing_shared.get());
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverUtilCpu1", cpu_util_shared.get(0));
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverUtilCpu2", cpu_util_shared.get(1));
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverUtilCpu3", cpu_util_shared.get(2));
-		r_cloud.sendTelemetry((char*)"4711",(char*)"sensor1",(char*)"hono-secret",(char*)"roverUtilCpu4", cpu_util_shared.get(3));
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverFront", distance_sr04_front_shared.get());
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverFrontLeft",infrared_shared.get(3));
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverFrontRight", infrared_shared.get(2));
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverRear", distance_sr04_back_shared.get());
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverRearLeft", infrared_shared.get(1));
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverRearRight", infrared_shared.get(0));
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverBearing", bearing_shared.get());
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverUtilCpu1", cpu_util_shared.get(0));
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverUtilCpu2", cpu_util_shared.get(1));
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverUtilCpu3", cpu_util_shared.get(2));
+		r_cloud.sendTelemetry(rover_config_obj.HONO_HTTP_DEVICE_ID_C,rover_config_obj.HONO_HTTP_USERNAME_C,rover_config_obj.HONO_HTTP_PASSWORD_C,(char*)"roverUtilCpu4", cpu_util_shared.get(3));
 
 
 		//Task content ends here -------------------------------------------------
