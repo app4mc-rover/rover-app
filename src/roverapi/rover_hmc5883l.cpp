@@ -72,7 +72,24 @@ void rover::RoverHMC5883L::initialize (void)
 
 void rover::RoverHMC5883L::calibrate (void)
 {
-	this->calibration_start = millis();
+	if (this->ROVERHMC5883L_SETUP_)
+	{
+		int i = 0;
+		printf ("Calibrating the HMC5883L Compass sensor.. Please turn the rover 360degrees during the next 5 seconds..");
+		this->calibration_start = millis();
+
+		for (i = 0; i<40; i++)
+		{
+			printf ("HMC5883L Compass Calibration: %f second left\n", (((40-i)*125.0)/1000)*1.0);
+			this->read();
+			delay(125);
+		}
+		printf ("HMC5883L Compass Calibration: Done\n");
+	}
+	else
+	{
+		fprintf(stderr,"You havent initialized RoverHMC5883L. Use RoverHMC5883L()::initialize() !\n");
+	}
 }
 
 float rover::RoverHMC5883L::read (void)

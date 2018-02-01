@@ -142,6 +142,12 @@ namespace rover
 			 */
 			float getAngleZ (void);
 
+                        /**
+                         * @brief Starts calibration for the compass unit
+                         * @return void
+                         */
+                        void calibrate (void);
+
 			/**
 			 * @brief Sets the Calibration Duration
 			 * @param period Period to set

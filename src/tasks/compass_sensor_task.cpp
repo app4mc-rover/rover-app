@@ -50,6 +50,7 @@ void *CompassSensor_Task(void * arg)
 
 	RoverHMC5883L r_hmc5883l = RoverHMC5883L();
 	r_hmc5883l.initialize();
+	//r_hmc5883l.calibrate();
 
 	while (running_flag.get()) {
 		compass_task_tmr.recordStartTime();

@@ -35,6 +35,7 @@ void *Accelerometer_Task (void * arg)
 
 	RoverGY521 r_accel = RoverGY521();
 	r_accel.initialize();
+	//r_accel.calibrate();
 
 	while (running_flag.get())
 	{

@@ -75,7 +75,31 @@ void rover::RoverGY521::initialize (void)
 	wiringPiI2CWriteReg16(gy521_fd, MPU6050_PWR_MGMT_1, 0);
 #endif
 
+	this->calibration_start = millis();
+
 	this->ROVERGY521_SETUP_ = 1;
+}
+
+void rover::RoverGY521::calibrate (void)
+{
+	if (this->ROVERGY521_SETUP_)
+	{
+		int i = 0;
+		printf ("Calibrating the GY521 Sensor.. Please turn the rover 360degrees during the next 5 seconds..");
+		this->calibration_start = millis();
+
+		for (i = 0; i<40; i++)
+		{
+			printf ("GY521 Sensor Calibration: %f second left\n", (((40-i)*125.0)/1000)*1.0);
+			this->read();
+			delay(125);
+		}
+		printf ("GY521 Sensor Calibration: Done\n");
+	}
+	else
+	{
+		fprintf(stderr,"You havent set up RoverGY521. Use RoverGY521::initialize() !\n");
+	}
 }
 
 int8_t rover::RoverGY521::getGyroX()

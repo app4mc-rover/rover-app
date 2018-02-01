@@ -65,8 +65,9 @@ int main()
 	r_hmc.calibrate();
     // Set up GY521 accelerometer
     r_accel.initialize();
+	r_accel.calibrate();
 
-	r_base.sleep(500);
+	r_base.sleep(100);
     
     //Read from sensors
     printf ("Ultrasonic = [%f %f]\n",   r_front.read(),
@@ -77,10 +78,7 @@ int main()
                                             r_infrared3.read());// Front-left
     printf ("Temperature = %f\n",   r_dht22.readTemperature());
     printf ("Humidity = %f\n",      r_dht22.readHumidity());
-	printf ("Bearing with HMC5883L (first reading) = %f\n",     r_hmc.read());
-	r_base.sleep(500);
-	printf ("Bearing with HMC5883L (second reading) = %f\n",     r_hmc.read());
-
+	printf ("Bearing with HMC5883L = %f\n",     r_hmc.read());
     printf ("GY521 AccelX = %d\n", r_accel.getAccelX());
     printf ("GY521 AccelY = %d\n", r_accel.getAccelY());
     printf ("GY521 AccelZ = %d\n", r_accel.getAccelZ());
