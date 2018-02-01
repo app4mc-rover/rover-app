@@ -57,7 +57,6 @@ void *MQTT_Publish_Task (void * arg)
 		sensor_data.ultrasonic_front = distance_sr04_front_shared.get();
 		sensor_data.ultrasonic_rear = distance_sr04_back_shared.get();
 		sensor_data.hmc5883l_bearing = bearing_shared.get();
-		sensor_data.qmc5883l_bearing = 0.0;
 		sensor_data.infrared[0] = infrared_shared.get(0);
 		sensor_data.infrared[1] = infrared_shared.get(1);
 		sensor_data.infrared[2] = infrared_shared.get(2);

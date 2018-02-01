@@ -164,7 +164,6 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	data["ultrasonic"]["front"] = sensor_data.ultrasonic_front;
 	data["ultrasonic"]["rear"] = sensor_data.ultrasonic_rear;
 	data["hmc5883l"]["bearing"] = sensor_data.hmc5883l_bearing;
-	data["qmc5883l"]["bearing"] = sensor_data.qmc5883l_bearing;
 	data["gy521"]["bearing"] = sensor_data.gy521_bearing;
 	data["gy521"]["gyro"]["x"] = sensor_data.gy521_gyro_x;
 	data["gy521"]["gyro"]["y"] = sensor_data.gy521_gyro_y;
