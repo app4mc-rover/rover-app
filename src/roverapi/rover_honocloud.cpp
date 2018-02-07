@@ -32,7 +32,6 @@ rover::RoverHonoCloud::RoverHonoCloud()
 	// Just to keep the symbol
 	handleCode(200);
 #endif
-
 }
 
 rover::RoverHonoCloud::RoverHonoCloud(char * host_name, const int port, const int registration_port, char * tenant_name)

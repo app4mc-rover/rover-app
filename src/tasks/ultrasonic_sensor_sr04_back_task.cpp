@@ -74,9 +74,9 @@ void *Ultrasonic_Sensor_SR04_Back_Task (void *unused)
 #if !SIMULATOR
 		if (rover_config_obj.USE_GROOVE_SENSOR_C == 0)
 		{
-			pthread_mutex_lock(&gpio_intensive_operation_lock);
+			//pthread_mutex_lock(&gpio_intensive_operation_lock);
 				distance_sr04_back_shared = r_ultrasonicrear.read();
-			pthread_mutex_unlock(&gpio_intensive_operation_lock);
+			//pthread_mutex_unlock(&gpio_intensive_operation_lock);
 		}
 #endif
 		//Task content ends here -------------------------------------------------

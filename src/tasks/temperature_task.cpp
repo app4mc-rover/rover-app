@@ -31,6 +31,8 @@
 #include <roverapp.h>
 #include <roverapi/rover_dht22.hpp>
 
+// TODO: Temperature Sensor is found to be unstable and will be improved in the later versions.
+
 void *Temperature_Task(void *arg)
 {
 	timing temperature_task_tmr;
@@ -56,7 +58,7 @@ void *Temperature_Task(void *arg)
 		// sensor-critical driving mode.
 
 #if !SIMULATOR
-		if (driving_mode.get() == MANUAL)
+		/*if (driving_mode.get() == MANUAL)
 		{
 			pthread_mutex_lock(&gpio_intensive_operation_lock);
 				temperature = r_dht22.readTemperature();
@@ -69,7 +71,7 @@ void *Temperature_Task(void *arg)
 				if (humidity != 0)
 					humidity_shared = humidity;
 			pthread_mutex_unlock(&gpio_intensive_operation_lock);
-		}
+		}*/
 #endif
 
 		//Task content ends here -------------------------------------------------

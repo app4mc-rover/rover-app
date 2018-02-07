@@ -40,8 +40,8 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 	timing ultrasonic_grove_task_tmr;
 
 	ultrasonic_grove_task_tmr.setTaskID((char*)"GrooveUltrasonic");
-	ultrasonic_grove_task_tmr.setDeadline(0.2);
-	ultrasonic_grove_task_tmr.setPeriod(0.2);
+	ultrasonic_grove_task_tmr.setDeadline(0.1);
+	ultrasonic_grove_task_tmr.setPeriod(0.1);
 
 	RoverGrooveUltrasonic r_groove = RoverGrooveUltrasonic(ROVER_REAR);
 	r_groove.initialize();
@@ -58,9 +58,9 @@ void *Ultrasonic_Sensor_Grove_Task(void *unused)
 #if !SIMULATOR
 		if (rover_config_obj.USE_GROOVE_SENSOR_C == 1)
 		{
-			pthread_mutex_lock(&gpio_intensive_operation_lock);
+			//pthread_mutex_lock(&gpio_intensive_operation_lock);
 				distance_sr04_back_shared = (int) r_groove.read();
-			pthread_mutex_unlock(&gpio_intensive_operation_lock);
+			//pthread_mutex_unlock(&gpio_intensive_operation_lock);
 		}
 #endif
 		//printf("Distance: %dcm\n", getCM_GrooveUltrasonicRanger());

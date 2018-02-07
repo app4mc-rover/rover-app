@@ -35,8 +35,8 @@ void *DisplaySensors_Task (void * arg)
 	timing display_sensors_task_tmr;
 
 	display_sensors_task_tmr.setTaskID((char*)"Display-Sensors");
-	display_sensors_task_tmr.setDeadline(3.0);
-	display_sensors_task_tmr.setPeriod(3.0);
+	display_sensors_task_tmr.setDeadline(0.3);
+	display_sensors_task_tmr.setPeriod(0.3);
 
 	while (running_flag.get())
 	{
@@ -45,8 +45,8 @@ void *DisplaySensors_Task (void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		printf("Temperature: %f deg\n", temperature_shared.get());
-		printf("Humidity: %f percent\n", humidity_shared.get());
+		//printf("Temperature: %f deg\n", temperature_shared.get());
+		//printf("Humidity: %f percent\n", humidity_shared.get());
 		printf("Distance(HCSR04Front): %d cm\n", distance_sr04_front_shared.get());
 		printf("Distance(HCSR04Back): %d cm\n", distance_sr04_back_shared.get());
 		printf("DistanceInfraredRearRight: %f cm\n", infrared_shared.get(0));

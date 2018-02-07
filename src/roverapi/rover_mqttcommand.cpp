@@ -28,6 +28,7 @@
 
 //To log sensor data
 //#define LOG_DATA
+#define LOG_LOCATION "/tmp/output.txt"
 
 rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * username, char * password, char * clientID)
 {
@@ -122,7 +123,7 @@ int rover::RoverMQTTCommand::publishToCoreUsageTopic (float core_usages[4] = {})
 	std::string temp = string_writer.write(data);
 
 #ifdef LOG_DATA
-	std::ofstream out("/home/pi/output.txt", ios::out | ios::app);
+	std::ofstream out(LOG_LOCATION, ios::out | ios::app);
 	out << temp;
 #endif
 
@@ -155,8 +156,8 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	this->setTopic (topicBuffer_RoverMQTTCommand);
 
 	/* Construct payload from sensor_data */
-	data["dht22"]["temperature"] = sensor_data.temperature;
-	data["dht22"]["humidity"] = sensor_data.humidity;
+	//data["dht22"]["temperature"] = sensor_data.temperature;
+	//data["dht22"]["humidity"] = sensor_data.humidity;
 	data["infrared"]["rearright"] = sensor_data.infrared[0];
 	data["infrared"]["rearleft"] = sensor_data.infrared[1];
 	data["infrared"]["frontright"] = sensor_data.infrared[2];
@@ -182,7 +183,7 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	this->setPayload(temp.c_str(), temp.length());
 
 #ifdef LOG_DATA
-	std::ofstream out("/home/pi/output.txt", ios::out | ios::app);
+	std::ofstream out(LOG_LOCATION, ios::out | ios::app);
 	out << temp;
 #endif
 
@@ -239,7 +240,7 @@ rover::RoverControlData_t rover::RoverMQTTCommand::readFromDrivingTopic (void)
 	else
 	{
 #ifdef LOG_DATA
-		std::ofstream out("/home/pi/output.txt", ios::out | ios::app);
+		std::ofstream out(LOG_LOCATION, ios::out | ios::app);
 		out << data;
 #endif
 		/* Data is ready */
@@ -270,7 +271,6 @@ rover::RoverControlData_t rover::RoverMQTTCommand::readFromDrivingTopic (void)
 					fprintf (stderr, "An exception with Nr. %d occurred while parsing the data in RoverMQTTCommand\n", exception_nr);
 					parsingSuccessful = false;
 				}
-
 			}
 		}
 		catch (int exception_nr)

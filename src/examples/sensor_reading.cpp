@@ -24,7 +24,6 @@
 #include <roverapi/rover_hcsr04.hpp>
 #include <roverapi/rover_hmc5883l.hpp>
 #include <roverapi/rover_infraredsensor.hpp>
-#include <roverapi/rover_dht22.hpp>
 
 //Using rover namespace from Rover API
 using namespace rover;
@@ -46,7 +45,6 @@ int main()
     RoverInfraredSensor r_infrared1 = RoverInfraredSensor(ROVER_REAR_LEFT);
     RoverInfraredSensor r_infrared2 = RoverInfraredSensor(ROVER_FRONT_RIGHT);
     RoverInfraredSensor r_infrared3 = RoverInfraredSensor(ROVER_FRONT_LEFT);
-    RoverDHT22 r_dht22 = RoverDHT22();
     RoverHMC5883L r_hmc = RoverHMC5883L();
     RoverGY521 r_accel = RoverGY521();
     
@@ -58,8 +56,6 @@ int main()
     r_infrared1.initialize();
     r_infrared2.initialize();
     r_infrared3.initialize();
-    // Set up DHT22 temperature and humidity sensor
-    r_dht22.initialize();
     // Set up HMC5883L or QMC5883L compass sensor
     r_hmc.initialize();
 	r_hmc.calibrate();
@@ -76,8 +72,6 @@ int main()
                                             r_infrared1.read(), // Rear-left
                                             r_infrared2.read(), // Front-right
                                             r_infrared3.read());// Front-left
-    printf ("Temperature = %f\n",   r_dht22.readTemperature());
-    printf ("Humidity = %f\n",      r_dht22.readHumidity());
 	printf ("Bearing with HMC5883L = %f\n",     r_hmc.read());
     printf ("GY521 AccelX = %d\n", r_accel.getAccelX());
     printf ("GY521 AccelY = %d\n", r_accel.getAccelY());

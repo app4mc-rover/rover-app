@@ -32,8 +32,8 @@ void *MQTT_Publish_Task (void * arg)
 	timing mqtt_publish_task_tmr;
 
 	mqtt_publish_task_tmr.setTaskID((char*)"MQTTPublish");
-	mqtt_publish_task_tmr.setDeadline(0.8);
-	mqtt_publish_task_tmr.setPeriod(0.8);
+	mqtt_publish_task_tmr.setDeadline(0.2);
+	mqtt_publish_task_tmr.setPeriod(0.2);
 
 	RoverMQTTCommand rover_mqtt = RoverMQTTCommand ( rover_config_obj.MQTT_BROKER_C,
 													 rover_config_obj.MQTT_BROKER_PORT_C,
@@ -52,8 +52,7 @@ void *MQTT_Publish_Task (void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		sensor_data.temperature = temperature_shared.get();
-		sensor_data.humidity = humidity_shared.get();
+
 		sensor_data.ultrasonic_front = distance_sr04_front_shared.get();
 		sensor_data.ultrasonic_rear = distance_sr04_back_shared.get();
 		sensor_data.hmc5883l_bearing = bearing_shared.get();
@@ -71,6 +70,8 @@ void *MQTT_Publish_Task (void * arg)
 		sensor_data.gy521_angle_x = accelerometerdata_shared.angle_x;
 		sensor_data.gy521_angle_y = accelerometerdata_shared.angle_y;
 		sensor_data.gy521_angle_z = accelerometerdata_shared.angle_z;
+		//sensor_data.temperature = temperature_shared.get();
+		//sensor_data.humidity = humidity_shared.get();
 
 		if (rover_mqtt.publishToSensorTopic(sensor_data) == 0)
 			printf ("Client rover_mqtt_publisher: Publishing successful!\n");

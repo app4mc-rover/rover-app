@@ -38,8 +38,8 @@ namespace rover
 	 */
 	typedef struct
 	{
-		float temperature;
-		float humidity;
+                //float temperature;
+                //float humidity;
 		float infrared[4];
 		float ultrasonic_front;
 		float ultrasonic_rear;
@@ -87,8 +87,6 @@ namespace rover
 	 *															1,
 	 *															"rover_mqtt_publisher");
 	 *		RoverSensorData_t sensor_data;
-	 *		sensor_data.temperature = temperature_shared.get();
-	 *		sensor_data.humidity = humidity_shared.get();
 	 *		sensor_data.ultrasonic_front = distance_sr04_front_shared.get();
 	 *		sensor_data.ultrasonic_rear = distance_sr04_back_shared.get();
 	 *		sensor_data.hmc5883l_bearing = bearing_shared.get();

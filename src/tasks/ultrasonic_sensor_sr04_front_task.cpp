@@ -75,9 +75,9 @@ void *Ultrasonic_Sensor_SR04_Front_Task(void *unused)
 
 		//Task content starts here -----------------------------------------------
 #if !SIMULATOR
-		pthread_mutex_lock(&gpio_intensive_operation_lock);
+		//pthread_mutex_lock(&gpio_intensive_operation_lock);
 			distance_sr04_front_shared = r_ultrasonicfront.read();
-		pthread_mutex_unlock(&gpio_intensive_operation_lock);
+		//pthread_mutex_unlock(&gpio_intensive_operation_lock);
 #endif
 		//Task content ends here -------------------------------------------------
 		ultrasonic_sr04_front_task_tmr.recordEndTime();
