@@ -25,7 +25,7 @@
 #define MQTT_BROKER (char*)"127.0.0.1"
 #define MQTT_BROKER_PORT 1883  //default:1883
 #define ROVER_MQTT_QOS 0 //Quality of service
-#define PUBLISH_TOPIC1 (char*)"rover/1/RoverDriving/control"
+#define PUBLISH_TOPIC1 (char*)"telemetry"
 #define PUBLISH_TOPIC2 (char*)"rover/2/RoverDriving/control"
 #define PUBLISH_PAYLOAD (char*)"Hello from rover!"
 #define MQTT_USERNAME (char*)"sensor1@DEFAULT_TENANT"

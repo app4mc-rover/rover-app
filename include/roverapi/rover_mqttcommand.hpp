@@ -20,13 +20,13 @@
 #include <roverapi/rover_pahomqtt.hpp>
 
 /* Defines regarding topic naming */
-// Topic naming is such as the following:
+// Topic naming for control such as the following:
 //  rover/<roverID 1-99>/RoverDriving/control
 //  e.g rover/1/RoverDriving/Control
+// Topic naming for sensor data and core data is : telemetry
 #define topicPrefix "rover/"
 #define drivingSubTopic "/RoverDriving/control"
-#define sensorSubTopic  "/RoverSensor/sensors"
-#define coreSubTopic "/RoverCore/usage"
+#define telemetryTopic "telemetry"
 
 /* Buffer size for received message for MQTT */
 #define MQTT_BUFSIZE 256
@@ -38,8 +38,6 @@ namespace rover
 	 */
 	typedef struct
 	{
-                //float temperature;
-                //float humidity;
 		float infrared[4];
 		float ultrasonic_front;
 		float ultrasonic_rear;
@@ -54,6 +52,7 @@ namespace rover
 		int8_t gy521_accel_x;
 		int8_t gy521_accel_y;
 		int8_t gy521_accel_z;
+                float core[4];
 	} RoverSensorData_t;
 
 	/**
@@ -175,7 +174,7 @@ namespace rover
 			~RoverMQTTCommand ();
 
 			/**
-			 * @brief Publishes a message to rover's sensor topic
+                         * @brief Publishes a message to rover's telemetry topic (to match Eclipse Hono)
 			 * @param sensor_data Sensor data to be used in the message
 			 * @return Return code 0-> success; others-> fail sreturn codes
 			 *  **1**: Connection refused: Unacceptable protocol version \n
@@ -186,21 +185,7 @@ namespace rover
 			 *	**6-255**: Reserved for future use \n
 			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
 			 */
-			int publishToSensorTopic (RoverSensorData_t sensor_data);
-
-			/**
-			 * @brief Publishes a mesage to rover's core usage topic
-			 * @param core_usages Core usage array with 4 cores
-			 * @return Return code 0-> success; others-> fail sreturn codes
-			 *  **1**: Connection refused: Unacceptable protocol version \n
-			 *	**2**: Connection refused: Identifier rejected \n
-			 *	**3**: Connection refused: Server unavailable \n
-			 *	**4**: Connection refused: Bad user name or password \n
-			 *	**5**: Connection refused: Not authorized \n
-			 *	**6-255**: Reserved for future use \n
-			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
-			 */
-			int publishToCoreUsageTopic (float core_usages[4]);
+                        int publishToTelemetryTopic (RoverSensorData_t sensor_data);
 
 			/**
 			 * @brief Subscribes to rover's driving topic

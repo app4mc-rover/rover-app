@@ -92,49 +92,7 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 
 rover::RoverMQTTCommand::~RoverMQTTCommand(){}
 
-int rover::RoverMQTTCommand::publishToCoreUsageTopic (float core_usages[4] = {})
-{
-	/* Common buffer to use */
-	char topicBuffer_RoverMQTTCommand[64] = { };
-	char numBuffer_RoverMQTTCommand[2]  = { };
-
-	/* Set topic name */
-	/* Add inital part of the topic name */
-	sprintf(topicBuffer_RoverMQTTCommand, "%s", topicPrefix);
-
-	/* Concatanate rover ID */
-	snprintf(numBuffer_RoverMQTTCommand, sizeof(numBuffer_RoverMQTTCommand), "%d", this->ROVER_ID);
-	strcat(topicBuffer_RoverMQTTCommand, numBuffer_RoverMQTTCommand);
-	numBuffer_RoverMQTTCommand[0] = 0; //Clear array
-
-	/* Add the rest of the topic name */
-	strcat(topicBuffer_RoverMQTTCommand, coreSubTopic);
-	this->setTopic (topicBuffer_RoverMQTTCommand);
-
-	/* Construct payload from sensor_data */
-	Json::Value data;
-	data["core0"] = core_usages[0];
-	data["core1"] = core_usages[1];
-	data["core2"] = core_usages[2];
-	data["core3"] = core_usages[3];
-
-	/* Convert JSON data to string */
-	Json::FastWriter  string_writer;
-	std::string temp = string_writer.write(data);
-
-#ifdef LOG_DATA
-	std::ofstream out(LOG_LOCATION, ios::out | ios::app);
-	out << temp;
-#endif
-
-	/* Set payload to constructed char* */
-	this->setPayload(temp.c_str(), temp.length());
-
-	/* Call publish */
-	return this->publish();
-}
-
-int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data)
+int rover::RoverMQTTCommand::publishToTelemetryTopic (RoverSensorData_t sensor_data)
 {
 	/* Common buffer to use */
 	char topicBuffer_RoverMQTTCommand[64] = {};
@@ -144,20 +102,10 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 
 	/* Set topic name */
 	/* Add inital part of the topic name */
-	sprintf(topicBuffer_RoverMQTTCommand, "%s", topicPrefix);
-
-	/* Concatanate rover ID */
-	snprintf(numBuffer_RoverMQTTCommand, sizeof(numBuffer_RoverMQTTCommand), "%d", this->ROVER_ID);
-	strcat(topicBuffer_RoverMQTTCommand, numBuffer_RoverMQTTCommand);
-	numBuffer_RoverMQTTCommand[0] = 0; //Clear array
-
-	/* Add the rest of the topic name */
-	strcat(topicBuffer_RoverMQTTCommand, sensorSubTopic);
+	sprintf(topicBuffer_RoverMQTTCommand, "%s", telemetryTopic);
 	this->setTopic (topicBuffer_RoverMQTTCommand);
 
 	/* Construct payload from sensor_data */
-	//data["dht22"]["temperature"] = sensor_data.temperature;
-	//data["dht22"]["humidity"] = sensor_data.humidity;
 	data["infrared"]["rearright"] = sensor_data.infrared[0];
 	data["infrared"]["rearleft"] = sensor_data.infrared[1];
 	data["infrared"]["frontright"] = sensor_data.infrared[2];
@@ -175,6 +123,10 @@ int rover::RoverMQTTCommand::publishToSensorTopic (RoverSensorData_t sensor_data
 	data["gy521"]["accel"]["x"] = sensor_data.gy521_accel_x;
 	data["gy521"]["accel"]["y"] = sensor_data.gy521_accel_y;
 	data["gy521"]["accel"]["z"] = sensor_data.gy521_accel_z;
+	data["cores"]["core0"] = sensor_data.core[0];
+	data["cores"]["core1"] = sensor_data.core[1];
+	data["cores"]["core2"] = sensor_data.core[2];
+	data["cores"]["core3"] = sensor_data.core[3];
 
 	/* Convert JSON data to string */
 	std::string temp = string_writer.write(data);

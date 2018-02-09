@@ -51,8 +51,6 @@ void *MQTT_Publish_Task (void * arg)
 		mqtt_publish_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-
-
 		sensor_data.ultrasonic_front = distance_sr04_front_shared.get();
 		sensor_data.ultrasonic_rear = distance_sr04_back_shared.get();
 		sensor_data.hmc5883l_bearing = bearing_shared.get();
@@ -70,26 +68,15 @@ void *MQTT_Publish_Task (void * arg)
 		sensor_data.gy521_angle_x = accelerometerdata_shared.angle_x;
 		sensor_data.gy521_angle_y = accelerometerdata_shared.angle_y;
 		sensor_data.gy521_angle_z = accelerometerdata_shared.angle_z;
-		//sensor_data.temperature = temperature_shared.get();
-		//sensor_data.humidity = humidity_shared.get();
+		sensor_data.core[0] = cpu_util_shared.get(0);
+		sensor_data.core[1] = cpu_util_shared.get(1);
+		sensor_data.core[2] = cpu_util_shared.get(2);
+		sensor_data.core[3] = cpu_util_shared.get(3);
 
-		if (rover_mqtt.publishToSensorTopic(sensor_data) == 0)
+		if (rover_mqtt.publishToTelemetryTopic(sensor_data) == 0)
 			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
 		else
 			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
-
-		core_usages[0] = cpu_util_shared.get(0);
-		core_usages[1] = cpu_util_shared.get(1);
-		core_usages[2] = cpu_util_shared.get(2);
-		core_usages[3] = cpu_util_shared.get(3);
-
-		if (rover_mqtt.publishToCoreUsageTopic(core_usages) == 0)
-			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
-		else
-			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
-
-
-
 
 		//Task content ends here -------------------------------------------------
 
