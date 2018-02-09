@@ -29,6 +29,7 @@
 //To log sensor data
 //#define LOG_DATA
 #define LOG_LOCATION "/tmp/output.txt"
+#define MQTT_TIMEOUT 1000L
 
 rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * username, char * password, char * clientID)
 {
@@ -46,7 +47,7 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 	}
 	this->defaultRoverMQTTConfigure.qos = qos;
 	this->defaultRoverMQTTConfigure.clientID = clientID;
-	this->defaultRoverMQTTConfigure.timeout = 10000L;
+	this->defaultRoverMQTTConfigure.timeout = MQTT_TIMEOUT;//10000L;
 	this->defaultRoverMQTTConfigure.payload = nullptr;
 	this->defaultRoverMQTTConfigure.username = username;
 	this->defaultRoverMQTTConfigure.password = password;
@@ -76,7 +77,7 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 	}
 	this->defaultRoverMQTTConfigure.qos = qos;
 	this->defaultRoverMQTTConfigure.clientID = clientID;
-	this->defaultRoverMQTTConfigure.timeout = 10000L;
+	this->defaultRoverMQTTConfigure.timeout = MQTT_TIMEOUT;//10000L;
 	this->defaultRoverMQTTConfigure.payload = nullptr;
 	this->defaultRoverMQTTConfigure.username = (char*)"";
 	this->defaultRoverMQTTConfigure.password = (char*)"";
@@ -101,9 +102,7 @@ int rover::RoverMQTTCommand::publishToTelemetryTopic (RoverSensorData_t sensor_d
 	Json::FastWriter string_writer;
 
 	/* Set topic name */
-	/* Add inital part of the topic name */
-	sprintf(topicBuffer_RoverMQTTCommand, "%s", telemetryTopic);
-	this->setTopic (topicBuffer_RoverMQTTCommand);
+	this->setTopic (telemetryTopic);
 
 	/* Construct payload from sensor_data */
 	data["infrared"]["rearright"] = sensor_data.infrared[0];
