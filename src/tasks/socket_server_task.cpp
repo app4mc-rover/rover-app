@@ -21,6 +21,7 @@
 #include <libraries/timing/timing.h>
 #include <interfaces.h>
 #include <pthread.h>
+#include <fcntl.h>
 
 #include <signal.h>
 
@@ -90,6 +91,7 @@ void *Socket_Server_Task(void * arg)
 	int  n;
 	int true_ = 1;
 	int client_connected_flag = 0;
+	int ret = 0;
 
 #if !SIMULATOR
 	/* First call to socket() function */
@@ -101,7 +103,7 @@ void *Socket_Server_Task(void * arg)
 	}
 
 	/* Handle re-binding problems */
-	setsockopt(roverapp_listen_sockfd, SOL_SOCKET,SO_REUSEADDR,&true_,sizeof(int));
+	setsockopt(roverapp_listen_sockfd, SOL_SOCKET, SO_REUSEADDR, &true_,sizeof(int));
 
 	/* Initialize socket structure */
 	bzero((char *) &serv_addr, sizeof(serv_addr));
@@ -126,7 +128,6 @@ void *Socket_Server_Task(void * arg)
 
 	while(running_flag.get())
 	{
-
 		socket_server_task_tmr.recordStartTime();
 		socket_server_task_tmr.calculatePreviousSlackTime();
 
@@ -145,6 +146,9 @@ void *Socket_Server_Task(void * arg)
 			/* Accept actual connection from the client */
 			newroverapp_listen_sockfd = accept(roverapp_listen_sockfd, (struct sockaddr *)&cli_addr, &clilen);
 
+			fcntl(newroverapp_listen_sockfd, F_SETFL, O_NONBLOCK); /* Change the socket into non-blocking state	*/
+			fcntl(roverapp_listen_sockfd, F_SETFL, O_NONBLOCK); /* Change the socket into non-blocking state	*/
+
 			if (newroverapp_listen_sockfd < 0) {
 				perror("ERROR on accept -> newroverapp_listen_sockfd");
 				exit(1);
@@ -157,28 +161,32 @@ void *Socket_Server_Task(void * arg)
 		}
 		else
 		{
+
 			/* If a client is connected */
 			/* If connection is established then start communicating */
 			size_t buf_idx = 0;
 
 			/* Read one char at a time until the EOF_STR "\r\n" is reached */
-			while (buf_idx < JSON_DATA_BUFSIZE)
+			while (buf_idx < JSON_DATA_BUFSIZE && running_flag.get())
 			{
-				if ( 1 == read(newroverapp_listen_sockfd, &server_buffer[buf_idx], 1))
-				{
-					if (buf_idx > 0 &&  LINE_FEED == server_buffer[buf_idx] && CARRIAGE_RETURN == server_buffer[buf_idx - 1])
-					{
-						break;
-					}
-					buf_idx++;
-				}
-				else
+				ret = recv(newroverapp_listen_sockfd, &server_buffer[buf_idx], 1, MSG_DONTWAIT);
+
+				if (errno && errno != EAGAIN)
 				{
 					/* Very important approach to have re-usable socket server */
 					/* Client connection status is determined by exit status of read */
 					printf ("Client disconnected!");
 					client_connected_flag = 0;
 					break;
+				}
+
+				if (ret == 1)
+				{
+					if (buf_idx > 0 &&  LINE_FEED == server_buffer[buf_idx] && CARRIAGE_RETURN == server_buffer[buf_idx - 1])
+					{
+						break;
+					}
+					buf_idx++;
 				}
 
 			}

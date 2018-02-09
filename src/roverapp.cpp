@@ -385,8 +385,6 @@ int main()
 
 	printf("Normally Exiting\n");
 
-	pthread_exit(0);
-
 	//Return 0
 	return 0;
 }
