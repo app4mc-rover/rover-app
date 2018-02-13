@@ -158,6 +158,7 @@ pthread_mutex_t display_lock;
 
 // For e.g. gpio, polling intensive operations with no delay
 pthread_mutex_t gpio_intensive_operation_lock;
+pthread_mutex_t i2c_lock;
 
 int main_running_flag = 1;
 

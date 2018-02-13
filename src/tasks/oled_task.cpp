@@ -81,6 +81,7 @@ void *OLED_Task (void * arg)
 			{
 				/* This lock is very important mutual exclusion of the OLED display */
 				pthread_mutex_lock(&display_lock);
+				pthread_mutex_lock(&i2c_lock);
 
 				/* Displays are switched by user button */
 				switch (display_mode_shared.get())
@@ -193,23 +194,18 @@ void *OLED_Task (void * arg)
 								my_display.setCursor(5,5);
 								my_display.print("------ GY521 ------");
 
-								s = std::to_string((int) accelerometerdata_shared.bearing);
-								my_display.setCursor(5,15);
-								my_display.print("Bearing:    ");
-								my_display.print(s.c_str());
-
 								s = std::to_string(accelerometerdata_shared.accel_x);
-								my_display.setCursor(5,25);
+								my_display.setCursor(5,15);
 								my_display.print("AccelX:     ");
 								my_display.print(s.c_str());
 
 								s = std::to_string(accelerometerdata_shared.accel_y);
-								my_display.setCursor(5,35);
+								my_display.setCursor(5,25);
 								my_display.print("AccelY:     ");
 								my_display.print(s.c_str());
 
 								s = std::to_string((int) accelerometerdata_shared.angle_x);
-								my_display.setCursor(5,45);
+								my_display.setCursor(5,35);
 								my_display.print("AngleX:     ");
 								my_display.print(s.c_str());
 
@@ -460,7 +456,7 @@ void *OLED_Task (void * arg)
 						break;
 
 				}
-
+				pthread_mutex_unlock(&i2c_lock);
 				pthread_mutex_unlock(&display_lock);
 
 			}
@@ -475,8 +471,10 @@ void *OLED_Task (void * arg)
 		if (display_use_elsewhere_shared.get() == 0)
 		{
 			pthread_mutex_lock(&display_lock);
+			pthread_mutex_lock(&i2c_lock);
 			/* Display the stuff NOW */
 			my_display.display();
+			pthread_mutex_unlock(&i2c_lock);
 			pthread_mutex_unlock(&display_lock);
 
 			/* Increment the counter */

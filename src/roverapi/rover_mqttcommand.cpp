@@ -29,7 +29,7 @@
 //To log sensor data
 //#define LOG_DATA
 #define LOG_LOCATION "/tmp/output.txt"
-#define MQTT_TIMEOUT 1000L
+#define MQTT_TIMEOUT 10000L
 
 rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * username, char * password, char * clientID)
 {
@@ -102,7 +102,7 @@ int rover::RoverMQTTCommand::publishToTelemetryTopic (RoverSensorData_t sensor_d
 	Json::FastWriter string_writer;
 
 	/* Set topic name */
-	this->setTopic (telemetryTopic);
+	this->setTopic ("telemetry");
 
 	/* Construct payload from sensor_data */
 	data["infrared"]["rearright"] = sensor_data.infrared[0];
@@ -112,7 +112,6 @@ int rover::RoverMQTTCommand::publishToTelemetryTopic (RoverSensorData_t sensor_d
 	data["ultrasonic"]["front"] = sensor_data.ultrasonic_front;
 	data["ultrasonic"]["rear"] = sensor_data.ultrasonic_rear;
 	data["hmc5883l"]["bearing"] = sensor_data.hmc5883l_bearing;
-	data["gy521"]["bearing"] = sensor_data.gy521_bearing;
 	data["gy521"]["gyro"]["x"] = sensor_data.gy521_gyro_x;
 	data["gy521"]["gyro"]["y"] = sensor_data.gy521_gyro_y;
 	data["gy521"]["gyro"]["z"] = sensor_data.gy521_gyro_z;

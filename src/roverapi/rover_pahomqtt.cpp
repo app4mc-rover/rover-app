@@ -147,7 +147,8 @@ int rover::RoverPahoMQTT::publish2 (void)
 int rover::RoverPahoMQTT::publish (void)
 {
 	int rc = 0;
-
+	const int timeout = 2000;
+	int ctr = 0;
 	// Only create client if it hasn't been created
 	this->flushFlags ();
 
@@ -175,9 +176,18 @@ int rover::RoverPahoMQTT::publish (void)
 	}
 	else
 	{
-		while (!(this->defaultRoverMQTTFlags.f_mqtt_finished))
+		printf ("Trying to connect to MQTT broker..\n");
+		while (!(this->defaultRoverMQTTFlags.f_mqtt_finished) && !(timeout < ctr))
+		{
+			ctr = ctr + 1;
 			usleep(this->defaultRoverMQTTConfigure.timeout);
+		}
 
+		if (timeout < ctr)
+		{
+			ctr = 0;
+			this->defaultReturnCodes.rc_publish = 1; //Failed
+		}
 	}
 
 	return this->defaultReturnCodes.rc_publish;

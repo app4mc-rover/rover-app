@@ -45,8 +45,6 @@ void *DisplaySensors_Task (void * arg)
 
 		//Task content starts here -----------------------------------------------
 
-		//printf("Temperature: %f deg\n", temperature_shared.get());
-		//printf("Humidity: %f percent\n", humidity_shared.get());
 		printf("Distance(HCSR04Front): %d cm\n", distance_sr04_front_shared.get());
 		printf("Distance(HCSR04Back): %d cm\n", distance_sr04_back_shared.get());
 		printf("DistanceInfraredRearRight: %f cm\n", infrared_shared.get(0));
@@ -60,8 +58,6 @@ void *DisplaySensors_Task (void * arg)
 		printf("Accelerometer angles:\t\t%f\t%f\t%f\n", accelerometerdata_shared.angle_x,
 				                                        accelerometerdata_shared.angle_y,
 														accelerometerdata_shared.angle_z);
-
-		printf("Bearing from accelerometer: %f\n", accelerometerdata_shared.bearing);
 
 		//Task content ends here -------------------------------------------------
 		display_sensors_task_tmr.recordEndTime();

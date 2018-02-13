@@ -50,7 +50,9 @@ void *CompassSensor_Task(void * arg)
 
 	RoverHMC5883L r_hmc5883l = RoverHMC5883L();
 	r_hmc5883l.initialize();
-	//r_hmc5883l.calibrate();
+	pthread_mutex_lock(&i2c_lock);
+		r_hmc5883l.calibrate();
+	pthread_mutex_unlock(&i2c_lock);
 
 	while (running_flag.get()) {
 		compass_task_tmr.recordStartTime();
@@ -70,7 +72,9 @@ void *CompassSensor_Task(void * arg)
 		}
 		//Asynchronous end to calibration mode --> Call EndCalibrationMode()
 
-		bearing_shared = r_hmc5883l.read();
+		pthread_mutex_lock(&i2c_lock);
+			bearing_shared = r_hmc5883l.read();
+		pthread_mutex_unlock(&i2c_lock);
 
 		//Task content ends here -------------------------------------------------
 		compass_task_tmr.recordEndTime();

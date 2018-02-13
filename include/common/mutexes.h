@@ -124,6 +124,9 @@ extern pthread_mutex_t display_lock;
 
 extern pthread_mutex_t gpio_intensive_operation_lock;
 
+extern pthread_mutex_t i2c_lock;
+
+
 typedef struct
 {
 	int8_t gyro_x;
@@ -135,7 +138,6 @@ typedef struct
 	int8_t accel_x;
 	int8_t accel_y;
 	int8_t accel_z;
-	float bearing;
 } AccelerometerData_t;
 
 extern AccelerometerData_t accelerometerdata_shared;

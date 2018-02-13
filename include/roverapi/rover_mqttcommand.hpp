@@ -42,7 +42,6 @@ namespace rover
 		float ultrasonic_front;
 		float ultrasonic_rear;
 		float hmc5883l_bearing;
-		float gy521_bearing;
 		int8_t gy521_gyro_x;
 		int8_t gy521_gyro_y;
 		int8_t gy521_gyro_z;
@@ -93,7 +92,6 @@ namespace rover
 	 *		sensor_data.infrared[1] = infrared_shared[1];
 	 *		sensor_data.infrared[2] = infrared_shared[2];
 	 *		sensor_data.infrared[3] = infrared_shared[3];
-	 *		sensor_data.gy521_bearing = accelerometerdata_shared.bearing;
 	 *		sensor_data.gy521_accel_x = accelerometerdata_shared.accel_x;
 	 *		sensor_data.gy521_accel_y = accelerometerdata_shared.accel_y;
 	 *		sensor_data.gy521_accel_z = accelerometerdata_shared.accel_z;

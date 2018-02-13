@@ -61,7 +61,6 @@ int main()
 	r_hmc.calibrate();
     // Set up GY521 accelerometer
     r_accel.initialize();
-	r_accel.calibrate();
 
 	r_base.sleep(100);
     
@@ -82,7 +81,6 @@ int main()
     printf ("GY521 AngleX = %f\n", r_accel.getAngleX());
     printf ("GY521 AngleY = %f\n", r_accel.getAngleY());
     printf ("GY521 AngleZ = %f\n", r_accel.getAngleZ());
-    printf ("GY521 Bearing = %f\n", r_accel.read());
 
 	printf("Exiting.\n");
 
