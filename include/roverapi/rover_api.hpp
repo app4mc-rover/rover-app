@@ -158,8 +158,6 @@ int main (void)
 											r_infrared1.read(),
 											r_infrared2.read(),
 											r_infrared3.read());
-	printf ("Temperature = %f\n",	r_dht22.readTemperature());
-	printf ("Humidity = %f\n",		r_dht22.readHumidity());
 	printf ("Bearing with HMC5883L = %f\n",		r_hmc.read());
 	// or printf ("Bearing with QMC5883L = %f\n",		r_qmc.read());
 
