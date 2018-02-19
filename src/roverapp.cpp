@@ -240,6 +240,8 @@ void exitHandler(int dummy)
 // Main function
 int main()
 {
+	printf ("Started rover\n");
+
 	/* Read configuration from config file */
 	rover_config_obj = getRoverConfig((char*)ROVER_CONFIG_FILE);
 

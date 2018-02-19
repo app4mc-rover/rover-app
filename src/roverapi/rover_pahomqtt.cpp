@@ -86,13 +86,13 @@ rover::RoverPahoMQTT::~RoverPahoMQTT() {
 void rover::RoverPahoMQTT::constructAddress (void)
 {
 	char num_buffer[5] = {};
-	char string[20] = {};
+	char string[100] = {};
 	sprintf (string, "%s", this->HOST_NAME);
 	strcat (string, ":");
 	snprintf (num_buffer, sizeof(num_buffer), "%d", this->PORT);
 	strcat(string, num_buffer);
 	num_buffer[0] = 0;
-	for (int i = 0; i<20; i++)
+	for (int i = 0; i<100; i++)
 		this->my_address[i] = string[i];
 
 }
