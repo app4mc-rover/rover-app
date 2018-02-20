@@ -39,7 +39,7 @@
 
 typedef struct
 {
-	int ROVER_IDENTITY_C;
+        int ROVER_IDENTITY_C;
 	char MQTT_BROKER_C [ROVER_CONFIG_MAXBUF];
 	int MQTT_BROKER_PORT_C;
 	int ROVER_MQTT_QOS_C;

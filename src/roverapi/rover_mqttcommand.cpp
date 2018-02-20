@@ -25,6 +25,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <roverapp.h>
 
 //To log sensor data
 //#define LOG_DATA
@@ -36,6 +37,7 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 	/* Assign what is constructed */
 	this->HOST_NAME = host;
 	this->PORT = port;
+
 	if (roverID < 1 || roverID > 99)
 	{
 		printf ("Invalid roverID in RoverMQTTCommand: It should be 1 to 99!\n");
@@ -54,10 +56,8 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 
 	/* Load defaults */
 	this->flushFlags();
-
 	/* Construct the address */
 	this->constructAddress ();
-
 	this->createClient();
 }
 

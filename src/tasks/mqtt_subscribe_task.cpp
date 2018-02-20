@@ -46,6 +46,7 @@ void *MQTT_Subscribe_Task (void * arg)
 														rover_config_obj.MQTT_USERNAME_C,
 														rover_config_obj.MQTT_PASSWORD_C,
 														"rover_mqtt_subscriber");
+
 	RoverControlData_t control_data;
 
 	/* Try to subscribe to the driving topic for a while (max_tries times) */

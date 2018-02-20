@@ -63,7 +63,7 @@ void rover::RoverPahoMQTT::createClient(void) {
 
 	MQTTAsync_setCallbacks(this->client, this, rover::RoverPahoMQTT::onConnectionLost_Redirect,
                                                 rover::RoverPahoMQTT::onSubscriberMessageArrived_Redirect,
-                                                NULL);
+												NULL);
 }
 
 void rover::RoverPahoMQTT::destroyClient(void) {
@@ -85,15 +85,18 @@ rover::RoverPahoMQTT::~RoverPahoMQTT() {
 
 void rover::RoverPahoMQTT::constructAddress (void)
 {
-	char num_buffer[5] = {};
-	char string[100] = {};
+	char num_buffer[5] = {'\0'};
+	char string[100] = {'\0'};
 	sprintf (string, "%s", this->HOST_NAME);
 	strcat (string, ":");
-	snprintf (num_buffer, sizeof(num_buffer), "%d", this->PORT);
-	strcat(string, num_buffer);
+
+	snprintf (num_buffer, strlen(num_buffer), "%d", this->PORT);
+	printf ("%d\n",num_buffer);
+	strncat(string, "1883", 4);
+	printf ("%s\n", string);
 	num_buffer[0] = 0;
-	for (int i = 0; i<100; i++)
-		this->my_address[i] = string[i];
+	memcpy(this->my_address,string,strlen(string));
+	printf ("%s\n", this->my_address);
 
 }
 

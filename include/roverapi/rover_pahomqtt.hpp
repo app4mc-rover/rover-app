@@ -477,7 +477,7 @@ namespace rover
 			/**
 			 * @brief MQTT address
 			 */
-			char my_address[20] = {};
+                        char my_address[100] = {};
 
 	};
 }

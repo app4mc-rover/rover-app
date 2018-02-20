@@ -153,18 +153,18 @@ namespace rover
 			/**
 			 * @brief Given rover identification for multi-agent MQTT communication with a single cloud
 			 */
-			int ROVER_ID;
+                        int ROVER_ID;
 
 		public:
 			/**
 			 * @brief Copy constructor for RoverMQTTCommand class that uses username and password
 			 */
-			RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * username, char * password, char * clientID);
+                        RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * username, char * password, char * clientID);
 
 			/**
 			 * @brief Copy constructor for RoverMQTTCommand class that doesn't use credentials
 			 */
-			RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * clientID);
+                        RoverMQTTCommand (char * host, const int port, const int roverID, const int qos, char * clientID);
 
 			/**
 			 * @brief Destructor for RoverMQTTCommand class
@@ -227,13 +227,13 @@ namespace rover
 			 * @brief Retrieves Rover ID
 			 * @return rover_id Rover ID
 			 */
-			int getRoverID (void);
+                        int getRoverID (void);
 
-			/**
+                        /**
 			 * @brief Sets Rover ID
 			 * @param rover_id Rover ID
 			 */
-			void setRoverID (const int rover_id);
+                        void setRoverID (const int rover_id);
 
 	};
 }
