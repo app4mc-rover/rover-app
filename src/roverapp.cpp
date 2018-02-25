@@ -55,6 +55,8 @@
 #include <tasks/mqtt_publish_task.h>
 #include <tasks/mqtt_subscribe_task.h>
 
+
+
 #include <interfaces.h>
 #include <signal.h>
 
@@ -75,6 +77,7 @@ RoverDriving r_driving = RoverDriving();
 RoverDisplay my_display;
 RoverUtils r_utils;
 
+RoverMQTTCommand *rover_mqtt;
 /* Threads */
 pthread_t ultrasonic_grove_thread;
 pthread_t ultrasonic_sr04_front_thread;
@@ -160,6 +163,8 @@ pthread_mutex_t display_lock;
 pthread_mutex_t gpio_intensive_operation_lock;
 pthread_mutex_t i2c_lock;
 
+pthread_mutex_t mqtt_client_lock;
+
 int main_running_flag = 1;
 
 // Function to handle the joining of every threads
@@ -240,10 +245,19 @@ void exitHandler(int dummy)
 // Main function
 int main()
 {
+
 	printf ("Started rover\n");
 
 	/* Read configuration from config file */
 	rover_config_obj = getRoverConfig((char*)ROVER_CONFIG_FILE);
+
+	rover_mqtt = new RoverMQTTCommand ( rover_config_obj.MQTT_BROKER_C,
+										rover_config_obj.MQTT_BROKER_PORT_C,
+										rover_config_obj.ROVER_IDENTITY_C,
+										rover_config_obj.ROVER_MQTT_QOS_C,
+										rover_config_obj.MQTT_USERNAME_C,
+										rover_config_obj.MQTT_PASSWORD_C,
+										"rover_mqtt_publisher");
 
 	int ret = 0;
 	r_base = RoverBase();

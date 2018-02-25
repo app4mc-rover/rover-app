@@ -30,20 +30,33 @@
 void *MQTT_Publish_Task (void * arg)
 {
 	timing mqtt_publish_task_tmr;
+	int rc = 1;
 
 	mqtt_publish_task_tmr.setTaskID((char*)"MQTTPublish");
-	mqtt_publish_task_tmr.setDeadline(0.2);
-	mqtt_publish_task_tmr.setPeriod(0.2);
+	mqtt_publish_task_tmr.setDeadline(0.1);
+	mqtt_publish_task_tmr.setPeriod(0.1);
 
-	RoverMQTTCommand rover_mqtt = RoverMQTTCommand ( rover_config_obj.MQTT_BROKER_C,
-													 rover_config_obj.MQTT_BROKER_PORT_C,
-													 rover_config_obj.ROVER_IDENTITY_C,
-													 rover_config_obj.ROVER_MQTT_QOS_C,
-													 rover_config_obj.MQTT_USERNAME_C,
-													 rover_config_obj.MQTT_PASSWORD_C,
-													 "rover_mqtt_publisher");
+//	RoverMQTTCommand rover_mqtt = RoverMQTTCommand ( rover_config_obj.MQTT_BROKER_C,
+//													 rover_config_obj.MQTT_BROKER_PORT_C,
+//													 rover_config_obj.ROVER_IDENTITY_C,
+//													 rover_config_obj.ROVER_MQTT_QOS_C,
+//													 rover_config_obj.MQTT_USERNAME_C,
+//													 rover_config_obj.MQTT_PASSWORD_C,
+//													 "rover_mqtt_publisher");
+
 	RoverSensorData_t sensor_data;
 	float core_usages[4] = {};
+
+	printf ("Trying to connect to MQTT Broker... \n");
+	if (rover_mqtt->getRoverConnected() != 1)
+	{
+		rc = rover_mqtt->connectRover();
+	}
+	else
+	{
+		printf ("Connected.....\n");
+		rc = 0;
+	}
 
 	while (running_flag.get())
 	{
@@ -51,6 +64,14 @@ void *MQTT_Publish_Task (void * arg)
 		mqtt_publish_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
+
+		if (rc != 0)
+		{
+			printf ("Publisher did not connect\n");
+			rc = rover_mqtt->connectRover();
+			continue;
+		}
+
 		sensor_data.ultrasonic_front = distance_sr04_front_shared.get();
 		sensor_data.ultrasonic_rear = distance_sr04_back_shared.get();
 		sensor_data.hmc5883l_bearing = bearing_shared.get();
@@ -72,10 +93,14 @@ void *MQTT_Publish_Task (void * arg)
 		sensor_data.core[2] = cpu_util_shared.get(2);
 		sensor_data.core[3] = cpu_util_shared.get(3);
 
-		if (rover_mqtt.publishToTelemetryTopic(sensor_data) == 0)
-			printf ("Client rover_mqtt_publisher: Publishing successful!\n");
-		else
-			printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+		pthread_mutex_lock(&mqtt_client_lock);
+
+			if (rover_mqtt->publishToTelemetryTopic(sensor_data) == 0)
+				printf ("Client rover_mqtt_publisher: Publishing successful!\n");
+			else
+				printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+
+		pthread_mutex_unlock(&mqtt_client_lock);
 
 		//Task content ends here -------------------------------------------------
 

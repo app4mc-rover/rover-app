@@ -37,6 +37,7 @@ using namespace rover;
 // Main function
 int main()
 {
+	int rc = 1;
     printf("Started rover mqtt publisher example.\n");
     
     //This initialization is a one time only must-call before every rover application.
@@ -57,21 +58,31 @@ int main()
     // Set payload
     rover_mqtt.setPayload (PUBLISH_PAYLOAD, strlen(PUBLISH_PAYLOAD));
 
-    // Publish is non-blocking, client disconnects afterwards
-    if (0 == rover_mqtt.publish())
-        printf ("Publishing successful!\n");
-    else
-        printf ("Publishing unsuccessful!\n");
-    
-    // Sleep a bit
-    r_base.sleep(1000);
-    
-    // Send the same message a second time, but to a different topic!
-    rover_mqtt.setTopic (PUBLISH_TOPIC2);
-    if (0 == rover_mqtt.publish())
+
+
+	while (rc != 0)
+	{
+		rc = rover_mqtt.connect();
+	}
+
+	// Publish is non-blocking
+	if (0 == rover_mqtt.publish())
 		printf ("Publishing successful!\n");
 	else
 		printf ("Publishing unsuccessful!\n");
+
+	// Send the same message a second time, but to a different topic!
+	rover_mqtt.setTopic (PUBLISH_TOPIC2);
+	if (0 == rover_mqtt.publish())
+		printf ("Publishing successful!\n");
+	else
+		printf ("Publishing unsuccessful!\n");
+
+
+    // Sleep a bit
+    r_base.sleep(1000);
+    
+
 
 	printf("Exiting.\n");
 

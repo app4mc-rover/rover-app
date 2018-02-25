@@ -93,6 +93,16 @@ rover::RoverMQTTCommand::RoverMQTTCommand (char * host, const int port, const in
 
 rover::RoverMQTTCommand::~RoverMQTTCommand(){}
 
+int rover::RoverMQTTCommand::connectRover (void)
+{
+	return this->connect();
+}
+
+int rover::RoverMQTTCommand::getRoverConnected(void)
+{
+	return this->getConnected();
+}
+
 int rover::RoverMQTTCommand::publishToTelemetryTopic (RoverSensorData_t sensor_data)
 {
 	/* Common buffer to use */

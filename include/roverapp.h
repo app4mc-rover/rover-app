@@ -33,6 +33,8 @@
 #include <roverapi/rover_display.hpp>
 #include <roverapi/rover_driving.hpp>
 #include <roverapi/rover_utils.hpp>
+#include <roverapi/rover_mqttcommand.hpp>
+
 
 #include <libraries/config_reader/config_reader.h>
 
@@ -54,8 +56,11 @@ extern RoverBase r_base;
 extern RoverDriving r_driving;
 extern RoverDisplay my_display;
 extern RoverUtils r_utils;
+extern RoverMQTTCommand *rover_mqtt;
 
 /* Configuration struct */
 extern rover_config rover_config_obj;
+
+
 
 #endif /* ROVERAPP_H_ */

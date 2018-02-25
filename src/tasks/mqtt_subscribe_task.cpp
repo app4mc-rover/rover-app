@@ -31,30 +31,53 @@ void *MQTT_Subscribe_Task (void * arg)
 {
 	timing mqtt_subscribe_task_tmr;
 
-	int rt = 0;
+	int rt = -1;
 	int try_count = 0;
-	const int max_tries = 20;
+	const int max_tries = 100;
+	int connected = 0;
 
 	mqtt_subscribe_task_tmr.setTaskID((char*)"MQTTSubscribe");
 	mqtt_subscribe_task_tmr.setDeadline(0.1);
 	mqtt_subscribe_task_tmr.setPeriod(0.1);
 
-	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	rover_config_obj.MQTT_BROKER_C,
-														rover_config_obj.MQTT_BROKER_PORT_C,
-														rover_config_obj.ROVER_IDENTITY_C,
-														rover_config_obj.ROVER_MQTT_QOS_C,
-														rover_config_obj.MQTT_USERNAME_C,
-														rover_config_obj.MQTT_PASSWORD_C,
-														"rover_mqtt_subscriber");
+	//Following is called only once, in main function:
+//	RoverMQTTCommand rover_mqtt = RoverMQTTCommand (	rover_config_obj.MQTT_BROKER_C,
+//														rover_config_obj.MQTT_BROKER_PORT_C,
+//														rover_config_obj.ROVER_IDENTITY_C,
+//														rover_config_obj.ROVER_MQTT_QOS_C,
+//														rover_config_obj.MQTT_USERNAME_C,
+//														rover_config_obj.MQTT_PASSWORD_C,
+//														"rover_mqtt_subscriber");
 
 	RoverControlData_t control_data;
 
+
+
+
 	/* Try to subscribe to the driving topic for a while (max_tries times) */
-	do
+	while (1)
 	{
 		if (running_flag.get())
 		{
-			rt = rover_mqtt.subscribeToDrivingTopic();
+			if (rover_mqtt->getRoverConnected() != 1)
+			{
+				pthread_mutex_lock(&mqtt_client_lock);
+					rt = rover_mqtt->connectRover();
+				pthread_mutex_unlock(&mqtt_client_lock);
+				printf ("Connecting.....\n");
+			}
+			else
+			{
+				rt = 0;
+				printf ("Connected.....\n");
+			}
+			if (rt == 0)
+			{
+				pthread_mutex_lock(&mqtt_client_lock);
+					rt = rover_mqtt->subscribeToDrivingTopic();
+				pthread_mutex_unlock(&mqtt_client_lock);
+				printf ("Subscribing.....\n");
+			}
 			if (rt == 0)
 			{
 				printf ("Client rover_mqtt_subscriber: Subscription succesful!\n");
@@ -72,7 +95,7 @@ void *MQTT_Subscribe_Task (void * arg)
 		else
 			break;
 	}
-	while (rt != 0);
+
 
 	/* Main thread loop */
 	while (running_flag.get())
@@ -81,8 +104,11 @@ void *MQTT_Subscribe_Task (void * arg)
 		mqtt_subscribe_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
+		pthread_mutex_lock(&mqtt_client_lock);
 
-		control_data = rover_mqtt.readFromDrivingTopic();
+			control_data = rover_mqtt->readFromDrivingTopic();
+
+		pthread_mutex_unlock(&mqtt_client_lock);
 
 		/* Override driving-related global variables if data is ready */
 		if (control_data.data_ready == 1)

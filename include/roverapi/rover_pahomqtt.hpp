@@ -62,6 +62,7 @@ namespace rover
 		int f_mqtt_finished;
 		int f_mqtt_subscribed;
 		int f_mqtt_publish_successful;
+                int f_mqtt_connected;
 	} RoverMQTT_StatusFlags_t;
 
 	/**
@@ -77,64 +78,7 @@ namespace rover
 	/**
 	 * @brief RoverPahoMQTT contains member functions to use rover as a client and to publish / subscribe to Eclipse Paho MQTT server topics.
 	 *
-	 * Example usage of this class is given below:
-	 *
-	 *	\code{.cpp}
-	 * 	#include <roverapi/rover_pahomqtt.hpp>
-	 *
-	 * 	using namespace rover;
-	 *
-	 * 	// Publish to a topic in an MQTTv3 or MQTTv3.1 broker using RoverPahoMQTT class
-	 *
-	 * 	RoverMQTT_Configure_t rover_mqtt_conf;
-	 * 	rover_mqtt_conf.clientID = "rover";							// Identification of the Client
-	 * 	rover_mqtt_conf.qos      = 1;   							// Quality of Service
-	 * 	rover_mqtt_conf.timeout  = 10000L;  						// Polling timeout, 10000L is fine
-	 * 	rover_mqtt_conf.topic    = "rover/RoverDriving/control/1"; 	// Topic name to publish to or subscribe from
-	 *  rover_mqtt_conf.username    = "sensor1@DEFAULT_TENANT";		// Username - Leave empty for no user and password
-     *	rover_mqtt_conf.password    = "hono-secret";				// Password - Leave empty for no user and password
-     *
-	 * 	RoverPahoMQTT rover_mqtt = RoverPahoMQTT (	"127.0.0.1",	// MQTT-Broker host
-	 *												1883,			// MQTT-Broker port
-	 *												rover_mqtt_conf);
-	 *
-	 * 	// Overriding payload and topic
-	 * 	char payloadMsg[] = "Hi from rover!";
-     *	rover_mqtt.setPayload (payloadMsg, strlen(payloadMsg));
-	 * 	rover_mqtt.setTopic ("rover/RoverDriving/control/2");
-	 *
-	 * 	// Publish is non-blocking, client disconnects afterwards
-	 * 	if (0 == rover_mqtt.publish())
-	 * 		printf ("Publishing successful!\n");
-	 * 	else
-	 * 		printf ("Publishing unsuccessful!\n");
-	 *
-	 * 	// Subscribe is non-blocking, works with internal callbacks
-	 * 	// unsubscribe() method should be used after finished
-	 * 	if (0 == rover_mqtt.subscribe())
-	 * 	{
-	 * 		printf ("Subscribe successful!\n");
-	 * 	}
-	 * 	else
-	 * 	{
-	 * 		printf ("Subscribe unsuccessful!\n");
-	 * 	}
-	 *
-	 * 	// Receive the final message that is arrived from the subscribed topic
-	 * 	printf ("Received data=%s\n", rover_mqtt.read());
-	 *
-	 * 	// Unsubscribe and disconnect
-	 * 	if (0 == rover_mqtt.unsubscribe())
-	 * 	{
-	 * 		printf ("Unsubscribe successful!\n");
-	 * 	}
-	 * 	else
-	 * 	{
-	 * 		printf ("Unsubscribe unsuccessful!\n");
-	 * 	}
-	 * 	\endcode
-	 *
-	 *	\warning For more concreate examples please go to: https://github.com/app4mc-rover/rover-app/tree/master/src/examples
+         *	\warning For oncreate examples please go to: https://github.com/app4mc-rover/rover-app/tree/master/src/examples
 	 */
 	class RoverPahoMQTT : public RoverCloud
 	{
@@ -172,7 +116,7 @@ namespace rover
 			/**
 			 * @brief Client object from MQTTAsync.
 			 */
-			MQTTAsync client;
+                        MQTTAsync client = NULL;
 
 			/**
 			 * @brief Client object from MQTTClient.
@@ -205,7 +149,7 @@ namespace rover
 			void destroyClient(void);
 
 
-		public:
+                public:
 			/**
 			 * @brief Destructor for RoverPahoMQTT class.
 			 */
@@ -215,6 +159,7 @@ namespace rover
 			 * @brief Default constructor for RoverPahoMQTT class
 			 */
 			RoverPahoMQTT();
+
 
 			/**
 			 * @brief Copy constructor for RoverPahoMQTT
@@ -271,18 +216,18 @@ namespace rover
 			 */
 			int publish (void);
 
-			/**
-			 * @brief Used for publishing to a topic in an MQTT-broker using blocking functions
-			 * @return Return code 0-> success; others-> fail return codes
-			 *	**1**: Connection refused: Unacceptable protocol version \n
-			 *	**2**: Connection refused: Identifier rejected \n
-			 *	**3**: Connection refused: Server unavailable \n
-			 *	**4**: Connection refused: Bad user name or password \n
-			 *	**5**: Connection refused: Not authorized \n
-			 *	**6-255**: Reserved for future use \n
-			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
-			 */
-			int publish2 (void);
+                        /**
+                         * @brief Used for connecting to MQTT broker asynchronously
+                         * @return Return code 0-> success; others-> fail return codes \n
+                         * 	**1**: Connection refused: Unacceptable protocol version \n
+                         *	**2**: Connection refused: Identifier rejected \n
+                         *	**3**: Connection refused: Server unavailable \n
+                         *	**4**: Connection refused: Bad user name or password \n
+                         *	**5**: Connection refused: Not authorized \n
+                         *	**6-255**: Reserved for future use \n
+                         *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
+                         */
+                        int connect (void);
 
 			/**
 			 * @brief Used for subscribing to a topic in an MQTT-broker. To unsubscribe use: RoverPahoMQTT::unsubscribe()
@@ -310,6 +255,12 @@ namespace rover
 			 */
 			int unsubscribe (void);
 
+                        /**
+                         * @brief Returns connected flag
+                         * @return connected flag 1:connected 0: not connected
+                         */
+                        int getConnected(void);
+
 		protected:
 			/**
 			 * @brief Private member function to flush the connection flags for new operation.
@@ -331,7 +282,7 @@ namespace rover
 			 * @param response Response data from MQTTAsync instance
 			 * @return void
 			 */
-			static void onPublisherConnect_Redirect (void* context, MQTTAsync_successData* response);
+                        static void onConnect_Redirect (void* context, MQTTAsync_successData* response);
 
 			/**
 			 * @brief Static function responsible for calling RoverPahoMQTT::onPublisherSend in a given RoverPahoMQTT context.
@@ -346,7 +297,7 @@ namespace rover
 			 * @param response Response data from MQTTAsync instance
 			 * @return void
 			 */
-			void onPublisherConnect (MQTTAsync_successData* response);
+                        void onConnect (MQTTAsync_successData* response);
 
 
 			/**
@@ -358,14 +309,6 @@ namespace rover
 
 
 			/* Related to subscriber */
-			/**
-			 * @brief Static function responsible for calling RoverPahoMQTT::onSubscriberConnect in a given RoverPahoMQTT context.
-			 * @param context Given context for RoverPahoMQTT. Internal use: this
-			 * @param response Response data from MQTTAsync instance
-			 * @return void
-			 */
-			static void onSubscriberConnect_Redirect (void* context, MQTTAsync_successData* response);
-
 			/**
 			 * @brief Static function responsible for calling RoverPahoMQTT::onSubscriberMessageArrived in a given RoverPahoMQTT context.
 			 * @param context Given context for RoverPahoMQTT. Internal use: this
@@ -392,12 +335,6 @@ namespace rover
 			 */
 			static void onSubscribeFailure_Redirect (void* context, MQTTAsync_failureData* response);
 
-			/**
-			 * @brief Member callback function for onSubscriberConnect actions
-			 * @param response Response data from MQTTAsync instance
-			 * @return void
-			 */
-			void onSubscriberConnect (MQTTAsync_successData* response);
 
 			/**
 			 * @brief Member callback function for onSubscriberMessageArrived actions
@@ -478,6 +415,8 @@ namespace rover
 			 * @brief MQTT address
 			 */
                         char my_address[100] = {};
+
+                        int connected = 0;
 
 	};
 }

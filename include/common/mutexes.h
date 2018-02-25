@@ -126,6 +126,8 @@ extern pthread_mutex_t gpio_intensive_operation_lock;
 
 extern pthread_mutex_t i2c_lock;
 
+extern pthread_mutex_t mqtt_client_lock;
+
 
 typedef struct
 {

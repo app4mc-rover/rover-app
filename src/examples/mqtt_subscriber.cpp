@@ -37,6 +37,8 @@ using namespace rover;
 // Main function
 int main()
 {
+	int rc = 1;
+
     printf("Started rover mqtt subscriber example.\n");
     
     //This initialization is a one time only must-call before every rover application.
@@ -60,6 +62,11 @@ int main()
                                                 MQTT_BROKER_PORT, // MQTT-Broker port
                                                 rover_mqtt_conf);
                                                 
+	while (rc != 0)
+	{
+		rc = rover_mqtt.connect();
+	}
+
     // Subscribe is non-blocking, works with internal callbacks
     if (0 == rover_mqtt.subscribe())
     {
