@@ -36,6 +36,7 @@ void *MQTT_Publish_Task (void * arg)
 	mqtt_publish_task_tmr.setDeadline(0.1);
 	mqtt_publish_task_tmr.setPeriod(0.1);
 
+	// The following is now initialized only once in main
 //	RoverMQTTCommand rover_mqtt = RoverMQTTCommand ( rover_config_obj.MQTT_BROKER_C,
 //													 rover_config_obj.MQTT_BROKER_PORT_C,
 //													 rover_config_obj.ROVER_IDENTITY_C,
@@ -93,14 +94,31 @@ void *MQTT_Publish_Task (void * arg)
 		sensor_data.core[2] = cpu_util_shared.get(2);
 		sensor_data.core[3] = cpu_util_shared.get(3);
 
-		pthread_mutex_lock(&mqtt_client_lock);
+		// Publishing with redirected topics
+		//   Rover --->telemetry---> EclipseHono ---> rover/<roverid>/telemetry ---> Rover Telemetry UI
+		//
+		// Publishing with non- redirected topics
+		//   Rover --> rover/<roverid>/telemetry --> EclipseHono --> rover/<roverid>/telemetry --> Rover Telemetry UI
+		//
+		if (rover_config_obj.USE_REDIRECTED_TOPICS_C == 1)
+		{
+			pthread_mutex_lock(&mqtt_client_lock);
+				if (rover_mqtt->publishToTelemetryTopic(sensor_data) == 0)
+					printf ("Client rover_mqtt_publisher: Publishing successful!\n");
+				else
+					printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+			pthread_mutex_unlock(&mqtt_client_lock);
+		}
+		else // 0
+		{
+			pthread_mutex_lock(&mqtt_client_lock);
+				if (rover_mqtt->publishToTelemetryTopicNonRedirected(sensor_data) == 0)
+					printf ("Client rover_mqtt_publisher: Publishing successful!\n");
+				else
+					printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+			pthread_mutex_unlock(&mqtt_client_lock);
+		}
 
-			if (rover_mqtt->publishToTelemetryTopic(sensor_data) == 0)
-				printf ("Client rover_mqtt_publisher: Publishing successful!\n");
-			else
-				printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
-
-		pthread_mutex_unlock(&mqtt_client_lock);
 
 		//Task content ends here -------------------------------------------------
 

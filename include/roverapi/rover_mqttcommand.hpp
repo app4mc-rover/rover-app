@@ -26,6 +26,7 @@
 // Topic naming for sensor data and core data is : telemetry
 #define topicPrefix "rover/"
 #define drivingSubTopic "/RoverDriving/control"
+#define telemetrySubTopic "/telemetry"
 #define telemetryTopic "telemetry"
 
 /* Buffer size for received message for MQTT */
@@ -100,18 +101,40 @@ namespace rover
 			~RoverMQTTCommand ();
 
 			/**
-                         * @brief Publishes a message to rover's telemetry topic (to match Eclipse Hono)
-			 * @param sensor_data Sensor data to be used in the message
-			 * @return Return code 0-> success; others-> fail sreturn codes
-			 *  **1**: Connection refused: Unacceptable protocol version \n
-			 *	**2**: Connection refused: Identifier rejected \n
-			 *	**3**: Connection refused: Server unavailable \n
-			 *	**4**: Connection refused: Bad user name or password \n
-			 *	**5**: Connection refused: Not authorized \n
-			 *	**6-255**: Reserved for future use \n
-			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
-			 */
-                        int publishToTelemetryTopic (RoverSensorData_t sensor_data);
+			* @brief Publishes a message to rover's telemetry topic (using redirected topic method)
+			*
+			* Publishing with redirected topics
+			*   Rover --->telemetry---> EclipseHono ---> rover/<roverid>/telemetry ---> Rover Telemetry UI
+			*
+			* @param sensor_data Sensor data to be used in the message
+			* @return Return code 0-> success; others-> fail sreturn codes
+			*  **1**: Connection refused: Unacceptable protocol version \n
+			*	**2**: Connection refused: Identifier rejected \n
+			*	**3**: Connection refused: Server unavailable \n
+			*	**4**: Connection refused: Bad user name or password \n
+			*	**5**: Connection refused: Not authorized \n
+			*	**6-255**: Reserved for future use \n
+			*	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
+			*/
+			int publishToTelemetryTopic (RoverSensorData_t sensor_data);
+
+			/**
+			* @brief Publishes a message to rover's telemetry topic (using unredirected topic method)
+			*
+			* Publishing with non- redirected topics
+			*    Rover --> rover/<roverid>/telemetry --> EclipseHono --> rover/<roverid>/telemetry --> Rover Telemetry UI
+			*
+			* @param sensor_data Sensor data to be used in the message
+			* @return Return code 0-> success; others-> fail sreturn codes
+			*  **1**: Connection refused: Unacceptable protocol version \n
+			*	**2**: Connection refused: Identifier rejected \n
+			*	**3**: Connection refused: Server unavailable \n
+			*	**4**: Connection refused: Bad user name or password \n
+			*	**5**: Connection refused: Not authorized \n
+			*	**6-255**: Reserved for future use \n
+			*	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
+			*/
+			int publishToTelemetryTopicNonRedirected (RoverSensorData_t sensor_data);
 
 			/**
 			 * @brief Subscribes to rover's driving topic
@@ -139,24 +162,24 @@ namespace rover
 			 */
 			int unsubscribeToDrivingTopic (void);
 
-                        /**
-                         * @brief connectRover connects to the MQTT broker. Each rover ideally should have only one client, instantiated internally within RoverMQTTCommand class.
-                         * @return Return code 0-> success, non-zero -> fail
-                         *  **1**: Connection refused: Unacceptable protocol version \n
-                         *	**2**: Connection refused: Identifier rejected \n
-                         *	**3**: Connection refused: Server unavailable \n
-                         *	**4**: Connection refused: Bad user name or password \n
-                         *	**5**: Connection refused: Not authorized \n
-                         *	**6-255**: Reserved for future use \n
-                         *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
-                         */
-                        int connectRover (void);
+			/**
+			 * @brief connectRover connects to the MQTT broker. Each rover ideally should have only one client, instantiated internally within RoverMQTTCommand class.
+			 * @return Return code 0-> success, non-zero -> fail
+			 *  **1**: Connection refused: Unacceptable protocol version \n
+			 *	**2**: Connection refused: Identifier rejected \n
+			 *	**3**: Connection refused: Server unavailable \n
+			 *	**4**: Connection refused: Bad user name or password \n
+			 *	**5**: Connection refused: Not authorized \n
+			 *	**6-255**: Reserved for future use \n
+			 *	Reference: \cite paho.mqtt.c Asynchronous MQTT Client Documentation
+			 */
+			int connectRover (void);
 
-                        /**
-                         * @brief Returns rover connected flag
-                         * @return connected flag 1:connected 0: not connected
-                         */
-                        int getRoverConnected(void);
+			/**
+			 * @brief Returns rover connected flag
+			 * @return connected flag 1:connected 0: not connected
+			 */
+			int getRoverConnected(void);
 
 			/**
 			 * @brief Returns the retrieved driving information
@@ -174,13 +197,13 @@ namespace rover
 			 * @brief Retrieves Rover ID
 			 * @return rover_id Rover ID
 			 */
-                        int getRoverID (void);
+			int getRoverID (void);
 
-                        /**
+			/**
 			 * @brief Sets Rover ID
 			 * @param rover_id Rover ID
 			 */
-                        void setRoverID (const int rover_id);
+			 void setRoverID (const int rover_id);
 
 	};
 }

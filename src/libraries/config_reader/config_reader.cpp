@@ -145,6 +145,21 @@ rover_config getRoverConfig(char *filename)
 					case 9:
 						if (strlen(cfline) > 1)
 						{
+							configstruct.USE_REDIRECTED_TOPICS_C = atoi(cfline);
+							printf("Read config [USE_REDIRECTED_TOPICS_C = %d]\n",configstruct.USE_REDIRECTED_TOPICS_C);
+
+						}
+						else
+						{
+							configstruct.USE_REDIRECTED_TOPICS_C = DEFAULT_USE_REDIRECTED_TOPICS_C;
+							printf("No data entered. Using default: [USE_REDIRECTED_TOPICS_C = %d]\n",configstruct.USE_REDIRECTED_TOPICS_C);
+
+						}
+						break;
+
+					case 10:
+						if (strlen(cfline) > 1)
+						{
 							memcpy(configstruct.HONO_HTTP_HOST_C,cfline,strlen(cfline));
 							configstruct.HONO_HTTP_HOST_C[strlen(cfline)-1] = 0;
 							printf("Read config [HONO_HTTP_HOST_C = %s]\n",configstruct.HONO_HTTP_HOST_C);
@@ -157,7 +172,7 @@ rover_config getRoverConfig(char *filename)
 						}
 						break;
 
-					case 10:
+					case 11:
 						if (strlen(cfline) > 1)
 						{
 							configstruct.HONO_HTTP_PORT_C = atoi(cfline);
@@ -170,7 +185,7 @@ rover_config getRoverConfig(char *filename)
 						}
 						break;
 
-					case 11:
+					case 12:
 						if (strlen(cfline) > 1)
 						{
 							memcpy(configstruct.HONO_HTTP_TENANT_NAME_C,cfline,strlen(cfline));
@@ -185,7 +200,7 @@ rover_config getRoverConfig(char *filename)
 						}
 						break;
 
-					case 12:
+					case 13:
 						if (strlen(cfline) > 1)
 						{
 							memcpy(configstruct.HONO_HTTP_DEVICE_ID_C,cfline,strlen(cfline));
@@ -200,7 +215,7 @@ rover_config getRoverConfig(char *filename)
 						}
 						break;
 
-					case 13:
+					case 14:
 						if (strlen(cfline) > 1)
 						{
 							configstruct.HONO_HTTP_REGISTER_PORT_C = atoi(cfline);
@@ -214,7 +229,7 @@ rover_config getRoverConfig(char *filename)
 						}
 						break;
 
-					case 14:
+					case 15:
 						if (strlen(cfline) > 1)
 						{
 							memcpy(configstruct.HONO_HTTP_USERNAME_C,cfline,strlen(cfline));
@@ -229,7 +244,7 @@ rover_config getRoverConfig(char *filename)
 						}
 						break;
 
-					case 15:
+					case 16:
 						if (strlen(cfline) > 1)
 						{
 							memcpy(configstruct.HONO_HTTP_PASSWORD_C,cfline,strlen(cfline));
@@ -259,7 +274,7 @@ rover_config getRoverConfig(char *filename)
 		use_defaults = 1;
 	}
 
-	if (i<15 || use_defaults)
+	if (i<16 || use_defaults)
 	{
 		if (use_defaults)
 			printf("Unable to read rover config file. Correct your /etc/rover.conf. Program will use default configuration.\n");
@@ -277,6 +292,7 @@ rover_config getRoverConfig(char *filename)
 		memcpy(configstruct.MQTT_PASSWORD_C,DEFAULT_MQTT_PASSWORD_C,strlen(DEFAULT_MQTT_PASSWORD_C));
 		configstruct.MQTT_PASSWORD_C[strlen(DEFAULT_MQTT_PASSWORD_C)] = 0;
 		configstruct.USE_GROOVE_SENSOR_C = DEFAULT_USE_GROOVE_SENSOR_C;
+		configstruct.USE_REDIRECTED_TOPICS_C = DEFAULT_USE_REDIRECTED_TOPICS_C;
 
 		memcpy(configstruct.HONO_HTTP_HOST_C,DEFAULT_HONO_HTTP_HOST_C,strlen(DEFAULT_HONO_HTTP_HOST_C));
 		configstruct.HONO_HTTP_HOST_C[strlen(DEFAULT_HONO_HTTP_HOST_C)] = 0;
@@ -298,6 +314,7 @@ rover_config getRoverConfig(char *filename)
 		printf("[MQTT_USERNAME_C = %s]\n",configstruct.MQTT_USERNAME_C);
 		printf("[MQTT_PASSWORD_C = %s]\n",configstruct.MQTT_PASSWORD_C);
 		printf("[USE_GROOVE_SENSOR_C = %d]\n",configstruct.USE_GROOVE_SENSOR_C);
+		printf("[USE_REDIRECTED_TOPICS_C = %d]\n",configstruct.USE_REDIRECTED_TOPICS_C);
 
 		printf("[HONO_HTTP_HOST_C = %s]\n",configstruct.HONO_HTTP_HOST_C);
 		printf("[HONO_HTTP_PORT_C = %d]\n",configstruct.HONO_HTTP_PORT_C);

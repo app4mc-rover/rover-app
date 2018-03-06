@@ -342,13 +342,13 @@ int main()
 
 	ret = createThread(&booth_thread, Booth_Modes_Task, "booth");
 	CHECK_RET(ret);
-
+/*
 	ret = createThread(&socket_client_thread, Socket_Client_Task, "SC");
 	CHECK_RET(ret);
 
 	ret = createThread(&socket_server_thread, Socket_Server_Task, "SS");
 	CHECK_RET(ret);
-
+*/
 	ret = createThread(&accelerometer_thread, Accelerometer_Task, "ACT");
 	CHECK_RET(ret);
 
