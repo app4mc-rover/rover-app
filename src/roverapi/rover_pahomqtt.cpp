@@ -241,7 +241,6 @@ int rover::RoverPahoMQTT::subscribe (void)
 	{
 		return -1;
 	}
-
 }
 
 int rover::RoverPahoMQTT::read (char* data)

@@ -104,18 +104,18 @@ void *MQTT_Publish_Task (void * arg)
 		{
 			pthread_mutex_lock(&mqtt_client_lock);
 				if (rover_mqtt->publishToTelemetryTopic(sensor_data) == 0)
-					printf ("Client rover_mqtt_publisher: Publishing successful!\n");
+					printf ("Client rover_mqtt_publisher: Redirected Publishing successful!\n");
 				else
-					printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+					printf ("Client rover_mqtt_publisher: Redirected Publishing unsuccessful!\n");
 			pthread_mutex_unlock(&mqtt_client_lock);
 		}
 		else // 0
 		{
 			pthread_mutex_lock(&mqtt_client_lock);
 				if (rover_mqtt->publishToTelemetryTopicNonRedirected(sensor_data) == 0)
-					printf ("Client rover_mqtt_publisher: Publishing successful!\n");
+					printf ("Client rover_mqtt_publisher: Nonredirected Publishing successful!\n");
 				else
-					printf ("Client rover_mqtt_publisher: Publishing unsuccessful!\n");
+					printf ("Client rover_mqtt_publisher: Nonredirected Publishing unsuccessful!\n");
 			pthread_mutex_unlock(&mqtt_client_lock);
 		}
 
