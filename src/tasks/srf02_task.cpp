@@ -21,7 +21,13 @@
 #include <interfaces.h>
 #include <pthread.h>
 
-#include <linux/i2c-dev.h>
+#ifdef CROSS_COMPILE_ECLIPSE
+	#include "i2c-dev.h"
+#elif CROSS_COMPILE_SDK
+	#include <linux/i2c-dev-user.h>
+#else
+	#include <linux/i2c-dev.h>
+#endif
 #include <fcntl.h>
 #include <string.h>
 #include <sys/ioctl.h>

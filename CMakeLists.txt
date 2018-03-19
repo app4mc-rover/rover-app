@@ -156,7 +156,7 @@ if(SDK_EN EQUAL 0)
    target_link_libraries (roverapptasks opencv_highgui)
    target_link_libraries (roverapptasks opencv_imgproc)
 else()
-   target_link_libraries (roverapptasks ${OpenCV_LIB})
+   target_link_libraries (roverapptasks ${OpenCV_LIBS})
 endif()
 
 target_link_libraries (roverapptasks jsoncpp)
