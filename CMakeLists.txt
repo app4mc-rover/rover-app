@@ -247,9 +247,9 @@ install(
     pthread_monitoring
     timing pthread_distribution
   PUBLIC_HEADER
-  RUNTIME DESTINATION /usr/bin
-  LIBRARY DESTINATION /usr/lib
-  ARCHIVE DESTINATION /usr/lib)
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib)
 
 #Copy/install files to a certain static directory
 install(FILES ${CMAKE_SOURCE_DIR}/scripts/read_core_usage.py
@@ -270,14 +270,14 @@ file (GLOB RECURSE ROVERDRIVERS_INCLUDE_FILES
 )
 
 INSTALL(FILES ${ROVERAPI_INCLUDE_FILES}
-  DESTINATION "/usr/include/roverapi"
+  DESTINATION include/roverapi
 )
 
 INSTALL(FILES ${ROVERDRIVERS_INCLUDE_FILES}
-  DESTINATION "/usr/include/drivers"
+  DESTINATION include/drivers
 )
 
 INSTALL(FILES ${ROVERLIBRARIES_INCLUDE_FILES}
-  DESTINATION "/usr/include/libraries"
+  DESTINATION include/libraries
 )
 
