@@ -103,25 +103,6 @@ add_library (timing SHARED
 add_library (config_reader SHARED
   ${CUSTOM_LIBS_DIR}/config_reader/config_reader.cpp)
 
-#Add tasks
-#Add all files to a variable ROVERAPP_TASK_FILES
-file (GLOB_RECURSE ROVERAPP_TASK_FILES ${CMAKE_SOURCE_DIR}/src/tasks/*.cpp)
-add_library (roverapptasks SHARED ${ROVERAPP_TASK_FILES})
-
-
-#Add drivers
-file (GLOB_RECURSE ROVERAPP_DRIVER_FILES
-  ${CMAKE_SOURCE_DIR}/src/drivers/oled_drivers/*.c
-  ${CMAKE_SOURCE_DIR}/src/drivers/oled_drivers/*.cpp
-)
-add_library (roverappdrivers SHARED ${ROVERAPP_DRIVER_FILES})
-
-#
-#  EXECUTABLE
-#
-
-#Add main executable
-add_executable(roverapp ${CMAKE_SOURCE_DIR}/src/roverapp.cpp)
 
 #
 #  LINKING TO ROVER API
@@ -146,114 +127,21 @@ target_link_libraries(roverapi jsoncpp)
 target_link_libraries (roverapi roverappdrivers)
 
 #
-#  LINKING TO ROVER TASKS
-#
-
-#Link external libraries
-# Since OpenCV Module don't return full path for libraries
-if(SDK_EN EQUAL 0)
-   target_link_libraries (roverapptasks opencv_core)
-   target_link_libraries (roverapptasks opencv_highgui)
-   target_link_libraries (roverapptasks opencv_imgproc)
-else()
-   target_link_libraries (roverapptasks ${OpenCV_LIBS})
-endif()
-
-target_link_libraries (roverapptasks jsoncpp)
-target_link_libraries (roverapptasks bluetooth)
-target_link_libraries (roverapptasks pthread)
-
-if(NOT DEFINED ${SIM})
-    target_link_libraries (roverapptasks wiringPi)
-    target_link_libraries (roverapptasks wiringPiDev)
-    target_link_libraries (roverapptasks raspicam)
-endif()
-
-#Linker actions to link our libraries to executable
-target_link_libraries(roverapptasks hono_interaction)
-target_link_libraries(roverapptasks pthread_distribution)
-target_link_libraries(roverapptasks status_library)
-target_link_libraries(roverapptasks pthread_monitoring)
-target_link_libraries(roverapptasks timing)
-target_link_libraries(roverapptasks config_reader)
-
-#Link api
-target_link_libraries (roverapptasks roverapi)
-
-#Link drivers
-target_link_libraries (roverapptasks roverappdrivers)
-
-#
-# LINKING TO MAIN EXECUTABLE
-#
-
-#Link external libraries
-target_link_libraries (roverapp pthread)
-
-#Link api
-target_link_libraries (roverapp roverapi)
-
-#Linker actions to link our libraries to executable
-target_link_libraries(roverapp hono_interaction)
-target_link_libraries(roverapp pthread_distribution)
-target_link_libraries(roverapp status_library)
-target_link_libraries(roverapp pthread_monitoring)
-target_link_libraries(roverapp timing)
-target_link_libraries(roverapp config_reader)
-
-#Link tasks
-target_link_libraries(roverapp roverapptasks)
-
-#Link drivers
-target_link_libraries(roverapp roverappdrivers)
-
-#
-# EXAMPLES
-#
-
-add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/display_control.cpp)
-target_link_libraries (display_control roverapi)
-
-add_executable(driving_control ${CMAKE_SOURCE_DIR}/src/examples/driving_control.cpp)
-target_link_libraries (driving_control roverapi)
-
-add_executable(buzzer_button_example ${CMAKE_SOURCE_DIR}/src/examples/buzzer_button_example.cpp)
-target_link_libraries (buzzer_button_example roverapi)
-
-add_executable(sensor_reading ${CMAKE_SOURCE_DIR}/src/examples/sensor_reading.cpp)
-target_link_libraries (sensor_reading roverapi)
-
-add_executable(utility_info ${CMAKE_SOURCE_DIR}/src/examples/utility_info.cpp)
-target_link_libraries (utility_info roverapi)
-
-add_executable(mqtt_publisher ${CMAKE_SOURCE_DIR}/src/examples/mqtt_publisher.cpp)
-target_link_libraries (mqtt_publisher roverapi)
-
-add_executable(mqtt_subscriber ${CMAKE_SOURCE_DIR}/src/examples/mqtt_subscriber.cpp)
-target_link_libraries (mqtt_subscriber roverapi)
-
-#
 # INSTALLING
 #
 
 #Install binary, shared library, includes, static library (archives)
 install(
-  TARGETS roverapp roverapi
-    roverapptasks
-    roverappdrivers
+  TARGETS roverapi
     hono_interaction
     status_library
     config_reader
     pthread_monitoring
     timing pthread_distribution
   PUBLIC_HEADER
-  RUNTIME DESTINATION /usr/bin
-  LIBRARY DESTINATION /usr/lib
-  ARCHIVE DESTINATION /usr/lib)
-
-#Copy/install files to a certain static directory
-install(FILES ${CMAKE_SOURCE_DIR}/scripts/read_core_usage.py
-  DESTINATION /opt/rover-app/scripts/)
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib)
 
 # Install public headers
 
@@ -270,14 +158,13 @@ file (GLOB RECURSE ROVERDRIVERS_INCLUDE_FILES
 )
 
 INSTALL(FILES ${ROVERAPI_INCLUDE_FILES}
-  DESTINATION "/usr/include/roverapi"
+  DESTINATION include/roverapi
 )
 
 INSTALL(FILES ${ROVERDRIVERS_INCLUDE_FILES}
-  DESTINATION "/usr/include/drivers"
+  DESTINATION include/drivers
 )
 
 INSTALL(FILES ${ROVERLIBRARIES_INCLUDE_FILES}
-  DESTINATION "/usr/include/libraries"
+  DESTINATION include/libraries
 )
-
