@@ -210,23 +210,8 @@ int rover::RoverMQTTCommand::publishToTelemetryTopicNonRedirected (RoverSensorDa
 
 int rover::RoverMQTTCommand::subscribeToDrivingTopic (void)
 {
-	/* Set topic */
-	/* Common buffer to use */
-	char topicBuffer_RoverMQTTCommand[64] = {};
-	char numBuffer_RoverMQTTCommand[2] = {};
-
 	/* Set topic name */
-	/* Add inital part of the topic name */
-	sprintf(topicBuffer_RoverMQTTCommand, "%s", topicPrefix);
-
-	/* Concatanate rover ID */
-	snprintf(numBuffer_RoverMQTTCommand, sizeof(numBuffer_RoverMQTTCommand), "%d", this->ROVER_ID);
-	strcat(topicBuffer_RoverMQTTCommand, numBuffer_RoverMQTTCommand);
-	numBuffer_RoverMQTTCommand[0] = 0; //Clear array
-
-	/* Add the rest of the topic name */
-	strcat(topicBuffer_RoverMQTTCommand, drivingSubTopic);
-	this->setTopic (topicBuffer_RoverMQTTCommand);
+	this->setTopic ("control/+/+/req/#");
 
 	/* Subscribe */
 	return this->subscribe();
