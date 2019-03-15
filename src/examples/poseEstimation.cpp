@@ -10,6 +10,12 @@
  *
  * Author:
  *   Daniel Paredes, FH Dortmund <daleonpz@gmail.com> - created 24.01.2019
+ * Note: 
+ *  You will find the calibration file in
+ *  src/examples/calibration.yml
+ *  when you want to run this application 
+ *  calibration.yml should be in the same directory
+ *  as the executable otherwise it won't run.
  *
  */
 
