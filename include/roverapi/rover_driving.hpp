@@ -83,6 +83,11 @@ namespace rover
 			int getSpeed (void);
 
 			/**
+			 * @brief Set the speed of the right and left wheels
+			 */
+			void differentialDrive(const float angular_speed, const float linear_speed );
+
+			/**
 			 * @brief Commands the rover to go forward.
 			 */
 			void goForward ();
