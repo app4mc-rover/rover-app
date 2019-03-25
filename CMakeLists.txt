@@ -223,6 +223,12 @@ target_link_libraries (buzzer_button_example roverapi)
 add_executable(sensor_reading ${CMAKE_SOURCE_DIR}/src/examples/sensor_reading.cpp)
 target_link_libraries (sensor_reading roverapi)
 
+add_executable(MarkerChaser ${CMAKE_SOURCE_DIR}/src/examples/MarkerChaser.cpp)
+target_link_libraries (MarkerChaser roverapi ${OpenCV_LIBS})
+
+add_executable(poseEstimation ${CMAKE_SOURCE_DIR}/src/examples/poseEstimation.cpp)
+target_link_libraries (poseEstimation roverapi ${OpenCV_LIBS})
+
 add_executable(utility_info ${CMAKE_SOURCE_DIR}/src/examples/utility_info.cpp)
 target_link_libraries (utility_info roverapi)
 

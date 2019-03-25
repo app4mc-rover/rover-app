@@ -66,6 +66,8 @@ extern float getHumidity(void);
 
 extern void runside(int side, int direction, int speed);
 
+extern void differential_drive( float angular_speed , float linear_speed );
+
 
 #endif /* PSYS_ROVER_H_ */
 
