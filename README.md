@@ -1,4 +1,6 @@
 # rover-app
+
+## Description
 roverapp Software (C/C++) for APP4MC Rover project
 
 ![API Documentation Link](https://travis-ci.org/app4mc-rover/rover-app.svg?branch=master)
@@ -27,4 +29,23 @@ Comprehensive documentation link: https://app4mc-rover.github.io/rover-docs
 * Parking behavior implementation.
 * Booth mode implementations.
 * Implementations for bluetooth-based driving from Android phones.
+
+
+## Build with Docker
+
+To build the Docker image
+
+```sh
+$ cd rover-app/
+$ docker build -t IMAGE_TAG . 
+```
+
+To compile rover-app
+
+```sh
+$ docker run -v $(pwd):/usr/src/myapp -w /usr/src/myapp IMAGE_TAG ./make_roverapp.sh
+```
+
+The binary files are under `build/bin` directory
+
 
