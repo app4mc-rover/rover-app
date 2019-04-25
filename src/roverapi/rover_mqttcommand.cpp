@@ -114,26 +114,26 @@ int rover::RoverMQTTCommand::publishToTelemetryTopic (RoverSensorData_t sensor_d
 	this->setTopic ("telemetry");
 
 	/* Construct payload from sensor_data */
-	data["infrared"]["rearright"] = sensor_data.infrared[0];
-	data["infrared"]["rearleft"] = sensor_data.infrared[1];
-	data["infrared"]["frontright"] = sensor_data.infrared[2];
-	data["infrared"]["frontleft"] = sensor_data.infrared[3];
-	data["ultrasonic"]["front"] = sensor_data.ultrasonic_front;
-	data["ultrasonic"]["rear"] = sensor_data.ultrasonic_rear;
-	data["hmc5883l"]["bearing"] = sensor_data.hmc5883l_bearing;
-	data["gy521"]["gyro"]["x"] = sensor_data.gy521_gyro_x;
-	data["gy521"]["gyro"]["y"] = sensor_data.gy521_gyro_y;
-	data["gy521"]["gyro"]["z"] = sensor_data.gy521_gyro_z;
-	data["gy521"]["angle"]["x"] = sensor_data.gy521_angle_x;
-	data["gy521"]["angle"]["y"] = sensor_data.gy521_angle_y;
-	data["gy521"]["angle"]["z"] = sensor_data.gy521_angle_z;
-	data["gy521"]["accel"]["x"] = sensor_data.gy521_accel_x;
-	data["gy521"]["accel"]["y"] = sensor_data.gy521_accel_y;
-	data["gy521"]["accel"]["z"] = sensor_data.gy521_accel_z;
-	data["cores"]["core0"] = sensor_data.core[0];
-	data["cores"]["core1"] = sensor_data.core[1];
-	data["cores"]["core2"] = sensor_data.core[2];
-	data["cores"]["core3"] = sensor_data.core[3];
+	data["infrared-rearright"] = sensor_data.infrared[0];
+	data["infrared-rearleft"] = sensor_data.infrared[1];
+	data["infrared-frontright"] = sensor_data.infrared[2];
+	data["infrared-frontleft"] = sensor_data.infrared[3];
+	data["ultrasonic-front"] = sensor_data.ultrasonic_front;
+	data["ultrasonic-rear"] = sensor_data.ultrasonic_rear;
+	data["hmc5883l-bearing"] = sensor_data.hmc5883l_bearing;
+	data["gy521-gyro-x"] = sensor_data.gy521_gyro_x;
+	data["gy521-gyro-y"] = sensor_data.gy521_gyro_y;
+	data["gy521-gyro-z"] = sensor_data.gy521_gyro_z;
+	data["gy521-angle-x"] = sensor_data.gy521_angle_x;
+	data["gy521-angle-y"] = sensor_data.gy521_angle_y;
+	data["gy521-angle-z"] = sensor_data.gy521_angle_z;
+	data["gy521-accel-x"] = sensor_data.gy521_accel_x;
+	data["gy521-accel-y"] = sensor_data.gy521_accel_y;
+	data["gy521-accel-z"] = sensor_data.gy521_accel_z;
+	data["cores-core0"] = sensor_data.core[0];
+	data["cores-core1"] = sensor_data.core[1];
+	data["cores-core2"] = sensor_data.core[2];
+	data["cores-core3"] = sensor_data.core[3];
 
 	/* Convert JSON data to string */
 	std::string temp = string_writer.write(data);
