@@ -2,9 +2,9 @@
 title: How to set up rover-app 
 ---
 
-This tutorial will teach your how to set up your Raspbian image to run rover-app applications and the basic workflow.
+This tutorial will teach your how to set up your Raspbian image to run rover-app applications from scratch and the basic workflow.
 
-# 1. Writing a Raspbian image on a SD card 
+# Writing a Raspbian image on a SD card 
 First, you will need a fresh Raspbian image. You can download from [here](https://www.raspberrypi.org/downloads/raspbian/).
 The image you will use is **Raspbian Stretch with desktop and recommended software**.
 Then you will write an image to your SD card following next described on the official Raspbian [site](https://www.raspberrypi.org/documentation/installation/installing-images/).
@@ -14,7 +14,7 @@ Then you will write an image to your SD card following next described on the off
 Once you wrote successfully your Raspbian image on your SD card, insert it into the  Raspberry Pi.
 
 
-# Configuring I2C and SSH  
+# Configuring I2C, SSH and SPI 
 After your fresh installation you will need to configure the Raspberry Pi in order to run rover-app applications. 
 **IMPORTANT**: Do **NOT** update your Raspbian image, this will take a lot of time.
 
@@ -56,7 +56,7 @@ Reboot your RPI3
 
 # Installing Rover-app dependencies
 
-## Insatll CMake
+## Install CMake
 ```sh
 $ sudo apt-get install cmake
 ```
