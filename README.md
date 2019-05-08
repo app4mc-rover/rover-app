@@ -1,7 +1,10 @@
 # rover-app
+Software (C/C++) for Rover project
 
 ## Description
-roverapp Software (C/C++) for APP4MC Rover project
+The Rover software (C/C++), called roverapp, features a multi-threaded (POSIX threads or Pthreads) C/C++ implementation that runs on Linux-based embedded single board computers (such as Raspberry Pi). 
+Rover features countless threads dedicated to communication infrastructure, sensor driving, display unit (such as OLED displays) utilization, bluetooth communication, image processing, and behavior modes (such as Parking, Adaptive Cruise Control, Manual Driving, and Booth Modes). 
+It also features drivers for sensors such as magnetometers, accelerometers, various ultrasonic sensors, and camera modules. Furthermore, OLED display, buttons, a buzzer are utilized.
 
 ![API Documentation Link](https://travis-ci.org/app4mc-rover/rover-app.svg?branch=master)
 
