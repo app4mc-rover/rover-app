@@ -12,6 +12,8 @@
  *    M.Ozcelikors <mozcelikors@gmail.com>, created API 17.11.2017
  *
  */
+///light system
+#include <libraries/demo_light/lightsys.h>
 
 #include <roverapi/rover_driving.hpp>
 #include <roverapi/basic_psys_rover.h>
@@ -98,6 +100,11 @@ void rover::RoverDriving::turnForwardRight (void)
     else
     {
         turn(FORWARD, LEFT, this->SPEED);
+        //light system
+        fprintf(stderr, "Lights turn right\n");
+        light_Blink_L(); // in reality right motor work, then rover will turn left
+        
+        
     }
 }
 
@@ -110,6 +117,9 @@ void rover::RoverDriving::turnForwardLeft (void)
     else
     {
         turn(FORWARD, RIGHT, this->SPEED);
+        //light system
+        fprintf(stderr, "Lights turn left \n");
+        light_Blink_R(); // in reality left motor work, then rover will turn right
     }
 }
 
@@ -122,6 +132,10 @@ void rover::RoverDriving::turnBackwardRight (void)
     else
     {
         turn(BACKWARD, LEFT, this->SPEED);
+        //light system
+        fprintf(stderr, "Lights turn right\n");
+        light_Blink_R();
+        
     }
 }
 
@@ -134,6 +148,10 @@ void rover::RoverDriving::turnBackwardLeft (void)
     else
     {
         turn(BACKWARD, RIGHT, this->SPEED);
+        //light system
+        fprintf(stderr, "Lights turn left \n");
+        light_Blink_L();
+        
     }
 }
 
@@ -146,6 +164,9 @@ void rover::RoverDriving::turnLeft (void)
     else
     {
         turnOnSpot(FORWARD, LEFT, this->SPEED);
+        //light system
+        fprintf(stderr, "Lights turn left\n");
+        light_Blink_L();
     }
 }
 
@@ -158,6 +179,9 @@ void rover::RoverDriving::turnRight (void)
     else
     {
         turnOnSpot(FORWARD, RIGHT, this->SPEED);
+        //light system
+        fprintf(stderr, "Lights turn right\n");
+        light_Blink_R();
     }
 }
 
@@ -170,6 +194,9 @@ void rover::RoverDriving::goForward (void)
     else
     {
         go(FORWARD, this->SPEED);
+        //light system
+        fprintf(stderr, "Lights on\n");
+        light_on();
     }
 }
 
@@ -182,6 +209,9 @@ void rover::RoverDriving::goBackward (void)
     else
     {
         go(BACKWARD, this->SPEED);
+        //light system
+        fprintf(stderr, "Lights backward \n");
+        light_BackW();
     }
 }
 
@@ -194,5 +224,8 @@ void rover::RoverDriving::stopRover (void)
     else
     {
         stop();
+        //light system
+        fprintf(stderr, "Lights off\n");
+        light_off();
     }
 }
