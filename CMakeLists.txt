@@ -105,7 +105,7 @@ add_library (config_reader SHARED
 ###light system
 file (GLOB_RECURSE LIGHT_LIB
   ${CUSTOM_LIBS_DIR}/lightsys/*.c
-  #${CUSTOM_LIBS_DIR}/lightsys/*.cpp
+  ${CUSTOM_LIBS_DIR}/lightsys/*.cpp
 	)
 add_library (lightsys_lib SHARED ${LIGHT_LIB})
 
@@ -185,6 +185,8 @@ target_link_libraries(roverapptasks status_library)
 target_link_libraries(roverapptasks pthread_monitoring)
 target_link_libraries(roverapptasks timing)
 target_link_libraries(roverapptasks config_reader)
+###light system
+target_link_libraries(roverapptasks lightsys_lib)
 
 #Link api
 target_link_libraries (roverapptasks roverapi)
@@ -222,8 +224,8 @@ target_link_libraries(roverapp roverappdrivers)
 # EXAMPLES
 #
 ###light system
-add_executable(light_demo_new ${CMAKE_SOURCE_DIR}/src/examples/light_demo_new.c)
-target_link_libraries (light_demo_new lightsys_lib)
+add_executable(light_demo ${CMAKE_SOURCE_DIR}/src/examples/light_demo.cpp)
+target_link_libraries (light_demo roverapi)
 
 add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/display_control.cpp)
 target_link_libraries (display_control roverapi)

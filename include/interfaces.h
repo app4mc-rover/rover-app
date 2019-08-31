@@ -35,6 +35,14 @@
 #define BOOTH1 4
 #define BOOTH2 5
 
+//Lighting modes
+#define LIGHT_ON     8
+#define LIGHT_OFF    5
+#define LIGHT_BLINKR 6
+#define LIGHT_BLINKL 4
+#define LIGHT_BACKW  2
+#define LIGHT_FLASH  1
+
 typedef struct  {
    char * task_id;
    int deadline_miss_percentage;
@@ -98,5 +106,7 @@ extern timing_interface accelerometer_task_ti;
 extern timing_interface mqtt_publish_task_ti;
 
 extern timing_interface mqtt_subscribe_task_ti;
+
+extern timing_interface light_task_ti;
 
 #endif /* INTERFACES_H_ */

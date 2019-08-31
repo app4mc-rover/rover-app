@@ -35,7 +35,7 @@
 #include <errno.h>
 #include <byteswap.h>
 
-#include <libraries/demo_light/rpihw.h>
+#include <libraries/lightsys/rpihw.h>
 
 
 #define LINE_WIDTH_MAX                           80

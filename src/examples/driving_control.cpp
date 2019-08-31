@@ -16,7 +16,7 @@
 #include <stdio.h>
 
 //lightsystem
-#include <libraries/demo_light/lightsys.h>
+#include <roverapi/rover_light.hpp>
 
 //Basis Include
 #include <roverapi/rover_api.hpp>
@@ -34,7 +34,8 @@ int main()
     
  
     //light system initial
-    lightsys_initial();
+    RoverLight r_light = RoverLight();
+    r_light.initialize();
     
     //This initialization is a one time only must-call before every rover application.
     RoverBase r_base = RoverBase();
@@ -47,20 +48,28 @@ int main()
 
     printf ("Going forward...\n");
     r_driving.goForward();
+    r_light.on();
     r_base.sleep (3000); //r_base.sleep (1500); // Sleep for some time in milliseconds
+    r_light.off();
 
     printf ("Turning right...\n");
     r_driving.turnForwardRight();//r_driving.turnRight();
-    r_base.sleep (1500);
+    r_light.Blink_L();
+    //r_base.sleep (1500);
+    r_light.off();
 
     printf ("Turning left...\n");
     r_driving.turnForwardLeft();//r_driving.turnLeft();
-    r_base.sleep (3000); //r_base.sleep (1500);
+    r_light.Blink_R();
+    //r_base.sleep (3000); //r_base.sleep (1500);
+    r_light.off();
 
     printf ("Going backward...\n");
     r_driving.goBackward();
+    r_light.BackW();
     r_base.sleep (1500);
     r_driving.stopRover();
+    r_light.off();
     
 	printf("Exiting.\n");
 

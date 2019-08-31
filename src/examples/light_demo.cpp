@@ -19,9 +19,18 @@
 #include "pwm.h"
 #include "version.h"
 #include "ws2811.h"*/
-#include <libraries/demo_light/lightsys.h>
+
+#include <stdio.h>
+#include <unistd.h>
+
+//lightsystem
+#include <roverapi/rover_light.hpp>
+
+//Basis Include
+#include <roverapi/rover_api.hpp>
 
 
+using namespace rover;
 
 int main()//int main(int argc, char *argv[])
 {
@@ -35,24 +44,37 @@ int main()//int main(int argc, char *argv[])
         fprintf(stderr, "ws2811_init failed: %s\n", ws2811_get_return_t_str(ret));
         return ret;
     }*/
-	lightsys_initial();
+	printf("Started roverapp light example.\n");
+	
+	//light system initial
+	RoverLight r_light = RoverLight();
+	r_light.initialize();
+	    
+	//This initialization is a one time only must-call before every rover application.
+	RoverBase r_base = RoverBase();
+	
 	//Action
 	fprintf(stderr, "Lights on for 3 Sec.\n");
-	light_on();	
-	usleep(3000000);
+	r_light.on();	
+	sleep (3);
+	r_light.off();
 	fprintf(stderr, "Lights turn right for 10 Sec. Ctrl+C to finish this step.\n");
-	light_Blink_R();
-	fprintf(stderr, "Lights turn left for 10 Sec. Ctrl+C to finish this step.\n");
-	light_Blink_L();
+	//stop_blink();
+	r_light.Blink_R();
+	//stop_blink();
+	fprintf(stderr, "Lights turn left for 10 Sec. Ctrl+C to finish this step.\n");	
+	r_light.Blink_L();
+	//stop_blink();
 	fprintf(stderr, "Lights backward for 3 Sec.\n");
-	light_BackW();
-	usleep(3000000);
+	r_light.BackW();
+	sleep (3);
 	fprintf(stderr, "Lights off\n");
-	light_off();
+	r_light.off();
 	fprintf(stderr, "THE END.\n");
 	
+	
 
-    ws2811_fini(&ledstring);
+    
 
     printf ("\n");
     //return ret;

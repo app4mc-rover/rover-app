@@ -54,6 +54,8 @@
 #include <tasks/accelerometer_task.h>
 #include <tasks/mqtt_publish_task.h>
 #include <tasks/mqtt_subscribe_task.h>
+//light system
+#include <tasks/light_task.h>
 
 
 
@@ -76,6 +78,7 @@ RoverBase r_base;
 RoverDriving r_driving = RoverDriving();
 RoverDisplay my_display;
 RoverUtils r_utils;
+RoverLight r_light = RoverLight();
 
 RoverMQTTCommand *rover_mqtt;
 /* Threads */
@@ -103,6 +106,9 @@ pthread_t socket_server_thread;
 pthread_t accelerometer_thread;
 pthread_t mqtt_publish_thread;
 pthread_t mqtt_subscribe_thread;
+//light system
+pthread_t light_thread;
+
 
 /* Timing interfaces for thread measurement */
 timing_interface compass_task_ti;
@@ -131,6 +137,8 @@ timing_interface socket_server_task_ti;
 timing_interface accelerometer_task_ti;
 timing_interface mqtt_publish_task_ti;
 timing_interface mqtt_subscribe_task_ti;
+//light system
+timing_interface light_task_ti;
 
 //Shared data between threads
 
@@ -150,6 +158,9 @@ SharedData<int> display_use_elsewhere_shared;
 SharedData<int> display_mode_shared;
 /* For proper termination */
 SharedData<int> running_flag;
+//light system
+SharedData<int> light_mode; // select lighting mode
+SharedData<int> blink_mode; // select lighting mode
 
 AccelerometerData_t accelerometerdata_shared;
 pthread_mutex_t accelerometerdata_lock;
@@ -268,6 +279,8 @@ int main()
 	r_base.initialize();
 	r_driving.initialize();
 	my_display.initialize();
+	//light system
+	r_light.initialize();
 
 
 	/* Add signals to exit threads properly */
@@ -358,6 +371,8 @@ int main()
 	ret = createThread(&mqtt_subscribe_thread, MQTT_Subscribe_Task, "MQTTS");
 	CHECK_RET(ret);
 
+	ret = createThread(&light_thread, Light_Task, "LIGHTS");
+	CHECK_RET(ret);
 
 	//Core pinning/mapping
 /*	placeAThreadToCore (main_thread, 1);
