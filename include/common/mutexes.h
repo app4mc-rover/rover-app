@@ -115,8 +115,10 @@ extern SharedData<int> shutdown_hook_shared;
 extern SharedData<int> display_use_elsewhere_shared;
 extern SharedData<int> running_flag;
 //light system
-extern SharedData<int> light_mode;
-extern SharedData<int> blink_mode;
+extern SharedData<int> light_mode_shared;
+//extern SharedData<int> blink_mode;
+//keyboard
+extern SharedData<char> keyboard_shared;
 
 extern SharedData<int> display_mode_shared;
 

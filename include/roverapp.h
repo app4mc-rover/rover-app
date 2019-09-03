@@ -59,6 +59,8 @@ extern RoverDriving r_driving;
 extern RoverDisplay my_display;
 extern RoverUtils r_utils;
 extern RoverMQTTCommand *rover_mqtt;
+//light system
+extern RoverLight r_light;
 
 /* Configuration struct */
 extern rover_config rover_config_obj;

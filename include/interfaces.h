@@ -107,6 +107,7 @@ extern timing_interface mqtt_publish_task_ti;
 
 extern timing_interface mqtt_subscribe_task_ti;
 
+// light system
 extern timing_interface light_task_ti;
 
 #endif /* INTERFACES_H_ */

@@ -177,7 +177,9 @@ void *MotorDriver_Task(void * arg)
 
 	int running = 1;
 	char local_command = 'F';
-
+	
+	cout<< "MOTOR DRIVE IS RUNNING " << endl;
+	cout<< endl;
 	while (running && running_flag.get())
 	{
 		motordriver_task_tmr.recordStartTime();
@@ -270,8 +272,52 @@ void *MotorDriver_Task(void * arg)
 			case 'F':
 				if (driving_mode.get() == MANUAL)
 					r_driving.stopRover();
-					 r_light.off();
+					r_light.off();
 				break;
+		}
+		
+		int a = light_mode_shared.get();
+		switch (a)
+		{
+			
+			case 0:
+				if (driving_mode.get() == MANUAL)
+					r_driving.stopRover();
+					r_light.off();
+				break;
+			case 5:
+					r_light.off();
+					cout<< "light task select  : "<< a <<endl;
+				break;
+			case 8:
+					ExitAutomaticModes();
+				r_driving.setSpeed(speed_shared.get());
+				r_driving.goForward();
+				r_light.on();
+					cout<< "motor  task select  : "<< a <<endl;
+				break;
+			case 2:
+					r_driving.setSpeed(speed_shared.get());
+				r_driving.goBackward();
+				r_light.BackW();
+					cout<< "light task select  : "<< a <<endl;
+				break;
+			case 6:
+					ExitAutomaticModes();
+				r_driving.setSpeed(speed_shared.get());
+				r_driving.turnForwardRight();
+				r_light.Blink_R();
+					cout<< "light task select  : "<< a <<endl;
+				break;	
+			case 4:
+					ExitAutomaticModes();
+				r_driving.setSpeed(speed_shared.get());
+				r_driving.turnForwardLeft();
+				r_light.Blink_L();
+					cout<< "light task select default" <<endl;
+				break;
+				
+			
 		}
 		//Task content ends here -------------------------------------------------
 

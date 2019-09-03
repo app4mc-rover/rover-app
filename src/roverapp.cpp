@@ -54,7 +54,6 @@
 #include <tasks/accelerometer_task.h>
 #include <tasks/mqtt_publish_task.h>
 #include <tasks/mqtt_subscribe_task.h>
-//light system
 #include <tasks/light_task.h>
 
 
@@ -159,8 +158,10 @@ SharedData<int> display_mode_shared;
 /* For proper termination */
 SharedData<int> running_flag;
 //light system
-SharedData<int> light_mode; // select lighting mode
+SharedData<int> light_mode_shared; // select lighting mode
 SharedData<int> blink_mode; // select lighting mode
+//keyboard
+SharedData<char>  keyboard_shared;
 
 AccelerometerData_t accelerometerdata_shared;
 pthread_mutex_t accelerometerdata_lock;
@@ -248,6 +249,8 @@ void exitHandler(int dummy)
 	joinThread(&accelerometer_thread);
 	joinThread(&mqtt_publish_thread);
 	joinThread(&mqtt_subscribe_thread);
+	// light system
+	joinThread(&light_thread);
 
 	main_running_flag = 0;
 	return;
@@ -294,6 +297,8 @@ int main()
 	running_flag = 1;
 	main_running_flag = 1;
 	keycommand_shared = 'F';
+	//keyboard
+	keyboard_shared = 'F';
 
 	//Initialize mutexes
 	pthread_mutex_init(&display_lock, NULL);
@@ -313,7 +318,10 @@ int main()
 		ret = createThread(&ultrasonic_sr04_back_thread, Ultrasonic_Sensor_SR04_Back_Task, "US_sr04_back");
 	}
 	CHECK_RET(ret);
-
+	// light system
+	ret = createThread(&light_thread, Light_Task, "LIGHTS");
+	CHECK_RET(ret);
+	
 	ret = createThread(&displaysensors_thread, DisplaySensors_Task, "displaysensors");
 	CHECK_RET(ret);
 
@@ -371,8 +379,7 @@ int main()
 	ret = createThread(&mqtt_subscribe_thread, MQTT_Subscribe_Task, "MQTTS");
 	CHECK_RET(ret);
 
-	ret = createThread(&light_thread, Light_Task, "LIGHTS");
-	CHECK_RET(ret);
+	
 
 	//Core pinning/mapping
 /*	placeAThreadToCore (main_thread, 1);

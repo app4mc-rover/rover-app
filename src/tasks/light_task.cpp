@@ -183,7 +183,7 @@ void *Light_Task(void * arg)
 	
 	char local_command = '5';
 
-	while (running && running_flag.get())
+	while (running)// && running_flag.get())
 	{
 		light_task_tmr.recordStartTime();
 		light_task_tmr.calculatePreviousSlackTime();
