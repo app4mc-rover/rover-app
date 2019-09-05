@@ -225,6 +225,36 @@ void light_on(void)
             
 }
 
+
+/// function to dim the lights
+void light_dim(int dim)
+{
+	ws2811_return_t ret;
+	
+	
+	ws2811_led_t	Led_B	= dim << 16;
+	fprintf(stderr, "ws2811_render_light_on failed: %X\n", Led_B);
+	ws2811_led_t	Led_R	= dim << 8;
+	fprintf(stderr, "ws2811_render_light_on failed: %X\n", Led_R);
+	ws2811_led_t	Led_G	= dim;
+	fprintf(stderr, "ws2811_render_light_on failed: %X\n", Led_G);
+	ws2811_led_t	Led_dim = Led_B | Led_R | Led_G;
+	fprintf(stderr, "ws2811_render_light_on failed: %X\n", Led_dim);
+	ws2811_led_t	red_dim= dim << 8;
+	Light_F_R = Led_dim;
+	Light_F_L = Led_dim;
+	Light_R_R = red_dim;
+	Light_R_L = red_dim;
+	matrix_render();
+	
+        if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
+        {
+            fprintf(stderr, "ws2811_render_light_on failed: %s\n", ws2811_get_return_t_str(ret));
+           
+        }
+            
+}
+
 ///turn off the lights
 void light_off(void)
 {
@@ -278,23 +308,17 @@ void light_Blink_R(void)
     // save the last colors before blinking
     colortemp1 = Light_F_R;
     colortemp2 = Light_R_R;
-    //running = 1;
-    blink = 1;
-    for(int i=0;i<10;i++)//while(blink_mode)//
-    {
-    	if (!blink) break;
-	//if (!blink) break;
+    
 	Light_F_R = orange;
-	//Light_F_L = off;
 	Light_R_R = orange;
-	//Light_R_L = off;
+	
 	matrix_render();
 	
 	if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         }
-	usleep(1000000 / 2);
+	usleep(1000000 / 4);
 		
 	Light_F_R = colortemp1;
 	//Light_F_L = off;
@@ -306,10 +330,10 @@ void light_Blink_R(void)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         }
-	usleep(1000000 / 2);
+	usleep(1000000 / 4);
 	
 
-    }
+    //}
     
 }
 
@@ -325,9 +349,9 @@ void light_Blink_L(void)
     //running = 1;
     
     blink = 1;
-      for(int i=0;i<10;i++)//while(blink_mode)//
-    {
-    	if (!blink) break;
+    //for(int i=0;i<10;i++)//while(blink_mode)//
+   // {
+    	//if (!blink) break;
 	Light_F_L = orange;
 	Light_R_L = orange;
 	
@@ -337,7 +361,7 @@ void light_Blink_L(void)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         }
-	usleep(1000000 / 2);
+	usleep(1000000 / 4);
 		
 	Light_F_L = colortemp1;
 	Light_R_L = colortemp2;
@@ -348,11 +372,62 @@ void light_Blink_L(void)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         }
-	usleep(1000000 / 2);
+	usleep(1000000 / 4);
+	
 	
 	
        
-    }
+    //}
+    
+}
+void light_Blink_L_on(void)
+{
+    
+    ws2811_return_t ret;
+    
+    colortemp1 = Light_F_L;
+    colortemp2 = Light_R_L;
+
+	Light_F_L = orange;
+	Light_R_L = orange;
+	Light_F_R = off;
+
+	Light_R_R = off;
+	
+	
+	matrix_render();
+	
+	if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
+        {
+            fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
+        }
+
+    
+}
+
+
+void light_Blink_R_on(void)
+{
+    
+    ws2811_return_t ret;
+    
+    colortemp1 = Light_F_R;
+    colortemp2 = Light_R_R;
+    
+	Light_F_R = orange;
+	Light_R_R = orange;
+
+	Light_F_L = off;
+
+	Light_R_L = off;
+	
+	matrix_render();
+	
+	if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
+        {
+            fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
+        }
+
     
 }
 

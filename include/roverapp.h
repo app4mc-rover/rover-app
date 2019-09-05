@@ -64,8 +64,7 @@ extern RoverLight r_light;
 
 /* Configuration struct */
 extern rover_config rover_config_obj;
-//light system
-extern RoverLight r_light;
+
 
 
 #endif /* ROVERAPP_H_ */

@@ -255,6 +255,17 @@ void *External_GPIO_Task(void *arg)
 				light_mode_shared = 5;
 				cout<< "it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
+			case 78:			// + key press
+			case 27:			// + german keybord
+				light_mode_shared = 11;
+				cout<< "it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+				
+			case 74:			// - key pres
+			case 53:			// - german key board
+				light_mode_shared = 22;
+				cout<< "it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
 			default:
 			//
 			break;	

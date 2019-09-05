@@ -30,146 +30,59 @@
 #include <pthread.h>
 #include <roverapp.h>
 
-/*
-void ExitAutomaticModes(void)
-{
-	switch(driving_mode.get())
-	{
-		case ACC:
-		case PARKING_LEFT:
-		case PARKING_RIGHT:
-		case BOOTH1:
-		case BOOTH2:
-			r_driving.stopRover(); //Stop the rover first.
-			driving_mode = MANUAL;
-			break;
-		default:
-			;// Do nothing
-	}
-}
+#define BLINK_INTERVAL 2000
 
-void ManualModeSet(void)
-{
-	switch(driving_mode.get())
-	{
-		case ACC:
-		case PARKING_LEFT:
-		case PARKING_RIGHT:
-		case BOOTH1:
-		case BOOTH2:
-			r_driving.stopRover(); //Stop the rover first.
-			break;
-		default:
-			;// Do nothing
-	}
+int blink_counter = 0;
+char blink_mode = '0'; // Initial
 
-	driving_mode = MANUAL;
-	keycommand_shared = 'F';
+
+void BlinkRight(void)
+{
+	switch (blink_mode)
+	{
+				
+		case '1':
+			if (blink_counter++ > BLINK_INTERVAL ) 
+			{
+			 blink_counter = 0;
+			 blink_mode = '0';
+			 r_light.off();
+			}
+			break;
+		case '0':
+			if (blink_counter++ > BLINK_INTERVAL )
+			{
+			 blink_mode = '1';
+			 r_light.Blink_R_on();
+			}
+			break;
+	}
 
 }
 
-void ParkingRightModeSet(void)
+void BlinkLeft(void)
 {
-	switch(driving_mode.get())
+	switch (blink_mode)
 	{
-		case ACC:
-		case MANUAL:
-		case BOOTH1:
-		case BOOTH2:
-			r_driving.stopRover(); //Stop the rover first.
+				
+		case '1':
+			if (blink_counter++ > BLINK_INTERVAL ) 
+			{
+			 blink_counter = 0;
+			 blink_mode = '0';
+			 r_light.off();
+			}
 			break;
-		default:
-			;// Do nothing
+		case '0':
+			if (blink_counter++ > BLINK_INTERVAL)
+			{
+			 blink_mode = '1';
+			 r_light.Blink_L_on();
+			}
+			break;
 	}
 
-	driving_mode = PARKING_RIGHT;
-	keycommand_shared = 'F';
-
 }
-
-void ParkingLeftModeSet(void)
-{
-	switch(driving_mode.get())
-	{
-		case ACC:
-		case MANUAL:
-		case BOOTH1:
-		case BOOTH2:
-			r_driving.stopRover(); //Stop the rover first.
-			break;
-		default:
-			;// Do nothing
-	}
-
-	driving_mode = PARKING_LEFT;
-	keycommand_shared = 'F';
-
-}
-
-void ACCModeSet(void)
-{
-
-	switch(driving_mode.get())
-	{
-		case PARKING_LEFT:
-		case PARKING_RIGHT:
-		case MANUAL:
-		case BOOTH1:
-		case BOOTH2:
-			r_driving.stopRover(); //Stop the rover first.
-			break;
-		default:
-			;// Do nothing
-	}
-
-	driving_mode = ACC;
-	keycommand_shared = 'F';
-}
-
-void BoothMode1Set(void)
-{
-
-	switch(driving_mode.get())
-	{
-		case PARKING_LEFT:
-		case PARKING_RIGHT:
-		case MANUAL:
-		case ACC:
-		case BOOTH2:
-			r_driving.stopRover(); //Stop the rover first.
-			break;
-		default:
-			;// Do nothing
-	}
-
-	driving_mode = BOOTH1;
-	keycommand_shared = 'F';
-}
-
-
-
-void BlinkMode(void)
-{
-
-	switch(light_mode.get())
-	{
-		case LIGHT_ON:
-		case LIGHT_OFF:
-		case LIGHT_BLINKR:
-		case LIGHT_BLINKL:
-		case LIGHT_BACKW:
-			r_driving.stopRover(); //Stop the rover first.
-			break;
-		case LIGHT_FLASH:
-		default:		
-			;// Do nothing
-	}
-
-	driving_mode = BOOTH2;
-	keycommand_shared = 'F';
-}
-*/
-
 
 void *Light_Task(void * arg)
 {
@@ -180,112 +93,57 @@ void *Light_Task(void * arg)
 	light_task_tmr.setPeriod(0.1);
 
 	int running = 1;
+	cout<< "LIGHT tASK IS RUNNING " << endl;
+	cout<< endl;
 	
 	char local_command = '5';
-
-	while (running)// && running_flag.get())
+	
+	while (running && running_flag.get())
 	{
 		light_task_tmr.recordStartTime();
 		light_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		local_command = keycommand_shared.get();
-		switch (local_command)
+		int a = light_mode_shared.get();
+		
+		switch (a)
 		{
-			/*case 'G':
+
+			case 0:
 				running = 0;
 				break;
-			case 'P':
-				ParkingLeftModeSet();
+			case 5 :
+				r_light.off();
+				cout<< "in light task ligh off selected " << endl;	
 				break;
-			case 'O':
-				ParkingRightModeSet();
+			case 8:
+				r_light.on();
+				blink_mode = 'I';
+				cout<< "in light task light on selected " << endl;	
 				break;
-			case 'W':
-				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.goForward();
+			case 2:
+				r_light.off();
+				r_light.BackW();
+				cout<< "in light task light bakw selected " << endl;	
 				break;
-			case 'D':
-				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.turnBackwardRight();
-				break;
-			case 'S':
-				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.goBackward();
-				break;
-			case 'A':
-				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.turnBackwardLeft();
-				break;
-			case 'Q':
-				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.turnForwardLeft();
-				break;
-			case 'E':
-				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.turnForwardRight();
-				break;
-			case 'K':  //turn right on spot
-				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.turnRight();
-				break;
-			case 'J': //turn left on spot
-				ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.turnLeft();
-				break;
-			case 'U':
-				//Calibration mode
-				break;
-			case 'R':
-				//Shutdown hook from web server
-				r_base.shutdown();
-				break;
-			case 'M':
-				//ACC mode set
-				ACCModeSet();
-				break;
-			case 'X':
-				//Manual mode set
-				ManualModeSet();
-				break;
-			case 'L':
-				//Booth mode (Demo 1) set
-				BoothMode1Set();
-				break;
-			case 'N':
-				//Booth mode (Demo 2) set
-				BoothMode2Set();
-				break;
-			case 'F':
-				if (driving_mode.get() == MANUAL)
-					r_driving.stopRover();
-				break;*/
-			case '0':
-				running = 0;
-				break;
-			case '5':
-					r_light.off();
-				break;
-			case '8':
-					r_light.on();
-				break;
-			case '2':
-					r_light.BackW();
-				break;
-			case '6':
-					r_light.Blink_R();
+			case 6:
+				r_light.off();
+				r_light.Blink_R();
+				cout<< "in light task Blink_R selected " << endl;	
 				break;	
-			case '4':
+			case 4:
+					r_light.off();
 					r_light.Blink_L();
-				break;
+			case 11:				// dim up
+					r_light.dim(255);
+					cout<< "in light task dim up selected " << endl;
+					//r_light.Blink_L();
+			case 22:					// dim down
+					r_light.dim(50);
+					//r_light.Blink_L();
+					cout<< "in light task dim down selected " << endl;
+					
+			break;
 		}
 		//Task content ends here -------------------------------------------------
 
@@ -307,7 +165,7 @@ void *Light_Task(void * arg)
 
 	}
 
-	r_light.~RoverLight(); 
+	//r_light.~RoverLight(); 
 
 	/* the function must return something - NULL will do */
 	return NULL;

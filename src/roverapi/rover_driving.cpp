@@ -13,7 +13,7 @@
  *
  */
 ///light system
-#include <roverapi/rover_light.hpp>
+//#include <roverapi/rover_light.hpp>
 
 #include <roverapi/rover_driving.hpp>
 #include <roverapi/basic_psys_rover.h>

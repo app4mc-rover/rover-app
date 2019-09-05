@@ -73,6 +73,9 @@ void light_BackW (void);
 void light_Blink_R(void);
 void light_Blink_L(void);
 void stop_blink(void);
+void light_Blink_R_on(void);
+void light_Blink_L_on(void);
+void light_dim(int);
 
 
 

@@ -217,7 +217,7 @@ int createThread(pthread_t * thread_to_create, void *(*thread_funct) (void *), c
 	}
 	else
 	{
-		pthread_setname_np(*thread_to_create, name); //If name is too long, this function silently fails.
+		pthread_setname_np(*thread_to_create, name); //If name is too long, this function silently fails.		
 	}
 
 	return 0;
@@ -319,9 +319,9 @@ int main()
 	}
 	CHECK_RET(ret);
 	// light system
-	ret = createThread(&light_thread, Light_Task, "LIGHTS");
+	ret = createThread(&light_thread, Light_Task, "light_system");
 	CHECK_RET(ret);
-	
+
 	ret = createThread(&displaysensors_thread, DisplaySensors_Task, "displaysensors");
 	CHECK_RET(ret);
 

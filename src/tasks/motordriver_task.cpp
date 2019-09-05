@@ -167,6 +167,7 @@ void BoothMode2Set(void)
 }
 
 
+
 void *MotorDriver_Task(void * arg)
 {
 	timing motordriver_task_tmr;
@@ -202,49 +203,49 @@ void *MotorDriver_Task(void * arg)
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.goForward();
-				r_light.on();
+				//r_light.on();
 				break;
 			case 'D':
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnBackwardRight();
-				r_light.Blink_R();
+				//r_light.Blink_L();
 				break;
 			case 'S':
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.goBackward();
-				r_light.BackW();
+				//r_light.BackW();
 				break;
 			case 'A':
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnBackwardLeft();
-				r_light.Blink_L();
+				//r_light.Blink_R();
 				break;
 			case 'Q':
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnForwardLeft();
-				r_light.Blink_L();
+				//r_light.Blink_R();
 				break;
 			case 'E':
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnForwardRight();
-				r_light.Blink_R();
+				//r_light.Blink_L();
 				break;
 			case 'K':  //turn right on spot
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnRight();
-				r_light.Blink_R();
+				//r_light.Blink_L();
 				break;
 			case 'J': //turn left on spot
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnLeft();
-				r_light.Blink_L();
+				//r_light.Blink_L();
 				break;
 			case 'U':
 				//Calibration mode
@@ -272,7 +273,7 @@ void *MotorDriver_Task(void * arg)
 			case 'F':
 				if (driving_mode.get() == MANUAL)
 					r_driving.stopRover();
-					r_light.off();
+					//r_light.off();
 				break;
 		}
 		
@@ -282,40 +283,54 @@ void *MotorDriver_Task(void * arg)
 			
 			case 0:
 				if (driving_mode.get() == MANUAL)
-					r_driving.stopRover();
 					r_light.off();
 				break;
 			case 5:
-					r_light.off();
-					cout<< "light task select  : "<< a <<endl;
+				r_light.off();
+				keycommand_shared.set('F');
+					
 				break;
 			case 8:
-					ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.goForward();
+				keycommand_shared.set('W');
+				//ExitAutomaticModes();
+				//r_driving.setSpeed(speed_shared.get());
+				//r_driving.goForward();
 				r_light.on();
-					cout<< "motor  task select  : "<< a <<endl;
+				
 				break;
 			case 2:
-					r_driving.setSpeed(speed_shared.get());
-				r_driving.goBackward();
+				keycommand_shared.set('S');
+				//ExitAutomaticModes();				
+				//r_driving.setSpeed(speed_shared.get());
+				//r_driving.goBackward();
 				r_light.BackW();
-					cout<< "light task select  : "<< a <<endl;
+					
 				break;
 			case 6:
-					ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.turnForwardRight();
-				r_light.Blink_R();
-					cout<< "light task select  : "<< a <<endl;
+				keycommand_shared.set('D');
+				//ExitAutomaticModes();
+				//r_driving.setSpeed(speed_shared.get());
+				//r_driving.turnForwardRight();
+				r_light.Blink_L();				
+				
 				break;	
 			case 4:
-					ExitAutomaticModes();
-				r_driving.setSpeed(speed_shared.get());
-				r_driving.turnForwardLeft();
-				r_light.Blink_L();
-					cout<< "light task select default" <<endl;
+				keycommand_shared.set('A');
+				//ExitAutomaticModes();
+				//r_driving.setSpeed(speed_shared.get());
+				//r_driving.turnForwardLeft();
+				r_light.Blink_R();				
 				break;
+						case 11:				// dim up
+					r_light.dim(255);
+					a=111;
+					//r_light.Blink_L();
+			case 22:					// dim down
+					r_light.dim(50);
+					//r_light.Blink_L();
+					a=222;
+					
+			break;
 				
 			
 		}

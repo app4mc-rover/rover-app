@@ -138,3 +138,46 @@ void rover::RoverLight::Blink_L(void)
     
 }
 
+void rover::RoverLight::Blink_R_on(void)
+{
+    
+    if (this->ROVERLIGHT_INIT_ != 1)
+    {
+        fprintf(stderr,"You havent initialized RoverLight. Use RoverLight::initialize() !\n");
+    }
+    else
+    {
+        light_Blink_R_on();        
+    }
+}
+
+
+void rover::RoverLight::Blink_L_on(void)
+{
+
+    if (this->ROVERLIGHT_INIT_ != 1)
+    {
+        fprintf(stderr,"You havent initialized RoverLight. Use RoverLight::initialize() !\n");
+    }
+    else
+    {    
+       light_Blink_L_on();       
+    }
+    
+}
+
+
+void rover::RoverLight::dim(int dimvalue)
+{
+
+    if (this->ROVERLIGHT_INIT_ != 1)
+    {
+        fprintf(stderr,"You havent initialized RoverLight. Use RoverLight::initialize() !\n");
+    }
+    else
+    {    
+       light_dim(dimvalue); 
+       fprintf(stderr,"dim is called from RoverLight object %d\n", dimvalue);      
+    }
+    
+}
