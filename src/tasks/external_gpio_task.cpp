@@ -87,7 +87,7 @@ int keyboardHandler (void)
 	{
 		perror("KeyboardMonitor can't open input device");
 		close(FileDevice);
-		return 0; ///////////////
+		return 666; ///////////////
 	}
 
 	//----- GET DEVICE VERSION -----
@@ -95,7 +95,7 @@ int keyboardHandler (void)
 	{
 		perror("KeyboardMonitor can't get version");
 		close(FileDevice);
-		return 0; ////////////
+		return 666; ////////////
 	}
 	//printf("Input driver version is %d.%d.%d\n", version >> 16, (version >> 8) & 0xff, version & 0xff);
 
@@ -113,9 +113,9 @@ int keyboardHandler (void)
 		if (ReadDevice < (int) sizeof(struct input_event))
 		{
 			//This should never happen
-			//perror("KeyboardMonitor error reading - keyboard lost?");
+			perror("KeyboardMonitor error reading - keyboard lost?");
 			close(FileDevice);
-			return 0; ////////////
+			return 666; ////////////
 		}
 		else
 		{
@@ -230,45 +230,49 @@ void *External_GPIO_Task(void *arg)
 		a = keyboardHandler();
 		cout<< "it receive------------------ : "<< a <<endl;
 		switch (a) {
+			case 0:
+				light_mode_shared = 0;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
 			case 72:
 			case 9:
 				light_mode_shared = 8;
-				cout<< "it select"<< light_mode_shared.get()<< "--"<<endl;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 80:
 			case 3:
 				light_mode_shared = 2;
-				cout<< "it select"<< light_mode_shared.get()<< "--"<<endl;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 77:
 			case 7:
 				light_mode_shared = 6;
-				cout<< "it select"<< light_mode_shared.get()<< "--"<<endl;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 75:
 			case 5:
 				light_mode_shared = 4;
-				cout<< "it select"<< light_mode_shared.get()<< "--"<<endl;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 76:
 			case 6:
 				light_mode_shared = 5;
-				cout<< "it select"<< light_mode_shared.get()<< "--"<<endl;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 78:			// + key press
 			case 27:			// + german keybord
 				light_mode_shared = 11;
-				cout<< "it select"<< light_mode_shared.get()<< "--"<<endl;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 				
 			case 74:			// - key pres
 			case 53:			// - german key board
 				light_mode_shared = 22;
-				cout<< "it select"<< light_mode_shared.get()<< "--"<<endl;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			default:
-			//
-			break;	
+				//
+				break;	
 			
 			}
 

@@ -57,6 +57,7 @@ namespace rover
 			 * @brief Flag to indicate light system initialization.
 			 */
 			int ROVERLIGHT_INIT_;
+			int dimValue;
 					
 
 		public:	
@@ -112,7 +113,15 @@ namespace rover
 			/**
 			 * @brief Commands the rover to stop blinking.
 			 */
-			void dim(int);
+			void dim(void);
+			/**
+			 * @brief Commands the rover to stop blinking.
+			 */
+			int dimget(void);
+			/**
+			 * @brief Commands the rover to stop blinking.
+			 */
+			void dimset(int);
 			};
 }
 

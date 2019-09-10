@@ -34,7 +34,21 @@
 
 int blink_counter = 0;
 char blink_mode = '0'; // Initial
+int dimTemp = 0xf0;
+int oldLightMode;
+int newLightMode; 
 
+enum LightState
+{
+		STATE_LIGHT_IDLE,
+		STATE_LIGHT_ON,
+		STATE_LIGHT_OFF,
+		STATE_LIGHT_BACKW,
+		STATE_LIGHT_BLINKR,
+		STATE_LIGHT_BLINKL,
+		STATE_LIGHT_DIMUP,
+		STATE_LIGHT_DIMDOWN
+	};
 
 void BlinkRight(void)
 {
@@ -92,58 +106,124 @@ void *Light_Task(void * arg)
 	light_task_tmr.setDeadline(0.1);
 	light_task_tmr.setPeriod(0.1);
 
-	int running = 1;
-	cout<< "LIGHT tASK IS RUNNING " << endl;
+
+	cout<< "LIGHT TASK IS RUNNING " << endl;
 	cout<< endl;
-	
 	char local_command = '5';
-	
-	while (running && running_flag.get())
+	LightState state = STATE_LIGHT_IDLE;
+	while (running_flag.get())
 	{
 		light_task_tmr.recordStartTime();
 		light_task_tmr.calculatePreviousSlackTime();
 
 		//Task content starts here -----------------------------------------------
-		int a = light_mode_shared.get();
 		
-		switch (a)
+		newLightMode = light_mode_shared.get();	
+		switch (state)
 		{
 
-			case 0:
-				running = 0;
+			case STATE_LIGHT_IDLE:
+				//KEY= 0; do notghing
+				if (newLightMode != oldLightMode) // each state shall be done just once per command push
+				{
+					switch (newLightMode)
+					{
+						case 0 : 
+							state = STATE_LIGHT_IDLE;
+							break;
+						case 5 : 
+							state = STATE_LIGHT_OFF;
+							break;
+						case 8 : 
+							state = STATE_LIGHT_ON;
+							break;
+						case 2 : 
+							state = STATE_LIGHT_BACKW;
+							break;
+						case 6 : 
+							state = STATE_LIGHT_BLINKR;
+							break;
+						case 4 : 
+							state = STATE_LIGHT_BLINKL;
+							break;
+						case 11 : 
+							state = STATE_LIGHT_DIMUP;
+							break;
+						case 22 : 
+							state = STATE_LIGHT_DIMDOWN;						
+							break;
+						}
+						
+						
+					oldLightMode = newLightMode; 
+				}
 				break;
-			case 5 :
-				r_light.off();
-				cout<< "in light task ligh off selected " << endl;	
+			case STATE_LIGHT_OFF : // off
+				//KEY= 5; 
+				r_light.off();				
+				state = STATE_LIGHT_IDLE;
 				break;
-			case 8:
-				r_light.on();
+			case STATE_LIGHT_ON: // on
+				//KEY= 8; 
+				r_light.dim();
 				blink_mode = 'I';
-				cout<< "in light task light on selected " << endl;	
+				state = STATE_LIGHT_IDLE;	
 				break;
-			case 2:
+			case STATE_LIGHT_BACKW: //backward
+				//KEY= 2; 
 				r_light.off();
-				r_light.BackW();
-				cout<< "in light task light bakw selected " << endl;	
+				r_light.BackW();				
+				state = STATE_LIGHT_IDLE;	
 				break;
-			case 6:
+			case STATE_LIGHT_BLINKR:  //blink right
+				//KEY= 6; 
 				r_light.off();
-				r_light.Blink_R();
-				cout<< "in light task Blink_R selected " << endl;	
+				r_light.Blink_R();				
+				if (newLightMode != 6) // the program wil continue blinking till another comand comes.
+				{
+					state = STATE_LIGHT_IDLE;	
+				}
 				break;	
-			case 4:
-					r_light.off();
-					r_light.Blink_L();
-			case 11:				// dim up
-					r_light.dim(255);
-					cout<< "in light task dim up selected " << endl;
-					//r_light.Blink_L();
-			case 22:					// dim down
-					r_light.dim(50);
-					//r_light.Blink_L();
-					cout<< "in light task dim down selected " << endl;
-					
-			break;
+			case STATE_LIGHT_BLINKL:  // blink left
+				//KEY= 4; 
+				r_light.off();
+				r_light.Blink_L();
+				if (newLightMode != 4) // the program wil continue blinking till another comand comes.
+				{
+					state = STATE_LIGHT_IDLE;	
+				}
+				break;
+			case STATE_LIGHT_DIMDOWN:  // dime down
+				//KEY= 22; 
+				dimTemp = r_light.dimget() - 20;
+				if (dimTemp < 15)  // down threshold
+				{
+					dimTemp = 15;
+					}			
+				r_light.dimset(dimTemp);				
+				cout<< "in light task dim down to :  " << r_light.dimget() << endl;
+				r_light.dim();
+				if (newLightMode != 22) // dim down continuesly
+				{
+					state = STATE_LIGHT_IDLE;	
+				}								
+				break;
+			case STATE_LIGHT_DIMUP:  //dime up
+				//KEY= 11; 
+				dimTemp = r_light.dimget() + 20;			
+				if (dimTemp > 255) // up threshold
+				{
+					dimTemp = 255;
+					}
+				
+				r_light.dimset(dimTemp);
+				cout<< "in light task dim up to :  " << r_light.dimget() << endl;
+				r_light.dim();
+				if (newLightMode != 11) //dim up continuesly
+				{
+					state = STATE_LIGHT_IDLE;	
+				}
+				break;
 		}
 		//Task content ends here -------------------------------------------------
 
@@ -165,7 +245,7 @@ void *Light_Task(void * arg)
 
 	}
 
-	//r_light.~RoverLight(); 
+	
 
 	/* the function must return something - NULL will do */
 	return NULL;

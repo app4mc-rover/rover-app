@@ -277,7 +277,7 @@ void *MotorDriver_Task(void * arg)
 				break;
 		}
 		
-		int a = light_mode_shared.get();
+		/*int a = light_mode_shared.get();
 		switch (a)
 		{
 			
@@ -321,19 +321,18 @@ void *MotorDriver_Task(void * arg)
 				//r_driving.turnForwardLeft();
 				r_light.Blink_R();				
 				break;
-						case 11:				// dim up
-					r_light.dim(255);
+			case 11:				// dim up
+					r_light.dimset(255);
+					r_light.dim();
 					a=111;
-					//r_light.Blink_L();
+					break;
 			case 22:					// dim down
-					r_light.dim(50);
-					//r_light.Blink_L();
-					a=222;
-					
-			break;
-				
-			
-		}
+					r_light.dimset(50);
+					r_light.dim();					
+					a=222;					
+			break;		
+		}*/
+		
 		//Task content ends here -------------------------------------------------
 
 		motordriver_task_tmr.recordEndTime();

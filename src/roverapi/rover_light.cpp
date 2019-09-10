@@ -27,6 +27,7 @@ using namespace std;
 rover::RoverLight::RoverLight()
 {
     ROVERLIGHT_INIT_ = 0;
+    dimValue = 0xf0;
 }
 
 rover::RoverLight::~RoverLight()
@@ -167,7 +168,7 @@ void rover::RoverLight::Blink_L_on(void)
 }
 
 
-void rover::RoverLight::dim(int dimvalue)
+void rover::RoverLight::dim(void)
 {
 
     if (this->ROVERLIGHT_INIT_ != 1)
@@ -176,8 +177,22 @@ void rover::RoverLight::dim(int dimvalue)
     }
     else
     {    
-       light_dim(dimvalue); 
-       fprintf(stderr,"dim is called from RoverLight object %d\n", dimvalue);      
+       light_dim(dimValue); 
+       fprintf(stderr,"dim is called from RoverLight object %d\n", dimValue);      
     }
+    
+}
+
+int rover::RoverLight::dimget(void)
+{
+
+    return dimValue;
+    
+}
+
+void rover::RoverLight::dimset(int dim)
+{
+
+    dimValue = dim;
     
 }

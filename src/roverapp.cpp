@@ -85,7 +85,6 @@ pthread_t ultrasonic_grove_thread;
 pthread_t ultrasonic_sr04_front_thread;
 pthread_t ultrasonic_sr04_back_thread;
 pthread_t temperature_thread;
-//	pthread_t keycommand_input_thread;
 pthread_t motordriver_thread;
 pthread_t infrared_thread;
 pthread_t displaysensors_thread;
