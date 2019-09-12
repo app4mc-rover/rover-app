@@ -54,7 +54,6 @@
 #include <tasks/accelerometer_task.h>
 #include <tasks/mqtt_publish_task.h>
 #include <tasks/mqtt_subscribe_task.h>
-#include <tasks/light_task.h>
 
 
 
@@ -77,7 +76,6 @@ RoverBase r_base;
 RoverDriving r_driving = RoverDriving();
 RoverDisplay my_display;
 RoverUtils r_utils;
-RoverLight r_light = RoverLight();
 
 RoverMQTTCommand *rover_mqtt;
 /* Threads */
@@ -85,6 +83,7 @@ pthread_t ultrasonic_grove_thread;
 pthread_t ultrasonic_sr04_front_thread;
 pthread_t ultrasonic_sr04_back_thread;
 pthread_t temperature_thread;
+//	pthread_t keycommand_input_thread;
 pthread_t motordriver_thread;
 pthread_t infrared_thread;
 pthread_t displaysensors_thread;
@@ -104,9 +103,6 @@ pthread_t socket_server_thread;
 pthread_t accelerometer_thread;
 pthread_t mqtt_publish_thread;
 pthread_t mqtt_subscribe_thread;
-//light system
-pthread_t light_thread;
-
 
 /* Timing interfaces for thread measurement */
 timing_interface compass_task_ti;
@@ -135,8 +131,6 @@ timing_interface socket_server_task_ti;
 timing_interface accelerometer_task_ti;
 timing_interface mqtt_publish_task_ti;
 timing_interface mqtt_subscribe_task_ti;
-//light system
-timing_interface light_task_ti;
 
 //Shared data between threads
 
@@ -156,11 +150,6 @@ SharedData<int> display_use_elsewhere_shared;
 SharedData<int> display_mode_shared;
 /* For proper termination */
 SharedData<int> running_flag;
-//light system
-SharedData<int> light_mode_shared; // select lighting mode
-SharedData<int> blink_mode; // select lighting mode
-//keyboard
-SharedData<char>  keyboard_shared;
 
 AccelerometerData_t accelerometerdata_shared;
 pthread_mutex_t accelerometerdata_lock;
@@ -216,7 +205,7 @@ int createThread(pthread_t * thread_to_create, void *(*thread_funct) (void *), c
 	}
 	else
 	{
-		pthread_setname_np(*thread_to_create, name); //If name is too long, this function silently fails.		
+		pthread_setname_np(*thread_to_create, name); //If name is too long, this function silently fails.
 	}
 
 	return 0;
@@ -248,8 +237,6 @@ void exitHandler(int dummy)
 	joinThread(&accelerometer_thread);
 	joinThread(&mqtt_publish_thread);
 	joinThread(&mqtt_subscribe_thread);
-	// light system
-	joinThread(&light_thread);
 
 	main_running_flag = 0;
 	return;
@@ -281,8 +268,6 @@ int main()
 	r_base.initialize();
 	r_driving.initialize();
 	my_display.initialize();
-	//light system
-	r_light.initialize();
 
 
 	/* Add signals to exit threads properly */
@@ -296,8 +281,6 @@ int main()
 	running_flag = 1;
 	main_running_flag = 1;
 	keycommand_shared = 'F';
-	//keyboard
-	keyboard_shared = 'F';
 
 	//Initialize mutexes
 	pthread_mutex_init(&display_lock, NULL);
@@ -316,9 +299,6 @@ int main()
 	{
 		ret = createThread(&ultrasonic_sr04_back_thread, Ultrasonic_Sensor_SR04_Back_Task, "US_sr04_back");
 	}
-	CHECK_RET(ret);
-	// light system
-	ret = createThread(&light_thread, Light_Task, "light_system");
 	CHECK_RET(ret);
 
 	ret = createThread(&displaysensors_thread, DisplaySensors_Task, "displaysensors");
@@ -378,7 +358,6 @@ int main()
 	ret = createThread(&mqtt_subscribe_thread, MQTT_Subscribe_Task, "MQTTS");
 	CHECK_RET(ret);
 
-	
 
 	//Core pinning/mapping
 /*	placeAThreadToCore (main_thread, 1);

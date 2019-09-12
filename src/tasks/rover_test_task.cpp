@@ -12,12 +12,12 @@
 
 void say(char *text){
    char buffer[1024];
-	int a=0;
+
    strcpy(buffer,"flite -voice rms -t \"");
    strcat(buffer, text);
    strcat(buffer,"\"");
 
-   a = system(buffer);
+   system(buffer);
 }
 
 void autopark() {
@@ -59,8 +59,6 @@ void getDistanceTrain(int channel,int rounds){
 void *Rover_Test_Task(void *unused)
 {
 	CollectThreadName((char*)"Rover_Test_Task");
-	cout<< "TEST TASK IS RUNNING " << endl;
-	cout<< endl;
 
 	int running = 1;
 	init();

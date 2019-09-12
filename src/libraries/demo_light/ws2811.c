@@ -42,15 +42,15 @@
 #include <linux/spi/spidev.h>
 #include <time.h>
 
-#include <libraries/lightsys/mailbox.h>
-#include <libraries/lightsys/clk.h>
-#include <libraries/lightsys/gpio.h>
-#include <libraries/lightsys/dma.h>
-#include <libraries/lightsys/pwm.h>
-#include <libraries/lightsys/pcm.h>
-#include <libraries/lightsys/rpihw.h>
+#include <libraries/demo_light/mailbox.h>
+#include <libraries/demo_light/clk.h>
+#include <libraries/demo_light/gpio.h>
+#include <libraries/demo_light/dma.h>
+#include <libraries/demo_light/pwm.h>
+#include <libraries/demo_light/pcm.h>
+#include <libraries/demo_light/rpihw.h>
 
-#include <libraries/lightsys/ws2811.h>
+#include <libraries/demo_light/ws2811.h>
 
 
 #define BUS_TO_PHYS(x)                           ((x)&~0xC0000000)

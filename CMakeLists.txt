@@ -102,12 +102,6 @@ add_library (timing SHARED
   ${CUSTOM_LIBS_DIR}/timing/timing.cpp)
 add_library (config_reader SHARED
   ${CUSTOM_LIBS_DIR}/config_reader/config_reader.cpp)
-###light system
-file (GLOB_RECURSE LIGHT_LIB
-  ${CUSTOM_LIBS_DIR}/lightsys/*.c
-  ${CUSTOM_LIBS_DIR}/lightsys/*.cpp
-	)
-add_library (lightsys_lib SHARED ${LIGHT_LIB})
 
 #Add tasks
 #Add all files to a variable ROVERAPP_TASK_FILES
@@ -148,11 +142,8 @@ target_link_libraries(roverapi paho-mqtt3as)
 target_link_libraries(roverapi paho-mqtt3c)
 target_link_libraries(roverapi paho-mqtt3cs)
 target_link_libraries(roverapi jsoncpp)
-###light system
-target_link_libraries (roverapi lightsys_lib)
 
 target_link_libraries (roverapi roverappdrivers)
-
 
 #
 #  LINKING TO ROVER TASKS
@@ -185,8 +176,6 @@ target_link_libraries(roverapptasks status_library)
 target_link_libraries(roverapptasks pthread_monitoring)
 target_link_libraries(roverapptasks timing)
 target_link_libraries(roverapptasks config_reader)
-###light system
-target_link_libraries(roverapptasks lightsys_lib)
 
 #Link api
 target_link_libraries (roverapptasks roverapi)
@@ -211,8 +200,6 @@ target_link_libraries(roverapp status_library)
 target_link_libraries(roverapp pthread_monitoring)
 target_link_libraries(roverapp timing)
 target_link_libraries(roverapp config_reader)
-###light system
-target_link_libraries(roverapp lightsys_lib)
 
 #Link tasks
 target_link_libraries(roverapp roverapptasks)
@@ -223,9 +210,6 @@ target_link_libraries(roverapp roverappdrivers)
 #
 # EXAMPLES
 #
-###light system
-add_executable(light_demo ${CMAKE_SOURCE_DIR}/src/examples/light_demo.cpp)
-target_link_libraries (light_demo roverapi)
 
 add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/display_control.cpp)
 target_link_libraries (display_control roverapi)
@@ -254,8 +238,6 @@ target_link_libraries (mqtt_publisher roverapi)
 add_executable(mqtt_subscriber ${CMAKE_SOURCE_DIR}/src/examples/mqtt_subscriber.cpp)
 target_link_libraries (mqtt_subscriber roverapi)
 
-
-
 #
 # INSTALLING
 #
@@ -270,8 +252,6 @@ install(
     config_reader
     pthread_monitoring
     timing pthread_distribution
-###light system    
-    lightsys_lib
   PUBLIC_HEADER
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib

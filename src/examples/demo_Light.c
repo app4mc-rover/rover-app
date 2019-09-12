@@ -29,7 +29,8 @@
  */
 
 
-/*
+//static char VERSION[] = "XX.YY.ZZ";
+
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,14 +45,15 @@
 #include <getopt.h>
 
 
-//#include "clk.h"
-//#include "gpio.h"
-#include "dma.h"
-#include "pwm.h"
-#include "version.h"
-#include "ws2811.h"*/
-#include <roverapi/lightsys.h>
+#include <libraries/demo_light/clk.h>
+#include <libraries/demo_light/gpio.h>
+#include <libraries/demo_light/dma.h>
+#include <libraries/demo_light/pwm.h>
+#include <libraries/demo_light/version.h>
+#include <libraries/demo_light/ws2811.h>
 
+
+#define ARRAY_SIZE(stuff)       (sizeof(stuff) / sizeof(stuff[0]))
 
 // defaults for cmdline options
 #define TARGET_FREQ             WS2811_TARGET_FREQ
@@ -61,9 +63,6 @@
 #define STRIP_TYPE              WS2811_STRIP_GBR		// WS2812/SK6812RGB integrated chip+leds
 //#define STRIP_TYPE            SK6812_STRIP_RGBW		// SK6812RGBW (NOT SK6812RGB)
 
-
-#define ARRAY_SIZE(stuff)       (sizeof(stuff) / sizeof(stuff[0]))
-
 #define WIDTH                   4	/// number of lights
 #define HEIGHT                  1	/// in case of light matrix: number of lights rows
 #define LED_COUNT               (WIDTH * HEIGHT)
@@ -72,8 +71,7 @@ int width = WIDTH;
 int height = HEIGHT;
 int led_count = LED_COUNT;
 
-static uint8_t blink = 0;
-//static uint8_t running = 1;		/// Key to stop the lighting loops
+int clear_on_exit = 0;
 
 ws2811_t ledstring =
 {
@@ -102,29 +100,13 @@ ws2811_t ledstring =
 
 ws2811_led_t *matrix;
 
-/// Define colors
-ws2811_led_t	blue	= 0xf00000;
-ws2811_led_t	red 	= 0x00f000;
-ws2811_led_t	red_lite= 0x002000;
-ws2811_led_t	green 	= 0x0000f0;
-ws2811_led_t	white 	= 0xf0f0f0;
-ws2811_led_t	yellow	= 0x00f090;
-ws2811_led_t	orange 	= 0x00a020;
-ws2811_led_t	purple 	= 0x50a000;
-ws2811_led_t	pink 	= 0x20c020;
-ws2811_led_t	off 	= 0x000000;
-/// define temps for saving colors
-ws2811_led_t	colortemp1= 0;
-ws2811_led_t	colortemp2= 0;
-
-int clear_on_exit = 0;
-
 /// define each light position regarding its position in series connection
 #define	Light_F_R	matrix[0] 	///Front Right light
 #define	Light_F_L	matrix[1]	///Front Left light
-#define	Light_R_R	matrix[3]	///Rear Right light
-#define	Light_R_L	matrix[2]	///Rear Left light
+#define	Light_R_R	matrix[2]	///Rear Right light
+#define	Light_R_L	matrix[3]	///Rear Left light
 
+static uint8_t running = 1;		/// Key to stop the lighting loops
 
 /// assign the matrix values to final  light data matrix
 void matrix_render(void)
@@ -154,57 +136,22 @@ void matrix_clear(void)
     }
 }
 
-
-/// to stop lighting loops by keyboard
-static void ctrl_c_handler(int signum)
-{
-	(void)(signum);
-    blink = 0;
-}
-
-void stop_blink()
-{	
-    blink = 0;
-}
-
-void setup_handlers(void)//static void setup_handlers(void)
-{
-    struct sigaction sa =
-    {
-        .sa_handler = ctrl_c_handler,
-    };
-
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGTERM, &sa, NULL);
-} 
-
-/*
- *
- * Application API Functions
- *
- */
+/// Define colors
+ws2811_led_t	blue	= 0xf00000;
+ws2811_led_t	red 	= 0x00f000;
+ws2811_led_t	red_lite= 0x002000;
+ws2811_led_t	green 	= 0x0000f0;
+ws2811_led_t	white 	= 0xf0f0f0;
+ws2811_led_t	yellow	= 0x00f090;
+ws2811_led_t	orange 	= 0x00a020;
+ws2811_led_t	purple 	= 0x50a000;
+ws2811_led_t	pink 	= 0x20c020;
+ws2811_led_t	off 	= 0x000000;
+/// define temps for saving colors
+ws2811_led_t	colortemp1= 0;
+ws2811_led_t	colortemp2= 0;
 
 
-/**
- * Allocate and initialize memory, buffers, pages, PWM, DMA, and GPIO.
- *
- * @param    ws2811  ws2811 instance pointer.
- *
- * @returns  0 on success, -1 otherwise.
- */
-
-ws2811_return_t initial(void)
-{
-    ws2811_return_t ret;
-    matrix = malloc(sizeof(ws2811_led_t) * width * height);
-    setup_handlers();
-
-    if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
-    {
-        fprintf(stderr, "ws2811_init failed: %s\n", ws2811_get_return_t_str(ret));
-	return ret;
-    }
-}
 
 /// function to turn on the lights
 void light_on(void)
@@ -215,36 +162,6 @@ void light_on(void)
 	Light_F_L = white;
 	Light_R_R = red_lite;
 	Light_R_L = red_lite;
-	matrix_render();
-	
-        if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
-        {
-            fprintf(stderr, "ws2811_render_light_on failed: %s\n", ws2811_get_return_t_str(ret));
-           
-        }
-            
-}
-
-
-/// function to dim the lights
-void light_dim(int dim)
-{
-	ws2811_return_t ret;
-	
-	
-	ws2811_led_t	Led_B	= dim << 16;
-	fprintf(stderr, "ws2811_render_light_on failed: %X\n", Led_B);
-	ws2811_led_t	Led_R	= dim << 8;
-	fprintf(stderr, "ws2811_render_light_on failed: %X\n", Led_R);
-	ws2811_led_t	Led_G	= dim;
-	fprintf(stderr, "ws2811_render_light_on failed: %X\n", Led_G);
-	ws2811_led_t	Led_dim = Led_B | Led_R | Led_G;
-	fprintf(stderr, "ws2811_render_light_on failed: %X\n", Led_dim);
-	ws2811_led_t	red_dim= dim << 8;
-	Light_F_R = Led_dim;
-	Light_F_L = Led_dim;
-	Light_R_R = red_dim;
-	Light_R_L = red_dim;
 	matrix_render();
 	
         if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
@@ -296,29 +213,37 @@ void light_BackW (void)
     
 }
 
-
+/// to stop lighting loops by keyboard
+static void ctrl_c_handler(int signum)
+{
+	(void)(signum);
+    running = 0;
+}
 
 
 void light_Blink_R(void)
 {
     
     ws2811_return_t ret;
-
     
     // save the last colors before blinking
     colortemp1 = Light_F_R;
     colortemp2 = Light_R_R;
-    
+    running = 1;
+    for(int i=0;i<10;i++)
+    {
+    	if (!running) break;
 	Light_F_R = orange;
+	//Light_F_L = off;
 	Light_R_R = orange;
-	
+	//Light_R_L = off;
 	matrix_render();
 	
 	if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         }
-	usleep(1000000 / 4);
+	usleep(1000000 / 2);
 		
 	Light_F_R = colortemp1;
 	//Light_F_L = off;
@@ -330,10 +255,16 @@ void light_Blink_R(void)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         }
-	usleep(1000000 / 4);
+	usleep(1000000 / 2);
 	
-
-    //}
+	
+/*        if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
+        {
+            fprintf(stderr, "ws2811_render_light_blink failed: %s\n", ws2811_get_return_t_str(ret));
+        }
+	
+	if (!right_running) break;*/
+    }
     
 }
 
@@ -346,12 +277,10 @@ void light_Blink_L(void)
     // save the last colors in temps
     colortemp1 = Light_F_L;
     colortemp2 = Light_R_L;
-    //running = 1;
-    
-    blink = 1;
-    //for(int i=0;i<10;i++)//while(blink_mode)//
-   // {
-    	//if (!blink) break;
+    running = 1;
+      for(int i=0;i<10;i++)
+    {
+    	if (!running) break;
 	Light_F_L = orange;
 	Light_R_L = orange;
 	
@@ -361,7 +290,7 @@ void light_Blink_L(void)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         }
-	usleep(1000000 / 4);
+	usleep(1000000 / 2);
 		
 	Light_F_L = colortemp1;
 	Light_R_L = colortemp2;
@@ -372,63 +301,64 @@ void light_Blink_L(void)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         }
-	usleep(1000000 / 4);
+	usleep(1000000 / 2);
 	
 	
-	
-       
-    //}
-    
-}
-void light_Blink_L_on(void)
-{
-    
-    ws2811_return_t ret;
-    
-    colortemp1 = Light_F_L;
-    colortemp2 = Light_R_L;
-
-	Light_F_L = orange;
-	Light_R_L = orange;
-	Light_F_R = off;
-
-	Light_R_R = off;
-	
-	
-	matrix_render();
-	
-	if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
+        /*if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
         {
-            fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
+            fprintf(stderr, "ws2811_render_light_blink failed: %s\n", ws2811_get_return_t_str(ret));
         }
-
+	
+	if (!left_running) break;*/
+    }
     
 }
 
 
-void light_Blink_R_on(void)
+static void setup_handlers(void)
 {
-    
+    struct sigaction sa =
+    {
+        .sa_handler = ctrl_c_handler,
+    };
+
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGTERM, &sa, NULL);
+} 
+
+
+
+int main()//int main(int argc, char *argv[])
+{
     ws2811_return_t ret;
-    
-    colortemp1 = Light_F_R;
-    colortemp2 = Light_R_R;
-    
-	Light_F_R = orange;
-	Light_R_R = orange;
 
-	Light_F_L = off;
+    matrix = malloc(sizeof(ws2811_led_t) * width * height);
 
-	Light_R_L = off;
+    setup_handlers();
+
+    if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
+    {
+        fprintf(stderr, "ws2811_init failed: %s\n", ws2811_get_return_t_str(ret));
+        return ret;
+    }
+
+	fprintf(stderr, "Lights on for 3 Sec.\n");
+	light_on();	
+	usleep(3000000);
+	fprintf(stderr, "Lights turn right for 10 Sec. Ctrl+C to finish this step.\n");
+	light_Blink_R();
+	fprintf(stderr, "Lights turn left for 10 Sec. Ctrl+C to finish this step.\n");
+	light_Blink_L();
+	fprintf(stderr, "Lights backward for 3 Sec.\n");
+	light_BackW();
+	usleep(3000000);
+	fprintf(stderr, "Lights off\n");
+	light_off();
+	fprintf(stderr, "THE END.\n");
 	
-	matrix_render();
-	
-	if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
-        {
-            fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
-        }
 
-    
+    ws2811_fini(&ledstring);
+
+    printf ("\n");
+    return ret;
 }
-
-

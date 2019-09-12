@@ -38,7 +38,7 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 
-#include <libraries/lightsys/dma.h>
+#include <libraries/demo_light/dma.h>
 
 
 // DMA address mapping by DMA number index

@@ -30,9 +30,9 @@
 
 #include <stdint.h>
 
-#include <libraries/lightsys/ws2811.h>
+#include <libraries/demo_light/ws2811.h>
 
-#include <libraries/lightsys/pwm.h>
+#include <libraries/demo_light/pwm.h>
 
 
 // Mapping of Pin to alternate function for PWM channel 0

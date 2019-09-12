@@ -40,7 +40,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <sys/sysmacros.h>
 #include <sys/stat.h>
 
-#include <libraries/lightsys/mailbox.h>
+#include <libraries/demo_light/mailbox.h>
 
 
 void *mapmem(uint32_t base, uint32_t size, const char *mem_dev) {
