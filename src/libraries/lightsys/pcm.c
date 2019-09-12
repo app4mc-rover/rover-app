@@ -30,7 +30,7 @@
 
 
 #include <stdint.h>
-#include <libraries/demo_light/pcm.h>
+#include <libraries/lightsys/pcm.h>
 
 
 // Mapping of Pin to alternate function for PCM_CLK

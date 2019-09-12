@@ -1,5 +1,5 @@
 /*
- * rpihw.h
+ * lightsys.h
  *
  * Copyright (c) 2014 Jeremy Garff <jer @ jers.net>
  *
@@ -28,24 +28,61 @@
  */
 
 
-#ifndef __RPIHW_H__
-#define __RPIHW_H__
+#ifndef __lightsys_H__
+#define __lightsys_H__
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
-typedef struct {
-    uint32_t type;
-#define RPI_HWVER_TYPE_UNKNOWN                   0
-#define RPI_HWVER_TYPE_PI1                       1
-#define RPI_HWVER_TYPE_PI2                       2
-#define RPI_HWVER_TYPE_PI4                       3
-    uint32_t hwver;
-    uint32_t periph_base;
-    uint32_t videocore_base;
-    char *desc;
-} rpi_hw_t;
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <getopt.h>
+
+#include <libraries/lightsys/dma.h>
+#include <libraries/lightsys/pwm.h>
+#include <libraries/lightsys/version.h>
+#include <libraries/lightsys/ws2811.h>
+
+extern int blink_count;
+extern int width;
+extern int height;
+extern int led_count;
+extern ws2811_t ledstring;
 
 
-const rpi_hw_t *rpi_hw_detect(void);
+ws2811_led_t *matrix;
+
+static void ctrl_c_handler(int signum);
+void setup_handlers(void);
+ws2811_return_t initial(void);
+//void lightsys_initial(void);
+void light_on(void);
+void light_off(void);
+void light_BackW (void);
+void light_Blink_R(void);
+void light_Blink_L(void);
+void stop_blink(void);
+void light_Blink_R_on(void);
+void light_Blink_L_on(void);
+void light_dim(int);
 
 
-#endif /* __RPIHW_H__ */
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __lightsys_H__ */
