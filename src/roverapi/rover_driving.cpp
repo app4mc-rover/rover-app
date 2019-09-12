@@ -12,6 +12,8 @@
  *    M.Ozcelikors <mozcelikors@gmail.com>, created API 17.11.2017
  *
  */
+///light system
+//#include <roverapi/rover_light.hpp>
 
 #include <roverapi/rover_driving.hpp>
 #include <roverapi/basic_psys_rover.h>
@@ -74,8 +76,7 @@ void rover::RoverDriving::initialize (void)
 }
 
 
-void
-rover::RoverDriving::differentialDrive( const float angular_speed , const float linear_speed )
+void rover::RoverDriving::differentialDrive( const float angular_speed , const float linear_speed )
 {
     if (this->ROVERDRIVING_INIT_ != 1)
     {
@@ -98,6 +99,9 @@ void rover::RoverDriving::turnForwardRight (void)
     else
     {
         turn(FORWARD, LEFT, this->SPEED);
+        
+        
+        
     }
 }
 
@@ -110,6 +114,7 @@ void rover::RoverDriving::turnForwardLeft (void)
     else
     {
         turn(FORWARD, RIGHT, this->SPEED);
+        
     }
 }
 
@@ -122,6 +127,8 @@ void rover::RoverDriving::turnBackwardRight (void)
     else
     {
         turn(BACKWARD, LEFT, this->SPEED);
+        
+        
     }
 }
 
@@ -134,6 +141,8 @@ void rover::RoverDriving::turnBackwardLeft (void)
     else
     {
         turn(BACKWARD, RIGHT, this->SPEED);
+        
+        
     }
 }
 
@@ -146,6 +155,8 @@ void rover::RoverDriving::turnLeft (void)
     else
     {
         turnOnSpot(FORWARD, LEFT, this->SPEED);
+        
+        
     }
 }
 
@@ -158,6 +169,8 @@ void rover::RoverDriving::turnRight (void)
     else
     {
         turnOnSpot(FORWARD, RIGHT, this->SPEED);
+        
+        
     }
 }
 
@@ -170,6 +183,8 @@ void rover::RoverDriving::goForward (void)
     else
     {
         go(FORWARD, this->SPEED);
+        
+        
     }
 }
 
@@ -182,6 +197,8 @@ void rover::RoverDriving::goBackward (void)
     else
     {
         go(BACKWARD, this->SPEED);
+        
+        
     }
 }
 
@@ -194,5 +211,7 @@ void rover::RoverDriving::stopRover (void)
     else
     {
         stop();
+        
+       
     }
 }
