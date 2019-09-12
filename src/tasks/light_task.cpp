@@ -47,7 +47,10 @@ enum LightState
 		STATE_LIGHT_BLINKR,
 		STATE_LIGHT_BLINKL,
 		STATE_LIGHT_DIMUP,
-		STATE_LIGHT_DIMDOWN
+		STATE_LIGHT_DIMDOWN,
+		STATE_LIGHT_AUTO,
+		STATE_LIGHT_MAN,
+		
 	};
 
 void BlinkRight(void)
@@ -106,8 +109,8 @@ void *Light_Task(void * arg)
 	light_task_tmr.setDeadline(0.1);
 	light_task_tmr.setPeriod(0.1);
 
-
-	cout<< "LIGHT TASK IS RUNNING " << endl;
+	r_light.autoLight = false;
+	cout<< "LIGHT TASK IS RUNNING IN MANUAL " << endl;
 	cout<< endl;
 	char local_command = '5';
 	LightState state = STATE_LIGHT_IDLE;
@@ -152,6 +155,12 @@ void *Light_Task(void * arg)
 						case 22 : 
 							state = STATE_LIGHT_DIMDOWN;						
 							break;
+						case 10 : 
+							state = STATE_LIGHT_AUTO;						
+							break;
+						case 20 : 
+							state = STATE_LIGHT_MAN;						
+						break;
 						}
 						
 						
@@ -166,7 +175,6 @@ void *Light_Task(void * arg)
 			case STATE_LIGHT_ON: // on
 				//KEY= 8; 
 				r_light.dim();
-				blink_mode = 'I';
 				state = STATE_LIGHT_IDLE;	
 				break;
 			case STATE_LIGHT_BACKW: //backward
@@ -179,7 +187,7 @@ void *Light_Task(void * arg)
 				//KEY= 6; 
 				r_light.off();
 				r_light.Blink_R();				
-				if (newLightMode != 6) // the program wil continue blinking till another comand comes.
+				if (newLightMode != 6) // the program will continue blinking till another comand comes.
 				{
 					state = STATE_LIGHT_IDLE;	
 				}
@@ -188,7 +196,7 @@ void *Light_Task(void * arg)
 				//KEY= 4; 
 				r_light.off();
 				r_light.Blink_L();
-				if (newLightMode != 4) // the program wil continue blinking till another comand comes.
+				if (newLightMode != 4) // the program will continue blinking till another comand comes.
 				{
 					state = STATE_LIGHT_IDLE;	
 				}
@@ -202,8 +210,8 @@ void *Light_Task(void * arg)
 					}			
 				r_light.dimset(dimTemp);				
 				cout<< "in light task dim down to :  " << r_light.dimget() << endl;
-				r_light.dim();
-				if (newLightMode != 22) // dim down continuesly
+				r_light.dim();	
+				if ((newLightMode != 22) || (r_light.dimget() >= 255)) // dim down continuesly
 				{
 					state = STATE_LIGHT_IDLE;	
 				}								
@@ -218,11 +226,21 @@ void *Light_Task(void * arg)
 				
 				r_light.dimset(dimTemp);
 				cout<< "in light task dim up to :  " << r_light.dimget() << endl;
-				r_light.dim();
-				if (newLightMode != 11) //dim up continuesly
+				r_light.dim();	
+				if ((newLightMode != 11) || (r_light.dimget() >= 255) ) //dim up continuesly
 				{
 					state = STATE_LIGHT_IDLE;	
 				}
+				break;
+			case STATE_LIGHT_AUTO:  //AUTO MANUAL 
+				r_light.autoLight = true;
+				r_light.autoLight ? cout<< "Lights are in AUTO" << endl : cout<< "Lights are in MANUAL" << endl;
+				state = STATE_LIGHT_IDLE;
+				break;
+			case STATE_LIGHT_MAN:  //AUTO MANUAL 
+				r_light.autoLight = false;
+				r_light.autoLight ? cout<< "Lights are in AUTO" << endl : cout<< "Lights are in MANUAL" << endl;
+				state = STATE_LIGHT_IDLE;
 				break;
 		}
 		//Task content ends here -------------------------------------------------

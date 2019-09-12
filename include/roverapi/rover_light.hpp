@@ -61,6 +61,7 @@ namespace rover
 					
 
 		public:	
+			bool autoLight;
 			/**
 			 * @brief Constructor for RoverLight class.
 			 */

@@ -203,49 +203,49 @@ void *MotorDriver_Task(void * arg)
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.goForward();
-				//r_light.on();
+				if (r_light.autoLight) light_mode_shared = 8 ;
 				break;
 			case 'D':
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnBackwardRight();
-				//r_light.Blink_L();
+				if (r_light.autoLight) light_mode_shared = 4 ;
 				break;
 			case 'S':
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.goBackward();
-				//r_light.BackW();
+				if (r_light.autoLight) light_mode_shared = 2 ;
 				break;
 			case 'A':
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnBackwardLeft();
-				//r_light.Blink_R();
+				if (r_light.autoLight) light_mode_shared = 6 ;
 				break;
 			case 'Q':
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnForwardLeft();
-				//r_light.Blink_R();
+				if (r_light.autoLight) light_mode_shared = 8 ;
 				break;
 			case 'E':
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnForwardRight();
-				//r_light.Blink_L();
+				if (r_light.autoLight) light_mode_shared = 4 ;
 				break;
 			case 'K':  //turn right on spot
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnRight();
-				//r_light.Blink_L();
+				if (r_light.autoLight) light_mode_shared = 4;
 				break;
 			case 'J': //turn left on spot
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnLeft();
-				//r_light.Blink_L();
+				if (r_light.autoLight) light_mode_shared = 4;
 				break;
 			case 'U':
 				//Calibration mode
@@ -273,8 +273,9 @@ void *MotorDriver_Task(void * arg)
 			case 'F':
 				if (driving_mode.get() == MANUAL)
 					r_driving.stopRover();
-					//r_light.off();
+					if (r_light.autoLight) light_mode_shared = 5;
 				break;
+			
 		}
 		
 		/*int a = light_mode_shared.get();
