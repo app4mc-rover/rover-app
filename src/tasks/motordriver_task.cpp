@@ -227,7 +227,7 @@ void *MotorDriver_Task(void * arg)
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnForwardLeft();
-				if (r_light.autoLight) light_mode_shared = 8 ;
+				if (r_light.autoLight) light_mode_shared = 6 ;
 				break;
 			case 'E':
 				ExitAutomaticModes();
@@ -245,7 +245,7 @@ void *MotorDriver_Task(void * arg)
 				ExitAutomaticModes();
 				r_driving.setSpeed(speed_shared.get());
 				r_driving.turnLeft();
-				if (r_light.autoLight) light_mode_shared = 4;
+				if (r_light.autoLight) light_mode_shared = 6; // command  light
 				break;
 			case 'U':
 				//Calibration mode
@@ -273,7 +273,7 @@ void *MotorDriver_Task(void * arg)
 			case 'F':
 				if (driving_mode.get() == MANUAL)
 					r_driving.stopRover();
-					if (r_light.autoLight) light_mode_shared = 5;
+					if (r_light.autoLight) light_mode_shared = 8;
 				break;
 			
 		}

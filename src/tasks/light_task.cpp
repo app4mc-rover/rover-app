@@ -109,10 +109,10 @@ void *Light_Task(void * arg)
 	light_task_tmr.setDeadline(0.1);
 	light_task_tmr.setPeriod(0.1);
 
-	r_light.autoLight = false;
+	r_light.autoLight = false;  //initial light to manual mode
 	cout<< "LIGHT TASK IS RUNNING IN MANUAL " << endl;
 	cout<< endl;
-	char local_command = '5';
+	light_mode_shared = 8; // initial the lights to ON
 	LightState state = STATE_LIGHT_IDLE;
 	while (running_flag.get())
 	{
@@ -234,6 +234,7 @@ void *Light_Task(void * arg)
 				break;
 			case STATE_LIGHT_AUTO:  //AUTO MANUAL 
 				r_light.autoLight = true;
+				light_mode_shared = 8;  // in auto mode the lights always turn on
 				r_light.autoLight ? cout<< "Lights are in AUTO" << endl : cout<< "Lights are in MANUAL" << endl;
 				state = STATE_LIGHT_IDLE;
 				break;
