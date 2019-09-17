@@ -231,45 +231,74 @@ void *External_GPIO_Task(void *arg)
 		cout<< "it receive------------------ : "<< a <<endl;
 		switch (a) {
 			case 0:
-				light_mode_shared = 0;
+				if (!r_light.autoLight) light_mode_shared = 0;
 				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 72:
 			case 9:
-				light_mode_shared = 8;
+				if (!r_light.autoLight)light_mode_shared = 8;
 				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 80:
 			case 3:
-				light_mode_shared = 2;
+				if (!r_light.autoLight)light_mode_shared = 2;
 				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 77:
 			case 7:
-				light_mode_shared = 6;
+				if (!r_light.autoLight)light_mode_shared = 6;
 				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 75:
 			case 5:
-				light_mode_shared = 4;
+				if (!r_light.autoLight)light_mode_shared = 4;
 				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 76:
 			case 6:
-				light_mode_shared = 5;
+				if (!r_light.autoLight)light_mode_shared = 5;
 				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 			case 78:			// + key press
 			case 27:			// + german keybord
-				light_mode_shared = 11;
+				if (!r_light.autoLight)light_mode_shared = 11;
 				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
 				
 			case 74:			// - key pres
 			case 53:			// - german key board
-				light_mode_shared = 22;
+				if (!r_light.autoLight)light_mode_shared = 22;
 				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
 				break;
+			case 56:			// left ctrl to Auto light
+				light_mode_shared = 10;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 100:			// right ctrl to Manual light
+				light_mode_shared = 20;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 17:			// GO FORWARD
+				keycommand_shared = 'W';
+				cout<< "external gpio task -> it select"<< keycommand_shared.get()<< "--"<<endl;
+				break;
+			case 31:			// GO FORWARD
+				keycommand_shared = 'S';
+				cout<< "external gpio task -> it select"<< keycommand_shared.get()<< "--"<<endl;
+				break;	
+			case 30:			// GO FORWARD
+				keycommand_shared = 'A';
+				cout<< "external gpio task -> it select"<< keycommand_shared.get()<< "--"<<endl;
+				break;
+			case 32:			// GO FORWARD
+				keycommand_shared = 'D';
+				cout<< "external gpio task -> it select"<< keycommand_shared.get()<< "--"<<endl;
+				break;
+			case 33:			// GO FORWARD
+				keycommand_shared = 'F';
+				cout<< "external gpio task -> it select"<< keycommand_shared.get()<< "--"<<endl;
+				break;
+			
 			default:
 				//
 				break;	
