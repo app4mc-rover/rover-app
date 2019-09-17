@@ -42,7 +42,7 @@ void *DisplaySensors_Task (void * arg)
 	{
 		display_sensors_task_tmr.recordStartTime();
 		display_sensors_task_tmr.calculatePreviousSlackTime();
-	/*
+	
 		//Task content starts here -----------------------------------------------
 
 		printf("Distance(HCSR04Front): %d cm\n", distance_sr04_front_shared.get());
@@ -58,7 +58,7 @@ void *DisplaySensors_Task (void * arg)
 		printf("Accelerometer angles:\t\t%f\t%f\t%f\n", accelerometerdata_shared.angle_x,
 				                                        accelerometerdata_shared.angle_y,
 													accelerometerdata_shared.angle_z);
-*/	
+														
 		//Task content ends here -------------------------------------------------
 		display_sensors_task_tmr.recordEndTime();
 		display_sensors_task_tmr.calculateExecutionTime();
