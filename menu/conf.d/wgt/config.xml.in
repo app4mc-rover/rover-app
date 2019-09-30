@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="@PROJECT_NAME@" version="@KUKSA_PROJECT_VERSION@">
+  <name>@PROJECT_NAME@</name>
+  <icon src="@PROJECT_ICON@"/>
+  <content src="@WIDGET_ENTRY_POINT@" type="@WIDGET_TYPE@"/>
+  <content src="content" type="@TARGET_NAME@"/>
+  <description>@PROJECT_DESCRIPTION@</description>
+  <author>@PROJECT_AUTHOR@ &lt;@PROJECT_AUTHOR_MAIL@&gt;</author>
+  <license>@PROJECT_LICENSE@</license>
+  <feature name="urn:AGL:widget:required-permission">
+    <param name="urn:AGL:permission::system:run-by-default" value="required" />
+  </feature>
+  <feature name="urn:AGL:widget:required-api">
+    <param name="roverbuttons" value="ws" />
+    <param name="roverdisplay" value="ws" />
+    <param name="roverbuzzer" value="ws" />
+    <param name="roverinfraredsensor" value="ws" />
+    <param name="roverdht22" value="ws" />
+    <param name="rovergy521" value="ws" />
+    <param name="roverdriving" value="ws" />
+    <param name="rovergrooveultrasonicsensor" value="ws" />
+    <param name="roverutils" value="ws" />
+    <param name="roverhmc5883l" value="ws" />
+    <param name="roverhelloworld" value="ws" />
+</feature>
+</widget>
