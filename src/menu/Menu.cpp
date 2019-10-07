@@ -23,7 +23,7 @@
 #include <errno.h>
 #include <vector>
 
-#include <Menu.h>
+#include <menu/Menu.h>
 
 using namespace std;
 
@@ -76,7 +76,7 @@ void Menu::draw() {
   int bg_color = 0;
 
 
-  rc |= this->disp->clearDisplay();
+  this->disp->clearDisplay();
 
   this->disp->setTextSize(2);
   this->disp->setTextColor(1);

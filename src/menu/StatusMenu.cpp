@@ -25,10 +25,10 @@
 #include <vector>
 #include <chrono>
 
-#include <StatusMenu.h>
+#include <menu/StatusMenu.h>
 
-#include <icons/bluetooth_logo.h>
-#include <icons/kuksa_logo.h>
+#include <menu/icons/bluetooth_logo.h>
+#include <menu/icons/kuksa_logo.h>
 
 StatusMenu::StatusMenu(RoverUtils *util, RoverDisplay * disp, RoverButton * btn) {
   this->util = util;
@@ -55,28 +55,28 @@ int StatusMenu::run() {
       case 0:
         this->disp->setCursor(45, 10);
         this->disp->print("WLAN:");
-        util->get_wlan_status(status);
+        status = util->getWlanStatus();
         break;
       case 1:
         this->disp->setCursor(48, 10);
         this->disp->print("ETH:");
-        util->get_ethernet_status(status);
+        status = util->getEthernetStatus();
         break;
       case 2:
         this->disp->setCursor(12, 10);
         this->disp->print("INTERNET:");
-        util->get_internet_status(status);
+        status = util->getInternetStatus();
         break;
       case 3:
         this->disp->setCursor(8, 10);
         this->disp->print("BLUETOOTH:");
-        util->get_bluetooth_status(status);
+        status = util->getBluetoothStatus();
         break;
       default:
         screen_sel = 0;
         this->disp->setCursor(45, 10);
         this->disp->print("WLAN:");
-        util->get_wlan_status(status);
+        status = util->getWlanStatus();
     }
 
 
@@ -108,7 +108,7 @@ bool StatusMenu::check_button() {
   double state = 1;
   static bool trigered = false;
 
-  state = this->btn->read();
+  state = this->btn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

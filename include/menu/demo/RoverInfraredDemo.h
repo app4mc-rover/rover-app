@@ -38,15 +38,22 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverInfraredDemo(RoverInfraredSensor *inf_sensor, RoverDisplay * disp, RoverButton * btn);
+  RoverInfraredDemo(RoverInfraredSensor *r_infrared0,
+      RoverInfraredSensor *r_infrared1, 
+      RoverInfraredSensor *r_infrared2,
+      RoverInfraredSensor *r_infrared3, 
+      RoverDisplay * disp, RoverButton * btn);
 
   int run();
 
   bool check_button();
 
 private:
+  RoverInfraredSensor *  r_infrared3 ;
+  RoverInfraredSensor *  r_infrared2 ;
+  RoverInfraredSensor *  r_infrared1 ;
+  RoverInfraredSensor *  r_infrared0 ;
 
-  RoverInfraredSensor * inf_sensor;
   RoverDisplay * disp;
   RoverButton * btn;
 };

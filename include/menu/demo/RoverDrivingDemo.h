@@ -30,7 +30,7 @@
 #include <roverapi/rover_button.hpp>
 #include <roverapi/rover_driving.hpp>
 
-#include <Menu.h>
+#include <menu/Menu.h>
 
 using namespace std;
 using namespace rover;

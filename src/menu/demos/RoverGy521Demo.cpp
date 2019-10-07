@@ -25,9 +25,9 @@
 #include <sstream>
 #include <iomanip>
 
-#include <demo/RoverGy521Demo.h>
+#include <menu/demo/RoverGy521Demo.h>
 
-RoverGy521Demo::RoverGy521Demo(RoverGy521 *sensor, RoverDisplay * disp, RoverButtons * btn) {
+RoverGy521Demo::RoverGy521Demo(RoverGY521 *sensor, RoverDisplay * disp, RoverButton * btn) {
   this->sensor = sensor;
   this->disp = disp;
   this->btn = btn;
@@ -66,7 +66,7 @@ void print_data(RoverDisplay * disp, const char * prefix, T data[3]) {
 
   for (int i = 0; i < 3; i++){
     data_str = string(prefix) + data_name[i] + string(":") + get_string(data[i]);
-    disp->set_cursor(5, 2 + 20 * i);
+    disp->setCursor(5, 2 + 20 * i);
     disp->print(data_str.c_str());
   }
 }
@@ -77,8 +77,8 @@ int RoverGy521Demo::run() {
   double double_data[3];
   uint sel = 0;
 
-  this->disp->set_text_size(1);
-  this->disp->set_text_color(1);
+  this->disp->setTextSize(1);
+  this->disp->setTextColor(1);
 
   while (!check_button()) {
 
@@ -87,25 +87,25 @@ int RoverGy521Demo::run() {
       sel = sel > 2 ? 0 : sel;
     }
 
-    this->disp->clear_display();
+    this->disp->clearDisplay();
 
     switch (sel) {
       case 0: // Accelerometer
-        this->sensor->read_acc_x(int_data[0]);
-        this->sensor->read_acc_y(int_data[1]);
-        this->sensor->read_acc_z(int_data[2]);
-        print_data<int>(this->disp, "acc_", int_data);
+        int_data[0] = this->sensor->getAccelX();
+        int_data[1] = this->sensor->getAccelY();
+        int_data[2] = this->sensor->getAccelZ();
+        print_data<int>(this->disp, "Accel", int_data);
         break;
       case 1: // Gyroscope
-        this->sensor->read_gyro_x(int_data[0]);
-        this->sensor->read_gyro_y(int_data[1]);
-        this->sensor->read_gyro_z(int_data[2]);
+        int_data[0] = this->sensor->getGyroX();
+        int_data[1] = this->sensor->getGyroY();
+        int_data[2] = this->sensor->getGyroZ();
         print_data<int>(this->disp, "gy_", int_data);
         break;
       case 2: // Angle
-        this->sensor->read_angle_x(double_data[0]);
-        this->sensor->read_angle_y(double_data[1]);
-        this->sensor->read_angle_z(double_data[2]);
+        double_data[0] = this->sensor->getAngleX();
+        double_data[1] = this->sensor->getAngleY();
+        double_data[2] = this->sensor->getAngleZ();
         print_data<double>(this->disp, "an_", double_data);
         break;
       default:
@@ -120,8 +120,8 @@ int RoverGy521Demo::run() {
 bool RoverGy521Demo::check_button() {
   double state = 1;
   static bool trigered = false;
-
-  this->btn->read(user_button, state);
+    
+  state = this->btn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;
@@ -139,7 +139,7 @@ bool RoverGy521Demo::check_next_button() {
   double state = 1;
   static bool trigered = false;
 
-  this->btn->read(shutdown_button, state);
+  state = this->btn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

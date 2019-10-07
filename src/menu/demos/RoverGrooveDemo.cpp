@@ -25,13 +25,14 @@
 #include <sstream>
 #include <iomanip>
 
-#include <demo/RoverGrooveDemo.h>
+#include <menu/demo/RoverGrooveDemo.h>
 
 static const int oled_width = 128;
 static const int oled_height = 64;
 
-RoverGrooveDemo::RoverGrooveDemo(RoverGrooveUltrasonicSensor *grv_sensor, RoverDisplay * disp, RoverButtons * btn) {
-  this->grv_sensor = grv_sensor;
+RoverGrooveDemo::RoverGrooveDemo(RoverHCSR04 *r_front, RoverHCSR04 *r_rear, RoverDisplay * disp, RoverButton * btn) {
+  this->r_front = r_front;
+  this->r_rear = r_rear;
   this->disp = disp;
   this->btn = btn;
 }
@@ -54,41 +55,39 @@ int RoverGrooveDemo::run() {
   static const int triangle_width = 10;
   static const int triangle_height = 20;
 
-  this->disp->set_text_size(2);
-  this->disp->set_text_color(1);
+  this->disp->setTextSize(2);
+  this->disp->setTextColor(1);
 
   while (!check_button()) {
-    this->disp->clear_display();
+    this->disp->clearDisplay();
 
     // Front
-    this->grv_sensor->read(rover_sensor_id::front, sensor_val);
+    sensor_val = this->r_front->read();
     // Arrow
-    this->disp->draw_triangle(triangle_width,
+    this->disp->drawTriangle(triangle_width,
                               0,
                               0,
                               triangle_height/2,
                               triangle_width,
                               triangle_height,
-                              1,
-                              true);
+                              1);
 
-    this->disp->set_cursor(triangle_width + 4, 3);
-  	this->disp->print(get_val_str(sensor_val));
+    this->disp->setCursor(triangle_width + 4, 3);
+    this->disp->print(get_val_str(sensor_val));
 
 
     // Rear
-    this->grv_sensor->read(rover_sensor_id::rear, sensor_val);
+    sensor_val = this->r_rear->read();
     // Arrow
-    this->disp->draw_triangle(oled_width - triangle_width,
+    this->disp->drawTriangle(oled_width - triangle_width,
                               oled_height - triangle_height,
                               oled_width,
                               oled_height - triangle_height/2,
                               oled_width - triangle_width,
                               oled_height,
-                              1,
-                              true);
+                              1);
 
-    this->disp->set_cursor(oled_width - 72, oled_height - 17);
+    this->disp->setCursor(oled_width - 72, oled_height - 17);
     this->disp->print(get_val_str(sensor_val));
 
 
@@ -101,7 +100,7 @@ bool RoverGrooveDemo::check_button() {
   double state = 1;
   static bool trigered = false;
 
-  this->btn->read(user_button, state);
+  state = this->btn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

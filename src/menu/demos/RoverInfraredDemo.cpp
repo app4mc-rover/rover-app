@@ -25,15 +25,23 @@
 #include <sstream>
 #include <iomanip>
 
-#include <demo/RoverInfraredDemo.h>
+#include <menu/demo/RoverInfraredDemo.h>
 
 static const int oled_width = 128;
 static const int oled_height = 64;
 
-RoverInfraredDemo::RoverInfraredDemo(RoverInfraredSensor *inf_sensor, RoverDisplay * disp, RoverButtons * btn) {
-  this->inf_sensor = inf_sensor;
-  this->disp = disp;
-  this->btn = btn;
+RoverInfraredDemo::RoverInfraredDemo(RoverInfraredSensor *r_infrared0,
+      RoverInfraredSensor *r_infrared1, 
+      RoverInfraredSensor *r_infrared2,
+      RoverInfraredSensor *r_infrared3, 
+      RoverDisplay * disp, RoverButton * btn) {
+  
+    this->r_infrared3 = r_infrared3;
+    this->r_infrared2 = r_infrared2;
+    this->r_infrared1 = r_infrared1;
+    this->r_infrared0 = r_infrared0;
+    this->disp = disp;
+    this->btn = btn;
 }
 
 inline const char * get_val_str(double val) {
@@ -54,77 +62,68 @@ int RoverInfraredDemo::run() {
   double sensor_val;
 
 
-  this->disp->set_text_size(1);
-  this->disp->set_text_color(1);
+  this->disp->setTextSize(1);
+  this->disp->setTextColor(1);
 
   while (!check_button()) {
-    this->disp->clear_display();
+    this->disp->clearDisplay();
 
     // Draw all triangles
     // Up-left
-    this->disp->draw_triangle(0,
+    this->disp->drawTriangle(0,
                               0,
                               0,
                               triangle_height,
                               triangle_width,
                               0,
-                              1,
-                              true);
+                              1);
     // Bottom-left
-    this->disp->draw_triangle(0,
+    this->disp->drawTriangle(0,
                               oled_height,
                               triangle_width,
                               oled_height,
                               0,
                               oled_height - triangle_height,
-                              1,
-                              true);
+                              1);
 
     // Up-right
-    this->disp->draw_triangle(oled_width,
+    this->disp->drawTriangle(oled_width,
                               0,
                               oled_width,
                               triangle_height,
                               oled_width - triangle_width,
                               0,
-                              1,
-                              true);
+                              1);
     // Buttom-right
-    this->disp->draw_triangle(oled_width,
+    this->disp->drawTriangle(oled_width,
                               oled_height,
                               oled_width,
                               oled_height - triangle_height,
                               oled_width - triangle_width,
                               oled_height,
-                              1,
-                              true);
+                              1);
 
 
     // Read Left
-    this->inf_sensor->read(rover_sensor_id::rear_right, sensor_val);
-    this->disp->set_cursor(80, 2);
+    sensor_val = this->r_infrared0->read();
+    this->disp->setCursor(80, 2);
     this->disp->print(get_val_str(sensor_val));
 
     // Read right
-    this->inf_sensor->read(rover_sensor_id::rear_left, sensor_val);
-    this->disp->set_cursor(80,  oled_height - (8 + 2));
+    sensor_val = this->r_infrared1->read();
+    this->disp->setCursor(80,  oled_height - (8 + 2));
     this->disp->print(get_val_str(sensor_val));
 
 
     // Front right
-    this->inf_sensor->read(rover_sensor_id::front_right, sensor_val);
-    this->disp->set_cursor(triangle_width + 2, 2);
+    sensor_val = this->r_infrared2->read();
+    this->disp->setCursor(triangle_width + 2, 2);
   	this->disp->print(get_val_str(sensor_val));
 
     // Front left
-    this->inf_sensor->read(rover_sensor_id::front_left, sensor_val);
-
-    this->disp->set_cursor(triangle_width + 2, oled_height - (8 + 2));
+    sensor_val = this->r_infrared3->read();
+    this->disp->setCursor(triangle_width + 2, oled_height - (8 + 2));
     this->disp->print(get_val_str(sensor_val));
-
-
-
-
 
     this->disp->display();
   }
@@ -135,7 +134,7 @@ bool RoverInfraredDemo::check_button() {
   double state = 1;
   static bool trigered = false;
 
-  this->btn->read(user_button, state);
+  state = this->btn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;
