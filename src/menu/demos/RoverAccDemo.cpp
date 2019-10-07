@@ -23,18 +23,18 @@
 #include <errno.h>
 #include <vector>
 
-#include <demo/RoverAccDemo.h>
+#include <menu/demo/RoverAccDemo.h>
+#include <menu/Menu.h>
 
-#include <Menu.h>
 
 static const int P = 30;
 static const double target_dist = 20;
 
-bool check_button(RoverButtons * btn) {
+bool check_button(RoverButton * btn) {
   double state = 1;
   static bool trigered = false;
 
-  btn->read(user_button, state);
+  state = btn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;
@@ -48,7 +48,7 @@ bool check_button(RoverButtons * btn) {
   return false;
 }
 
-RoverAccDemo::RoverAccDemo(RoverDriving *drv, RoverGrooveUltrasonicSensor *grv_sensor, RoverDisplay * disp, RoverButtons * btn) : curr_speed(0), running(true) {
+RoverAccDemo::RoverAccDemo(RoverDriving *drv, RoverGrooveUltrasonic *grv_sensor, RoverDisplay * disp, RoverButton * btn) : curr_speed(0), running(true) {
   this->drv = drv;
   this->grv_sensor = grv_sensor;
   this->btn = btn;
@@ -59,7 +59,7 @@ int RoverAccDemo::run() {
   double sensor_val = 0;
   double speed_to_set = 0;
 
-  this->drv->setspeed((int)speed_to_set);
+  this->drv->setSpeed((int)speed_to_set);
 
   while(!check_button(this->btn)) {
     
