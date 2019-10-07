@@ -224,8 +224,8 @@ target_link_libraries(roverapp roverappdrivers)
 #
 # EXAMPLES
 #
-#add_executable(OLEDmenu ${CMAKE_SOURCE_DIR}/src/examples/OLEDmenu.cpp)
-#target_link_libraries(OLEDmenu roverapi roverappmenu)
+add_executable(OLEDmenu ${CMAKE_SOURCE_DIR}/src/examples/OLEDmenu.cpp)
+target_link_libraries(OLEDmenu roverapi roverappmenu)
 
 add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/display_control.cpp)
 target_link_libraries (display_control roverapi)
