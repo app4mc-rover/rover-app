@@ -26,9 +26,9 @@
 #include <errno.h>
 #include <vector>
 
-#include <app/RoverDriving.h>
-#include <app/RoverButtons.h>
-#include <app/RoverDisplay.h>
+#include <roverapi/rover_driving.hpp>
+#include <roverapi/rover_button.hpp>
+#include <roverapi/rover_driving.hpp>
 
 #include <Menu.h>
 
@@ -40,13 +40,13 @@ public:
   bool running;
   RoverDriving * drv;
 
-  RoverDrivingDemo(RoverDriving *drv, RoverDisplay * disp, RoverButtons * btn);
+  RoverDrivingDemo(RoverDriving *drv, RoverDisplay * disp, RoverButton * btn);
 
   int run();
 
 private:
 
-  RoverButtons * btn;
+  RoverButton * btn;
   Menu * main;
 
 };

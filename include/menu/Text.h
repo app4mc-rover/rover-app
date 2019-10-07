@@ -26,14 +26,14 @@
 #include <errno.h>
 #include <vector>
 
-#include <app/RoverDisplay.h>
-#include <app/RoverButtons.h>
+#include <roverapi/rover_button.hpp>
+#include <roverapi/rover_display.hpp>
 
 using namespace std;
 
 class Text {
 public:
-  Text(RoverDisplay *disp, RoverButtons* btn);
+  Text(RoverDisplay *disp, RoverButton* btn);
 
   void add_text(string text);
 
@@ -46,7 +46,7 @@ public:
 private:
   vector<string> fulltext;
   uint pos = 0;
-  RoverButtons *btn;
+  RoverButton *btn;
   RoverDisplay *disp;
   uint char_size = 1;
   uint num_chars_line = 128/6;

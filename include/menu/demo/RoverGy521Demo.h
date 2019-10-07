@@ -26,9 +26,9 @@
 #include <errno.h>
 #include <vector>
 
-#include <app/RoverGy521.h>
-#include <app/RoverButtons.h>
-#include <app/RoverDisplay.h>
+#include <roverapi/rover_gy521.hpp>
+#include <roverapi/rover_button.hpp>
+#include <roverapi/rover_display.hpp>
 
 using namespace std;
 
@@ -37,7 +37,7 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverGy521Demo(RoverGy521 *sensor, RoverDisplay * disp, RoverButtons * btn);
+  RoverGy521Demo(RoverGy521 *sensor, RoverDisplay * disp, RoverButton * btn);
 
   int run();
 
@@ -48,7 +48,7 @@ private:
 
   RoverGy521 * sensor;
   RoverDisplay * disp;
-  RoverButtons * btn;
+  RoverButton * btn;
 };
 
 #endif /* _ROVER_GY521_HEADER_ */

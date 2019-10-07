@@ -26,7 +26,7 @@
 #include <errno.h>
 #include <vector>
 
-#include <app/RoverBuzzer.h>
+#include <roverapi/rover_buzzer.hpp>
 
 using namespace std;
 

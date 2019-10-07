@@ -26,9 +26,9 @@
 #include <errno.h>
 #include <vector>
 
-#include <app/RoverInfraredSensor.h>
-#include <app/RoverButtons.h>
-#include <app/RoverDisplay.h>
+#include <roverapi/rover_infraredsensor.hpp>
+#include <roverapi/rover_display.hpp>
+#include <roverapi/rover_button.hpp>
 
 using namespace std;
 
@@ -37,7 +37,7 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverInfraredDemo(RoverInfraredSensor *inf_sensor, RoverDisplay * disp, RoverButtons * btn);
+  RoverInfraredDemo(RoverInfraredSensor *inf_sensor, RoverDisplay * disp, RoverButton * btn);
 
   int run();
 
@@ -47,7 +47,7 @@ private:
 
   RoverInfraredSensor * inf_sensor;
   RoverDisplay * disp;
-  RoverButtons * btn;
+  RoverButton * btn;
 };
 
 #endif /* _ROVER_INFRARED_HEADER_ */
