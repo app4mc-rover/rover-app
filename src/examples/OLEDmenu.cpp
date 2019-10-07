@@ -22,43 +22,49 @@
 #include <sys/types.h>
 #include <errno.h>
 #include <vector>
-#include <systemd/sd-event.h>
+#include <string>
+#include <sstream>
+#include <array>
+#include <memory>
+//#include <systemd/sd-event.h>
 
 #include <json-c/json.h>
-#include <afb/afb-wsj1.h>
-#include <afb/afb-ws-client.h>
+//#include <afb/afb-wsj1.h>
+//#include <afb/afb-ws-client.h>
 
-#include <app/RoverDriving.h>
-#include <app/RoverInfraredSensor.h>
-#include <app/RoverGrooveUltrasonicSensor.h>
-#include <app/RoverBuzzer.h>
-#include <app/RoverUtils.h>
-#include <app/RoverDisplay.h>
-#include <app/RoverButtons.h>
-#include <app/RoverDriving.h>
-#include <app/RoverHelloWorld.h>
+//Basis Include
+#include <roverapi/rover_api.hpp>
 
-#include <demo/RoverBuzzerDemo.h>
-#include <demo/RoverDrivingDemo.h>
-#include <demo/RoverInfraredDemo.h>
-#include <demo/RoverGrooveDemo.h>
-#include <demo/RoverDht22Demo.h>
-#include <demo/RoverGy521Demo.h>
-#include <demo/RoverBearingDemo.h>
-#include <demo/RoverAccDemo.h>
+#include <roverapi/rover_driving.hpp>
+#include <roverapi/rover_infraredsensor.hpp>
+#include <roverapi/rover_grooveultrasonic.hpp>
+#include <roverapi/rover_hcsr04.hpp>
+#include <roverapi/rover_buzzer.hpp>
+#include <roverapi/rover_utils.hpp>
+#include <roverapi/rover_display.hpp>
+#include <roverapi/rover_button.hpp>
+#include <roverapi/rover_driving.hpp>
 
-#include <demo/RoverHelloWorldDemo.h>
+#include <menu/demo/RoverBuzzerDemo.h>
+#include <menu/demo/RoverDrivingDemo.h>
+#include <menu/demo/RoverInfraredDemo.h>
+#include <menu/demo/RoverGrooveDemo.h>
+#include <menu/demo/RoverDht22Demo.h>
+#include <menu/demo/RoverGy521Demo.h>
+#include <menu/demo/RoverBearingDemo.h>
+#include <menu/demo/RoverAccDemo.h>
 
-#include <icons/bluetooth_logo.h>
+#include <menu/icons/bluetooth_logo.h>
 
-#include <Menu.h>
-#include <Text.h>
-#include <StatusMenu.h>
+#include <menu/Menu.h>
+#include <menu/Text.h>
+#include <menu/StatusMenu.h>
 
 using namespace std;
+using namespace rover;
 
 // Callback for handling shutdown menu
-void shutdown_cb(Menu * menu, RoverButtons* btn, void * closure) {
+void shutdown_cb(Menu * menu, RoverButton* r_button, void * closure) {
 
   switch (menu->get_option()) {
     case 0: // Reset
@@ -75,7 +81,7 @@ void shutdown_cb(Menu * menu, RoverButtons* btn, void * closure) {
 }
 
 // Callback for handling Main menu
-void main_cb(Menu * menu, RoverButtons* btn, void * closure) {
+void main_cb(Menu * menu, RoverButton* r_button, void * closure) {
   StatusMenu * status = (StatusMenu *)closure;
   Text * text = (Text *)closure;
 
@@ -94,7 +100,7 @@ void main_cb(Menu * menu, RoverButtons* btn, void * closure) {
 }
 
 // Callback for handling demo menu
-void demo_cb(Menu * menu, RoverButtons* btn, void * closure) {
+void demo_cb(Menu * menu, RoverButton* r_button, void * closure) {
   RoverBuzzerDemo * bzrd = (RoverBuzzerDemo *)closure;
   RoverDrivingDemo * drvd = (RoverDrivingDemo *)closure;
   RoverInfraredDemo * infrd = (RoverInfraredDemo *)closure;
@@ -103,7 +109,6 @@ void demo_cb(Menu * menu, RoverButtons* btn, void * closure) {
   RoverGy521Demo * gy521d = (RoverGy521Demo *)closure;
   RoverBearingDemo * beardem = (RoverBearingDemo *)closure;
   RoverAccDemo  * acc_demo = (RoverAccDemo *)closure;
-  RoverHelloWorldDemo * hello_demo = (RoverHelloWorldDemo *)closure; 
 
   switch (menu->get_option()) {
     case 0: // Buzzer
@@ -130,14 +135,93 @@ void demo_cb(Menu * menu, RoverButtons* btn, void * closure) {
     case 7: // ACC
       acc_demo->run();
       break;
-    case 8: // Hello World Test
-      hello_demo->run(); 
-      break; 
     default:
       break;
   }
 
   return;
+}
+
+std::string exec(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) throw std::runtime_error("popen() failed!");
+    while (!feof(pipe.get())) {
+        if (fgets(buffer.data(), 128, pipe.get()) != nullptr)
+        result += buffer.data();
+    }
+    return result;
+}
+
+
+void get_interface_data(string int_name, std::string &ip, std::string  &mac) {
+    string data_ex;
+    int find_res = 0;
+
+    string cmd = string("ifconfig ") + int_name;
+
+    stringstream interfaces(exec(cmd.c_str()));
+
+    while (interfaces >> data_ex) {
+        if (!data_ex.compare("inet")) {
+            interfaces >> data_ex;
+            find_res = data_ex.find("addr:");
+
+            if (find_res != string::npos) {
+                    data_ex = data_ex.substr(5);
+            }
+            ip = data_ex.c_str();
+        }
+
+        if (!data_ex.compare("ether")) {
+            interfaces >> data_ex;
+            mac = data_ex.c_str();
+        }
+
+        if (!data_ex.compare("HWaddr")) {
+            interfaces >> data_ex;
+            mac = data_ex.c_str();
+        }
+    }
+}
+
+
+void get_interfaces(vector<string> &interfaces) {
+  string int_name;
+  stringstream cmd_out(exec("ifconfig -a | grep '^[a-z].*' | awk '{ print $1}'"));
+
+  while (cmd_out >> int_name) {
+      interfaces.push_back(int_name);
+    }
+
+}
+
+int get_interface_info(const int in_interface_idx,
+        std::string &out_interface_name,
+        std::string &out_ip_addr,
+        std::string &out_hw_addr) {
+
+    vector<string> interfaces;
+    get_interfaces(interfaces);
+
+    if (in_interface_idx >= interfaces.size()) {
+            return -1;
+    }
+
+    out_interface_name = interfaces[in_interface_idx];
+
+    get_interface_data(interfaces[in_interface_idx], out_ip_addr, out_hw_addr);
+
+    return 0;
+}
+
+int get_number_of_network_interfaces(int &out_num_interface) {
+    vector<string> interfaces;
+    get_interfaces(interfaces);
+    
+    out_num_interface = interfaces.size();
+    return 0;
 }
 
 void create_info_text(Text &text, RoverUtils &utils) {
@@ -151,10 +235,10 @@ void create_info_text(Text &text, RoverUtils &utils) {
   text.add_text("NETWORK");
   text.add_text("====================");
 
-  utils.get_number_of_network_interfaces(int_num);
+  get_number_of_network_interfaces(int_num);
 
   for (int i = 0; i < int_num; i++) {
-    utils.get_interface_info(i, out_interface_name, out_ip_addr, out_hw_add);
+    get_interface_info(i, out_interface_name, out_ip_addr, out_hw_add);
 
     if (!out_interface_name.compare("lo")) {
       continue;
@@ -175,50 +259,80 @@ void create_info_text(Text &text, RoverUtils &utils) {
 /* entry function */
 int main(int ac, char **av, char **env)
 {
-	int rc = 0;
+    RoverBase r_base = RoverBase();
+    r_base.initialize();
 
-	/*get port and token from the command arg*/
-	char *port = av[1];
-	char *token = av[2];
-  char uri[500];
-
-  sprintf(uri, "127.0.0.1:%s/api?token=%s", port, token);
-
-  // Create services objects
-  RoverDisplay display(uri);
-  RoverButtons btn(uri);
-  RoverBuzzer bzr(uri);
-  RoverDriving drv(uri);
-  RoverInfraredSensor inf_red(uri);
-  RoverGrooveUltrasonicSensor grv_sen(uri);
-  RoverDht22 dht_sen(uri);
-  RoverGy521 gy_sen(uri);
-  RoverUtils util(uri);
-  RoverHmc5883L bear_sen(uri);
+    // Use the OLED display on the rover
+    RoverDisplay r_display = RoverDisplay();
+    r_display.initialize();
   
-  RoverHelloWorld hello(uri);
+    // Instantiate buzzer and button
+    RoverBuzzer r_buzzer = RoverBuzzer();
+    RoverButton r_button = RoverButton(USER_BUTTON);
+    r_buzzer.initialize();
+    r_button.initialize();
   
+    // Driving with rover
+    RoverDriving r_driving = RoverDriving();
+    r_driving.initialize();
+    r_driving.setSpeed(HIGHEST_SPEED);
+
+    // Set up ultrasonic sensors
+    RoverHCSR04 r_front = RoverHCSR04(ROVER_FRONT);
+    RoverHCSR04 r_rear = RoverHCSR04(ROVER_REAR);
+    r_front.initialize();
+    r_rear.initialize();
+
+    // InfraredSensor
+    RoverInfraredSensor r_infrared0 = RoverInfraredSensor(ROVER_REAR_RIGHT);
+    RoverInfraredSensor r_infrared1 = RoverInfraredSensor(ROVER_REAR_LEFT);
+    RoverInfraredSensor r_infrared2 = RoverInfraredSensor(ROVER_FRONT_RIGHT);
+    RoverInfraredSensor r_infrared3 = RoverInfraredSensor(ROVER_FRONT_LEFT);
+    r_infrared0.initialize();
+    r_infrared1.initialize();
+    r_infrared2.initialize();
+    r_infrared3.initialize();
+
+    // Set up HMC5883L or QMC5883L compass sensor
+    RoverHMC5883L r_hmc = RoverHMC5883L();
+    r_hmc.initialize();
+    r_hmc.calibrate();
+
+    // Set up GY521 accelerometer
+    RoverGY521 r_accel = RoverGY521();
+    r_accel.initialize();
+
+    //  DHT22 temperature and humidity
+    RoverDHT22 r_dht22 = RoverDHT22();
+    r_dht22.initialize();
+
+
+    // Instantiate a RoverUtils object to access member functions that deals with status and performance tasks
+    RoverUtils r_utils = RoverUtils(); //RoverUtils does not need to be initialized
+ 
+    r_base.sleep(100);
+ 
   // Create demos objects
-  RoverBuzzerDemo bzr_demo(&bzr);
-  RoverDrivingDemo drv_demo(&drv, &display, &btn);
-  RoverInfraredDemo inf_red_demo(&inf_red, &display, &btn);
-  RoverGrooveDemo grv_sen_demo(&grv_sen, &display, &btn);
-  RoverDht22Demo dht_sen_demo(&dht_sen, &display, &btn);
-  RoverGy521Demo gy_sen_demo(&gy_sen, &display, &btn);
-  RoverBearingDemo bearing_demo(&bear_sen, &display, &btn);
-  RoverAccDemo acc_demo(&drv, &grv_sen, &display, &btn);
+  RoverBuzzerDemo bzr_demo(&r_buzzer);
+  RoverDrivingDemo drv_demo(&r_driving, &r_display, &r_button);
+  RoverInfraredDemo inf_red_demo(
+          &r_infrared0, &r_infrared1, &r_infrared2, &r_infrared3 , 
+          &r_display, &r_button);
+  RoverGrooveDemo grv_sen_demo(&r_front, &r_rear, &r_display, &r_button);
+  RoverDht22Demo dht_sen_demo(&r_dht22, &r_display, &r_button);
+  RoverGy521Demo gy_sen_demo(&r_accel, &r_display, &r_button);
+  RoverBearingDemo bearing_demo(&r_hmc, &r_display, &r_button);
+  RoverAccDemo acc_demo(&r_driving, &r_front, &r_rear, &r_display, &r_button);
 
-  RoverHelloWorldDemo hello_demo(&hello); 
+  StatusMenu status_men(&r_utils, &r_display, &r_button);
+  Text info_text(&r_display, &r_button);
 
-  StatusMenu status_men(&util, &display, &btn);
-  Text info_text(&display, &btn);
-
-  create_info_text(info_text, util);
+  create_info_text(info_text, r_utils);
 
   // Create the menu objects
-  Menu main_menu = Menu("Main", &btn, &display);
-  Menu demo_menu = Menu("Demo", &btn, &display);
-  Menu shut_menu = Menu("Shutdown", &btn, &display);
+  Menu main_menu = Menu("Main", &r_button, &r_display);
+  Menu demo_menu = Menu("Demo", &r_button, &r_display);
+  Menu shut_menu = Menu("Shutdown", &r_button, &r_display);
   Menu * curr_menu = &main_menu;
 
   // Add Main Menu options
@@ -237,8 +351,7 @@ int main(int ac, char **av, char **env)
   demo_menu.add_option("7:Bearing", demo_cb, &bearing_demo);
   demo_menu.add_option("8:ACC", demo_cb, &acc_demo);
     // Test service
-  demo_menu.add_option("9:Hello", demo_cb, &hello_demo);
-  demo_menu.add_submenu("10:Back", &main_menu);
+  demo_menu.add_submenu("9:Back", &main_menu);
 
   // Add Shutdown menu options
   shut_menu.add_option("1:Reset", shutdown_cb, NULL);
@@ -250,10 +363,6 @@ int main(int ac, char **av, char **env)
     curr_menu->update();
     curr_menu = curr_menu->next();
     curr_menu->draw();
-  }
-
-  if (rc) {
-    return -1;
   }
 
 }
