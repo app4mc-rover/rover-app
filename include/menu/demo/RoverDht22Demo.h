@@ -28,7 +28,7 @@
 
 #include <roverapi/rover_dht22.hpp>
 #include <roverapi/rover_button.hpp>
-#include <roverapi/rover_driving.hpp>
+#include <roverapi/rover_display.hpp>
 
 using namespace std;
 using namespace rover;

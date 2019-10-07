@@ -48,9 +48,10 @@ bool check_button(RoverButton * btn) {
   return false;
 }
 
-RoverAccDemo::RoverAccDemo(RoverDriving *drv, RoverGrooveUltrasonic *grv_sensor, RoverDisplay * disp, RoverButton * btn) : curr_speed(0), running(true) {
+RoverAccDemo::RoverAccDemo(RoverDriving *drv, RoverHCSR04 *r_front, RoverHCSR04 *r_rear, RoverDisplay * disp, RoverButton * btn) : curr_speed(0), running(true) {
   this->drv = drv;
-  this->grv_sensor = grv_sensor;
+  this->r_rear = r_rear;;
+  this->r_front = r_front;
   this->btn = btn;
   
 }
@@ -63,18 +64,18 @@ int RoverAccDemo::run() {
 
   while(!check_button(this->btn)) {
     
-    this->grv_sensor->read(rover_sensor_id::front, sensor_val);
+    sensor_val =  this->r_front->read();
     
     speed_to_set = (sensor_val - target_dist)*P;
     
     if (speed_to_set < 0) {
-        this->grv_sensor->read(rover_sensor_id::rear, sensor_val);
+        sensor_val = this->r_rear->read();
         speed_to_set = sensor_val < target_dist? 0:speed_to_set;
-        this->drv->setspeed(static_cast<int>(-speed_to_set));
-        this->drv->gobackward();
+        this->drv->setSpeed(static_cast<int>(-speed_to_set));
+        this->drv->goBackward();
     } else {
-        this->drv->setspeed(static_cast<int>(speed_to_set));
-        this->drv->goforward();
+        this->drv->setSpeed(static_cast<int>(speed_to_set));
+        this->drv->goForward();
     }
     
     usleep(100000);

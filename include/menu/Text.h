@@ -30,6 +30,7 @@
 #include <roverapi/rover_display.hpp>
 
 using namespace std;
+using namespace rover;
 
 class Text {
 public:

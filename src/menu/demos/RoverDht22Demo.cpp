@@ -22,10 +22,14 @@
 #include <sys/types.h>
 #include <errno.h>
 #include <vector>
+#include <string>
 
-#include <demo/RoverDht22Demo.h>
+#include <menu/demo/RoverDht22Demo.h>
 
-RoverDht22Demo::RoverDht22Demo(RoverDht22 *sensor, RoverDisplay * disp, RoverButtons * btn) {
+using namespace rover;
+
+
+RoverDht22Demo::RoverDht22Demo(RoverDHT22 *sensor, RoverDisplay * disp, RoverButton * btn) {
   this->sensor = sensor;
   this->disp = disp;
   this->btn = btn;
@@ -34,21 +38,21 @@ RoverDht22Demo::RoverDht22Demo(RoverDht22 *sensor, RoverDisplay * disp, RoverBut
 int RoverDht22Demo::run() {
   double sensor_val = 1;
 
-  this->disp->set_text_size(2);
-  this->disp->set_text_color(1);
+  this->disp->setTextSize(2);
+  this->disp->setTextColor(1);
 
   while (!check_button()) {
-    this->disp->clear_display();
+    this->disp->clearDisplay();
 
     // Temperature
-    this->sensor->read_temperature(sensor_val);
-    this->disp->set_cursor(30, 30);
-  	this->disp->print(to_string(sensor_val).c_str());
+    sensor_val = this->sensor->readTemperature();
+    this->disp->setCursor(30, 30);
+    this->disp->print(to_string(sensor_val).c_str());
 
 
     // Humidity
     // this->sensor->read_humidity(sensor_val);
-    this->disp->set_cursor(90, 30);
+    this->disp->setCursor(90, 30);
     this->disp->print(to_string(sensor_val).c_str());
 
 
@@ -61,7 +65,7 @@ bool RoverDht22Demo::check_button() {
   double state = 1;
   static bool trigered = false;
 
-  this->btn->read(user_button, state);
+  state = this->btn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

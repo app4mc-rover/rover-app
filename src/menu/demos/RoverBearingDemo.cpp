@@ -26,17 +26,18 @@
 #include <iomanip>
 #include <math.h>
 
-#include <demo/RoverBearingDemo.h>
+#include <menu/demo/RoverBearingDemo.h>
+
+using namespace rover;
 
 static const int oled_width = 128;
 static const int oled_height = 64;
 
-RoverBearingDemo::RoverBearingDemo(RoverHmc5883L *sensor, RoverDisplay * disp, RoverButtons * btn) {
+RoverBearingDemo::RoverBearingDemo(RoverHMC5883L *sensor, RoverDisplay * disp, RoverButton * btn) {
   this->sensor = sensor;
   this->disp = disp;
   this->btn = btn;
-
-  this->sensor->read(this->ref_val);
+  this->ref_val = this->sensor->read();
 }
 
 inline const char * get_val_str(double val) {
@@ -75,16 +76,16 @@ int RoverBearingDemo::run() {
   int arrow_tip_y_2 = tip_y;
   double sensor_val;
 
-  this->disp->set_text_size(1);
-  this->disp->set_text_color(1);
+  this->disp->setTextSize(1);
+  this->disp->setTextColor(1);
 
   while (!check_button()) {
-    this->disp->clear_display();
+    this->disp->clearDisplay();
     // Read Left
-    this->sensor->read(sensor_val);
+    sensor_val = this->sensor->read();
 
     sensor_val = normalize_angle(sensor_val - this->ref_val);
-    this->disp->set_cursor(80, 2);
+    this->disp->setCursor(80, 2);
     this->disp->print(get_val_str(sensor_val));
 
     tip_x = origin_x;
@@ -92,7 +93,7 @@ int RoverBearingDemo::run() {
     tip_y = origin_y;
     tip_y += std::sin(pi * sensor_val / 180) * arrow_len;
 
-    this->disp->draw_line(origin_x, origin_y, tip_x, tip_y, 1);
+    this->disp->drawLine(origin_x, origin_y, tip_x, tip_y, 1);
 
     arrow_tip_x_1 = tip_x;
     arrow_tip_x_1 -= std::cos(pi * (sensor_val - 45) / 180) * 5;
@@ -106,7 +107,7 @@ int RoverBearingDemo::run() {
     arrow_tip_y_2 = tip_y;
     arrow_tip_y_2 -= std::sin(pi * (sensor_val + 45) / 180) * 5;
 
-    this->disp->draw_triangle(arrow_tip_x_1, arrow_tip_y_1, arrow_tip_x_2, arrow_tip_y_2, tip_x, tip_y, 1, true);
+    this->disp->drawTriangle(arrow_tip_x_1, arrow_tip_y_1, arrow_tip_x_2, arrow_tip_y_2, tip_x, tip_y, 1);
 
     this->disp->display();
   }
@@ -117,7 +118,7 @@ bool RoverBearingDemo::check_button() {
   double state = 1;
   static bool trigered = false;
 
-  this->btn->read(user_button, state);
+  state = this->btn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

@@ -23,14 +23,15 @@
 #include <errno.h>
 #include <vector>
 
-#include <demo/RoverBuzzerDemo.h>
+#include <menu/demo/RoverBuzzerDemo.h>
 
-#include <melodies.h>
+#include <menu/melodies.h>
 
 RoverBuzzerDemo::RoverBuzzerDemo(RoverBuzzer *bzr) {
   this->bzr = bzr;
 }
 
 int RoverBuzzerDemo::run() {
-  this->bzr->play_melody(mario_theme, MARION_THEME_SIZE, mario_theme_tempo, MARION_THEME_SIZE);
+//  this->bzr->play_melody(mario_theme, MARION_THEME_SIZE, mario_theme_tempo, MARION_THEME_SIZE);
+    this->bzr->shutdownTone();
 }

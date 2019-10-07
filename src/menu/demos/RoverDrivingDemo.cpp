@@ -23,11 +23,11 @@
 #include <errno.h>
 #include <vector>
 
-#include <demo/RoverDrivingDemo.h>
+#include <menu/demo/RoverDrivingDemo.h>
 
-#include <Menu.h>
+#include <menu/Menu.h>
 
-void menu_cb(Menu * menu, RoverButtons* btn, void * closure) {
+void menu_cb(Menu * menu, RoverButton* btn, void * closure) {
 
   RoverDrivingDemo * drv_demo = (RoverDrivingDemo *)closure;
 
@@ -38,38 +38,38 @@ void menu_cb(Menu * menu, RoverButtons* btn, void * closure) {
       if (drv_demo->curr_speed > 480) {
         drv_demo->curr_speed = 480;
       }
-      drv_demo->drv->setspeed(drv_demo->curr_speed);
+      drv_demo->drv->setSpeed(drv_demo->curr_speed);
       break;
     case 1: // Decrement speed
       drv_demo->curr_speed -= 10;
-      drv_demo->drv->setspeed(drv_demo->curr_speed);
+      drv_demo->drv->setSpeed(drv_demo->curr_speed);
       break;
     case 2: // Go Forward
-      drv_demo->drv->goforward();
+      drv_demo->drv->goForward();
       break;
     case 3: // Go Backward
-      drv_demo->drv->gobackward();
+      drv_demo->drv->goBackward();
       break;
     case 4: // Turn left
-      drv_demo->drv->turnleft();
+      drv_demo->drv->turnLeft();
       break;
     case 5: // Turn right
-      drv_demo->drv->turnright();
+      drv_demo->drv->turnRight();
       break;
     case 6: // Stop
-      drv_demo->drv->stop();
+      drv_demo->drv->stopRover();
       break;
     case 7: // End demo
       drv_demo->running = false;
       break;
     default:
-      drv_demo->drv->stop();
+      drv_demo->drv->stopRover();
   }
 
   return;
 }
 
-RoverDrivingDemo::RoverDrivingDemo(RoverDriving *drv, RoverDisplay * disp, RoverButtons * btn) : curr_speed(0), running(true) {
+RoverDrivingDemo::RoverDrivingDemo(RoverDriving *drv, RoverDisplay * disp, RoverButton * btn) : curr_speed(0), running(true) {
   this->drv = drv;
   this->btn = btn;
   this->main = new Menu("DrivingDemo", btn, disp);
@@ -86,7 +86,7 @@ RoverDrivingDemo::RoverDrivingDemo(RoverDriving *drv, RoverDisplay * disp, Rover
 
 int RoverDrivingDemo::run() {
 
-  this->drv->setspeed(480);
+  this->drv->setSpeed(480);
 
   while(this->running) {
     this->main->update();

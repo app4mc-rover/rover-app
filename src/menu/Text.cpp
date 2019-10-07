@@ -25,9 +25,10 @@
 #include <errno.h>
 #include <vector>
 
-#include <Text.h>
+#include <menu/Text.h>
 
 using namespace std;
+using namespace rover; 
 
 Text::Text(RoverDisplay *disp, RoverButton* btn) {
   this->btn = btn;
@@ -106,7 +107,7 @@ void Text::draw() {
   uint screen_lines = 64 / this->line_height;
 
 
-  rc |= this->disp->clearDisplay();
+  this->disp->clearDisplay();
 
   this->disp->setTextSize(this->char_size);
   this->disp->setTextColor(1);

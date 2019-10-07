@@ -29,6 +29,7 @@
 #include <roverapi/rover_grooveultrasonic.hpp>
 #include <roverapi/rover_button.hpp>
 #include <roverapi/rover_display.hpp>
+#include <roverapi/rover_hcsr04.hpp>
 
 using namespace std;
 using namespace rover;
@@ -38,15 +39,16 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverGrooveDemo(RoverGrooveUltrasonic *grv_sensor, RoverDisplay * disp, RoverButton * btn);
-
+  RoverGrooveDemo(RoverHCSR04 *r_front, RoverHCSR04 *r_rear, RoverDisplay * disp, RoverButton * btn);
+ 
   int run();
 
   bool check_button();
 
 private:
 
-  RoverGrooveUltrasonic * grv_sensor;
+  RoverHCSR04 * r_rear;
+  RoverHCSR04 * r_front;
   RoverDisplay * disp;
   RoverButton * btn;
 };

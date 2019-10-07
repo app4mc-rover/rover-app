@@ -33,6 +33,7 @@
 #include <roverapi/rover_driving.hpp>
 #include <roverapi/rover_button.hpp>
 #include <roverapi/rover_display.hpp>
+#include <roverapi/rover_hcsr04.hpp>
 #include <roverapi/rover_grooveultrasonic.hpp>
 
 #include <menu/Menu.h>
@@ -46,12 +47,13 @@ public:
   bool running;
   RoverDriving * drv;
 
-  RoverAccDemo(RoverDriving *drv, RoverGrooveUltrasonic *grv_sensor, RoverDisplay * disp, RoverButton * btn);
+  RoverAccDemo(RoverDriving *drv, RoverHCSR04 * r_front, RoverHCSR04 * r_rear, RoverDisplay * disp, RoverButton * btn);
   
   int run();
 
 private:
-  RoverGrooveUltrasonic * grv_sensor;
+  RoverHCSR04 * r_front;
+  RoverHCSR04 * r_rear;
   RoverButton * btn;
   Menu * main;
 

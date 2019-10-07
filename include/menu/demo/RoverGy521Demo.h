@@ -38,7 +38,7 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverGy521Demo(RoverGy521 *sensor, RoverDisplay * disp, RoverButton * btn);
+  RoverGy521Demo(RoverGY521 *sensor, RoverDisplay * disp, RoverButton * btn);
 
   int run();
 
@@ -47,7 +47,7 @@ public:
 
 private:
 
-  RoverGy521 * sensor;
+  RoverGY521 * sensor;
   RoverDisplay * disp;
   RoverButton * btn;
 };
