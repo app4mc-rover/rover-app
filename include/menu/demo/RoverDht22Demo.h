@@ -31,6 +31,7 @@
 #include <roverapi/rover_driving.hpp>
 
 using namespace std;
+using namespace rover;
 
 class RoverDht22Demo {
 public:

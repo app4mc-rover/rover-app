@@ -33,6 +33,7 @@
 #include <Menu.h>
 
 using namespace std;
+using namespace rover;
 
 class StatusMenu {
 public:

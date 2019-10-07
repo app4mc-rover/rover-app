@@ -29,6 +29,7 @@
 #include <roverapi/rover_buzzer.hpp>
 
 using namespace std;
+using namespace rover;
 
 class RoverBuzzerDemo {
 public:
