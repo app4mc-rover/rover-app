@@ -26,9 +26,9 @@
 #include <errno.h>
 #include <vector>
 
-#include <app/RoverHmc5883L.h>
-#include <app/RoverButtons.h>
-#include <app/RoverDisplay.h>
+#include <roverapi/rover_hmc5883l.hpp>
+#include <roverapi/rover_button.hpp>
+#include <roverapi/rover_display.hpp>
 
 using namespace std;
 
@@ -37,7 +37,7 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverBearingDemo(RoverHmc5883L *sensor, RoverDisplay * disp, RoverButtons * btn);
+  RoverBearingDemo(RoverHMC5883L *sensor, RoverDisplay * disp, RoverButton * btn);
 
   int run();
 
@@ -47,9 +47,9 @@ private:
 
   double ref_val;
 
-  RoverHmc5883L * sensor;
+  RoverHMC5883L * sensor;
   RoverDisplay * disp;
-  RoverButtons * btn;
+  RoverButton * btn;
 };
 
 #endif /* _ROVER_BEARING_HEADER_ */

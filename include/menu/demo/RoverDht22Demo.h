@@ -26,9 +26,9 @@
 #include <errno.h>
 #include <vector>
 
-#include <app/RoverDht22.h>
-#include <app/RoverButtons.h>
-#include <app/RoverDisplay.h>
+#include <roverapi/rover_dht22.hpp>
+#include <roverapi/rover_button.hpp>
+#include <roverapi/rover_driving.hpp>
 
 using namespace std;
 
@@ -37,7 +37,7 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverDht22Demo(RoverDht22 *sensor, RoverDisplay * disp, RoverButtons * btn);
+  RoverDht22Demo(RoverDHT22 *sensor, RoverDisplay * disp, RoverButton * btn);
 
   int run();
 
@@ -45,9 +45,9 @@ public:
 
 private:
 
-  RoverDht22 * sensor;
+  RoverDHT22 * sensor;
   RoverDisplay * disp;
-  RoverButtons * btn;
+  RoverButton * btn;
 };
 
 #endif /* _ROVER_DHT22_HEADER_ */

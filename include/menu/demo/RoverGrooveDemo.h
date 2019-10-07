@@ -26,9 +26,9 @@
 #include <errno.h>
 #include <vector>
 
-#include <app/RoverGrooveUltrasonicSensor.h>
-#include <app/RoverButtons.h>
-#include <app/RoverDisplay.h>
+#include <roverapi/rover_grooveultrasonic.hpp>
+#include <roverapi/rover_button.hpp>
+#include <roverapi/rover_display.hpp>
 
 using namespace std;
 
@@ -37,7 +37,7 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverGrooveDemo(RoverGrooveUltrasonicSensor *grv_sensor, RoverDisplay * disp, RoverButtons * btn);
+  RoverGrooveDemo(RoverGrooveUltrasonic *grv_sensor, RoverDisplay * disp, RoverButton * btn);
 
   int run();
 
@@ -45,9 +45,9 @@ public:
 
 private:
 
-  RoverGrooveUltrasonicSensor * grv_sensor;
+  RoverGrooveUltrasonic * grv_sensor;
   RoverDisplay * disp;
-  RoverButtons * btn;
+  RoverButton * btn;
 };
 
 #endif /* _ROVER_GROOVE_HEADER_ */

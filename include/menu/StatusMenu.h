@@ -26,9 +26,9 @@
 #include <errno.h>
 #include <vector>
 
-#include <app/RoverDisplay.h>
-#include <app/RoverButtons.h>
-#include <app/RoverUtils.h>
+#include <roverapi/rover_display.hpp>
+#include <roverapi/rover_button.hpp>
+#include <roverapi/rover_utils.hpp>
 
 #include <Menu.h>
 
@@ -39,7 +39,7 @@ public:
 
     RoverUtils * util;
 
-    StatusMenu(RoverUtils *util, RoverDisplay * disp, RoverButtons * btn);
+    StatusMenu(RoverUtils *util, RoverDisplay * disp, RoverButton * btn);
 
     int run();
 
@@ -51,7 +51,7 @@ private:
 
     RoverDisplay * disp;
 
-    RoverButtons * btn;
+    RoverButton * btn;
     Menu * main;
 
 };

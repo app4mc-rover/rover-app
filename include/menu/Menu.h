@@ -26,8 +26,10 @@
 #include <errno.h>
 #include <vector>
 
-#include <app/RoverDisplay.h>
-#include <app/RoverButtons.h>
+#include <roverapi/rover_display.hpp>
+#include <roverapi/rover_button.hpp>
+//#include <app/RoverDisplay.h>
+//#include <app/RoverButtons.h>
 
 using namespace std;
 
@@ -35,7 +37,7 @@ class Menu {
 public:
   char * name;
 
-  Menu(char *name, RoverButtons* btn, RoverDisplay *disp);
+  Menu(char *name, RoverButton* btn, RoverDisplay *disp);
 
   int get_max_size();
 
@@ -45,7 +47,7 @@ public:
 
   void inc_option();
 
-  void add_option(char * option, void (*callback)(Menu* menu, RoverButtons* btn, void * closure), void * closure);
+  void add_option(char * option, void (*callback)(Menu* menu, RoverButton* btn, void * closure), void * closure);
 
   void add_submenu(char * option, Menu *menu);
 
@@ -60,7 +62,7 @@ public:
 private:
   vector<char *> options;
   vector<Menu *> submenu;
-  vector<void (*)(Menu* menu, RoverButtons* btn, void * closure)> callbacks;
+  vector<void (*)(Menu* menu, RoverButton* btn, void * closure)> callbacks;
   vector<void *> cookies;
   uint opt = 0;
   RoverButtons *btn;
