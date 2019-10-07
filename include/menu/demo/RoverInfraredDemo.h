@@ -31,6 +31,7 @@
 #include <roverapi/rover_button.hpp>
 
 using namespace std;
+using namespace rover;
 
 class RoverInfraredDemo {
 public:

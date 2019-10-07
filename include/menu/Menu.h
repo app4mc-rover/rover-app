@@ -26,12 +26,13 @@
 #include <errno.h>
 #include <vector>
 
+#include <roverapi/rover_api.hpp>
+
 #include <roverapi/rover_display.hpp>
 #include <roverapi/rover_button.hpp>
-//#include <app/RoverDisplay.h>
-//#include <app/RoverButtons.h>
 
 using namespace std;
+using namespace rover;
 
 class Menu {
 public:
@@ -65,7 +66,7 @@ private:
   vector<void (*)(Menu* menu, RoverButton* btn, void * closure)> callbacks;
   vector<void *> cookies;
   uint opt = 0;
-  RoverButtons *btn;
+  RoverButton *btn;
   RoverDisplay *disp;
 };
 

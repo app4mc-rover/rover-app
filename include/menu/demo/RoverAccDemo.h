@@ -35,10 +35,10 @@
 #include <roverapi/rover_display.hpp>
 #include <roverapi/rover_grooveultrasonic.hpp>
 
-
-#include <Menu.h>
+#include <menu/Menu.h>
 
 using namespace std;
+using namespace rover;
 
 class RoverAccDemo {
 public:
