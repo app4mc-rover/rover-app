@@ -109,6 +109,15 @@ file (GLOB_RECURSE ROVERAPP_TASK_FILES ${CMAKE_SOURCE_DIR}/src/tasks/*.cpp)
 add_library (roverapptasks SHARED ${ROVERAPP_TASK_FILES})
 
 
+#Add menu
+#Add all files to a variable ROVERAPP_MENU_FILES
+file (GLOB_RECURSE ROVERAPP_MENU_FILES 
+    ${CMAKE_SOURCE_DIR}/src/menu/demos/*.cpp
+    ${CMAKE_SOURCE_DIR}/src/menu/*.cpp
+    )
+add_library (roverappmenu SHARED ${ROVERAPP_MENU_FILES})
+
+
 #Add drivers
 file (GLOB_RECURSE ROVERAPP_DRIVER_FILES
   ${CMAKE_SOURCE_DIR}/src/drivers/oled_drivers/*.c
@@ -144,6 +153,11 @@ target_link_libraries(roverapi paho-mqtt3cs)
 target_link_libraries(roverapi jsoncpp)
 
 target_link_libraries (roverapi roverappdrivers)
+
+#
+#  LINKING API TO ROVER MENU
+#
+target_link_libraries(roverappmenu roverapi)
 
 #
 #  LINKING TO ROVER TASKS
@@ -210,6 +224,8 @@ target_link_libraries(roverapp roverappdrivers)
 #
 # EXAMPLES
 #
+#add_executable(OLEDmenu ${CMAKE_SOURCE_DIR}/src/examples/OLEDmenu.cpp)
+#target_link_libraries(OLEDmenu roverapi roverappmenu)
 
 add_executable(display_control ${CMAKE_SOURCE_DIR}/src/examples/display_control.cpp)
 target_link_libraries (display_control roverapi)
@@ -247,6 +263,7 @@ install(
   TARGETS roverapp roverapi
     roverapptasks
     roverappdrivers
+    roverappmenu
     hono_interaction
     status_library
     config_reader
