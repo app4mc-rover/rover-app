@@ -34,14 +34,15 @@ RoverInfraredDemo::RoverInfraredDemo(RoverInfraredSensor *r_infrared0,
       RoverInfraredSensor *r_infrared1, 
       RoverInfraredSensor *r_infrared2,
       RoverInfraredSensor *r_infrared3, 
-      RoverDisplay * disp, RoverButton * btn) {
+      RoverDisplay * disp, 
+      RoverButton * usrbtn) {
   
     this->r_infrared3 = r_infrared3;
     this->r_infrared2 = r_infrared2;
     this->r_infrared1 = r_infrared1;
     this->r_infrared0 = r_infrared0;
     this->disp = disp;
-    this->btn = btn;
+    this->usrbtn = usrbtn;
 }
 
 inline const char * get_val_str(double val) {
@@ -134,7 +135,7 @@ bool RoverInfraredDemo::check_button() {
   double state = 1;
   static bool trigered = false;
 
-  state = this->btn->readButton();
+  state = this->usrbtn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

@@ -38,7 +38,7 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverBearingDemo(RoverHMC5883L *sensor, RoverDisplay * disp, RoverButton * btn);
+  RoverBearingDemo(RoverHMC5883L *sensor, RoverDisplay * disp, RoverButton * usrbtn);
 
   int run();
 
@@ -50,7 +50,7 @@ private:
 
   RoverHMC5883L * sensor;
   RoverDisplay * disp;
-  RoverButton * btn;
+  RoverButton * usrbtn;
 };
 
 #endif /* _ROVER_BEARING_HEADER_ */

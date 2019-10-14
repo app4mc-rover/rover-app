@@ -27,9 +27,11 @@
 
 using namespace std;
 
-Menu::Menu(char *name, RoverButton* btn, RoverDisplay *disp) {
+Menu::Menu(char *name, RoverButton* usrbtn, 
+        RoverButton* shutdownbtn, RoverDisplay *disp) {
   this->name = name;
-  this->btn = btn;
+  this->shutdownbtn = shutdownbtn;
+  this->usrbtn = usrbtn; 
   this->disp = disp;
 }
 
@@ -53,7 +55,9 @@ void Menu::inc_option() {
   }
 }
 
-void Menu::add_option(char * option, void (*callback)(Menu* menu, RoverButton* btn, void * closure), void * closure) {
+void Menu::add_option(char * option,
+        void (*callback)(Menu* menu, RoverButton* usrbtn, RoverButton* shutdownbtn, void * closure),
+        void * closure) {
   options.push_back(option);
   submenu.push_back(NULL);
   callbacks.push_back(callback);
@@ -112,7 +116,7 @@ Menu * Menu::select() {
   }
 
   if (callbacks[this->opt]) {
-    callbacks[this->opt](this, this->btn, cookies[this->opt]);
+    callbacks[this->opt](this, this->usrbtn, this->shutdownbtn, cookies[this->opt]);
   }
 
   return this;
@@ -122,7 +126,7 @@ void Menu::update() {
   double state = 1;
   static bool trigered = false;
 
-  state = this->btn->readButton();
+  state = this->shutdownbtn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;
@@ -138,7 +142,7 @@ Menu * Menu::next() {
   double state = 1;
   static bool trigered = false;
 
-  state = this->btn->readButton();
+  state = this->usrbtn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

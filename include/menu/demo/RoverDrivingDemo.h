@@ -41,13 +41,14 @@ public:
   bool running;
   RoverDriving * drv;
 
-  RoverDrivingDemo(RoverDriving *drv, RoverDisplay * disp, RoverButton * btn);
+  RoverDrivingDemo(RoverDriving *drv, RoverDisplay * disp, RoverButton * usrbtn, RoverButton * shutdownbtn);
 
   int run();
 
 private:
 
-  RoverButton * btn;
+  RoverButton * usrbtn;
+  RoverButton * shutdownbtn;
   Menu * main;
 
 };

@@ -39,7 +39,7 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverGrooveDemo(RoverHCSR04 *r_front, RoverHCSR04 *r_rear, RoverDisplay * disp, RoverButton * btn);
+  RoverGrooveDemo(RoverHCSR04 *r_front, RoverHCSR04 *r_rear, RoverDisplay * disp, RoverButton * usrbtn);
  
   int run();
 
@@ -50,7 +50,7 @@ private:
   RoverHCSR04 * r_rear;
   RoverHCSR04 * r_front;
   RoverDisplay * disp;
-  RoverButton * btn;
+  RoverButton * usrbtn;
 };
 
 #endif /* _ROVER_GROOVE_HEADER_ */

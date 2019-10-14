@@ -38,7 +38,7 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverDht22Demo(RoverDHT22 *sensor, RoverDisplay * disp, RoverButton * btn);
+  RoverDht22Demo(RoverDHT22 *sensor, RoverDisplay * disp, RoverButton * usrbtn);
 
   int run();
 
@@ -48,7 +48,7 @@ private:
 
   RoverDHT22 * sensor;
   RoverDisplay * disp;
-  RoverButton * btn;
+  RoverButton * usrbtn;
 };
 
 #endif /* _ROVER_DHT22_HEADER_ */

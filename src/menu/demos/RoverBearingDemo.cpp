@@ -33,10 +33,10 @@ using namespace rover;
 static const int oled_width = 128;
 static const int oled_height = 64;
 
-RoverBearingDemo::RoverBearingDemo(RoverHMC5883L *sensor, RoverDisplay * disp, RoverButton * btn) {
+RoverBearingDemo::RoverBearingDemo(RoverHMC5883L *sensor, RoverDisplay * disp, RoverButton * usrbtn) {
   this->sensor = sensor;
   this->disp = disp;
-  this->btn = btn;
+  this->usrbtn = usrbtn;
   this->ref_val = this->sensor->read();
 }
 
@@ -118,7 +118,7 @@ bool RoverBearingDemo::check_button() {
   double state = 1;
   static bool trigered = false;
 
-  state = this->btn->readButton();
+  state = this->usrbtn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

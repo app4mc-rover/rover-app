@@ -29,10 +29,10 @@
 using namespace rover;
 
 
-RoverDht22Demo::RoverDht22Demo(RoverDHT22 *sensor, RoverDisplay * disp, RoverButton * btn) {
+RoverDht22Demo::RoverDht22Demo(RoverDHT22 *sensor, RoverDisplay * disp, RoverButton * usrbtn) {
   this->sensor = sensor;
   this->disp = disp;
-  this->btn = btn;
+  this->usrbtn = usrbtn;
 }
 
 int RoverDht22Demo::run() {
@@ -65,7 +65,7 @@ bool RoverDht22Demo::check_button() {
   double state = 1;
   static bool trigered = false;
 
-  state = this->btn->readButton();
+  state = this->usrbtn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

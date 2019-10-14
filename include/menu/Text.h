@@ -34,7 +34,7 @@ using namespace rover;
 
 class Text {
 public:
-  Text(RoverDisplay *disp, RoverButton* btn);
+  Text(RoverDisplay *disp, RoverButton* usrbtn, RoverButton* shutdownbtn);
 
   void add_text(string text);
 
@@ -47,7 +47,8 @@ public:
 private:
   vector<string> fulltext;
   uint pos = 0;
-  RoverButton *btn;
+  RoverButton *usrbtn;
+  RoverButton *shutdownbtn;
   RoverDisplay *disp;
   uint char_size = 1;
   uint num_chars_line = 128/6;
