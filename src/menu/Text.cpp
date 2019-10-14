@@ -30,8 +30,9 @@
 using namespace std;
 using namespace rover; 
 
-Text::Text(RoverDisplay *disp, RoverButton* btn) {
-  this->btn = btn;
+Text::Text(RoverDisplay *disp, RoverButton* usrbtn, RoverButton* shutdownbtn) {
+  this->usrbtn = usrbtn;
+  this->shutdownbtn = usrbtn;
   this->disp = disp;
 }
 
@@ -131,7 +132,7 @@ void Text::update() {
   static bool scroll_trigered = false;
   static bool exit_trigered = false;
 
-  state = this->btn->readButton();
+  state = this->shutdownbtn->readButton();
 
   if (scroll_trigered && state != 0) {
     scroll_trigered = false;
@@ -142,7 +143,7 @@ void Text::update() {
     scroll_trigered = true;
   }
 
-  state = this->btn->readButton();
+  state = this->usrbtn->readButton();
 
   if (exit_trigered && state != 0) {
     exit_trigered = false;

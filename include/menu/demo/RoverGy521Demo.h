@@ -38,7 +38,10 @@ public:
   uint curr_speed;
   bool running;
 
-  RoverGy521Demo(RoverGY521 *sensor, RoverDisplay * disp, RoverButton * btn);
+  RoverGy521Demo(RoverGY521 *sensor, 
+          RoverDisplay * disp, 
+          RoverButton * usrbtn,
+          RoverButton * shutdownbtn);
 
   int run();
 
@@ -49,7 +52,8 @@ private:
 
   RoverGY521 * sensor;
   RoverDisplay * disp;
-  RoverButton * btn;
+  RoverButton * usrbtn;
+  RoverButton * shutdownbtn;
 };
 
 #endif /* _ROVER_GY521_HEADER_ */

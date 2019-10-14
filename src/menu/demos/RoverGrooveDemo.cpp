@@ -30,11 +30,11 @@
 static const int oled_width = 128;
 static const int oled_height = 64;
 
-RoverGrooveDemo::RoverGrooveDemo(RoverHCSR04 *r_front, RoverHCSR04 *r_rear, RoverDisplay * disp, RoverButton * btn) {
+RoverGrooveDemo::RoverGrooveDemo(RoverHCSR04 *r_front, RoverHCSR04 *r_rear, RoverDisplay * disp, RoverButton * usrbtn) {
   this->r_front = r_front;
   this->r_rear = r_rear;
   this->disp = disp;
-  this->btn = btn;
+  this->usrbtn = usrbtn;
 }
 
 inline const char * get_val_str(double val) {
@@ -100,7 +100,7 @@ bool RoverGrooveDemo::check_button() {
   double state = 1;
   static bool trigered = false;
 
-  state = this->btn->readButton();
+  state = this->usrbtn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

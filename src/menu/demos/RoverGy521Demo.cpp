@@ -27,10 +27,14 @@
 
 #include <menu/demo/RoverGy521Demo.h>
 
-RoverGy521Demo::RoverGy521Demo(RoverGY521 *sensor, RoverDisplay * disp, RoverButton * btn) {
+RoverGy521Demo::RoverGy521Demo(RoverGY521 *sensor, 
+        RoverDisplay * disp, 
+        RoverButton * usrbtn,
+        RoverButton * shutdownbtn) {
   this->sensor = sensor;
   this->disp = disp;
-  this->btn = btn;
+  this->usrbtn = usrbtn;
+  this->shutdownbtn = shutdownbtn;
 }
 
 
@@ -121,7 +125,7 @@ bool RoverGy521Demo::check_button() {
   double state = 1;
   static bool trigered = false;
     
-  state = this->btn->readButton();
+  state = this->usrbtn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;
@@ -139,7 +143,7 @@ bool RoverGy521Demo::check_next_button() {
   double state = 1;
   static bool trigered = false;
 
-  state = this->btn->readButton();
+  state = this->shutdownbtn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

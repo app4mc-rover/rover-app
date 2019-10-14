@@ -27,7 +27,7 @@
 
 #include <Menu.h>
 
-void menu_cb(Menu * menu, RoverButtons* btn, void * closure) {
+void menu_cb(Menu * menu, RoverButtons* userbtn, RoverButtons *shutdownbtn, void * closure) {
 
   RoverDrivingDemo * drv_demo = (RoverDrivingDemo *)closure;
 

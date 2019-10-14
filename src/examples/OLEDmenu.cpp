@@ -64,7 +64,7 @@ using namespace std;
 using namespace rover;
 
 // Callback for handling shutdown menu
-void shutdown_cb(Menu * menu, RoverButton* r_button, void * closure) {
+void shutdown_cb(Menu * menu, RoverButton* usrbtn, RoverButton* shutdownbtn, void * closure) {
 
   switch (menu->get_option()) {
     case 0: // Reset
@@ -81,7 +81,7 @@ void shutdown_cb(Menu * menu, RoverButton* r_button, void * closure) {
 }
 
 // Callback for handling Main menu
-void main_cb(Menu * menu, RoverButton* r_button, void * closure) {
+void main_cb(Menu * menu, RoverButton* usrbtn, RoverButton* shutdownbtn, void * closure) {
   StatusMenu * status = (StatusMenu *)closure;
   Text * text = (Text *)closure;
 
@@ -100,7 +100,7 @@ void main_cb(Menu * menu, RoverButton* r_button, void * closure) {
 }
 
 // Callback for handling demo menu
-void demo_cb(Menu * menu, RoverButton* r_button, void * closure) {
+void demo_cb(Menu * menu, RoverButton* usrbtn, RoverButton *shutdownbtn, void * closure) {
   RoverBuzzerDemo * bzrd = (RoverBuzzerDemo *)closure;
   RoverDrivingDemo * drvd = (RoverDrivingDemo *)closure;
   RoverInfraredDemo * infrd = (RoverInfraredDemo *)closure;
@@ -268,10 +268,12 @@ int main(int ac, char **av, char **env)
   
     // Instantiate buzzer and button
     RoverBuzzer r_buzzer = RoverBuzzer();
-    RoverButton r_button = RoverButton(USER_BUTTON);
+    RoverButton user_button = RoverButton(USER_BUTTON); //right one
+    RoverButton shutdown_button = RoverButton(SHUTDOWN_BUTTON); //left one
     r_buzzer.initialize();
-    r_button.initialize();
-  
+    user_button.initialize();
+    shutdown_button.initialize();
+ 
     // Driving with rover
     RoverDriving r_driving = RoverDriving();
     r_driving.initialize();
@@ -314,25 +316,25 @@ int main(int ac, char **av, char **env)
  
   // Create demos objects
   RoverBuzzerDemo bzr_demo(&r_buzzer);
-  RoverDrivingDemo drv_demo(&r_driving, &r_display, &r_button);
+  RoverDrivingDemo drv_demo(&r_driving, &r_display, &user_button, &shutdown_button);
   RoverInfraredDemo inf_red_demo(
           &r_infrared0, &r_infrared1, &r_infrared2, &r_infrared3 , 
-          &r_display, &r_button);
-  RoverGrooveDemo grv_sen_demo(&r_front, &r_rear, &r_display, &r_button);
-  RoverDht22Demo dht_sen_demo(&r_dht22, &r_display, &r_button);
-  RoverGy521Demo gy_sen_demo(&r_accel, &r_display, &r_button);
-  RoverBearingDemo bearing_demo(&r_hmc, &r_display, &r_button);
-  RoverAccDemo acc_demo(&r_driving, &r_front, &r_rear, &r_display, &r_button);
+          &r_display, &user_button);
+  RoverGrooveDemo grv_sen_demo(&r_front, &r_rear, &r_display, &user_button);
+  RoverDht22Demo dht_sen_demo(&r_dht22, &r_display, &user_button);
+  RoverGy521Demo gy_sen_demo(&r_accel, &r_display, &user_button, &shutdown_button);
+  RoverBearingDemo bearing_demo(&r_hmc, &r_display, &user_button);
+  RoverAccDemo acc_demo(&r_driving, &r_front, &r_rear, &r_display, &user_button);
 
-  StatusMenu status_men(&r_utils, &r_display, &r_button);
-  Text info_text(&r_display, &r_button);
+  StatusMenu status_men(&r_utils, &r_display, &user_button);
+  Text info_text(&r_display, &user_button, &shutdown_button);
 
   create_info_text(info_text, r_utils);
 
   // Create the menu objects
-  Menu main_menu = Menu("Main", &r_button, &r_display);
-  Menu demo_menu = Menu("Demo", &r_button, &r_display);
-  Menu shut_menu = Menu("Shutdown", &r_button, &r_display);
+  Menu main_menu = Menu("Main", &user_button, &shutdown_button, &r_display);
+  Menu demo_menu = Menu("Demo", &user_button, &shutdown_button, &r_display);
+  Menu shut_menu = Menu("Shutdown", &user_button, &shutdown_button, &r_display);
   Menu * curr_menu = &main_menu;
 
   // Add Main Menu options

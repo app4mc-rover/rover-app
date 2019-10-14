@@ -30,11 +30,11 @@
 static const int P = 30;
 static const double target_dist = 20;
 
-bool check_button(RoverButton * btn) {
+bool check_button(RoverButton * usrbtn) {
   double state = 1;
   static bool trigered = false;
 
-  state = btn->readButton();
+  state = usrbtn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;
@@ -48,11 +48,11 @@ bool check_button(RoverButton * btn) {
   return false;
 }
 
-RoverAccDemo::RoverAccDemo(RoverDriving *drv, RoverHCSR04 *r_front, RoverHCSR04 *r_rear, RoverDisplay * disp, RoverButton * btn) : curr_speed(0), running(true) {
+RoverAccDemo::RoverAccDemo(RoverDriving *drv, RoverHCSR04 *r_front, RoverHCSR04 *r_rear, RoverDisplay * disp, RoverButton * usrbtn) : curr_speed(0), running(true) {
   this->drv = drv;
   this->r_rear = r_rear;;
   this->r_front = r_front;
-  this->btn = btn;
+  this->usrbtn = usrbtn;
   
 }
 
@@ -62,7 +62,7 @@ int RoverAccDemo::run() {
 
   this->drv->setSpeed((int)speed_to_set);
 
-  while(!check_button(this->btn)) {
+  while(!check_button(this->usrbtn)) {
     
     sensor_val =  this->r_front->read();
     

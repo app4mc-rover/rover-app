@@ -42,7 +42,8 @@ public:
       RoverInfraredSensor *r_infrared1, 
       RoverInfraredSensor *r_infrared2,
       RoverInfraredSensor *r_infrared3, 
-      RoverDisplay * disp, RoverButton * btn);
+      RoverDisplay * disp, 
+      RoverButton * usrbtn) ;
 
   int run();
 
@@ -55,7 +56,7 @@ private:
   RoverInfraredSensor *  r_infrared0 ;
 
   RoverDisplay * disp;
-  RoverButton * btn;
+  RoverButton * usrbtn;
 };
 
 #endif /* _ROVER_INFRARED_HEADER_ */

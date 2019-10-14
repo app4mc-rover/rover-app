@@ -30,10 +30,10 @@
 #include <menu/icons/bluetooth_logo.h>
 #include <menu/icons/kuksa_logo.h>
 
-StatusMenu::StatusMenu(RoverUtils *util, RoverDisplay * disp, RoverButton * btn) {
+StatusMenu::StatusMenu(RoverUtils *util, RoverDisplay * disp, RoverButton * usrbtn) {
   this->util = util;
   this->disp = disp;
-  this->btn = btn;
+  this->usrbtn = usrbtn;
 }
 
 int StatusMenu::run() {
@@ -108,7 +108,7 @@ bool StatusMenu::check_button() {
   double state = 1;
   static bool trigered = false;
 
-  state = this->btn->readButton();
+  state = this->usrbtn->readButton();
 
   if (trigered && state != 0) {
     trigered = false;

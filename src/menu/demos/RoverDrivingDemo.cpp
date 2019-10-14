@@ -27,7 +27,7 @@
 
 #include <menu/Menu.h>
 
-void menu_cb(Menu * menu, RoverButton* btn, void * closure) {
+void menu_cb(Menu * menu, RoverButton* usrbtn, RoverButton * shutdownbtn, void * closure) {
 
   RoverDrivingDemo * drv_demo = (RoverDrivingDemo *)closure;
 
@@ -69,10 +69,11 @@ void menu_cb(Menu * menu, RoverButton* btn, void * closure) {
   return;
 }
 
-RoverDrivingDemo::RoverDrivingDemo(RoverDriving *drv, RoverDisplay * disp, RoverButton * btn) : curr_speed(0), running(true) {
+RoverDrivingDemo::RoverDrivingDemo(RoverDriving *drv, RoverDisplay * disp, RoverButton * usrbtn, RoverButton* shutdownbtn) : curr_speed(0), running(true) {
   this->drv = drv;
-  this->btn = btn;
-  this->main = new Menu("DrivingDemo", btn, disp);
+  this->usrbtn= usrbtn;
+  this->shutdownbtn = shutdownbtn;
+  this->main = new Menu("DrivingDemo", usrbtn, shutdownbtn, disp);
 
   this->main->add_option("1:Speed++", menu_cb, this);
   this->main->add_option("2:Speed--", menu_cb, this);

@@ -40,7 +40,7 @@ public:
 
     RoverUtils * util;
 
-    StatusMenu(RoverUtils *util, RoverDisplay * disp, RoverButton * btn);
+    StatusMenu(RoverUtils *util, RoverDisplay * disp, RoverButton * usrbtn);
 
     int run();
 
@@ -52,7 +52,7 @@ private:
 
     RoverDisplay * disp;
 
-    RoverButton * btn;
+    RoverButton * usrbtn;
     Menu * main;
 
 };

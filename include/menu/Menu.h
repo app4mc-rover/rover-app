@@ -38,7 +38,7 @@ class Menu {
 public:
   char * name;
 
-  Menu(char *name, RoverButton* btn, RoverDisplay *disp);
+  Menu(char *name, RoverButton* usrbtn, RoverButton* shutdownbtn, RoverDisplay *disp);
 
   int get_max_size();
 
@@ -48,7 +48,12 @@ public:
 
   void inc_option();
 
-  void add_option(char * option, void (*callback)(Menu* menu, RoverButton* btn, void * closure), void * closure);
+  void add_option(char * option, 
+          void (*callback)(Menu* menu,
+              RoverButton* usrbtn, 
+              RoverButton* shutdownbtn, 
+              void * closure), 
+          void * closure);
 
   void add_submenu(char * option, Menu *menu);
 
@@ -63,10 +68,11 @@ public:
 private:
   vector<char *> options;
   vector<Menu *> submenu;
-  vector<void (*)(Menu* menu, RoverButton* btn, void * closure)> callbacks;
+  vector<void (*)(Menu* menu, RoverButton* usrbtn, RoverButton* shutdownbtn, void * closure)> callbacks;
   vector<void *> cookies;
   uint opt = 0;
-  RoverButton *btn;
+  RoverButton *usrbtn;
+  RoverButton *shutdownbtn;
   RoverDisplay *disp;
 };
 
