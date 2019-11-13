@@ -15,6 +15,7 @@
 
 #include <tasks/external_gpio_task.h>
 
+#include <iostream>
 #include <ctime>
 #include <unistd.h>
 #include <libraries/timing/timing.h>
@@ -25,6 +26,21 @@
 
 #include <roverapi/rover_buzzer.hpp>
 #include <roverapi/rover_button.hpp>
+
+//Keyboard
+#include <fcntl.h>    /* For O_RDWR */
+#include <unistd.h>   /* For open(), creat() */
+#include <cmath>
+#include <cerrno>
+#include <cstdio>
+#include <iostream> 
+#include <stdio.h>  
+#include <string.h>
+#include <linux/input.h>
+#define BITS_PER_LONG (sizeof(long) * 8)
+#define NBITS(x) ((((x)-1)/BITS_PER_LONG)+1)
+using namespace std;
+
 
 /* Checks global variable buzzer_status */
 /* 1-> ON    0-> OFF */
@@ -50,6 +66,96 @@ void buzzerHandler (void)
 		softToneWrite (BUZZER_PIN, BUZZER_OFF_FREQ);
 	}
 	*/
+}
+//keyboard
+using namespace std;
+int keyboardHandler (void)
+{
+
+	//char input = 'f';
+	int FileDevice;
+	int ReadDevice;
+	int Index;
+	struct input_event InputEvent[64];
+	int version;
+	unsigned short id[4];
+	unsigned long bit[EV_MAX][NBITS(KEY_MAX)];
+	int input;
+
+	//----- OPEN THE INPUT DEVICE -----
+	if ((FileDevice = open("/dev/input/event1", O_RDONLY)) < 0)		//<<<<SET THE INPUT DEVICE PATH HERE
+	{
+		perror("KeyboardMonitor can't open input device");
+		close(FileDevice);
+		return 666; ///////////////
+	}
+
+	//----- GET DEVICE VERSION -----
+	if (ioctl(FileDevice, EVIOCGVERSION, &version))
+	{
+		perror("KeyboardMonitor can't get version");
+		close(FileDevice);
+		return 666; ////////////
+	}
+	//printf("Input driver version is %d.%d.%d\n", version >> 16, (version >> 8) & 0xff, version & 0xff);
+
+	//----- GET DEVICE INFO -----
+	ioctl(FileDevice, EVIOCGID, id);
+	//printf("Input device ID: bus 0x%x vendor 0x%x product 0x%x version 0x%x\n", id[ID_BUS], id[ID_VENDOR], id[ID_PRODUCT], id[ID_VERSION]);
+	
+	memset(bit, 0, sizeof(bit));
+	ioctl(FileDevice, EVIOCGBIT(0, EV_MAX), bit[0]);
+
+	//----- READ KEYBOARD EVENTS -----
+
+		ReadDevice = read(FileDevice, InputEvent, sizeof(struct input_event) * 64);
+
+		if (ReadDevice < (int) sizeof(struct input_event))
+		{
+			//This should never happen
+			perror("KeyboardMonitor error reading - keyboard lost?");
+			close(FileDevice);
+			return 666; ////////////
+		}
+		else
+		{
+			for (Index = 0; Index < ReadDevice / sizeof(struct input_event); Index++)
+			{
+				//We have:
+				//	InputEvent[Index].time		timeval: 16 bytes (8 bytes for seconds, 8 bytes for microseconds)
+				//	InputEvent[Index].type		See input-event-codes.h
+				//	InputEvent[Index].code		See input-event-codes.h
+				//	InputEvent[Index].value		01 for keypress, 00 for release, 02 for autorepeat
+				
+				if (InputEvent[Index].type == EV_KEY)
+				{
+					if (InputEvent[Index].value == 2)
+					{
+						//This is an auto repeat of a held down key
+						//cout << (int)(InputEvent[Index].code) << " Auto Repeat";
+						//cout << endl;
+					}
+					else if (InputEvent[Index].value == 1)
+					{
+						//----- KEY DOWN -----
+						//cout << (int)(InputEvent[Index].code) << " Key Down";		//input-event-codes.h
+						//cout << endl;
+						input=(int)(InputEvent[Index].code) ;
+					}
+					else if (InputEvent[Index].value == 0)
+					{
+						//----- KEY UP -----
+						//cout << (int)(InputEvent[Index].code) << " Key Up";		//input-event-codes.h
+						//cout << endl;
+						input=(int)(InputEvent[Index].code) ;
+						
+					}
+				}
+			}
+		}
+	    cout<< "input key is : "<< input <<endl;
+	
+	return input;
 }
 
 void buttonHandler (void)
@@ -104,6 +210,7 @@ void buttonHandler (void)
 
 void *External_GPIO_Task(void *arg)
 {
+	int a=0;
 	timing extgpio_task_tmr;
 
 	extgpio_task_tmr.setTaskID((char*)"GPIO");
@@ -120,6 +227,83 @@ void *External_GPIO_Task(void *arg)
 		/* Handle buzzer operation */
 		buzzerHandler();
 		buttonHandler();
+		a = keyboardHandler();
+		cout<< "it receive------------------ : "<< a <<endl;
+		switch (a) {
+			case 0:
+				if (!r_light.autoLight) light_mode_shared = 0;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 72:
+			case 9:
+				if (!r_light.autoLight)light_mode_shared = 8;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 80:
+			case 3:
+				if (!r_light.autoLight)light_mode_shared = 2;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 77:
+			case 7:
+				if (!r_light.autoLight)light_mode_shared = 6;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 75:
+			case 5:
+				if (!r_light.autoLight)light_mode_shared = 4;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 76:
+			case 6:
+				if (!r_light.autoLight)light_mode_shared = 5;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 78:			// + key press
+			case 27:			// + german keybord
+				if (!r_light.autoLight)light_mode_shared = 11;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+				
+			case 74:			// - key pres
+			case 53:			// - german key board
+				if (!r_light.autoLight)light_mode_shared = 22;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 56:			// left ctrl to Auto light
+				light_mode_shared = 10;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 100:			// right ctrl to Manual light
+				light_mode_shared = 20;
+				cout<< "external gpio task -> it select"<< light_mode_shared.get()<< "--"<<endl;
+				break;
+			case 17:			// GO FORWARD
+				keycommand_shared = 'W';
+				cout<< "external gpio task -> it select"<< keycommand_shared.get()<< "--"<<endl;
+				break;
+			case 31:			// GO FORWARD
+				keycommand_shared = 'S';
+				cout<< "external gpio task -> it select"<< keycommand_shared.get()<< "--"<<endl;
+				break;	
+			case 30:			// GO FORWARD
+				keycommand_shared = 'A';
+				cout<< "external gpio task -> it select"<< keycommand_shared.get()<< "--"<<endl;
+				break;
+			case 32:			// GO FORWARD
+				keycommand_shared = 'D';
+				cout<< "external gpio task -> it select"<< keycommand_shared.get()<< "--"<<endl;
+				break;
+			case 33:			// GO FORWARD
+				keycommand_shared = 'F';
+				cout<< "external gpio task -> it select"<< keycommand_shared.get()<< "--"<<endl;
+				break;
+			
+			default:
+				//
+				break;	
+			
+			}
 
 		//Task content ends here -------------------------------------------------
 
