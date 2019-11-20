@@ -35,8 +35,8 @@ void menu_cb(Menu * menu, RoverButton* usrbtn, RoverButton * shutdownbtn, void *
     case 0: // Increment Speed
       drv_demo->curr_speed += 10;
 
-      if (drv_demo->curr_speed > 480) {
-        drv_demo->curr_speed = 480;
+      if (drv_demo->curr_speed > HIGHEST_SPEED) {
+        drv_demo->curr_speed = HIGHEST_SPEED;
       }
       drv_demo->drv->setSpeed(drv_demo->curr_speed);
       break;
