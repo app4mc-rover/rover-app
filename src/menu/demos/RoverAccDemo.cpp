@@ -22,6 +22,7 @@
 #include <sys/types.h>
 #include <errno.h>
 #include <vector>
+#include <string>
 
 #include <menu/demo/RoverAccDemo.h>
 #include <menu/Menu.h>
@@ -29,6 +30,10 @@
 
 static const int P = 30;
 static const double target_dist = 20;
+
+static const int oled_width = 128;
+static const int oled_height = 64;
+
 
 bool check_button(RoverButton * usrbtn) {
   double state = 1;
@@ -53,19 +58,41 @@ RoverAccDemo::RoverAccDemo(RoverDriving *drv, RoverHCSR04 *r_front, RoverHCSR04 
   this->r_rear = r_rear;;
   this->r_front = r_front;
   this->usrbtn = usrbtn;
-  
+  this->disp = disp;  
 }
 
 int RoverAccDemo::run() {
   double sensor_val = 0;
   double speed_to_set = 0;
 
+  static const int triangle_width = 10;
+  static const int triangle_height = 20;
+
+  this->disp->setTextSize(2);
+  this->disp->setTextColor(1);
+
   this->drv->setSpeed((int)speed_to_set);
 
   while(!check_button(this->usrbtn)) {
+    this->disp->clearDisplay();
     
     sensor_val =  this->r_front->read();
-    
+   
+    // Front
+    sensor_val = this->r_front->read();
+    // Arrow
+    this->disp->drawTriangle(oled_width - triangle_width,
+                              oled_height - triangle_height,
+                              oled_width,
+                              oled_height - triangle_height/2,
+                              oled_width - triangle_width,
+                              oled_height,
+                              1);
+
+    this->disp->setCursor(oled_width - 72, oled_height - 17);
+    this->disp->print(to_string(sensor_val).c_str());
+    this->disp->display();
+ 
     speed_to_set = (sensor_val - target_dist)*P;
     
     if (speed_to_set < 0) {
@@ -80,5 +107,7 @@ int RoverAccDemo::run() {
     
     usleep(100000);
   }
+  this->drv->stopRover();
+
 
 }
