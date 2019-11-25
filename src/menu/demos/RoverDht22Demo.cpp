@@ -43,19 +43,27 @@ int RoverDht22Demo::run() {
 
   while (!check_button()) {
     this->disp->clearDisplay();
-
-    // Temperature
-    sensor_val = this->sensor->readTemperature();
-    this->disp->setCursor(30, 30);
-    this->disp->print(to_string(sensor_val).c_str());
-
-
+    
     // Humidity
-    // this->sensor->read_humidity(sensor_val);
-    this->disp->setCursor(90, 30);
-    this->disp->print(to_string(sensor_val).c_str());
+    sensor_val = this->sensor->readHumidity();
+    // couldn't find an easy way to check sensor status
+    // So i used humidity, because  lowest humidity on earth is 1
+    if ( sensor_val > 1 ) {
+        this->disp->setCursor(90, 30);
+        this->disp->print(to_string(sensor_val).c_str());
 
-
+        // Temperature
+        sensor_val = this->sensor->readTemperature();
+        this->disp->setCursor(30, 30);
+        this->disp->print(to_string(sensor_val).c_str());
+    }
+    else{
+        this->disp->setCursor(15,10);
+        this->disp->print("Not");
+        this->disp->setCursor(5,30);
+        this->disp->print("Connected");
+    }
+    
     this->disp->display();
   }
 
