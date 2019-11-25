@@ -64,21 +64,6 @@ int RoverGrooveDemo::run() {
     // Front
     sensor_val = this->r_front->read();
     // Arrow
-    this->disp->drawTriangle(triangle_width,
-                              0,
-                              0,
-                              triangle_height/2,
-                              triangle_width,
-                              triangle_height,
-                              1);
-
-    this->disp->setCursor(triangle_width + 4, 3);
-    this->disp->print(get_val_str(sensor_val));
-
-
-    // Rear
-    sensor_val = this->r_rear->read();
-    // Arrow
     this->disp->drawTriangle(oled_width - triangle_width,
                               oled_height - triangle_height,
                               oled_width,
@@ -88,6 +73,21 @@ int RoverGrooveDemo::run() {
                               1);
 
     this->disp->setCursor(oled_width - 72, oled_height - 17);
+    this->disp->print(get_val_str(sensor_val));
+
+
+    // Rear
+    sensor_val = this->r_rear->read();
+    // Arrow
+    this->disp->drawTriangle(triangle_width,
+                              0,
+                              0,
+                              triangle_height/2,
+                              triangle_width,
+                              triangle_height,
+                              1);
+
+    this->disp->setCursor(triangle_width + 4, 3);
     this->disp->print(get_val_str(sensor_val));
 
 
