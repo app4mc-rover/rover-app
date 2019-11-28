@@ -56,6 +56,7 @@ private:
   RoverHCSR04 * r_rear;
   RoverButton * usrbtn;
   Menu * main;
+  RoverDisplay * disp; 
 
 };
 
