@@ -1,0 +1,26 @@
+var classrover_1_1_rover_q_m_c5883_l =
+[
+    [ "RoverQMC5883L", "classrover_1_1_rover_q_m_c5883_l.html#a650f01e286f4e10abf38588cf5f96fc3", null ],
+    [ "~RoverQMC5883L", "classrover_1_1_rover_q_m_c5883_l.html#aa4c90227e30158c37ed2d835312d5f10", null ],
+    [ "calibrate", "classrover_1_1_rover_q_m_c5883_l.html#a8528acf3980f66008e82ec3ff0847aba", null ],
+    [ "getQMC5883LAddress", "classrover_1_1_rover_q_m_c5883_l.html#a1589a2f2d4d8a6e7ae61a65f99abfd89", null ],
+    [ "getQMC5883LCalibrationPeriod", "classrover_1_1_rover_q_m_c5883_l.html#a263b13c03d6a3a706306cd1d785fc8ce", null ],
+    [ "getQMC5883LDeclinationAngle", "classrover_1_1_rover_q_m_c5883_l.html#a8b6e59e2abc18c6d0c0bdb353db17647", null ],
+    [ "initialize", "classrover_1_1_rover_q_m_c5883_l.html#ad94cbba23b1835718990d9df5c04ec53", null ],
+    [ "MAXIMUM_", "classrover_1_1_rover_q_m_c5883_l.html#a82234be37f3e7af3440e6ca9c1b34c9d", null ],
+    [ "MINIMUM_", "classrover_1_1_rover_q_m_c5883_l.html#aa33690bf538d09a36b856ddb814cf72a", null ],
+    [ "read", "classrover_1_1_rover_q_m_c5883_l.html#a54c7e0341431f27784b2d89ab8471a30", null ],
+    [ "setQMC5883LAddress", "classrover_1_1_rover_q_m_c5883_l.html#a57f72d6c784517dc5473ba99bfe1907b", null ],
+    [ "setQMC5883LCalibrationPeriod", "classrover_1_1_rover_q_m_c5883_l.html#acd83f493569493e1f44c2f85c013dadd", null ],
+    [ "setQMC5883LDeclinationAngle", "classrover_1_1_rover_q_m_c5883_l.html#a4118ec5ea48bd0aff627be7294964712", null ],
+    [ "CALIBRATION_DURATION", "classrover_1_1_rover_q_m_c5883_l.html#a3630d7161baecd526fe1a060d48b046d", null ],
+    [ "calibration_start", "classrover_1_1_rover_q_m_c5883_l.html#aa949787c30cb3814de42184233777e72", null ],
+    [ "DECLINATION_ANGLE", "classrover_1_1_rover_q_m_c5883_l.html#ae53b3d4e459a7a83e336e10f1dcabe75", null ],
+    [ "i2c_qmc588l_fd", "classrover_1_1_rover_q_m_c5883_l.html#afb1682d4448de9cbadac461da7697ed7", null ],
+    [ "QMC5883L_ADDRESS", "classrover_1_1_rover_q_m_c5883_l.html#a6873401be9437cdf2c89a49098413a9d", null ],
+    [ "ROVERQMC5883L_SETUP_", "classrover_1_1_rover_q_m_c5883_l.html#ab53e8214e7304c2d7eaf50f249e35007", null ],
+    [ "xMaxRaw", "classrover_1_1_rover_q_m_c5883_l.html#a2dc32075bf3a3b785d68a74dc3755d60", null ],
+    [ "xMinRaw", "classrover_1_1_rover_q_m_c5883_l.html#aa501464dad9a3a210e9e05a683d13605", null ],
+    [ "yMaxRaw", "classrover_1_1_rover_q_m_c5883_l.html#a4654a5da99946c9ba795f88772d577ba", null ],
+    [ "yMinRaw", "classrover_1_1_rover_q_m_c5883_l.html#a027dff1117c94c341759e15fe81f0c89", null ]
+];

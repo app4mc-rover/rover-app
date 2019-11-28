@@ -1,0 +1,26 @@
+var classrover_1_1_rover_h_m_c5883_l =
+[
+    [ "RoverHMC5883L", "classrover_1_1_rover_h_m_c5883_l.html#a3fd5d91d0edcbd40bdfc183373bd375f", null ],
+    [ "~RoverHMC5883L", "classrover_1_1_rover_h_m_c5883_l.html#a1e7ebbb6aa555f3661503589e652fa66", null ],
+    [ "calibrate", "classrover_1_1_rover_h_m_c5883_l.html#aead385a0f2a58badafe459d59da9e07b", null ],
+    [ "getHMC588LAddress", "classrover_1_1_rover_h_m_c5883_l.html#a6d8dcc287764775d9ca0e2ffa7101ac7", null ],
+    [ "getHMC588LCalibrationPeriod", "classrover_1_1_rover_h_m_c5883_l.html#a776b0869bed39513c24065533521bb88", null ],
+    [ "getHMC588LDeclinationAngle", "classrover_1_1_rover_h_m_c5883_l.html#a2d8068bea01ba8786ee0c0314fbcfdc5", null ],
+    [ "initialize", "classrover_1_1_rover_h_m_c5883_l.html#aa417fcc6da9ac40fff22553f0bc4a3cb", null ],
+    [ "MAXIMUM_", "classrover_1_1_rover_h_m_c5883_l.html#ab426d79c38ee983e85e1fedf5af1c951", null ],
+    [ "MINIMUM_", "classrover_1_1_rover_h_m_c5883_l.html#a8b08226a3f143f97caf572292445bef9", null ],
+    [ "read", "classrover_1_1_rover_h_m_c5883_l.html#aa5b843ab20d6bf423b28f388dca2b250", null ],
+    [ "setHMC588LAddress", "classrover_1_1_rover_h_m_c5883_l.html#ac514555ddab8714e734672ccf100f558", null ],
+    [ "setHMC588LCalibrationPeriod", "classrover_1_1_rover_h_m_c5883_l.html#a8b7900e577c6af3f6fff07ffc76c4c77", null ],
+    [ "setHMC588LDeclinationAngle", "classrover_1_1_rover_h_m_c5883_l.html#a616580809e42ce2102e4fb5c6a005b1c", null ],
+    [ "CALIBRATION_DURATION", "classrover_1_1_rover_h_m_c5883_l.html#aa2f4a56d703604b893d12aa6303e79f1", null ],
+    [ "calibration_start", "classrover_1_1_rover_h_m_c5883_l.html#a0d73e1f3f8087662da5d4e442a36e29b", null ],
+    [ "DECLINATION_ANGLE", "classrover_1_1_rover_h_m_c5883_l.html#a4da7fdcefa79b31395eada1a235b4b6b", null ],
+    [ "HMC588L_ADDRESS", "classrover_1_1_rover_h_m_c5883_l.html#aad5ce11837c3d2fb06e94b8b57a5808f", null ],
+    [ "i2c_hmc588l_fd", "classrover_1_1_rover_h_m_c5883_l.html#ae5b8b6abc8a35bee558a60c26bb0db64", null ],
+    [ "ROVERHMC5883L_SETUP_", "classrover_1_1_rover_h_m_c5883_l.html#a45acaaf247f20995e9159f24f92a7849", null ],
+    [ "xMaxRaw", "classrover_1_1_rover_h_m_c5883_l.html#a7f61db2ce62d5dc2bfab89b8884fd41a", null ],
+    [ "xMinRaw", "classrover_1_1_rover_h_m_c5883_l.html#adcc14d0e4d362620e9cac7c51371ff50", null ],
+    [ "yMaxRaw", "classrover_1_1_rover_h_m_c5883_l.html#a29ac561908c59f395bdd062a356f5d21", null ],
+    [ "yMinRaw", "classrover_1_1_rover_h_m_c5883_l.html#a35b6afcdc182bfc2a31bd3ab336e3d2c", null ]
+];

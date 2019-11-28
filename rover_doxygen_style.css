@@ -1,0 +1,21 @@
+div.image img[src="rover2.jpg"]{ 
+	margin:20px;
+    width:70%; 
+}
+
+div.image img[src="RoverAPI_Overview.jpg"]{ 
+	margin:20px;
+    width:100%; 
+}
+
+div.contents div[class="textblock"]{
+	width:100%;
+	text-decoration:justify;
+}
+
+#projectname {
+	font:Georgia, "Times New Roman", Times, serif;
+	font-size:35px;
+	padding-right:30px;
+	color:#C0C0C0;
+}
