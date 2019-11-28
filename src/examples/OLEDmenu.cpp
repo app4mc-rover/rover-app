@@ -28,7 +28,7 @@
 #include <memory>
 //#include <systemd/sd-event.h>
 
-#include <json-c/json.h>
+//#include <json-c/json.h>
 //#include <afb/afb-wsj1.h>
 //#include <afb/afb-ws-client.h>
 
