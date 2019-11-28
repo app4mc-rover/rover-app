@@ -105,7 +105,7 @@ int RoverAccDemo::run() {
         this->drv->goForward();
     }
     
-    usleep(100000);
+    usleep(1000);
   }
   this->drv->stopRover();
 
