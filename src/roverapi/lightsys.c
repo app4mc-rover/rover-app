@@ -1,55 +1,18 @@
 
  /*
- * newtest.c
+ * 
+ * Copyright (c) 2016 Eclipse Foundation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * Copyright (c) 2014 Jeremy Garff <jer @ jers.net>
- *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
- *
- *     1.  Redistributions of source code must retain the above copyright notice, this list of
- *         conditions and the following disclaimer.
- *     2.  Redistributions in binary form must reproduce the above copyright notice, this list
- *         of conditions and the following disclaimer in the documentation and/or other materials
- *         provided with the distribution.
- *     3.  Neither the name of the owner nor the names of its contributors may be used to endorse
- *         or promote products derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * Authors:
+ *    Mobin Pourreza; mobin.pourreza@gmail.com
+ * Contributors:
  */
+ 
 
-
-/*
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <signal.h>
-#include <stdarg.h>
-#include <getopt.h>
-
-
-//#include "clk.h"
-//#include "gpio.h"
-#include "dma.h"
-#include "pwm.h"
-#include "version.h"
-#include "ws2811.h"*/
 #include <roverapi/lightsys.h>
 
 
@@ -57,9 +20,7 @@
 #define TARGET_FREQ             WS2811_TARGET_FREQ
 #define GPIO_PIN                19				/// select the GPIO pin to send data. 
 #define DMA                     10				/// select DMA channel to use 
-//#define STRIP_TYPE            WS2811_STRIP_RGB		// WS2812/SK6812RGB integrated chip+leds
 #define STRIP_TYPE              WS2811_STRIP_GBR		// WS2812/SK6812RGB integrated chip+leds
-//#define STRIP_TYPE            SK6812_STRIP_RGBW		// SK6812RGBW (NOT SK6812RGB)
 
 
 #define ARRAY_SIZE(stuff)       (sizeof(stuff) / sizeof(stuff[0]))
@@ -72,8 +33,7 @@ int width = WIDTH;
 int height = HEIGHT;
 int led_count = LED_COUNT;
 
-static uint8_t blink = 0;
-//static uint8_t running = 1;		/// Key to stop the lighting loops
+static uint8_t blink = 0;		// Key to stop the lighting loop
 
 ws2811_t ledstring =
 {
@@ -178,17 +138,10 @@ void setup_handlers(void)//static void setup_handlers(void)
     sigaction(SIGTERM, &sa, NULL);
 } 
 
-/*
- *
- * Application API Functions
- *
- */
 
 
 /**
  * Allocate and initialize memory, buffers, pages, PWM, DMA, and GPIO.
- *
- * @param    ws2811  ws2811 instance pointer.
  *
  * @returns  0 on success, -1 otherwise.
  */
@@ -206,7 +159,11 @@ ws2811_return_t initial(void)
     }
 }
 
-/// function to turn on the lights
+/**
+ * turn on the lights.
+ *
+ * @returns  0 on success, -1 otherwise.
+ */
 void light_on(void)
 {
     ws2811_return_t ret;
@@ -226,7 +183,14 @@ void light_on(void)
 }
 
 
-/// function to dim the lights
+/**
+ * Dim the lights.
+ *
+ * @param   int dim, a value between 15 and 255.
+ *
+ * @returns  0 on success, -1 otherwise.
+ */
+
 void light_dim(int dim)
 {
 	ws2811_return_t ret;
@@ -255,7 +219,11 @@ void light_dim(int dim)
             
 }
 
-///turn off the lights
+/**
+ * turn off the lights.
+ *
+ * @returns  0 on success, -1 otherwise.
+ */
 void light_off(void)
 {
     ws2811_return_t ret;
@@ -276,7 +244,11 @@ void light_off(void)
     
 }
 
-/// backward drive lights
+/**
+ * Turn on backward lights in yellow.
+ *
+ * @returns  0 on success, -1 otherwise.
+ */
 void light_BackW (void)
 {
     ws2811_return_t ret;
@@ -297,7 +269,11 @@ void light_BackW (void)
 }
 
 
-
+/**
+ * Blink the right lights in orange as right indicator.
+ *
+ * @returns  0 on success, -1 otherwise.
+ */
 
 void light_Blink_R(void)
 {
@@ -330,14 +306,16 @@ void light_Blink_R(void)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         }
-	usleep(1000000 / 4);
-	
-
-    //}
+	usleep(1000000 / 4);    
     
 }
 
 
+/**
+ * Blink the left lights in orange as indicator.
+ *
+ * @returns  0 on success, -1 otherwise.
+ */
 void light_Blink_L(void)
 {
     
@@ -346,12 +324,9 @@ void light_Blink_L(void)
     // save the last colors in temps
     colortemp1 = Light_F_L;
     colortemp2 = Light_R_L;
-    //running = 1;
-    
+      
     blink = 1;
-    //for(int i=0;i<10;i++)//while(blink_mode)//
-   // {
-    	//if (!blink) break;
+
 	Light_F_L = orange;
 	Light_R_L = orange;
 	
@@ -372,14 +347,18 @@ void light_Blink_L(void)
         {
             fprintf(stderr, "ws2811_render failed: %s\n", ws2811_get_return_t_str(ret));
         }
-	usleep(1000000 / 4);
-	
-	
-	
-       
-    //}
+	usleep(1000000 / 4); 
+    
     
 }
+
+
+/**
+ * left blink function without delay.
+ *
+ * @returns  0 on success, -1 otherwise.
+ */
+
 void light_Blink_L_on(void)
 {
     
@@ -405,6 +384,12 @@ void light_Blink_L_on(void)
     
 }
 
+
+/**
+ * right blink function without delay
+ *
+ * @returns  0 on success, -1 otherwise.
+ */
 
 void light_Blink_R_on(void)
 {
