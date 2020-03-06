@@ -6,18 +6,13 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Description:
- *    Motor driving Task with wiringPi and pThreads
+ *    Lighting Task with wiringPi and pThreads
  *
  * Authors:
- *    M. Ozcelikors,            R.Hottger
- *    <mozcelikors@gmail.com>   <robert.hoettger@fh-dortmund.de>
+ *    M. Pourreza,         	   R.Hottger			
+ *    <mobin.pourreza@gmail.com>   <robert.hoettger@fh-dortmund.de>
  *
- * Contributors:
- *    Gael Blondelle - API functions
  *
- * Update History:
- *    02.02.2017   -    first compilation
- *    15.03.2017   -    updated tasks for web-based driving
  *
  */
 
