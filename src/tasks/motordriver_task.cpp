@@ -278,61 +278,6 @@ void *MotorDriver_Task(void * arg)
 			
 		}
 		
-		/*int a = light_mode_shared.get();
-		switch (a)
-		{
-			
-			case 0:
-				if (driving_mode.get() == MANUAL)
-					r_light.off();
-				break;
-			case 5:
-				r_light.off();
-				keycommand_shared.set('F');
-					
-				break;
-			case 8:
-				keycommand_shared.set('W');
-				//ExitAutomaticModes();
-				//r_driving.setSpeed(speed_shared.get());
-				//r_driving.goForward();
-				r_light.on();
-				
-				break;
-			case 2:
-				keycommand_shared.set('S');
-				//ExitAutomaticModes();				
-				//r_driving.setSpeed(speed_shared.get());
-				//r_driving.goBackward();
-				r_light.BackW();
-					
-				break;
-			case 6:
-				keycommand_shared.set('D');
-				//ExitAutomaticModes();
-				//r_driving.setSpeed(speed_shared.get());
-				//r_driving.turnForwardRight();
-				r_light.Blink_L();				
-				
-				break;	
-			case 4:
-				keycommand_shared.set('A');
-				//ExitAutomaticModes();
-				//r_driving.setSpeed(speed_shared.get());
-				//r_driving.turnForwardLeft();
-				r_light.Blink_R();				
-				break;
-			case 11:				// dim up
-					r_light.dimset(255);
-					r_light.dim();
-					a=111;
-					break;
-			case 22:					// dim down
-					r_light.dimset(50);
-					r_light.dim();					
-					a=222;					
-			break;		
-		}*/
 		
 		//Task content ends here -------------------------------------------------
 
