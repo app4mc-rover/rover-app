@@ -229,13 +229,13 @@ void *Light_Task(void * arg)
 				break;
 			case STATE_LIGHT_AUTO:  //AUTO MANUAL 
 				r_light.autoLight = true;
-				light_mode_shared = 8;  // in auto mode the lights always turn on
-				r_light.autoLight ? cout<< "Lights are in AUTO" << endl : cout<< "Lights are in MANUAL" << endl;
+				r_light.on();  // to start auto mode the lights shall turn on
+				cout<< "Lights are in AUTO" << endl;
 				state = STATE_LIGHT_IDLE;
 				break;
 			case STATE_LIGHT_MAN:  //AUTO MANUAL 
 				r_light.autoLight = false;
-				r_light.autoLight ? cout<< "Lights are in AUTO" << endl : cout<< "Lights are in MANUAL" << endl;
+				cout<< "Lights are in MANUAL" << endl;
 				state = STATE_LIGHT_IDLE;
 				break;
 		}
